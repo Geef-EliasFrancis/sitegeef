@@ -1960,15 +1960,19 @@
   .admin-page-header--music-catalog {
     gap: 0.65rem;
     padding: 0.8rem;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
   }
 
   .admin-page-header--music-catalog .admin-page-header-copy {
     width: 100%;
+    min-width: 0;
   }
 
   .admin-page-header--music-catalog .admin-page-title-row {
     flex-wrap: nowrap;
     gap: 0.45rem;
+    min-width: 0;
   }
 
   .admin-page-header--music-catalog .admin-page-title {

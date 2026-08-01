@@ -119,7 +119,6 @@ export function MusicasCatalogTable({
     <div className="area-page">
       <div className="admin-page-header admin-page-header--music-catalog">
         <div className="admin-page-header-copy">
-          <span className="admin-dashboard-kicker">Reunião pública</span>
           {!searchOpen ? (
             <div className="admin-page-title-row">
               <h1 className="admin-page-title">Músicas</h1>

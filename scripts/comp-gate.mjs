@@ -29,6 +29,7 @@ const responsiveContract = [
   ['conteúdo pode encolher', adminCss.includes('.admin-main') && adminCss.includes('min-width: 0')],
   ['catálogo tem busca móvel recolhida', musicCatalogSource.includes('music-catalog-search-toggle') && musicCatalogSource.includes('setSearchOpen(false)')],
   ['catálogo tem ação móvel por ícone', musicCatalogSource.includes('music-catalog-create-label') && adminCss.includes('.music-catalog-create-label')],
+  ['catálogo não repete área no título', !musicCatalogSource.includes('>Reunião pública<')],
   ['top menu móvel tem ícones e tooltip', adminHeaderSource.includes('admin-shell-tab-icon') && adminHeaderSource.includes('title={`${item.label}: ${item.note}`}') && adminCss.includes('.admin-shell-tab-label')],
   ['top menu móvel compartilha linha com usuário', adminCss.includes('grid-template-columns: minmax(0, 1fr) auto') && adminCss.includes('.admin-header-right') && adminCss.includes('.admin-header .admin-brand')],
 ];
@@ -85,6 +86,11 @@ try {
         if (await searchToggle.count() !== 1 || await titleRow.count() !== 1 || await mobileSearch.count() !== 0) {
           failures.push(`${route} @ ${viewport.width}x${viewport.height}: busca móvel não inicia recolhida`);
         } else {
+          const titleBox = await titleRow.boundingBox();
+          const createBox = await page.locator('.music-catalog-create').boundingBox();
+          if (!titleBox || !createBox || Math.abs(titleBox.top - createBox.top) > 8) {
+            failures.push(`${route} @ ${viewport.width}x${viewport.height}: título e adicionar música não estão na mesma linha`);
+          }
           await searchToggle.click();
           if (await page.locator('.music-catalog-mobile-search').count() !== 1 || await page.locator('.admin-page-title-row').count() !== 0) {
             failures.push(`${route} @ ${viewport.width}x${viewport.height}: busca móvel não expandiu substituindo o título`);
