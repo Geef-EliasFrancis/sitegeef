@@ -76,6 +76,7 @@ export function SiteHeader({
       ],
     },
   ];
+  const activeGroup = navGroups.find((group) => group.key === openGroup);
 
   return (
     <header className="site-header">
@@ -103,16 +104,6 @@ export function SiteHeader({
             >
               {group.label}<span aria-hidden="true">⌄</span>
             </button>
-            {openGroup === group.key && (
-              <div className="site-nav-group-dropdown">
-                <p>{group.description}</p>
-                {group.links.map((item) => (
-                  <Link key={`${group.key}-${item.href}`} href={item.href} className="site-nav-dropdown-item" onClick={() => setOpenGroup(null)}>
-                    {item.label}
-                  </Link>
-                ))}
-              </div>
-            )}
           </div>
         ))}
       </nav>
@@ -153,6 +144,22 @@ export function SiteHeader({
         avatarUrl={avatarUrl}
         hasAdminAccess={hasAdminAccess}
       />
+
+      {activeGroup && !mobileMenuOpen && (
+        <section className="site-context-navigation" aria-label={`Opções de ${activeGroup.label}`}>
+          <div className="site-context-navigation-copy">
+            <strong>{activeGroup.label}</strong>
+            <p>{activeGroup.description}</p>
+          </div>
+          <nav className="site-context-navigation-links">
+            {activeGroup.links.map((item) => (
+              <Link key={`context-${activeGroup.key}-${item.href}`} href={item.href} className="site-context-navigation-link" onClick={() => setOpenGroup(null)}>
+                {item.label}
+              </Link>
+            ))}
+          </nav>
+        </section>
+      )}
     </header>
   );
 }

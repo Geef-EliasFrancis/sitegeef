@@ -18,7 +18,7 @@ async function runDesktop(width, height) {
   if (groupCount !== 5) throw new Error(`Esperados 5 grupos no desktop; encontrados ${groupCount}`);
 
   await groups.first().click();
-  const dropdown = page.locator(".site-nav-group-dropdown").first();
+  const dropdown = page.locator(".site-context-navigation").first();
   await dropdown.waitFor({ state: "visible" });
   await page.waitForTimeout(300);
   const dropdownBox = await dropdown.boundingBox();
