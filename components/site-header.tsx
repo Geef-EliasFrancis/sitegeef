@@ -113,6 +113,10 @@ export function SiteHeader({
       >
         <Tabs.List asChild>
           <nav className="site-nav-primary" aria-label="Navegação principal">
+            <Link href="/" className="site-nav-home-btn" aria-label="Home">
+              <span aria-hidden="true">⌂</span>
+              <span>HOME</span>
+            </Link>
             {navGroups.map((group) => (
               <div key={group.key} className={`site-nav-group${openGroup === group.key ? " is-active" : ""}`}>
                 <Tabs.Trigger asChild value={group.key}>
@@ -162,6 +166,9 @@ export function SiteHeader({
               ))}
             </div>
           ))}
+          <Link href="/" className="site-nav-dropdown-item" onClick={() => setMobileMenuOpen(false)}>
+            Home
+          </Link>
           <Link href="/contato" className="site-nav-dropdown-item" onClick={() => setMobileMenuOpen(false)}>
             Contato
           </Link>
