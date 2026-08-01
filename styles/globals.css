@@ -4218,6 +4218,9 @@ a.button.musica-icon-button {
 }
 
 .contact-list a {
+  display: inline-block;
+  max-width: 100%;
+  overflow-wrap: anywhere;
   color: var(--uva-strong);
   font-weight: 600;
 }

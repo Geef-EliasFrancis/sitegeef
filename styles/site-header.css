@@ -798,9 +798,9 @@
     padding: 0.55rem;
     border: 1px solid var(--dropdown-border);
     border-radius: 20px;
-    background: var(--dropdown-bg);
+    background: var(--surface-strong, #fbf7ff);
     box-shadow: var(--popover-shadow);
-    backdrop-filter: blur(16px);
+    backdrop-filter: none;
     z-index: 3000;
     animation: site-menu-reveal 180ms ease-out both;
   }

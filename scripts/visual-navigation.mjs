@@ -88,6 +88,15 @@ async function runMobile(width, height) {
   await page.goto(baseUrl, { waitUntil: "networkidle" });
   await page.screenshot({ path: `${outputDir}/mobile-${width}.png`, fullPage: true });
 
+  const clippedContactLinks = await page.locator(".contact-card .contact-list a").evaluateAll((links) => links.filter((link) => {
+    const linkBox = link.getBoundingClientRect();
+    const cardBox = link.closest(".contact-card")?.getBoundingClientRect();
+    return cardBox && linkBox.right > cardBox.right + 1;
+  }).map((link) => link.textContent?.trim()));
+  if (clippedContactLinks.length > 0) {
+    throw new Error(`Links de contato recortados em ${width}px: ${clippedContactLinks.join(", ")}`);
+  }
+
   const menu = page.locator(".site-mobile-menu-toggle");
   await menu.click();
   const mobileNavigation = page.locator("#site-mobile-navigation");
@@ -102,6 +111,10 @@ async function runMobile(width, height) {
   if (submenuCount < 3) throw new Error(`Accordion sem submenus suficientes: ${submenuCount}`);
   const mobileAnimationName = await mobileNavigation.evaluate((element) => getComputedStyle(element).animationName);
   if (mobileAnimationName === "none") throw new Error("Menu mobile sem animação");
+  const mobileBackground = await mobileNavigation.evaluate((element) => getComputedStyle(element).backgroundColor);
+  if (mobileBackground === "rgba(0, 0, 0, 0)" || mobileBackground === "transparent") {
+    throw new Error("Menu mobile sem fundo opaco");
+  }
   await page.screenshot({ path: `${outputDir}/mobile-${width}-submenu.png`, fullPage: true });
 
   const noHorizontalOverflow = await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth + 1);
