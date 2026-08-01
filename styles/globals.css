@@ -1573,12 +1573,24 @@ body.musica-display-route .site-shell {
   --display-columns: 2;
   --display-title-size: clamp(2.4rem, 4vw, 4.2rem);
   --display-subtitle-size: clamp(1rem, 1.5vw, 1.45rem);
-  --display-verse-text: clamp(1.45rem, 2.05vw, 2.35rem);
-  --display-body-gap: clamp(1rem, 2.2vw, 2rem);
-  --display-body-pad-top: clamp(1rem, 2vw, 2rem);
-  --display-body-pad-x: clamp(1.2rem, 2.5vw, 3rem);
+  --display-verse-text: clamp(1rem, calc(2.05vw * var(--display-fit-scale, 1)), 2.35rem);
+  --display-body-gap: clamp(0.45rem, calc(2.2vw * var(--display-fit-scale, 1)), 2rem);
+  --display-body-pad-top: clamp(0.45rem, calc(2vw * var(--display-fit-scale, 1)), 2rem);
+  --display-body-pad-x: clamp(0.8rem, 2.5vw, 3rem);
   background: #10131c;
   color: #ffffff;
+}
+
+.musica-display-screen--live .musica-display-header-16x9 {
+  min-height: 0;
+  padding-top: clamp(0.65rem, calc(1.4rem * var(--display-fit-scale, 1)), 1.8rem);
+  padding-bottom: clamp(0.5rem, calc(1.15rem * var(--display-fit-scale, 1)), 1.4rem);
+}
+
+.musica-display-screen--live .musica-display-body-16x9 {
+  height: 0;
+  overflow: hidden;
+  padding-bottom: 0;
 }
 
 .musica-display-screen--live .musica-display-header-16x9 {

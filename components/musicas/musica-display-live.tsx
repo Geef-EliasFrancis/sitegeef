@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import type { CSSProperties } from "react";
 import { createClient as createSupabaseClient } from "@/lib/supabase/client";
 import type { Musica, MusicaSessao } from "@/lib/musicas";
 
@@ -180,9 +181,13 @@ export function MusicaDisplayLive({
   const refraoDestacado = musica.partes.find((p) => p.tipo === "refrao");
 
   let estrofeCount = 0;
+  const fitScale = estrofes.length <= 4 ? 1 : estrofes.length <= 6 ? 0.86 : estrofes.length <= 8 ? 0.72 : 0.6;
 
   return (
-    <main className="musica-display-screen musica-display-screen--live">
+    <main
+      className="musica-display-screen musica-display-screen--live"
+      style={{ "--display-fit-scale": fitScale } as CSSProperties}
+    >
       {/* Header */}
       <div className="musica-display-header-16x9">
         <div className="musica-display-header-title">
