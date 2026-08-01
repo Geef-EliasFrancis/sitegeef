@@ -11,7 +11,6 @@ import { MusicaExibicaoPublicaButton } from "./musica-exibicao-publica-button";
 type MusicasCatalogTableProps = {
   musicas: Musica[];
   musicaAtivaId?: string | null;
-  musicaAtivaTitulo?: string | null;
   initialQuery?: string;
   isSaved?: boolean;
 };
@@ -49,7 +48,6 @@ function musicaMatchesSearch(musica: Musica, search: string) {
 export function MusicasCatalogTable({
   musicas,
   musicaAtivaId = null,
-  musicaAtivaTitulo = null,
   initialQuery = "",
   isSaved = false,
 }: MusicasCatalogTableProps) {
@@ -186,16 +184,6 @@ export function MusicasCatalogTable({
           <IconPlus size={18} />
           <span className="music-catalog-create-label">Nova música</span>
         </Link>
-      </div>
-
-      <div className="content-surface-note content-surface-note-inline">
-        {musicaAtivaTitulo ? (
-          <>
-            Exibição pública atual: <strong>{musicaAtivaTitulo}</strong>
-          </>
-        ) : (
-          "Nenhuma música está marcada como exibição pública no momento."
-        )}
       </div>
 
       {isSaved && (

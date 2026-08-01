@@ -24,7 +24,6 @@ async function MusicasContent({ searchParams }: PageProps) {
     <MusicasCatalogTable
       musicas={musicas}
       musicaAtivaId={exibicaoAtual?.musica?.id ?? null}
-      musicaAtivaTitulo={exibicaoAtual?.musica?.titulo ?? null}
       initialQuery={q}
       isSaved={isSaved}
     />
