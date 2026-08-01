@@ -544,9 +544,6 @@ export function MusicaReader({
             <img src={logoSrc} alt="Logo GEEF" className="musica-display-header-logo" />
           </div>
 
-          <div className="musica-display-presentation-message">
-            Vamos praticar o amor que o Mestre nos ensinou!
-          </div>
         </div>
 
         <div className="musica-display-body-16x9">
