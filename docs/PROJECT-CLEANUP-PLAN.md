@@ -67,3 +67,5 @@ Reduzir ruído no checkout, separar código-fonte de artefatos gerados, organiza
 - Fase 2 concluída em `61897ed`: screenshots/resultados gerados removidos do versionamento, auditorias históricas movidas para `docs/archive/audits/` e regras de ignore adicionadas.
 - Validação da fase 2: type-check, 66 testes, comp gate, gate responsivo e `git diff --check` aprovados.
 - Fase 3 em aberto: reorganização adicional de documentação e revisão individual dos scripts manuais.
+- Revisão de scripts concluída nesta etapa: seis duplicatas/one-offs sem referência foram removidos; scripts de migração, MCP, Autoreflex e recuperação operacional foram preservados.
+- Arquivos históricos `baseinicial.md`, `bootstrap.txt` e `migration-log.txt` foram movidos para `docs/archive/legacy/`.

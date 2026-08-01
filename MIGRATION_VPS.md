@@ -26,7 +26,7 @@
 - [ ] `DEPLOY.md` — Novo IP e fluxo GitHub Actions
 - [ ] `DEPLOY_AUTOMATION.md` — Fluxo principal de CI/CD
 - [ ] `README.md` — Se houver referência a VPS antigo
-- [ ] `baseinicial.md` — Atualizar referência VPS
+- [ ] `docs/archive/legacy/baseinicial.md` — Referência histórica de VPS
 
 ### Atualizar Configurações
 

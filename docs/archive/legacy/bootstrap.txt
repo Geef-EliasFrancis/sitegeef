@@ -29,7 +29,7 @@ Sem leitura do Agent.md, nenhuma operação é considerada válida.
 
 A stack base do projeto deve seguir:
 
-ver arquivo baseinicial.md
+ver arquivo docs/archive/legacy/baseinicial.md
 Regras:
 Alterações na stack exigem ADR obrigatório
 Evitar fragmentação tecnológica
