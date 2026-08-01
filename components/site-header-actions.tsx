@@ -24,7 +24,7 @@ export function SiteHeaderActions({
   return (
     <div className="site-header-right">
       <Link href="/contato" className="site-nav-contact-btn">
-        {copy.header.contact}
+        <span>{copy.header.contact}</span>
       </Link>
 
       <UserMenu
