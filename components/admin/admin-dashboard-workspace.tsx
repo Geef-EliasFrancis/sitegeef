@@ -389,7 +389,7 @@ export function AdminDashboardWorkspace({ summary }: AdminDashboardWorkspaceProp
   }
 
   return (
-    <div className="admin-dashboard-page">
+    <div className="admin-dashboard-page admin-dashboard-page--panel">
       <section className="admin-page-header admin-card admin-page-header--hero">
         <div className="admin-page-header-copy">
           <h1 className="admin-page-title">Dashboard</h1>
