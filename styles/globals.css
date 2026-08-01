@@ -1370,14 +1370,20 @@ body.musica-display-route .site-shell {
 }
 
 .musica-catalog-live-button {
-  min-width: 4.75rem !important;
-  padding: 0.42rem 0.62rem !important;
-  gap: 0.28rem;
+  width: 2.25rem;
+  min-width: 2.25rem !important;
+  height: 2.25rem;
+  padding: 0 !important;
+  gap: 0;
   font-size: 0.78rem;
 }
 
 .musica-catalog-live-button--active {
-  min-width: 4.9rem !important;
+  min-width: 2.25rem !important;
+}
+
+.musica-catalog-live-button span {
+  display: none;
 }
 
 @media (max-width: 767px) {
