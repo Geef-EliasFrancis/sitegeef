@@ -500,7 +500,6 @@ export function MusicaReader({
             title="Voltar ao catálogo"
           >
             <IconArrowLeft size={16} />
-            <span>Voltar</span>
           </Link>
           <button
             type="button"
@@ -510,7 +509,6 @@ export function MusicaReader({
             title="Imprimir música"
           >
             <IconPrinter size={16} />
-            <span>Imprimir</span>
           </button>
           {hasMedia ? (
             <button
@@ -521,7 +519,6 @@ export function MusicaReader({
               title={pipHidden ? "Mostrar vídeo" : "Ocultar vídeo"}
             >
               <span aria-hidden="true">{pipHidden ? "▶" : "■"}</span>
-              <span>{pipHidden ? "Vídeo" : "Ocultar"}</span>
             </button>
           ) : null}
           {podeAlternarCifra ? (
@@ -533,7 +530,6 @@ export function MusicaReader({
               title={`Exibir ${viewMode === "letra" ? "cifra" : "letra"}`}
             >
               <span aria-hidden="true">🎼</span>
-              <span>{viewMode === "letra" ? "Cifra" : "Letra"}</span>
             </button>
           ) : null}
         </div>
