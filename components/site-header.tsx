@@ -29,6 +29,7 @@ export function SiteHeader({
     {
       key: "quem-somos",
       label: "Quem somos",
+      shortLabel: "Quem somos",
       description: "Conheça a história, a identidade e os compromissos do GEEF.",
       links: primaryLinks.filter((item) => item.href === "/quem-somos").concat([
         { href: "/institucional", label: "Credibilidade e filiações" },
@@ -38,6 +39,7 @@ export function SiteHeader({
     {
       key: "oferecemos",
       label: "O que oferecemos",
+      shortLabel: "Oferecemos",
       description: "Atividades, acolhimento, estudos e formação para a comunidade.",
       links: primaryLinks.filter((item) => ["/agenda", "/atividades", "/evangelizacao", "/atendimento-fraterno"].includes(item.href)).concat([
         { href: "/estudos", label: "Estudos" },
@@ -46,6 +48,7 @@ export function SiteHeader({
     {
       key: "reuniao-publica",
       label: "Reunião pública",
+      shortLabel: "Reunião",
       description: "Acompanhe a programação, as músicas e as escalas da casa.",
       links: [
         { href: "/agenda", label: "Programação" },
@@ -58,6 +61,7 @@ export function SiteHeader({
     {
       key: "biblioteca",
       label: "Biblioteca e conteúdos",
+      shortLabel: "Biblioteca",
       description: "Materiais para leitura, estudo e acompanhamento da Doutrina Espírita.",
       links: [
         { href: "/leitor", label: "Área do leitor" },
@@ -68,6 +72,7 @@ export function SiteHeader({
     {
       key: "participe",
       label: "Participe",
+      shortLabel: "Participe",
       description: "Encontre a casa, acompanhe a agenda e fale conosco.",
       links: [
         { href: "/agenda", label: "Agenda pública" },
@@ -103,7 +108,8 @@ export function SiteHeader({
               aria-expanded={openGroup === group.key}
               onClick={() => setOpenGroup(openGroup === group.key ? null : group.key)}
             >
-              {group.label}
+              <span className="site-nav-group-label-full">{group.label}</span>
+              <span className="site-nav-group-label-short" aria-hidden="true">{group.shortLabel}</span>
             </button>
           </div>
         ))}
