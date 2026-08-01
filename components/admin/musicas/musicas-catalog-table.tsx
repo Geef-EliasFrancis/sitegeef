@@ -196,13 +196,6 @@ export function MusicasCatalogTable({
 
       <section className="area-section">
         <div className="admin-card table-surface musica-catalog-surface">
-          <div className="area-section-title flex-space-between">
-            <h2>Catálogo</h2>
-            <span className="table-cell-text-muted">
-              {filteredMusicas.length} {filteredMusicas.length === 1 ? "resultado" : "resultados"}
-            </span>
-          </div>
-
           {filteredMusicas.length === 0 ? (
             <div className="area-empty">
               <p>Nenhuma música encontrada.</p>
