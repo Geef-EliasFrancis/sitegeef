@@ -458,7 +458,6 @@ export function MusicaReader({
 
     const observer = new ResizeObserver(measure);
     observer.observe(screen);
-    observer.observe(body);
     measure();
     return () => {
       cancelAnimationFrame(frame);
