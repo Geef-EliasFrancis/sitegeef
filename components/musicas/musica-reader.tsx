@@ -428,12 +428,6 @@ export function MusicaReader({
     Object.entries(properties).forEach(([property, value]) => {
       el.style.setProperty(property, value);
     });
-
-    return () => {
-      Object.keys(properties).forEach((property) => {
-        el.style.removeProperty(property);
-      });
-    };
   }, [displayMetrics, fitScale, isDisplay]);
 
   useEffect(() => {

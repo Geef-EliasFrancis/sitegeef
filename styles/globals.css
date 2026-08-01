@@ -1576,6 +1576,12 @@ body.musica-display-route .site-shell {
   box-sizing: border-box;
 }
 
+html.musica-display-route *,
+body.musica-display-route * {
+  animation: none !important;
+  transition: none !important;
+}
+
 /* Modo projetor: contraste alto, tipografia grande e leitura a distancia. */
 .musica-display-screen--live {
   --display-columns: 3;
