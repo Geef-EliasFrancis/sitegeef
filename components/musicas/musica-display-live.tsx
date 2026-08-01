@@ -180,12 +180,17 @@ export function MusicaDisplayLive({
   const estrofes = musica.partes.filter((p) => p.tipo === "estrofe" || p.tipo === "ponte" || p.tipo === "intro");
   const refraoDestacado = musica.partes.find((p) => p.tipo === "refrao");
 
-  const fitScale = estrofes.length <= 4 ? 1 : estrofes.length <= 6 ? 0.86 : estrofes.length <= 8 ? 0.72 : 0.6;
+  const totalLines = estrofes.reduce((total, parte) => total + parte.conteudo.split("\n").length, 0);
+  const fitScale = Math.min(1.35, Math.max(0.58, 34 / Math.max(totalLines, 1)));
+  const displayColumns = totalLines > 20 ? 2 : 1;
 
   return (
     <main
       className="musica-display-screen musica-display-screen--live"
-      style={{ "--display-fit-scale": fitScale } as CSSProperties}
+      style={{
+        "--display-fit-scale": fitScale,
+        "--display-columns": displayColumns,
+      } as CSSProperties}
     >
       {/* Header */}
       <div className="musica-display-header-16x9">
