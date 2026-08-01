@@ -2043,9 +2043,15 @@
   }
 
   .musica-catalog-table thead,
-  .musica-catalog-table tbody,
+  .musica-catalog-table tbody {
+    display: block;
+    width: 100%;
+    min-width: 0;
+  }
+
   .musica-catalog-table tr {
     display: grid;
+    width: 100%;
     min-width: 0;
   }
 
@@ -2059,6 +2065,12 @@
     min-width: 0;
     padding: 0.65rem 0.45rem;
     overflow-wrap: anywhere;
+  }
+
+  .musica-catalog-table th {
+    white-space: nowrap;
+    word-break: normal;
+    overflow-wrap: normal;
   }
 
   .musica-catalog-table th:nth-child(4),
