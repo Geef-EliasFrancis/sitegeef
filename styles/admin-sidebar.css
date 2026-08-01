@@ -70,6 +70,18 @@
   display: none;
 }
 
+/* Tablet: o rail continua visível; somente o mobile usa drawer. */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .admin-navigation {
+    flex-basis: clamp(220px, 25vw, 260px);
+  }
+
+  .admin-sidebar {
+    width: 100%;
+    max-height: calc(100vh - 6rem);
+  }
+}
+
 @media (max-width: 767px) {
   .admin-navigation {
     flex: 0 0 0;

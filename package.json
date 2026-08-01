@@ -24,6 +24,7 @@
     "lint": "eslint . --ext .ts,.tsx",
     "lint:design-system": "node scripts/validate-design-system.js",
     "gate:responsive-admin": "node scripts/validate-admin-responsive.mjs",
+    "gate:comp": "node scripts/comp-gate.mjs",
     "gate:agenda": "node scripts/validate-agenda.mjs",
     "mcp:supabase:gate": "node scripts/validate-supabase-mcp.mjs",
     "mcp:supabase:gate:strict": "node scripts/validate-supabase-mcp.mjs --strict",

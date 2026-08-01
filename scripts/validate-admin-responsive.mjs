@@ -4,6 +4,7 @@ const files = ['styles/admin.css', 'styles/admin-sidebar.css'];
 const adminCss = fs.readFileSync('styles/admin.css', 'utf8');
 const sidebarCss = fs.readFileSync('styles/admin-sidebar.css', 'utf8');
 const source = `${adminCss}\n${sidebarCss}`;
+const shellTabsBlock = adminCss.match(/\.admin-shell-tabs\s*\{[^}]*\}/s)?.[0] ?? '';
 const checks = [
   ['breakpoints CSS válidos', !source.includes('max-width: var(--bp-')],
   ['sem seletor legado do menu', !source.includes('admin-mobile-nav-toggle') && !source.includes('is-mobile-open')],
@@ -15,6 +16,8 @@ const checks = [
   ['conteúdo sem largura mínima', source.includes('.admin-main') && source.includes('min-width: 0')],
   ['breakpoint tablet explícito', source.includes('@media (max-width: 1023px)')],
   ['breakpoint mobile explícito', source.includes('@media (max-width: 767px)')],
+  ['abas sem quebra no shell', shellTabsBlock.includes('grid-template-columns: repeat(6, minmax(0, 1fr))') && !shellTabsBlock.includes('flex-wrap: wrap')],
+  ['tablet mantém rail visível', source.includes('@media (min-width: 768px) and (max-width: 1023px)') && source.includes('.admin-navigation {')],
 ];
 
 const failures = checks.filter(([, passed]) => !passed);
