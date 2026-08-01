@@ -105,6 +105,7 @@ export function MusicaReader({
     width: 1366,
     height: 768,
   }));
+  const [fitScale, setFitScale] = useState(1);
 
   const partesComCifra = musica.partes.filter((p) => p.cifra);
   const hasInlineChords = musica.partes.some((p) =>
@@ -408,19 +409,20 @@ export function MusicaReader({
 
     const properties: Record<string, string> = {
       "--display-scale": String(displayMetrics.scale),
+      "--display-fit-scale": String(fitScale),
       "--display-columns": String(displayMetrics.columns),
-      "--display-body-gap": `${displayMetrics.bodyGap}rem`,
-      "--display-header-pad-y": `${displayMetrics.headerPaddingY}rem`,
-      "--display-header-pad-x": `${displayMetrics.headerPaddingX}rem`,
-      "--display-body-pad-x": `${displayMetrics.headerPaddingX}rem`,
-      "--display-title-size": `${displayMetrics.titleSize}rem`,
-      "--display-subtitle-size": `${displayMetrics.subtitleSize}rem`,
-      "--display-logo-width": `${displayMetrics.logoWidth}px`,
-      "--display-body-pad-top": `${displayMetrics.bodyPaddingTop}rem`,
-      "--display-verse-pad": `${displayMetrics.versePad}rem`,
-      "--display-verse-title": `${displayMetrics.verseTitle * (displayDensity === "full" ? 1.25 : 1)}rem`,
-      "--display-verse-text": `${displayMetrics.verseText * (displayDensity === "full" ? 1.45 : 1)}rem`,
-      "--display-verse-min-height": `${displayMetrics.verseMinHeight}rem`,
+      "--display-body-gap": `${displayMetrics.bodyGap * fitScale}rem`,
+      "--display-header-pad-y": `${displayMetrics.headerPaddingY * fitScale}rem`,
+      "--display-header-pad-x": `${displayMetrics.headerPaddingX * fitScale}rem`,
+      "--display-body-pad-x": `${displayMetrics.headerPaddingX * fitScale}rem`,
+      "--display-title-size": `${displayMetrics.titleSize * fitScale}rem`,
+      "--display-subtitle-size": `${displayMetrics.subtitleSize * fitScale}rem`,
+      "--display-logo-width": `${displayMetrics.logoWidth * fitScale}px`,
+      "--display-body-pad-top": `${displayMetrics.bodyPaddingTop * fitScale}rem`,
+      "--display-verse-pad": `${displayMetrics.versePad * fitScale}rem`,
+      "--display-verse-title": `${displayMetrics.verseTitle * (displayDensity === "full" ? 1.25 : 1) * fitScale}rem`,
+      "--display-verse-text": `${displayMetrics.verseText * (displayDensity === "full" ? 1.45 : 1) * fitScale}rem`,
+      "--display-verse-min-height": `${displayMetrics.verseMinHeight * fitScale}rem`,
     };
 
     Object.entries(properties).forEach(([property, value]) => {
@@ -432,7 +434,37 @@ export function MusicaReader({
         el.style.removeProperty(property);
       });
     };
-  }, [displayMetrics, isDisplay]);
+  }, [displayMetrics, fitScale, isDisplay]);
+
+  useEffect(() => {
+    if (!isDisplay) return;
+    const screen = displayScreenRef.current;
+    const body = screen?.querySelector<HTMLElement>(".musica-display-body-16x9");
+    const header = screen?.querySelector<HTMLElement>(".musica-display-header-16x9");
+    if (!screen || !body || !header) return;
+
+    let frame = 0;
+    const measure = () => {
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(() => {
+        const availableHeight = Math.max(1, screen.clientHeight - header.offsetHeight - 16);
+        const contentHeight = Math.max(1, body.scrollHeight);
+        const availableWidth = Math.max(1, screen.clientWidth - 24);
+        const contentWidth = Math.max(1, body.scrollWidth);
+        const nextScale = Math.max(0.42, Math.min(1, availableHeight / contentHeight, availableWidth / contentWidth));
+        setFitScale((current) => Math.abs(current - nextScale) > 0.01 ? nextScale : current);
+      });
+    };
+
+    const observer = new ResizeObserver(measure);
+    observer.observe(screen);
+    observer.observe(body);
+    measure();
+    return () => {
+      cancelAnimationFrame(frame);
+      observer.disconnect();
+    };
+  }, [displayMetrics, isDisplay, musica.id, mostrarCifra, viewport.height, viewport.width]);
 
   useEffect(() => {
     const el = publicLyricsPanelRef.current;
