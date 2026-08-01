@@ -43,3 +43,7 @@ rota -> lib/domínio -> dados
 2. Migrar superfícies repetidas para `AdminPanel`.
 3. Catalogar tabelas e formulários por domínio.
 4. Remover classes duplicadas somente após os consumidores usarem os primitives.
+
+## Gate visual
+
+`npm run lint:design-system` agora é portátil em Windows e Linux. A execução atual identifica dívida visual preexistente (cores hardcoded e estilos inline em telas antigas); ela deve ser reduzida por domínio, sem mascarar o resultado do gate. Cada migração deve substituir primeiro os estilos do próprio módulo e manter os gates estruturais e responsivos verdes.

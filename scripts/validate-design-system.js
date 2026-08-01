@@ -2,7 +2,6 @@
 
 const fs = require('fs');
 const path = require('path');
-const { execSync } = require('child_process');
 
 console.log('🔍 Validating design system compliance...\n');
 
@@ -12,8 +11,22 @@ const violations = {
   missingVars: []
 };
 
-// Check TypeScript/TSX files for inline styles
-const tsxFiles = execSync('find . -type f -name "*.tsx" -not -path "./node_modules/*" -not -path "./.next/*"', { encoding: 'utf8' }).split('\n').filter(Boolean);
+// Check TypeScript/TSX files for inline styles without relying on Unix tools.
+function collectTsxFiles(directory, files = []) {
+  for (const entry of fs.readdirSync(directory, { withFileTypes: true })) {
+    if (['node_modules', '.next', '.git', '.autoreflex'].includes(entry.name)) continue;
+
+    const entryPath = path.join(directory, entry.name);
+    if (entry.isDirectory()) {
+      collectTsxFiles(entryPath, files);
+    } else if (entry.isFile() && entry.name.endsWith('.tsx')) {
+      files.push(entryPath);
+    }
+  }
+  return files;
+}
+
+const tsxFiles = collectTsxFiles('.');
 
 console.log(`📄 Checking ${tsxFiles.length} TypeScript/React files...\n`);
 
