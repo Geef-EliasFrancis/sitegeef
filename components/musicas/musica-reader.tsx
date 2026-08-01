@@ -100,7 +100,7 @@ export function MusicaReader({
   const publicLyricsPanelRef = useRef<HTMLElement | null>(null);
   const [viewMode, setViewMode] = useState<"letra" | "cifra">("letra");
   const [pipExpanded, setPipExpanded] = useState(false);
-  const [pipHidden, setPipHidden] = useState(false);
+  const [pipHidden, setPipHidden] = useState(true);
   const [viewport, setViewport] = useState(() => ({
     width: 1366,
     height: 768,
@@ -595,6 +595,17 @@ export function MusicaReader({
                 title="Imprimir música"
               >
                 <IconPrinter size={18} />
+              </button>
+            ) : null}
+            {!isDisplay && hasMedia ? (
+              <button
+                type="button"
+                onClick={() => setPipHidden((hidden) => !hidden)}
+                className="button button-secondary musica-icon-button"
+                aria-label={pipHidden ? "Exibir clipe" : "Ocultar clipe"}
+                title={pipHidden ? "Exibir clipe" : "Ocultar clipe"}
+              >
+                {pipHidden ? "▶" : "■"}
               </button>
             ) : null}
             {!isDisplay && showLiveAction ? (
