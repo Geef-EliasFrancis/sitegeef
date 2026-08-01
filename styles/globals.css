@@ -1604,6 +1604,10 @@ body.musica-display-route .site-shell {
   padding-bottom: clamp(0.5rem, calc(1.15rem * var(--display-fit-scale, 1)), 1.4rem);
 }
 
+.musica-display-screen--live .musica-display-floating-controls {
+  display: none;
+}
+
 .musica-display-screen--live .musica-display-body-16x9 {
   height: auto;
   min-height: 0;

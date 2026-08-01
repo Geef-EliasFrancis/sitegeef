@@ -219,6 +219,9 @@ export function MusicaReader({
 
     if (isFullDisplay) {
       columns = Math.min(columns, 3);
+      if (partesVisiveis.length <= 4) {
+        columns = Math.min(columns, 2);
+      }
     }
 
     const bodyGap = isFullDisplay

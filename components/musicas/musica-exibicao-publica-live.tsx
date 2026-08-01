@@ -125,6 +125,7 @@ export function MusicaExibicaoPublicaLive({
     <MusicaReader
       musica={musica}
       logoSrc={logoSrc}
+      mode="exibicao"
       readerDensity="full"
       showBranding={false}
       showLiveAction={false}
