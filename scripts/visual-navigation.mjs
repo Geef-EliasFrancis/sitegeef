@@ -17,43 +17,49 @@ async function runDesktop(width, height) {
   const groupCount = await groups.count();
   if (groupCount !== 5) throw new Error(`Esperados 5 grupos no desktop; encontrados ${groupCount}`);
 
-  await groups.first().click();
-  const dropdown = page.locator(".site-context-navigation").first();
-  await dropdown.waitFor({ state: "visible" });
-  await page.waitForTimeout(300);
-  const dropdownBox = await dropdown.boundingBox();
-  if (!dropdownBox || dropdownBox.width < 180 || dropdownBox.height < 80) {
-    throw new Error(`Dropdown desktop não está visualmente aberto: ${JSON.stringify(dropdownBox)}`);
+  let submenuCount = 0;
+  for (let index = 0; index < groupCount; index += 1) {
+    await groups.nth(index).click();
+    const dropdown = page.locator(".site-context-navigation").first();
+    await dropdown.waitFor({ state: "visible" });
+    await page.waitForTimeout(120);
+    const dropdownBox = await dropdown.boundingBox();
+    if (!dropdownBox || dropdownBox.width < 180 || dropdownBox.height < 60) {
+      throw new Error(`Dropdown desktop não está visualmente aberto na aba ${index + 1}: ${JSON.stringify(dropdownBox)}`);
+    }
+    const currentSubmenuCount = await dropdown.locator("a").count();
+    if (currentSubmenuCount < 3) throw new Error(`Dropdown sem submenus suficientes na aba ${index + 1}: ${currentSubmenuCount}`);
+    submenuCount = Math.max(submenuCount, currentSubmenuCount);
+    const visualState = await page.evaluate(() => {
+      const ribbon = document.querySelector(".site-nav-primary");
+      const active = document.querySelector('.site-nav-group-trigger[aria-expanded="true"]');
+      const inactive = document.querySelector('.site-nav-group-trigger[aria-expanded="false"]');
+      if (!ribbon || !active || !inactive) return null;
+      const activeStyle = getComputedStyle(active);
+      const ribbonRail = getComputedStyle(ribbon, "::after");
+      return {
+        activeHeight: active.getBoundingClientRect().height,
+        inactiveHeight: inactive.getBoundingClientRect().height,
+        activeTop: active.getBoundingClientRect().top,
+        inactiveTop: inactive.getBoundingClientRect().top,
+        activeBackground: activeStyle.backgroundImage,
+        activeColor: activeStyle.color,
+        railBackground: ribbonRail.backgroundImage,
+        activeShadow: activeStyle.boxShadow,
+      };
+    });
+    if (!visualState) throw new Error(`Estado visual ausente na aba ${index + 1}`);
+    if (visualState.activeTop >= visualState.inactiveTop || visualState.activeHeight <= visualState.inactiveHeight) {
+      throw new Error(`Aba ativa não está elevada na aba ${index + 1}: ${JSON.stringify(visualState)}`);
+    }
+    if (visualState.activeBackground === "none" || visualState.activeColor === "rgb(28, 32, 31)") {
+      throw new Error(`Contraste insuficiente na aba ${index + 1}: ${JSON.stringify(visualState)}`);
+    }
+    if (visualState.railBackground === "none" || visualState.activeShadow === "none") {
+      throw new Error(`Acabamento visual ausente na aba ${index + 1}: ${JSON.stringify(visualState)}`);
+    }
   }
-  const submenuCount = await dropdown.locator("a").count();
-  if (submenuCount < 3) throw new Error(`Dropdown sem submenus suficientes: ${submenuCount}`);
-  const visualState = await page.evaluate(() => {
-    const ribbon = document.querySelector(".site-nav-primary");
-    const active = document.querySelector('.site-nav-group-trigger[aria-expanded="true"]');
-    const inactive = document.querySelector('.site-nav-group-trigger[aria-expanded="false"]');
-    if (!ribbon || !active || !inactive) return null;
-    const activeStyle = getComputedStyle(active);
-    const ribbonRail = getComputedStyle(ribbon, "::after");
-    return {
-      activeHeight: active.getBoundingClientRect().height,
-      inactiveHeight: inactive.getBoundingClientRect().height,
-      activeTop: active.getBoundingClientRect().top,
-      inactiveTop: inactive.getBoundingClientRect().top,
-      activeBackground: activeStyle.backgroundImage,
-      activeColor: activeStyle.color,
-      railBackground: ribbonRail.backgroundImage,
-      activeShadow: activeStyle.boxShadow,
-    };
-  });
-  if (!visualState) throw new Error("Estado visual da barra não foi encontrado");
-  if (visualState.activeTop >= visualState.inactiveTop) throw new Error(`Aba ativa não está elevada: ${JSON.stringify(visualState)}`);
-  if (visualState.activeBackground === "none" || visualState.activeColor === "rgb(28, 32, 31)") {
-    throw new Error(`Contraste insuficiente na aba ativa: ${JSON.stringify(visualState)}`);
-  }
-  if (visualState.railBackground === "none" || visualState.activeShadow === "none") {
-    throw new Error(`Acabamento visual ausente na barra: ${JSON.stringify(visualState)}`);
-  }
-  const animationName = await dropdown.evaluate((element) => getComputedStyle(element).animationName);
+  const animationName = await page.locator(".site-context-navigation").first().evaluate((element) => getComputedStyle(element).animationName);
   if (animationName === "none") throw new Error("Dropdown desktop sem animação");
   const headerBox = await page.locator(".site-header").boundingBox();
   await page.screenshot({

@@ -1261,10 +1261,16 @@
   .site-nav-group:nth-child(4) { z-index: 4; }
   .site-nav-group:nth-child(5) { z-index: 5; }
 
+  .site-nav-group.is-active {
+    z-index: 30;
+  }
+
   .site-nav-group-trigger,
   .site-nav-primary > .site-nav-contact-btn {
     width: calc(100% + 0.7rem);
+    height: 2.45rem;
     min-height: 2.45rem;
+    align-self: start;
     margin-left: 0;
     padding: 0.35rem 0.6rem;
     border: 0;
@@ -1293,12 +1299,13 @@
   }
 
   .site-nav-group-trigger[aria-expanded="true"] {
-    min-height: 2.72rem;
+    height: 2.63rem;
+    min-height: 2.63rem;
     margin-top: -0.18rem;
     border: 0;
     color: #ffffff;
     background: linear-gradient(180deg, #95c95b, #5d9e2d);
-    box-shadow: inset 1px 0 0 rgba(255, 255, 255, 0.58), inset 0 -0.2rem 0 rgba(37, 76, 19, 0.52), 0 0.55rem 0.8rem rgba(31, 55, 22, 0.35);
+    box-shadow: inset 1px 0 0 rgba(255, 255, 255, 0.5), inset 0 -1px 0 rgba(37, 76, 19, 0.58), 0 0.22rem 0.45rem rgba(31, 55, 22, 0.3);
     transform: none;
   }
 

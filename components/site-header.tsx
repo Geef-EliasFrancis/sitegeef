@@ -106,7 +106,7 @@ export function SiteHeader({
 
       <nav className="site-nav-primary" aria-label="Navegação principal">
         {navGroups.map((group) => (
-          <div key={group.key} className="site-nav-group">
+          <div key={group.key} className={`site-nav-group${openGroup === group.key ? " is-active" : ""}`}>
             <button
               type="button"
               className="site-nav-group-trigger"
