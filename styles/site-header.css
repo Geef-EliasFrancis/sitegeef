@@ -909,6 +909,10 @@
 
 /* Organização estrutural do menu: navegação primária segmentada + contexto em faixa própria. */
 @media (min-width: 768px) {
+  .site-nav-tabs {
+    display: contents;
+  }
+
   .site-header {
     border-radius: 8px;
   }
@@ -955,7 +959,8 @@
     clip-path: polygon(0 0, calc(100% - 1rem) 0, 100% 50%, calc(100% - 1rem) 100%, 0 100%);
   }
 
-  .site-nav-group-trigger[aria-expanded="true"] {
+  .site-nav-group-trigger[aria-expanded="true"],
+  .site-nav-group-trigger[data-state="active"] {
     background: var(--surface-primary-hover);
   }
 
@@ -1139,7 +1144,8 @@
     transform: translateY(-0.08rem) skewX(-8deg);
   }
 
-  .site-nav-group-trigger[aria-expanded="true"] {
+  .site-nav-group-trigger[aria-expanded="true"],
+  .site-nav-group-trigger[data-state="active"] {
     min-height: 2.6rem;
     border: 2px solid var(--uva-700, var(--border-light));
     background: var(--surface-primary-hover);
@@ -1298,7 +1304,8 @@
     transform: none;
   }
 
-  .site-nav-group-trigger[aria-expanded="true"] {
+  .site-nav-group-trigger[aria-expanded="true"],
+  .site-nav-group-trigger[data-state="active"] {
     height: 2.63rem;
     min-height: 2.63rem;
     margin-top: -0.18rem;

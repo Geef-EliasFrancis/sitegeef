@@ -32,8 +32,8 @@ async function runDesktop(width, height) {
     submenuCount = Math.max(submenuCount, currentSubmenuCount);
     const visualState = await page.evaluate(() => {
       const ribbon = document.querySelector(".site-nav-primary");
-      const active = document.querySelector('.site-nav-group-trigger[aria-expanded="true"]');
-      const inactive = document.querySelector('.site-nav-group-trigger[aria-expanded="false"]');
+      const active = document.querySelector('.site-nav-group-trigger[data-state="active"]');
+      const inactive = document.querySelector('.site-nav-group-trigger:not([data-state="active"])');
       if (!ribbon || !active || !inactive) return null;
       const activeStyle = getComputedStyle(active);
       const ribbonRail = getComputedStyle(ribbon, "::after");

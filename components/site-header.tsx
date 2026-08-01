@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import * as Tabs from "@radix-ui/react-tabs";
 import { site } from "@/lib/site-data";
 import { getLocalizedNavItems, type Locale } from "@/lib/multilingual";
 import { SiteHeaderActions } from "@/components/site-header-actions";
@@ -104,27 +105,36 @@ export function SiteHeader({
         </span>
       </Link>
 
-      <nav className="site-nav-primary" aria-label="Navegação principal">
-        {navGroups.map((group) => (
-          <div key={group.key} className={`site-nav-group${openGroup === group.key ? " is-active" : ""}`}>
-            <button
-              type="button"
-              className="site-nav-group-trigger"
-              aria-label={group.label}
-              aria-expanded={openGroup === group.key}
-              onClick={() => setOpenGroup(openGroup === group.key ? null : group.key)}
-            >
-              <span className="site-nav-group-icon" aria-hidden="true">{group.icon}</span>
-              <span className="site-nav-group-label-full">{group.label}</span>
-              <span className="site-nav-group-label-short" aria-hidden="true">{group.shortLabel}</span>
-            </button>
-          </div>
-        ))}
-        <Link href="/contato" className="site-nav-contact-btn" aria-label="Contato">
-          <span className="site-nav-group-icon" aria-hidden="true">✉</span>
-          <span>Contato</span>
-        </Link>
-      </nav>
+      <Tabs.Root
+        className="site-nav-tabs"
+        value={openGroup ?? undefined}
+        onValueChange={setOpenGroup}
+        orientation="horizontal"
+      >
+        <Tabs.List asChild>
+          <nav className="site-nav-primary" aria-label="Navegação principal">
+            {navGroups.map((group) => (
+              <div key={group.key} className={`site-nav-group${openGroup === group.key ? " is-active" : ""}`}>
+                <Tabs.Trigger asChild value={group.key}>
+                  <button
+                    type="button"
+                    className="site-nav-group-trigger"
+                    aria-label={group.label}
+                  >
+                    <span className="site-nav-group-icon" aria-hidden="true">{group.icon}</span>
+                    <span className="site-nav-group-label-full">{group.label}</span>
+                    <span className="site-nav-group-label-short" aria-hidden="true">{group.shortLabel}</span>
+                  </button>
+                </Tabs.Trigger>
+              </div>
+            ))}
+            <Link href="/contato" className="site-nav-contact-btn" aria-label="Contato">
+              <span className="site-nav-group-icon" aria-hidden="true">✉</span>
+              <span>Contato</span>
+            </Link>
+          </nav>
+        </Tabs.List>
+      </Tabs.Root>
 
       <button
         type="button"
