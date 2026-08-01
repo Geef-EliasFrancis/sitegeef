@@ -8,6 +8,7 @@
 - [Agent map JSON](../agent-map.json)
 - [Documento base do ERP](./baseerp.md)
 - [MCP Supabase GEEF](./MCP_SUPABASE_GEEF.md)
+- [Handoff de ativação completa do MCP Supabase](./SUPABASE_MCP_ACTIVATION_HANDOFF.md)
 - [Sistema de tema](../THEME_SYSTEM.md)
 - [Padrão de tema, contraste e identidade](./PADRAO_TEMA_CONTRASTE_IDENTIDADE.md)
 
@@ -25,6 +26,7 @@
 - [Mapa de modulos](./MODULE_MAP.md)
 - [Agent Playbook](./AGENT_PLAYBOOK.md)
 - [MCP Supabase GEEF](./MCP_SUPABASE_GEEF.md)
+- [Handoff de ativação completa do MCP Supabase](./SUPABASE_MCP_ACTIVATION_HANDOFF.md)
 - [Modelo relacional da instituicao](./INSTITUICAO_MODELO_RELACIONAL.md)
 - [Aplicar migracao](../APPLY_MIGRATION.md)
 - [Status de deploy](../DEPLOYMENT_STATUS.md)

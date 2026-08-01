@@ -1,5 +1,7 @@
 # MCP Supabase GEEF
 
+> Runbook completo para a próxima sessão: `docs/SUPABASE_MCP_ACTIVATION_HANDOFF.md`.
+
 Guia rapido para manter e recuperar o MCP do Supabase deste projeto.
 
 ## Objetivo
@@ -49,7 +51,7 @@ Arquivo local do projeto:
 
 ## Quando o MCP nao basta
 
-Se o servidor MCP estiver habilitado, mas a sessão não expuser uma ferramenta de escrita, use o token do projeto para operar pela Management API do Supabase:
+Se o servidor MCP estiver habilitado, mas a sessão não expuser uma ferramenta de escrita, pare e confirme se a tarefa realmente exige mutação. A Management API é fallback explícito, nunca automático:
 
 1. Reautentique o MCP com `codex mcp login supabase-geef`.
 2. Exporte `SUPABASE_ACCESS_TOKEN` a partir do token de acesso do projeto.
