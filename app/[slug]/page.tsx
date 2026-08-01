@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { ContentPageView } from "@/components/content-page";
 import { getLocalizedContentPage } from "@/lib/multilingual/content";
 import { getRequestLocale } from "@/lib/multilingual/server";
+import { AgendaView } from "@/components/agenda/agenda-view";
 
 type Params = {
   slug: string;
@@ -34,5 +35,5 @@ export default async function Page({ params }: { params: Promise<Params> }) {
     notFound();
   }
 
-  return <ContentPageView page={page} locale={locale} slug={slug} />;
+  return slug === "agenda" ? <AgendaView /> : <ContentPageView page={page} locale={locale} slug={slug} />;
 }
