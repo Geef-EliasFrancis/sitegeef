@@ -27,6 +27,32 @@ async function runDesktop(width, height) {
   }
   const submenuCount = await dropdown.locator("a").count();
   if (submenuCount < 3) throw new Error(`Dropdown sem submenus suficientes: ${submenuCount}`);
+  const visualState = await page.evaluate(() => {
+    const ribbon = document.querySelector(".site-nav-primary");
+    const active = document.querySelector('.site-nav-group-trigger[aria-expanded="true"]');
+    const inactive = document.querySelector('.site-nav-group-trigger[aria-expanded="false"]');
+    if (!ribbon || !active || !inactive) return null;
+    const activeStyle = getComputedStyle(active);
+    const ribbonRail = getComputedStyle(ribbon, "::after");
+    return {
+      activeHeight: active.getBoundingClientRect().height,
+      inactiveHeight: inactive.getBoundingClientRect().height,
+      activeTop: active.getBoundingClientRect().top,
+      inactiveTop: inactive.getBoundingClientRect().top,
+      activeBackground: activeStyle.backgroundImage,
+      activeColor: activeStyle.color,
+      railBackground: ribbonRail.backgroundImage,
+      activeShadow: activeStyle.boxShadow,
+    };
+  });
+  if (!visualState) throw new Error("Estado visual da barra não foi encontrado");
+  if (visualState.activeTop >= visualState.inactiveTop) throw new Error(`Aba ativa não está elevada: ${JSON.stringify(visualState)}`);
+  if (visualState.activeBackground === "none" || visualState.activeColor === "rgb(28, 32, 31)") {
+    throw new Error(`Contraste insuficiente na aba ativa: ${JSON.stringify(visualState)}`);
+  }
+  if (visualState.railBackground === "none" || visualState.activeShadow === "none") {
+    throw new Error(`Acabamento visual ausente na barra: ${JSON.stringify(visualState)}`);
+  }
   const animationName = await dropdown.evaluate((element) => getComputedStyle(element).animationName);
   if (animationName === "none") throw new Error("Dropdown desktop sem animação");
   const headerBox = await page.locator(".site-header").boundingBox();
