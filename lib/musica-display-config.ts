@@ -8,7 +8,7 @@ export type MusicaDisplayConfig = {
 
 const configs: Record<string, MusicaDisplayConfig> = {
   "A Canção Que a Gente Fez": { columns: 5, scaleNarrow: 0.45, scaleWide: 0.65 },
-  Aleluia: { columns: 3, scale: 0.98 },
+  Aleluia: { columns: 3, scale: 0.58 },
   "Quanta Luz": { columns: 2, scale: 1.35 },
 };
 
