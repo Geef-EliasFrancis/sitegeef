@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { getNomeMes, getProximaQuinta, formatarDataLonga } from "@/lib/escalas/datas";
 import { useAdminShellArea } from "@/components/admin/use-admin-shell-area";
 import type { AdminDashboardSummary } from "@/lib/admin/dashboard";
@@ -25,13 +24,15 @@ function SectionCard({
         <p>{description}</p>
       </div>
 
-      <div className="admin-dashboard-actions">
-        {actions.map((action) => (
-          <Link key={action.href} href={action.href} className="admin-btn admin-btn-secondary">
-            {action.label}
-          </Link>
-        ))}
-      </div>
+      {actions.length > 0 && (
+        <div className="admin-dashboard-actions">
+          {actions.map((action) => (
+            <a key={action.href} href={action.href} className="admin-btn admin-btn-secondary">
+              {action.label}
+            </a>
+          ))}
+        </div>
+      )}
     </div>
   );
 }
@@ -68,20 +69,13 @@ export function AdminDashboardWorkspace({ summary }: AdminDashboardWorkspaceProp
             </p>
           </div>
 
-          <div className="admin-actions">
-            <Link href="/admin/perfil" className="admin-btn admin-btn-primary">👤 Meu perfil</Link>
-            <Link href="/minha-area" className="admin-btn admin-btn-secondary">🧭 Minha área</Link>
-          </div>
         </section>
 
         <div className="admin-dashboard-hero">
           <SectionCard
             title="Sessão"
             description="Use esta visão para revisar seus dados públicos e sair quando terminar."
-            actions={[
-              { href: "/admin/perfil", label: "Abrir perfil" },
-              { href: "/logout", label: "Encerrar sessão" },
-            ]}
+            actions={[]}
           />
           <div className="admin-card admin-dashboard-panel admin-subtle-card">
             <span className="admin-inline-pill">Atalhos</span>
@@ -119,9 +113,7 @@ export function AdminDashboardWorkspace({ summary }: AdminDashboardWorkspaceProp
           <SectionCard
             title="Estrutura institucional"
             description="Abra os cadastros que mantêm a base organizacional da casa."
-            actions={[
-              { href: "/admin/instituicao/documentos", label: "Documentos" },
-            ]}
+            actions={[]}
           />
 
           <div className="admin-card admin-dashboard-panel admin-subtle-card">
@@ -152,21 +144,13 @@ export function AdminDashboardWorkspace({ summary }: AdminDashboardWorkspaceProp
             </p>
           </div>
 
-          <div className="admin-actions">
-            <Link href="/admin/reuniao-publica" className="admin-btn admin-btn-primary">📣 Avisos</Link>
-            <Link href="/admin/reuniao-publica/musicas" className="admin-btn admin-btn-secondary">🎵 Músicas</Link>
-          </div>
         </section>
 
         <div className="admin-dashboard-hero">
           <SectionCard
             title="Controle ao vivo"
             description="Use este espaço para acessar o catálogo, ajustar a tela pública e alterar a música exibida."
-            actions={[
-              { href: "/admin/reuniao-publica/musicas", label: "Músicas" },
-              { href: "/admin/reuniao-publica/musicas/sessoes", label: "Sessões" },
-              { href: "/musicas/exibir", label: "Exibição pública" },
-            ]}
+            actions={[]}
           />
 
           <div className="admin-card admin-dashboard-panel admin-subtle-card">
@@ -196,18 +180,13 @@ export function AdminDashboardWorkspace({ summary }: AdminDashboardWorkspaceProp
             <h1 className="admin-page-title">Cadastro e vínculo</h1>
             <p className="admin-page-subtitle">Tudo que depende de cadastro de tarefeiro, usuário e estrutura interna.</p>
           </div>
-          <div className="admin-actions">
-            <Link href="/admin/usuarios" className="admin-btn admin-btn-secondary">🔑 Usuários</Link>
-          </div>
         </section>
 
         <div className="admin-dashboard-hero">
           <SectionCard
             title="Cadastro central"
             description="Abra a base de tarefeiros, vínculos e departamentos."
-            actions={[
-              { href: "/admin/usuarios", label: "Usuários e permissões" },
-            ]}
+            actions={[]}
           />
           <div className="admin-card admin-dashboard-panel admin-subtle-card">
             <span className="admin-inline-pill">Resumo</span>
@@ -234,22 +213,13 @@ export function AdminDashboardWorkspace({ summary }: AdminDashboardWorkspaceProp
             <h1 className="admin-page-title">Gestão e direção</h1>
             <p className="admin-page-subtitle">Diretorias, cargos, assembleias e documentos institucionais.</p>
           </div>
-          <div className="admin-actions">
-            <Link href="/admin/governanca" className="admin-btn admin-btn-primary">🏛️ Abrir governança</Link>
-            <Link href="/admin/governanca/documentos" className="admin-btn admin-btn-secondary">📚 Documentos</Link>
-          </div>
         </section>
 
         <div className="admin-dashboard-hero">
           <SectionCard
             title="Estrutura institucional"
             description="Abra as áreas que formam a governança."
-            actions={[
-              { href: "/admin/governanca/diretorias", label: "Diretorias" },
-              { href: "/admin/governanca/cargos", label: "Cargos" },
-              { href: "/admin/governanca/assembleias", label: "Assembleias" },
-              { href: "/admin/governanca/documentos", label: "Documentos" },
-            ]}
+            actions={[]}
           />
           <div className="admin-card admin-dashboard-panel admin-subtle-card">
             <span className="admin-inline-pill">Leitura rápida</span>
@@ -269,22 +239,13 @@ export function AdminDashboardWorkspace({ summary }: AdminDashboardWorkspaceProp
             <h1 className="admin-page-title">LGPD e registros</h1>
             <p className="admin-page-subtitle">Modelos, pedidos do titular, consentimentos e leitura online da governança.</p>
           </div>
-          <div className="admin-actions">
-            <Link href="/admin/documentos" className="admin-btn admin-btn-primary">📄 Abrir documentos</Link>
-            <Link href="/admin/governanca/documentos" className="admin-btn admin-btn-secondary">📚 Governança</Link>
-          </div>
         </section>
 
         <div className="admin-dashboard-hero">
           <SectionCard
             title="LGPD"
             description="Abra a estrutura de documentos e auditoria."
-            actions={[
-              { href: "/admin/documentos", label: "Modelos" },
-              { href: "/admin/documentos/pedidos", label: "Pedidos" },
-              { href: "/admin/documentos/consentimentos", label: "Consentimentos" },
-              { href: "/admin/documentos/auditoria", label: "Auditoria" },
-            ]}
+            actions={[]}
           />
           <div className="admin-card admin-dashboard-panel admin-subtle-card">
             <span className="admin-inline-pill">Documentos vivos</span>
@@ -332,22 +293,13 @@ export function AdminDashboardWorkspace({ summary }: AdminDashboardWorkspaceProp
             <h1 className="admin-page-title">Rotinas do dia a dia</h1>
             <p className="admin-page-subtitle">Escalas, biblioteca, livraria, atendimento e comunicação.</p>
           </div>
-          <div className="admin-actions">
-            <Link href="/admin/operacao" className="admin-btn admin-btn-primary">📅 Abrir operação</Link>
-            <Link href="/admin/biblioteca" className="admin-btn admin-btn-secondary">📚 Biblioteca</Link>
-          </div>
         </section>
 
         <div className="admin-dashboard-hero">
           <SectionCard
             title="Atalhos operacionais"
             description="Abra o que precisa sem poluir a tela com blocos repetidos."
-            actions={[
-              { href: "/admin/escalas", label: "Escalas" },
-              { href: "/admin/biblioteca", label: "Biblioteca" },
-              { href: "/admin/livraria", label: "Livraria" },
-              { href: "/admin/comunicacao", label: "Comunicação" },
-            ]}
+            actions={[]}
           />
           <div className="admin-card admin-dashboard-panel admin-subtle-card">
             <span className="admin-inline-pill">Resumo</span>

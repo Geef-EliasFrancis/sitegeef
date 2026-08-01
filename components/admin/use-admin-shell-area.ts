@@ -48,6 +48,7 @@ export const ADMIN_SHELL_ROUTES: Record<AdminShellArea, string> = {
 };
 
 const OPERACAO_PREFIXES = [
+  "/admin/operacao",
   "/admin/atendimento",
   "/admin/biblioteca",
   "/admin/livraria",

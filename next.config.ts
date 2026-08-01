@@ -52,12 +52,58 @@ if (isProd) {
 
 const supabaseImageHost = getSupabaseImageHost();
 
+const contextualRouteRewrites = [
+  { source: "/admin/geef/instituicao", destination: "/admin/instituicao" },
+  { source: "/admin/geef/dados", destination: "/admin/instituicao/identificacao" },
+  { source: "/admin/geef/endereco", destination: "/admin/instituicao/endereco" },
+  { source: "/admin/geef/agenda", destination: "/admin/reunioes-virtuais" },
+  { source: "/admin/geef/departamentos", destination: "/admin/departamentos" },
+  { source: "/admin/geef/contas", destination: "/admin/instituicao/contas" },
+  { source: "/admin/pessoas/pessoas", destination: "/admin/pessoas" },
+  { source: "/admin/pessoas/funcoes", destination: "/admin/funcoes" },
+  { source: "/admin/reuniao-publica/avisos", destination: "/admin/reuniao-publica" },
+  { source: "/admin/reuniao-publica/musica", destination: "/admin/reuniao-publica/musicas" },
+  { source: "/admin/reuniao-publica/leitura", destination: "/leitor" },
+  { source: "/admin/reuniao-publica/palestra", destination: "/admin/funcoes/temas" },
+  { source: "/admin/reuniao-publica/prece", destination: "/admin/funcoes/temas?categoria=prece" },
+  { source: "/admin/sistema/observabilidade", destination: "/admin/observability" },
+  { source: "/admin/sistema/migrations", destination: "/admin/migrations" },
+  { source: "/admin/sistema/idiomas", destination: "/admin/idiomas" },
+  { source: "/admin/sistema/fix-usuarios", destination: "/admin/fix-usuarios" },
+  ...[
+    "atendimento",
+    "apse",
+    "biblioteca",
+    "comunicacao",
+    "escalas",
+    "estudos",
+    "evangelizacao",
+    "financeiro",
+    "juventude",
+    "livraria",
+    "mediunidade",
+    "notificacoes",
+    "patrimonio",
+    "planejamento",
+    "relatorios",
+    "reunioes-virtuais",
+  ].map((submenu) => ({
+    source: `/admin/operacao/${submenu}/:path*`,
+    destination: `/admin/${submenu}/:path*`,
+  })),
+];
+
 const nextConfig: NextConfig = {
   poweredByHeader: false,
   output: "standalone",
   serverExternalPackages: ["@supabase/supabase-js", "@supabase/ssr"],
   experimental: {
     devtoolSegmentExplorer: false,
+  },
+  async rewrites() {
+    return {
+      beforeFiles: contextualRouteRewrites,
+    };
   },
   images: {
     remotePatterns: supabaseImageHost

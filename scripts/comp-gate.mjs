@@ -22,6 +22,7 @@ const musicCatalogSource = fs.readFileSync('components/admin/musicas/musicas-cat
 const publicDisplaySource = fs.readFileSync('components/admin/musicas/musica-exibicao-publica-button.tsx', 'utf8');
 const adminHeaderSource = fs.readFileSync('components/admin/admin-header.tsx', 'utf8');
 const shellAreaSource = fs.readFileSync('components/admin/use-admin-shell-area.ts', 'utf8');
+const nextConfigSource = fs.readFileSync('next.config.ts', 'utf8');
 const dashboardSource = fs.readFileSync('components/admin/admin-dashboard-workspace.tsx', 'utf8');
 const shellTabsBlock = adminCss.match(/\.admin-shell-tabs\s*\{[^}]*\}/s)?.[0] ?? '';
 const responsiveContract = [
@@ -45,6 +46,8 @@ const responsiveContract = [
   ['submenu GEEF possui instituição e seis telas', ['Início', 'Instituição', 'Dados', 'Endereço', 'Agenda', 'Departamentos', 'Contas'].every((label) => adminHeaderSource.includes(`label: '${label}'`)) && adminHeaderSource.includes("geef: [")],
   ['submenu Tarefeiros possui início pessoas e funções', ['Início', 'Pessoas', 'Funções'].every((label) => adminHeaderSource.includes(`label: '${label}'`)) && adminHeaderSource.includes("pessoas: [") && fs.existsSync('app/admin/pessoas/inicio/page.tsx')],
   ['submenu Sistema possui cinco telas', ['Início', 'Observabilidade', 'Migrações', 'Idiomas', 'Fix Usuários'].every((label) => adminHeaderSource.includes(`label: '${label}'`)) && adminHeaderSource.includes("sistema: [")],
+  ['contextos administrativos possuem submenu', ['painel: [', 'perfil: [', 'geef: [', 'pessoas: [', "'reuniao-publica': [", 'governanca: [', 'documentos: [', 'operacao: [', 'sistema: ['].every((context) => adminHeaderSource.includes(context))],
+  ['rotas canônicas seguem menu e submenu', nextConfigSource.includes('contextualRouteRewrites') && nextConfigSource.includes('/admin/geef/instituicao') && nextConfigSource.includes('/admin/pessoas/funcoes') && nextConfigSource.includes('/admin/operacao/${submenu}') && nextConfigSource.includes('/admin/sistema/observabilidade')],
   ['funções pertencem à área Tarefeiros', shellAreaSource.includes('normalizedPath.startsWith("/admin/funcoes")') && shellAreaSource.includes('return "pessoas"') && !shellAreaSource.match(/normalizedPath\.startsWith\("\/admin\/funcoes"\)[\s\S]{0,180}return "geef"/)],
   ['atalhos GEEF foram centralizados', !adminSidebarSource.includes('href="/admin/instituicao/identificacao"') && !adminSidebarSource.includes('href="/admin/instituicao/endereco"') && !adminSidebarSource.includes('href="/admin/instituicao/contas"') && !adminSidebarSource.includes('href="/admin/departamentos"') && !dashboardSource.includes('href: "/admin/departamentos"')],
   ['atalhos Sistema saíram dos corpos', !adminSidebarSource.includes('href="/admin/migrations"') && !adminSidebarSource.includes('href="/admin/fix-usuarios"') && !dashboardSource.includes('href: "/admin/observability"')],
