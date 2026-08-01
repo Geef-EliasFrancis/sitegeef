@@ -1,7 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { createClient as createSupabaseClient } from "@/lib/supabase/client";
+import { useState } from "react";
 import type { Musica, MusicaSessao } from "@/lib/musicas";
 import { MusicaReader } from "./musica-reader";
 
@@ -26,85 +25,6 @@ export function MusicaExibicaoPublicaLive({
   const [data, setData] = useState<SessaoResponse | null>(
     initialSessao ? { sessao: initialSessao, musica: initialMusica } : null,
   );
-
-  useEffect(() => {
-    let cancelled = false;
-    const supabase = createSupabaseClient();
-    const intervalId = window.setInterval(() => {
-      void refresh();
-    }, 3000);
-
-    async function refresh() {
-      try {
-        const response = await fetch(pollUrl, {
-          cache: "no-store",
-        });
-
-        if (!response.ok) {
-          if (!cancelled && response.status === 404) {
-            setData(null);
-          }
-          return;
-        }
-
-        const nextData = (await response.json()) as SessaoResponse;
-        if (!cancelled) {
-          setData((current) => {
-            const currentSession = current?.sessao;
-            const nextSession = nextData.sessao;
-            const sameSessionState =
-              currentSession?.codigo_pareamento === nextSession?.codigo_pareamento &&
-              currentSession?.musica_id === nextSession?.musica_id &&
-              currentSession?.ativo === nextSession?.ativo &&
-              current?.musica?.id === nextData.musica?.id;
-
-            return sameSessionState ? current : nextData;
-          });
-        }
-      } catch (error) {
-        console.error("Erro ao atualizar exibição pública:", error);
-      }
-    }
-
-    const channel = supabase
-      .channel("musica-exibicao-publica-reader")
-      .on(
-        "postgres_changes",
-        {
-          event: "*",
-          schema: "public",
-          table: "musica_sessoes",
-          filter: "codigo_pareamento=eq.EXIBICAO_PUBLICA",
-        },
-        () => {
-          void refresh();
-        },
-      )
-      .subscribe((status) => {
-        if (status === "SUBSCRIBED") {
-          void refresh();
-        }
-      });
-
-    void refresh();
-
-    const handleVisibilityChange = () => {
-      if (!document.hidden) {
-        void refresh();
-      }
-    };
-
-    document.addEventListener("visibilitychange", handleVisibilityChange);
-    window.addEventListener("focus", handleVisibilityChange);
-
-    return () => {
-      cancelled = true;
-      window.clearInterval(intervalId);
-      document.removeEventListener("visibilitychange", handleVisibilityChange);
-      window.removeEventListener("focus", handleVisibilityChange);
-      void supabase.removeChannel(channel);
-    };
-  }, [pollUrl]);
 
   const sessao = data?.sessao ?? null;
   const musica = data?.musica ?? null;
