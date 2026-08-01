@@ -61,3 +61,9 @@ Reduzir ruído no checkout, separar código-fonte de artefatos gerados, organiza
 - Migrações SQL, arquivos de configuração e documentos de operação Supabase.
 - Qualquer arquivo cujo único uso seja uma instrução manual ou recuperação de incidente.
 
+## Progresso
+
+- Fase 1 concluída em `d12ae9a`: inventário e plano versionados.
+- Fase 2 concluída em `61897ed`: screenshots/resultados gerados removidos do versionamento, auditorias históricas movidas para `docs/archive/audits/` e regras de ignore adicionadas.
+- Validação da fase 2: type-check, 66 testes, comp gate, gate responsivo e `git diff --check` aprovados.
+- Fase 3 em aberto: reorganização adicional de documentação e revisão individual dos scripts manuais.
