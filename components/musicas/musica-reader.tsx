@@ -406,11 +406,10 @@ export function MusicaReader({
       verseMinHeight,
     };
   }, [displayDensity, musica.titulo, partesVisiveis, viewport.height, viewport.width]);
-  const displayColumns = useMemo(() => {
+  const displayRows = useMemo(() => {
     const columns = Math.max(1, displayMetrics.columns);
-    const perColumn = Math.ceil(partesVisiveis.length / columns);
-    return Array.from({ length: columns }, (_, columnIndex) =>
-      partesVisiveis.slice(columnIndex * perColumn, (columnIndex + 1) * perColumn),
+    return Array.from({ length: Math.ceil(partesVisiveis.length / columns) }, (_, rowIndex) =>
+      partesVisiveis.slice(rowIndex * columns, (rowIndex + 1) * columns),
     );
   }, [displayMetrics.columns, partesVisiveis]);
 
@@ -561,10 +560,10 @@ export function MusicaReader({
         </div>
 
         <div className="musica-display-body-16x9">
-          {displayColumns.map((column, columnIndex) => (
-            <div className="musica-display-column" key={`${musica.id}-column-${columnIndex}`}>
-              {column.map((parte, localIndex) => {
-                const index = columnIndex * Math.ceil(partesVisiveis.length / displayMetrics.columns) + localIndex;
+          {displayRows.map((row, rowIndex) => (
+            <div className="musica-display-row" key={`${musica.id}-row-${rowIndex}`}>
+              {row.map((parte, columnIndex) => {
+                const index = rowIndex * displayMetrics.columns + columnIndex;
                 const tipoLabel = formatParteTipoLabel(parte.tipo);
 
                 return (

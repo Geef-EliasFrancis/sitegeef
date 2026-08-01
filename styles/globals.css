@@ -1622,17 +1622,23 @@ body.musica-display-route * {
   flex: none;
   overflow: hidden;
   padding-bottom: 0;
-  display: grid;
-  grid-template-columns: repeat(var(--display-columns, 3), minmax(0, 1fr));
-  grid-template-rows: none;
-  grid-auto-flow: initial;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(0.45rem, 0.8vw, 0.85rem);
   align-content: start;
   column-count: initial;
   column-gap: var(--display-body-gap, 0.95rem);
 }
 
+.musica-display-row {
+  display: grid;
+  grid-template-columns: repeat(var(--display-columns, 3), minmax(0, 1fr));
+  gap: var(--display-body-gap, 0.95rem);
+  align-items: start;
+}
+
 .musica-display-column {
-  display: flex;
+  display: none;
   min-width: 0;
   flex-direction: column;
   gap: clamp(0.35rem, 0.7vw, 0.75rem);
