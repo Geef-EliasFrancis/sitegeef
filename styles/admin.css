@@ -590,6 +590,87 @@
   text-align: center;
 }
 
+.admin-service-status {
+  margin-bottom: 2rem;
+  border-left: 4px solid var(--text-info);
+  background: var(--status-info-bg);
+}
+
+.admin-service-note {
+  margin-bottom: 1rem;
+  padding: 0.9rem 1rem;
+  border-radius: 0.75rem;
+  background: var(--surface-primary);
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+.admin-service-summary {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 2rem;
+}
+
+.admin-meta-label {
+  margin: 0.5rem 0;
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+  text-transform: uppercase;
+}
+
+.admin-meta-value {
+  margin: 0.5rem 0;
+  font-size: 0.95rem;
+}
+
+.admin-form-grid-spaced {
+  margin-bottom: 1rem;
+}
+
+.admin-form-actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.admin-timeline {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.admin-timeline-item {
+  display: flex;
+  gap: 1rem;
+}
+
+.admin-timeline-dot {
+  flex: 0 0 0.75rem;
+  width: 0.75rem;
+  height: 0.75rem;
+  margin-top: 0.5rem;
+  border-radius: 50%;
+  background: var(--text-secondary);
+}
+
+.admin-timeline-dot.is-active {
+  background: var(--uva);
+}
+
+.admin-timeline-title,
+.admin-timeline-date {
+  margin: 0.5rem 0;
+}
+
+.admin-timeline-title {
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.admin-timeline-date {
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+}
+
 .admin-status-chip--ativo {
   background: var(--status-success-bg);
   color: var(--status-success-text);
@@ -610,6 +691,11 @@
   .admin-inline-form-member,
   .admin-inline-form-meeting {
     grid-template-columns: 1fr;
+  }
+
+  .admin-service-summary {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
   }
 }
 

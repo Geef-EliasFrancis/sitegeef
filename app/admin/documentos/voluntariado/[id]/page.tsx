@@ -56,7 +56,7 @@ async function EditServicoContent({ id }: { id: string }) {
         </div>
 
         <div className="admin-card">
-          <p style={{ margin: 0, color: 'var(--muted)' }}>
+          <p className="admin-empty-state">
             O serviço pode ter sido removido ou você não tem acesso.
           </p>
         </div>
@@ -72,18 +72,13 @@ async function EditServicoContent({ id }: { id: string }) {
           <h1 className="admin-page-title">Serviço Voluntário</h1>
           <p className="admin-page-subtitle">{servico.pessoas?.nome} — {servico.departamentos?.nome}</p>
         </div>
-        <div style={{ display: 'flex', gap: '0.5rem' }}>
+        <div className="admin-header-actions">
           {servico.status === 'ativo' && (
-            <form action={(formData) => handleEncerrar(id, formData)} style={{ display: 'inline' }}>
+            <form action={(formData) => handleEncerrar(id, formData)} className="admin-inline-form-reset">
               <input type="hidden" name="data_fim" value={new Date().toISOString().split('T')[0]} />
               <button
                 type="submit"
-                className="admin-btn"
-                style={{
-                  backgroundColor: 'rgba(239, 68, 68, 0.1)',
-                  color: '#ef4444',
-                  border: '1px solid rgba(239, 68, 68, 0.3)',
-                }}
+                className="admin-btn admin-btn-danger"
                 onClick={(e) => {
                   if (!confirm('Tem certeza que deseja encerrar este serviço?')) {
                     e.preventDefault();
@@ -98,30 +93,23 @@ async function EditServicoContent({ id }: { id: string }) {
       </div>
 
       {/* Status Box */}
-      <div className="admin-card" style={{ marginBottom: '2rem', backgroundColor: 'rgba(59, 130, 246, 0.05)', borderLeft: '4px solid var(--primary)' }}>
-        <div style={{ marginBottom: '1rem', padding: '0.9rem 1rem', borderRadius: '0.75rem', background: 'rgba(138, 0, 90, 0.06)', color: 'var(--muted)', lineHeight: 1.6 }}>
+      <div className="admin-card admin-service-status">
+        <div className="admin-service-note">
           Mantenha o vínculo claro. Se o serviço terminar, registre o fim e preserve o histórico.
         </div>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '2rem' }}>
+        <div className="admin-service-summary">
           <div>
-            <p style={{ margin: '0.5rem 0', fontSize: '0.85rem', color: 'var(--muted)', textTransform: 'uppercase' }}>Departamento</p>
-            <p style={{ margin: '0.5rem 0', fontSize: '0.95rem', fontWeight: 500 }}>{servico.departamentos?.nome}</p>
+            <p className="admin-meta-label">Departamento</p>
+            <p className="admin-meta-value admin-cell-emphasis">{servico.departamentos?.nome}</p>
           </div>
           <div>
-            <p style={{ margin: '0.5rem 0', fontSize: '0.85rem', color: 'var(--muted)', textTransform: 'uppercase' }}>Serviço</p>
-            <p style={{ margin: '0.5rem 0', fontSize: '0.95rem' }}>{servico.servico}</p>
+            <p className="admin-meta-label">Serviço</p>
+            <p className="admin-meta-value">{servico.servico}</p>
           </div>
           <div>
-            <p style={{ margin: '0.5rem 0', fontSize: '0.85rem', color: 'var(--muted)', textTransform: 'uppercase' }}>Status</p>
-            <p style={{ margin: '0.5rem 0' }}>
-              <span style={{
-                display: 'inline-block',
-                padding: '0.35rem 0.7rem',
-                backgroundColor: servico.status === 'ativo' ? 'rgba(34, 197, 94, 0.1)' : 'rgba(107, 114, 128, 0.1)',
-                color: servico.status === 'ativo' ? '#22c55e' : '#6b7280',
-                borderRadius: '0.4rem',
-                fontSize: '0.85rem',
-              }}>
+            <p className="admin-meta-label">Status</p>
+            <p className="admin-meta-value">
+              <span className={`admin-status-chip admin-status-chip--${servico.status}`} data-status={servico.status}>
                 {servico.status}
               </span>
             </p>
@@ -131,8 +119,8 @@ async function EditServicoContent({ id }: { id: string }) {
 
       {/* Edit Form */}
       {servico.status === 'ativo' && (
-        <div className="admin-card" style={{ maxWidth: '700px', margin: '0 auto', marginBottom: '2rem' }}>
-          <h2 style={{ margin: '0 0 1.5rem', fontSize: '1.1rem', color: 'var(--text)' }}>Editar Informações</h2>
+        <div className="admin-card admin-detail-card admin-detail-card-narrow">
+          <h2 className="admin-section-title">Editar Informações</h2>
 
           <form action={(formData) => handleUpdate(id, formData)}>
             <div className="admin-form-group">
@@ -153,7 +141,7 @@ async function EditServicoContent({ id }: { id: string }) {
               />
             </div>
 
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginBottom: '1rem' }}>
+            <div className="admin-form-grid admin-form-grid-two admin-form-grid-spaced">
               <div className="admin-form-group">
                 <label>Data de Início</label>
                 <input
@@ -181,7 +169,7 @@ async function EditServicoContent({ id }: { id: string }) {
               />
             </div>
 
-            <div style={{ display: 'flex', gap: '1rem', marginTop: '2rem' }}>
+            <div className="admin-form-actions">
               <button type="submit" className="admin-btn admin-btn-primary">
                 ✅ Salvar
               </button>
@@ -194,26 +182,26 @@ async function EditServicoContent({ id }: { id: string }) {
       )}
 
       {/* Timeline */}
-      <div className="admin-card" style={{ maxWidth: '700px', margin: '0 auto' }}>
-        <h2 style={{ margin: '0 0 1.5rem', fontSize: '1.1rem', color: 'var(--text)' }}>Histórico</h2>
+      <div className="admin-card admin-detail-card admin-detail-card-narrow">
+        <h2 className="admin-section-title">Histórico</h2>
 
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-          <div style={{ display: 'flex', gap: '1rem' }}>
-            <div style={{ width: '12px', height: '12px', backgroundColor: 'var(--primary)', borderRadius: '50%', marginTop: '0.5rem', flexShrink: 0 }} />
+        <div className="admin-timeline">
+          <div className="admin-timeline-item">
+            <div className="admin-timeline-dot is-active" />
             <div>
-              <p style={{ margin: '0.5rem 0', fontSize: '0.9rem', fontWeight: 500 }}>Serviço iniciado</p>
-              <p style={{ margin: '0.5rem 0', fontSize: '0.85rem', color: 'var(--muted)' }}>
+              <p className="admin-timeline-title">Serviço iniciado</p>
+              <p className="admin-timeline-date">
                 {new Date(servico.data_inicio + 'T00:00:00').toLocaleDateString('pt-BR')}
               </p>
             </div>
           </div>
 
           {servico.data_fim && (
-            <div style={{ display: 'flex', gap: '1rem' }}>
-              <div style={{ width: '12px', height: '12px', backgroundColor: '#6b7280', borderRadius: '50%', marginTop: '0.5rem', flexShrink: 0 }} />
+            <div className="admin-timeline-item">
+              <div className="admin-timeline-dot" />
               <div>
-                <p style={{ margin: '0.5rem 0', fontSize: '0.9rem', fontWeight: 500 }}>Serviço finalizado</p>
-                <p style={{ margin: '0.5rem 0', fontSize: '0.85rem', color: 'var(--muted)' }}>
+                <p className="admin-timeline-title">Serviço finalizado</p>
+                <p className="admin-timeline-date">
                   {new Date(servico.data_fim + 'T00:00:00').toLocaleDateString('pt-BR')}
                 </p>
               </div>
@@ -228,7 +216,7 @@ async function EditServicoContent({ id }: { id: string }) {
 export default async function EditServicoPage({ params }: { params: Promise<any> }) {
   const resolvedParams = await params;
   return (
-    <Suspense fallback={<div style={{ padding: '2rem', textAlign: 'center' }}>Carregando...</div>}>
+    <Suspense fallback={<div className="admin-loading-state">Carregando...</div>}>
       <EditServicoContent id={resolvedParams.id} />
     </Suspense>
   );
