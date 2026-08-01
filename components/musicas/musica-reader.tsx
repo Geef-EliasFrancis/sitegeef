@@ -493,7 +493,7 @@ export function MusicaReader({
     return (
       <main
         ref={displayScreenRef}
-        className="musica-display-screen musica-display-screen--reader musica-display-screen--live"
+        className={`musica-display-screen musica-display-screen--reader musica-display-screen--live ${getMusicaDisplayConfig(musica.titulo).fillRows ? "is-fill-rows" : ""}`}
       >
         <div className="musica-display-command-bar" role="toolbar" aria-label="Comandos da exibição">
           <Link

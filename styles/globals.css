@@ -1632,6 +1632,10 @@ body.musica-display-route * {
   column-gap: var(--display-body-gap, 0.95rem);
 }
 
+.musica-display-screen--live.is-fill-rows .musica-display-body-16x9 {
+  grid-template-rows: repeat(var(--display-rows, 2), minmax(0, 1fr));
+}
+
 .musica-display-screen--live .musica-display-header-16x9 {
   border-bottom-color: rgba(255, 255, 255, 0.2);
 }
