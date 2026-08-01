@@ -46,10 +46,106 @@
   display: none;
 }
 
+/* Shell responsivo: rail no desktop e drawer sobreposto no mobile. */
+.admin-navigation {
+  position: relative;
+  flex: 0 0 clamp(250px, 20vw, 290px);
+  min-width: 0;
+  transition: flex-basis 180ms ease;
+  z-index: 50;
+}
+
+.admin-navigation.is-collapsed {
+  flex-basis: 2.8rem;
+}
+
+.admin-navigation .admin-sidebar {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.admin-navigation.is-collapsed .admin-sidebar {
+  display: none;
+}
+
+.admin-navigation-toggle {
+  position: absolute;
+  top: 0.9rem;
+  right: -0.8rem;
+  z-index: 132;
+  display: grid;
+  place-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  padding: 0;
+  border: 1px solid rgba(138, 0, 90, 0.18);
+  border-radius: 999px;
+  background: #fff;
+  color: var(--uva-700);
+  font: inherit;
+  font-size: 1.25rem;
+  line-height: 1;
+  font-weight: 900;
+  cursor: pointer;
+  box-shadow: 0 8px 22px rgba(42, 23, 51, 0.14);
+  transition: transform 160ms ease, box-shadow 160ms ease;
+}
+
+.admin-navigation-toggle:hover,
+.admin-navigation-toggle:focus-visible {
+  transform: translateY(-1px);
+  box-shadow: 0 12px 28px rgba(42, 23, 51, 0.2);
+  outline: 3px solid rgba(138, 0, 90, 0.14);
+  outline-offset: 2px;
+}
+
+.admin-navigation-scrim {
+  display: none;
+}
+
 @media (max-width: 767px) {
-  .admin-mobile-nav-toggle {
-    position: relative;
+  .admin-navigation {
+    flex: 0 0 0;
+    width: 0;
+    min-height: 0;
+  }
+
+  .admin-navigation-toggle {
+    position: fixed;
+    top: 5.7rem;
+    right: 0.9rem;
+    width: 2.75rem;
+    height: 2.75rem;
+  }
+
+  .admin-navigation .admin-sidebar,
+  .admin-navigation.is-collapsed .admin-sidebar {
+    display: none;
+    position: fixed;
+    top: 5.35rem;
+    left: 0.65rem;
+    width: min(18rem, calc(100vw - 1.3rem));
+    max-height: calc(100vh - 6rem);
+    margin: 0;
+    z-index: 131;
+    box-shadow: 0 24px 60px rgba(42, 23, 51, 0.25);
+  }
+
+  .admin-navigation.is-open .admin-sidebar {
+    display: block;
+  }
+
+  .admin-navigation-scrim {
+    display: block;
+    position: fixed;
+    inset: 0;
     z-index: 130;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    border: 0;
+    background: rgba(32, 18, 39, 0.18);
+    cursor: pointer;
   }
 }
 

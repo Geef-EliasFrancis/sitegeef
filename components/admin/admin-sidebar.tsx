@@ -85,6 +85,17 @@ export function AdminSidebar({ usuarioSistema }: AdminSidebarProps) {
     }
   }, [pathname]);
 
+  useEffect(() => {
+    if (!mobileOpen) return;
+
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setMobileOpen(false);
+    };
+
+    document.addEventListener('keydown', handleEscape);
+    return () => document.removeEventListener('keydown', handleEscape);
+  }, [mobileOpen]);
+
   const toggleGroup = (groupName: string) => {
     const newState = { ...expandedGroups, [groupName]: !expandedGroups[groupName] };
     setExpandedGroups(newState);
@@ -126,18 +137,27 @@ export function AdminSidebar({ usuarioSistema }: AdminSidebarProps) {
   };
 
   return (
-    <>
+    <div className={`admin-navigation ${mobileOpen ? 'is-open' : 'is-collapsed'}`}>
       <button
         type="button"
-        className="admin-mobile-nav-toggle"
+        className="admin-navigation-toggle"
         aria-expanded={mobileOpen}
         aria-controls="admin-navigation"
-        title={mobileOpen ? 'Recolher menu lateral' : 'Abrir menu lateral'}
+        aria-label={mobileOpen ? 'Recolher navegação' : 'Abrir navegação'}
+        title={mobileOpen ? 'Recolher navegação' : 'Abrir navegação'}
         onClick={() => setMobileOpen((open) => !open)}
       >
         <span aria-hidden="true">{mobileOpen ? '‹' : '☰'}</span>
       </button>
-    <aside id="admin-navigation" className={`admin-sidebar ${mobileOpen ? 'is-mobile-open' : 'is-collapsed'}`}>
+      {mobileOpen && (
+        <button
+          type="button"
+          className="admin-navigation-scrim"
+          aria-label="Fechar navegação"
+          onClick={() => setMobileOpen(false)}
+        />
+      )}
+    <aside id="admin-navigation" className="admin-sidebar">
       <nav className="admin-nav">
         {/* Dashboard */}
         {showDashboardArea && (
@@ -425,6 +445,6 @@ export function AdminSidebar({ usuarioSistema }: AdminSidebarProps) {
         )}
       </nav>
     </aside>
-    </>
+    </div>
   );
 }
