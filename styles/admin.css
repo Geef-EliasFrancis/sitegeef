@@ -1791,6 +1791,10 @@
     padding-inline: 0.8rem;
   }
 
+  .admin-header .admin-brand {
+    display: none;
+  }
+
   .admin-card-grid {
     grid-template-columns: 1fr;
   }

@@ -35,7 +35,7 @@ const responsiveContract = [
   ['catálogo móvel reduz tom e status', adminCss.includes('.musica-catalog-table th:nth-child(3)') && adminCss.includes('.musica-catalog-table th:nth-child(5)')],
   ['catálogo móvel usa ações por ícone', publicDisplaySource.includes('IconBroadcast') && adminCss.includes('.musica-public-toggle-button span')],
   ['top menu móvel tem ícones e tooltip', adminHeaderSource.includes('admin-shell-tab-icon') && adminHeaderSource.includes('title={`${item.label}: ${item.note}`}') && adminCss.includes('.admin-shell-tab-label')],
-  ['top menu móvel compartilha linha com usuário', adminCss.includes('grid-template-columns: minmax(0, 1fr) auto') && adminCss.includes('.admin-header-right') && adminCss.includes('.admin-header .admin-brand')],
+  ['top menu compartilha linha com usuário', adminCss.includes('grid-template-columns: minmax(0, 1fr) auto') && adminCss.includes('.admin-header-right') && adminCss.includes('.admin-header .admin-brand')],
 ];
 
 for (const [name, passed] of responsiveContract) console.log(`${passed ? '✓' : '✗'} contrato: ${name}`);
