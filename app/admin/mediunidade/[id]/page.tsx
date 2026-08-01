@@ -91,8 +91,8 @@ async function GrupoContent({ id }: { id: string }) {
         </div>
       </div>
 
-      <div className="admin-card" style={{ maxWidth: '700px', margin: '0 auto', marginBottom: '2rem' }}>
-        <h2 style={{ margin: '0 0 1.5rem', fontSize: '1rem', fontWeight: 600 }}>Editar Grupo</h2>
+      <div className="admin-card admin-detail-card admin-detail-card-narrow">
+        <h2 className="admin-section-title">Editar Grupo</h2>
         <form action={(formData) => handleSubmitGrupo(id, formData)}>
           <div className="admin-form-group">
             <label>Nome *</label>
@@ -104,22 +104,13 @@ async function GrupoContent({ id }: { id: string }) {
             />
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+          <div className="admin-form-grid admin-form-grid-two">
             <div className="admin-form-group">
               <label>Coordenador</label>
               <select
                 name="coordenador_id"
                 defaultValue={grupo.coordenador_id || ''}
-                style={{
-                  width: '100%',
-                  padding: '0.65rem 0.85rem',
-                  border: '1px solid var(--admin-border)',
-                  borderRadius: '0.6rem',
-                  fontFamily: 'var(--font-body)',
-                  fontSize: '0.95rem',
-                  color: 'var(--text)',
-                  backgroundColor: '#fff',
-                }}
+                className="admin-form-control"
               >
                 <option value="">Selecione um coordenador</option>
                 {pessoas.map((pessoa: any) => (
@@ -135,16 +126,7 @@ async function GrupoContent({ id }: { id: string }) {
               <select
                 name="status"
                 defaultValue={grupo.status || 'ativo'}
-                style={{
-                  width: '100%',
-                  padding: '0.65rem 0.85rem',
-                  border: '1px solid var(--admin-border)',
-                  borderRadius: '0.6rem',
-                  fontFamily: 'var(--font-body)',
-                  fontSize: '0.95rem',
-                  color: 'var(--text)',
-                  backgroundColor: '#fff',
-                }}
+                className="admin-form-control"
               >
                 <option value="ativo">✓ Ativo</option>
                 <option value="inativo">✕ Inativo</option>
@@ -158,31 +140,18 @@ async function GrupoContent({ id }: { id: string }) {
         </form>
       </div>
 
-      <div className="admin-card" style={{ marginBottom: '2rem' }}>
-        <h2 style={{ margin: '0 0 1.5rem', fontSize: '1.1rem', fontWeight: 600 }}>Membros ({membros.length})</h2>
+      <div className="admin-card admin-detail-card">
+        <h2 className="admin-section-title">Membros ({membros.length})</h2>
 
-        <div style={{
-          padding: '1rem',
-          backgroundColor: 'rgba(59, 130, 246, 0.05)',
-          borderRadius: '0.6rem',
-          marginBottom: '1.5rem',
-          borderLeft: '4px solid #3b82f6',
-        }}>
-          <h3 style={{ margin: '0 0 1rem', fontSize: '0.95rem', fontWeight: 600 }}>Adicionar Membro</h3>
-          <form action={(formData) => handleAdicionarMembro(id, formData)} style={{ display: 'grid', gridTemplateColumns: '1fr auto', gap: '0.75rem' }}>
+        <div className="admin-inline-form-panel">
+          <h3 className="admin-subsection-title">Adicionar Membro</h3>
+          <form action={(formData) => handleAdicionarMembro(id, formData)} className="admin-inline-form admin-inline-form-member">
             <div>
-              <label style={{ fontSize: '0.85rem', display: 'block', marginBottom: '0.25rem' }}>Pessoa</label>
+              <label className="admin-inline-label">Pessoa</label>
               <select
                 name="pessoa_id"
                 required
-                style={{
-                  width: '100%',
-                  padding: '0.5rem',
-                  border: '1px solid var(--admin-border)',
-                  borderRadius: '0.4rem',
-                  fontSize: '0.9rem',
-                  backgroundColor: '#fff',
-                }}
+                className="admin-form-control admin-form-control-compact"
               >
                 <option value="">Selecione</option>
                 {pessoas.map((pessoa: any) => (
@@ -193,32 +162,25 @@ async function GrupoContent({ id }: { id: string }) {
               </select>
             </div>
             <div>
-              <label style={{ fontSize: '0.85rem', display: 'block', marginBottom: '0.25rem' }}>Status</label>
+              <label className="admin-inline-label">Status</label>
               <select
                 name="status"
                 defaultValue="ativo"
-                style={{
-                  width: '100%',
-                  padding: '0.5rem',
-                  border: '1px solid var(--admin-border)',
-                  borderRadius: '0.4rem',
-                  fontSize: '0.9rem',
-                  backgroundColor: '#fff',
-                }}
+                className="admin-form-control admin-form-control-compact"
               >
                 <option value="ativo">✓ Ativo</option>
                 <option value="afastado">⏸️ Afastado</option>
                 <option value="visitante">👤 Visitante</option>
               </select>
             </div>
-            <button type="submit" className="admin-btn admin-btn-small" style={{ alignSelf: 'flex-end' }}>
+            <button type="submit" className="admin-btn admin-btn-small admin-align-end">
               ➕ Adicionar
             </button>
           </form>
         </div>
 
         {membros.length > 0 ? (
-          <div style={{ overflowX: 'auto' }}>
+          <div className="admin-table-wrapper">
             <table className="admin-table">
               <thead>
                 <tr>
@@ -231,29 +193,22 @@ async function GrupoContent({ id }: { id: string }) {
               <tbody>
                 {membros.map((membro: any) => (
                   <tr key={membro.id}>
-                    <td style={{ fontWeight: 500 }}>
+                    <td className="admin-cell-emphasis">
                       {membro.pessoa?.nome}
                     </td>
                     <td>
-                      <span style={{
-                        display: 'inline-block',
-                        padding: '0.25rem 0.6rem',
-                        backgroundColor: membro.status === 'ativo' ? 'rgba(34, 197, 94, 0.1)' : membro.status === 'afastado' ? 'rgba(249, 115, 22, 0.1)' : 'rgba(107, 114, 128, 0.1)',
-                        color: membro.status === 'ativo' ? '#22c55e' : membro.status === 'afastado' ? '#f97316' : '#6b7280',
-                        borderRadius: '0.3rem',
-                        fontSize: '0.85rem',
-                      }}>
+                      <span className={`admin-status-chip admin-status-chip--${membro.status}`} data-status={membro.status}>
                         {membro.status === 'ativo' && '✓ Ativo'}
                         {membro.status === 'afastado' && '⏸️ Afastado'}
                         {membro.status === 'visitante' && '👤 Visitante'}
                       </span>
                     </td>
-                    <td style={{ fontSize: '0.85rem', color: 'var(--muted)' }}>
+                    <td className="admin-cell-muted admin-cell-small">
                       {membro.desde ? new Date(membro.desde).toLocaleDateString('pt-BR') : '—'}
                     </td>
                     <td>
-                      <form action={() => handleRemoverMembro(id, membro.id)} style={{ display: 'inline' }}>
-                        <button type="submit" className="admin-btn admin-btn-small" style={{ backgroundColor: '#ef4444', color: '#fff', border: 'none' }}>
+                      <form action={() => handleRemoverMembro(id, membro.id)} className="admin-inline-form-reset">
+                        <button type="submit" className="admin-btn admin-btn-small admin-btn-danger">
                           ✕ Remover
                         </button>
                       </form>
@@ -264,50 +219,32 @@ async function GrupoContent({ id }: { id: string }) {
             </table>
           </div>
         ) : (
-          <p style={{ color: 'var(--muted)', textAlign: 'center' }}>Nenhum membro neste grupo.</p>
+          <p className="admin-empty-state admin-empty-state-centered">Nenhum membro neste grupo.</p>
         )}
       </div>
 
-      <div className="admin-card">
-        <h2 style={{ margin: '0 0 1.5rem', fontSize: '1.1rem', fontWeight: 600 }}>Reuniões ({reunioes.length})</h2>
+      <div className="admin-card admin-detail-card">
+        <h2 className="admin-section-title">Reuniões ({reunioes.length})</h2>
 
-        <div style={{
-          padding: '1rem',
-          backgroundColor: 'rgba(59, 130, 246, 0.05)',
-          borderRadius: '0.6rem',
-          marginBottom: '1.5rem',
-          borderLeft: '4px solid #3b82f6',
-        }}>
-          <h3 style={{ margin: '0 0 1rem', fontSize: '0.95rem', fontWeight: 600 }}>Registrar Reunião</h3>
-          <form action={(formData) => handleCriarReuniao(id, formData)} style={{ display: 'grid', gridTemplateColumns: '1fr 1fr auto', gap: '0.75rem', alignItems: 'flex-end' }}>
+        <div className="admin-inline-form-panel">
+          <h3 className="admin-subsection-title">Registrar Reunião</h3>
+          <form action={(formData) => handleCriarReuniao(id, formData)} className="admin-inline-form admin-inline-form-meeting">
             <div>
-              <label style={{ fontSize: '0.85rem', display: 'block', marginBottom: '0.25rem' }}>Data</label>
+              <label className="admin-inline-label">Data</label>
               <input
                 type="date"
                 name="data"
                 required
-                style={{
-                  width: '100%',
-                  padding: '0.5rem',
-                  border: '1px solid var(--admin-border)',
-                  borderRadius: '0.4rem',
-                  fontSize: '0.9rem',
-                }}
+                className="admin-form-control admin-form-control-compact"
               />
             </div>
             <div>
-              <label style={{ fontSize: '0.85rem', display: 'block', marginBottom: '0.25rem' }}>Observações</label>
+              <label className="admin-inline-label">Observações</label>
               <input
                 type="text"
                 name="observacoes"
                 placeholder="Tema, insights..."
-                style={{
-                  width: '100%',
-                  padding: '0.5rem',
-                  border: '1px solid var(--admin-border)',
-                  borderRadius: '0.4rem',
-                  fontSize: '0.9rem',
-                }}
+                className="admin-form-control admin-form-control-compact"
               />
             </div>
             <button type="submit" className="admin-btn admin-btn-small">
@@ -317,7 +254,7 @@ async function GrupoContent({ id }: { id: string }) {
         </div>
 
         {reunioes.length > 0 ? (
-          <div style={{ overflowX: 'auto' }}>
+          <div className="admin-table-wrapper">
             <table className="admin-table">
               <thead>
                 <tr>
@@ -328,10 +265,10 @@ async function GrupoContent({ id }: { id: string }) {
               <tbody>
                 {reunioes.map((reuniao: any) => (
                   <tr key={reuniao.id}>
-                    <td style={{ fontWeight: 500 }}>
+                    <td className="admin-cell-emphasis">
                       {new Date(reuniao.data).toLocaleDateString('pt-BR')}
                     </td>
-                    <td style={{ fontSize: '0.9rem', color: 'var(--muted)' }}>
+                    <td className="admin-cell-muted">
                       {reuniao.observacoes || '—'}
                     </td>
                   </tr>
@@ -340,7 +277,7 @@ async function GrupoContent({ id }: { id: string }) {
             </table>
           </div>
         ) : (
-          <p style={{ color: 'var(--muted)', textAlign: 'center' }}>Nenhuma reunião registrada.</p>
+          <p className="admin-empty-state admin-empty-state-centered">Nenhuma reunião registrada.</p>
         )}
       </div>
     </div>
@@ -350,7 +287,7 @@ async function GrupoContent({ id }: { id: string }) {
 export default async function GrupoPage({ params }: { params: Promise<any> }) {
   const resolvedParams = await params;
   return (
-    <Suspense fallback={<div style={{ padding: '2rem', textAlign: 'center' }}>Carregando...</div>}>
+    <Suspense fallback={<div className="admin-loading-state">Carregando...</div>}>
       <GrupoContent id={resolvedParams.id} />
     </Suspense>
   );

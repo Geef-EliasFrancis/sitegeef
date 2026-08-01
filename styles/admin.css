@@ -495,6 +495,124 @@
   text-align: center;
 }
 
+.admin-detail-card {
+  margin-bottom: 2rem;
+}
+
+.admin-detail-card-narrow {
+  width: min(100%, 700px);
+  margin-inline: auto;
+}
+
+.admin-section-title {
+  margin: 0 0 1.5rem;
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.admin-form-grid-two {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.admin-form-control {
+  width: 100%;
+  padding: 0.65rem 0.85rem;
+  border: 1px solid var(--admin-border);
+  border-radius: 0.6rem;
+  background: var(--input-bg);
+  color: var(--input-text);
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+}
+
+.admin-form-control-compact {
+  padding: 0.5rem;
+  border-radius: 0.4rem;
+  font-size: 0.9rem;
+}
+
+.admin-inline-form-panel {
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  border-left: 4px solid var(--text-info);
+  border-radius: 0.6rem;
+  background: var(--status-info-bg);
+}
+
+.admin-subsection-title {
+  margin: 0 0 1rem;
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+.admin-inline-form {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.admin-inline-form-member {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) auto;
+}
+
+.admin-inline-form-meeting {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) auto;
+  align-items: end;
+}
+
+.admin-inline-label {
+  display: block;
+  margin-bottom: 0.25rem;
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+}
+
+.admin-align-end {
+  align-self: end;
+}
+
+.admin-cell-emphasis {
+  font-weight: 600;
+}
+
+.admin-cell-muted {
+  color: var(--text-secondary);
+}
+
+.admin-cell-small {
+  font-size: 0.85rem;
+}
+
+.admin-inline-form-reset {
+  display: inline;
+}
+
+.admin-empty-state-centered {
+  text-align: center;
+}
+
+.admin-status-chip--ativo {
+  background: var(--status-success-bg);
+  color: var(--status-success-text);
+}
+
+.admin-status-chip--afastado {
+  background: var(--status-warning-bg);
+  color: var(--status-warning-text);
+}
+
+.admin-status-chip--visitante {
+  background: var(--surface-tertiary);
+  color: var(--text-secondary);
+}
+
+@media (max-width: 767px) {
+  .admin-form-grid-two,
+  .admin-inline-form-member,
+  .admin-inline-form-meeting {
+    grid-template-columns: 1fr;
+  }
+}
+
 .admin-header-right {
   display: flex;
   align-items: center;
