@@ -1270,7 +1270,7 @@ body.musica-display-route .site-shell {
 
 .musica-catalog-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 540px), 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
   gap: 0.45rem;
   width: 100%;
   align-items: start;
@@ -1285,6 +1285,8 @@ body.musica-display-route .site-shell {
   border-radius: var(--radius-lg);
   background: var(--surface-tertiary);
   box-shadow: var(--shadow-sm);
+  min-width: 0;
+  overflow: hidden;
 }
 
 .musica-catalog-card--compact {
@@ -1308,7 +1310,8 @@ body.musica-display-route .site-shell {
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
-  flex: 1 1 auto;
+  flex: 1 1 0;
+  width: 0;
 }
 
 .musica-catalog-author-inline {
@@ -1358,6 +1361,7 @@ body.musica-display-route .site-shell {
   justify-content: flex-end;
   flex: 0 0 auto;
   margin-left: auto;
+  min-width: 0;
 }
 
 .musica-catalog-actions .button {
@@ -1385,6 +1389,17 @@ body.musica-display-route .site-shell {
   .musica-catalog-actions {
     justify-content: flex-start;
     margin-left: 0;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1199px) {
+  .musica-toolbar {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .musica-toolbar-actions--catalog {
+    margin-left: auto;
   }
 }
 
@@ -1858,10 +1873,10 @@ body.musica-display-route .musica-display-screen--reader {
     width: 100%;
   }
 
-  .musica-toolbar-search input {
-    width: 100%;
-    min-width: 0;
-  }
+.musica-toolbar-search input {
+  width: 100%;
+  min-width: 0;
+}
 
   .musica-reader-panel--media iframe {
     height: 200px;
@@ -1905,7 +1920,21 @@ body.musica-display-route .musica-display-screen--reader {
 :root.dark .musica-reader-panel,
 :root.dark .musica-letra-bloco,
 :root.dark .musica-parte,
-:root.dark .musica-parte-musical,
+:root.dark .musica-parte-musical {
+  color: #f4efe7;
+}
+
+@media (min-width: 768px) and (max-width: 1199px) {
+  .musica-toolbar {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .musica-toolbar-actions--catalog {
+    margin-left: auto;
+  }
+}
+
 :root.dark .musica-catalog-card,
 :root.dark .musica-toolbar,
 :root.dark .musica-display-stage,
