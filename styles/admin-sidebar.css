@@ -13,39 +13,6 @@
   z-index: 50;
 }
 
-.admin-mobile-nav-toggle {
-  display: inline-flex;
-  flex: 0 0 auto;
-  align-items: center;
-  justify-content: center;
-  width: 2.6rem;
-  height: 2.6rem;
-  padding: 0;
-  border: 1px solid rgba(138, 0, 90, 0.18);
-  border-radius: 0.9rem;
-  background: rgba(248, 240, 255, 0.96);
-  color: var(--uva-700);
-  font: inherit;
-  font-size: 1.35rem;
-  line-height: 1;
-  font-weight: 900;
-  cursor: pointer;
-  box-shadow: 0 8px 22px rgba(42, 23, 51, 0.12);
-  transition: transform 160ms ease, background 160ms ease, box-shadow 160ms ease;
-}
-
-.admin-mobile-nav-toggle:hover,
-.admin-mobile-nav-toggle:focus-visible {
-  background: #fff;
-  box-shadow: 0 10px 26px rgba(42, 23, 51, 0.18);
-  outline: 3px solid rgba(138, 0, 90, 0.14);
-  outline-offset: 2px;
-}
-
-.admin-sidebar.is-collapsed {
-  display: none;
-}
-
 /* Shell responsivo: rail no desktop e drawer sobreposto no mobile. */
 .admin-navigation {
   position: relative;
