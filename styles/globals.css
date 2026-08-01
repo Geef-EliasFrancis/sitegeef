@@ -1622,7 +1622,13 @@ body.musica-display-route * {
   flex: none;
   overflow: hidden;
   padding-bottom: 0;
-  column-fill: auto;
+  display: grid;
+  grid-template-columns: repeat(var(--display-columns, 3), minmax(0, 1fr));
+  grid-template-rows: repeat(var(--display-rows, 5), minmax(0, 1fr));
+  grid-auto-flow: column;
+  align-content: start;
+  column-count: initial;
+  column-gap: var(--display-body-gap, 0.95rem);
 }
 
 .musica-display-screen--live .musica-display-header-16x9 {

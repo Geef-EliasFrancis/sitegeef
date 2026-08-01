@@ -386,6 +386,7 @@ export function MusicaReader({
     return {
       scale,
       columns,
+      rows: Math.max(1, Math.ceil(partesVisiveis.length / columns)),
       bodyGap,
       headerPaddingY,
       headerPaddingX,
@@ -409,6 +410,7 @@ export function MusicaReader({
     const properties: Record<string, string> = {
       "--display-scale": String(displayMetrics.scale),
       "--display-columns": String(displayMetrics.columns),
+      "--display-rows": String(displayMetrics.rows),
       "--display-body-gap": `${displayMetrics.bodyGap * displayMetrics.scale}rem`,
       "--display-header-pad-y": `${displayMetrics.headerPaddingY * displayMetrics.scale}rem`,
       "--display-header-pad-x": `${displayMetrics.headerPaddingX * displayMetrics.scale}rem`,
