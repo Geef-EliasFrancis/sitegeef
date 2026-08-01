@@ -40,9 +40,9 @@ Se não houver nova mudança pendente, o projeto já está validado para seguir 
 ## Documentos de apoio
 
 - [`HANDOFF.md`](HANDOFF.md) - ponte curta para o estado atual
-- [`docs/CONTINUATION_GUIDE.md`](docs/CONTINUATION_GUIDE.md) - guia atual de continuação
+- [`CONTINUATION_GUIDE.md`](CONTINUATION_GUIDE.md) - guia atual de continuação
 - [`docs/DARK_MODE_AUDIT_2026_05_31.md`](docs/DARK_MODE_AUDIT_2026_05_31.md) - auditoria registrada
 
 ## Observação
 
-Os guias antigos de backlog devem ser tratados como histórico. Se aparecer divergência entre documentos, a referência atual é `docs/CONTINUATION_GUIDE.md`.
+Os guias antigos de backlog devem ser tratados como histórico. Se aparecer divergência entre documentos, a referência atual é `CONTINUATION_GUIDE.md`.

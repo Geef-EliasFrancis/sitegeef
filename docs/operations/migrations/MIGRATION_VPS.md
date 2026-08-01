@@ -23,8 +23,8 @@
 
 ### Atualizar Documentação
 
-- [ ] `DEPLOY.md` — Novo IP e fluxo GitHub Actions
-- [ ] `DEPLOY_AUTOMATION.md` — Fluxo principal de CI/CD
+- [ ] `../deployment/DEPLOY.md` — Novo IP e fluxo GitHub Actions
+- [ ] `../deployment/DEPLOY_AUTOMATION.md` — Fluxo principal de CI/CD
 - [ ] `README.md` — Se houver referência a VPS antigo
 - [ ] `docs/archive/legacy/baseinicial.md` — Referência histórica de VPS
 
@@ -146,7 +146,7 @@ Ao migrar para outro VPS:
 
 3. **Documentar a mudança:**
    - Atualizar este arquivo
-   - Atualizar `DEPLOY.md`
+   - Atualizar `../deployment/DEPLOY.md`
    - Atualizar IP em qualquer referência
    - Fazer commit com mensagem clara
 
@@ -154,8 +154,8 @@ Ao migrar para outro VPS:
 
 ## 📚 Documentos Relacionados
 
-- `DEPLOY.md` — Setup e troubleshooting
-- `DEPLOY_AUTOMATION.md` — Workflow de CI/CD (se usar GitHub Actions)
+- `../deployment/DEPLOY.md` — Setup e troubleshooting
+- `../deployment/DEPLOY_AUTOMATION.md` — Workflow de CI/CD (se usar GitHub Actions)
 - `README.md` — Informações gerais do projeto
 
 ---

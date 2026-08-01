@@ -14,7 +14,7 @@ Exemplos de ações proibidas:
 - ❌ Consolidar formulários sem plano de migração
 - ❌ Remover features e deixar como "placeholder"
 
-**Leia:** `REFACTORING_RULES.md` antes de fazer qualquer mudança estrutural.
+**Leia:** `docs/reference/REFACTORING_RULES.md` antes de fazer qualquer mudança estrutural.
 
 Resumo rápido:
 1. **Sempre documente** o estado atual antes de refatorar
@@ -502,6 +502,6 @@ Migração completa de cores hardcoded para `identity-system.css` variáveis CSS
 ## Veja também
 
 - `agents.md` — Memória operacional do Autoreflex
-- `STATUS.md` — Status e progresso do projeto
+- `docs/archive/status/STATUS.md` — Status histórico do projeto
 - `HANDOFF.md` — Notas de handoff entre sessões
 - `skills/` — Conhecimento indexado (skills)

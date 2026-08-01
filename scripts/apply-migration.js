@@ -75,7 +75,7 @@ async function main() {
     console.error('   - If the project does not expose public.execute_sql, apply the SQL in the Supabase SQL Editor');
     console.error('   - Verify DATABASE_URL or SERVICE_ROLE_KEY is correct');
     console.error('   - Check Supabase project is active');
-    console.error('   - Try running from APPLY_MIGRATION.md for manual steps');
+    console.error('   - Try running from docs/operations/migrations/APPLY_MIGRATION.md for manual steps');
     process.exit(1);
   }
 }

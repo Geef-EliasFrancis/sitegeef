@@ -46,5 +46,5 @@ O site está configurado para deploy automático ao fazer `git push origin main`
 2. **Pré-Deploy** — Verificação de artefatos com retry automático
 3. **Deploy** — Deploy ao VPS com retry automático (até 3 tentativas por estágio)
 
-Veja `DEPLOY.md` e `WORKFLOW_STAGES.md` para mais detalhes.
+Veja `docs/operations/deployment/DEPLOY.md` e `docs/operations/deployment/WORKFLOW_STAGES.md` para mais detalhes.
 # Deploy test - Sat May 16 19:23:53     2026

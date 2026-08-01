@@ -9,7 +9,7 @@
 - [Documento base do ERP](./baseerp.md)
 - [MCP Supabase GEEF](./MCP_SUPABASE_GEEF.md)
 - [Handoff de ativação completa do MCP Supabase](./SUPABASE_MCP_ACTIVATION_HANDOFF.md)
-- [Sistema de tema](../THEME_SYSTEM.md)
+- [Sistema de tema](./reference/THEME_SYSTEM.md)
 - [Padrão de tema, contraste e identidade](./PADRAO_TEMA_CONTRASTE_IDENTIDADE.md)
 
 ## Por assunto
@@ -17,9 +17,9 @@
 ### Visual
 
 - [Agent Playbook](./AGENT_PLAYBOOK.md)
-- [Sistema de tema](../THEME_SYSTEM.md)
+- [Sistema de tema](./reference/THEME_SYSTEM.md)
 - [Padrão de tema, contraste e identidade](./PADRAO_TEMA_CONTRASTE_IDENTIDADE.md)
-- [CSS correction summary](../CSS_CORRECTION_SUMMARY.md)
+- [CSS correction summary](./reference/CSS_CORRECTION_SUMMARY.md)
 
 ### Cache e Supabase
 
@@ -28,15 +28,15 @@
 - [MCP Supabase GEEF](./MCP_SUPABASE_GEEF.md)
 - [Handoff de ativação completa do MCP Supabase](./SUPABASE_MCP_ACTIVATION_HANDOFF.md)
 - [Modelo relacional da instituicao](./INSTITUICAO_MODELO_RELACIONAL.md)
-- [Aplicar migracao](../APPLY_MIGRATION.md)
-- [Status de deploy](../DEPLOYMENT_STATUS.md)
+- [Aplicar migracao](./operations/migrations/APPLY_MIGRATION.md)
+- [Status de deploy](./operations/deployment/DEPLOYMENT_STATUS.md)
 
 ### Operacao
 
-- [Testing guide](../TESTING_GUIDE.md)
-- [Testing report](../TESTING_REPORT.md)
-- [Session summary](../SESSION_SUMMARY.md)
-- [Status](../STATUS.md)
+- [Testing guide](./operations/testing/TESTING_GUIDE.md)
+- [Testing report](./operations/testing/TESTING_REPORT.md)
+- [Session summary](./archive/status/SESSION_SUMMARY.md)
+- [Status](./archive/status/STATUS.md)
 - [Engineering guidelines](./ENGINEERING_GUIDELINES.md)
 
 ### Dominios

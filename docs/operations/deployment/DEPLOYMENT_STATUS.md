@@ -62,8 +62,8 @@
 - ✓ `access-denied.tsx` — Página de acesso negado (RLS)
 
 ### Documentação
-- ✓ `TESTING_REPORT.md` — Relatório detalhado de verificações
-- ✓ `TESTING_GUIDE.md` — Guia passo-a-passo para testes
+- ✓ `../testing/TESTING_REPORT.md` — Relatório detalhado de verificações
+- ✓ `../testing/TESTING_GUIDE.md` — Guia passo-a-passo para testes
 - ✓ `README_TESTES.md` — Resumo executivo e checklist
 
 ---
@@ -265,8 +265,8 @@ npx tsc --noEmit
 
 ## 🔗 Referências
 
-- **TESTING_GUIDE.md** — Instruções detalhadas de teste
-- **TESTING_REPORT.md** — Resultado das verificações técnicas
+- **../testing/TESTING_GUIDE.md** — Instruções detalhadas de teste
+- **../testing/TESTING_REPORT.md** — Resultado das verificações técnicas
 - **README_TESTES.md** — Resumo de testes anteriores
 - **docs/baseerp.md** — Especificação completa do sistema
 
@@ -281,4 +281,3 @@ npx tsc --noEmit
 
 **Status Atual:** Aguardando teste de autenticação  
 **Última Atualização:** 16 de maio de 2026, 15:00 GMT
-

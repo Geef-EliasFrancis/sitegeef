@@ -18,7 +18,7 @@ const MODULES = {
     mustInvalidate: ["public-escalas", "/escalas", "/minha-area", "/leitor"],
     css: ["styles/globals.css", "styles/site-header.css"],
     writeActions: [],
-    docs: ["HANDOFF.md", "docs/AGENT_PLAYBOOK.md", "docs/MODULE_MAP.md", "docs/INDEX.md", "THEME_SYSTEM.md"],
+    docs: ["HANDOFF.md", "docs/AGENT_PLAYBOOK.md", "docs/MODULE_MAP.md", "docs/INDEX.md", "docs/reference/THEME_SYSTEM.md"],
     notes: [
       "Use site-geef-ui-ux for visual changes.",
       "Keep light theme readable; avoid pure white cards.",
@@ -40,7 +40,7 @@ const MODULES = {
     mustInvalidate: ["/login", "/perfil", "/", "layout"],
     css: ["styles/globals.css"],
     writeActions: ["app/login/actions.ts", "app/auth/callback/route.ts"],
-    docs: ["HANDOFF.md", "docs/AGENT_PLAYBOOK.md", "docs/MODULE_MAP.md", "GOOGLE_OAUTH_SETUP.md"],
+    docs: ["HANDOFF.md", "docs/AGENT_PLAYBOOK.md", "docs/MODULE_MAP.md", "docs/integrations/GOOGLE_OAUTH_SETUP.md"],
     notes: [
       "Keep login compact and modal-like when possible.",
       "Preserve nextUrl redirects and OAuth callback sanitation.",
@@ -60,7 +60,7 @@ const MODULES = {
     mustInvalidate: ["admin-dashboard", "/admin"],
     css: ["styles/admin.css", "styles/admin-sidebar.css"],
     writeActions: ["app/admin/pessoas/actions.ts", "app/admin/funcoes/actions.ts", "app/admin/escalas/actions.ts"],
-    docs: ["HANDOFF.md", "docs/AGENT_PLAYBOOK.md", "docs/MODULE_MAP.md", "docs/baseerp.md", "STATUS.md"],
+    docs: ["HANDOFF.md", "docs/AGENT_PLAYBOOK.md", "docs/MODULE_MAP.md", "docs/baseerp.md", "docs/archive/status/STATUS.md"],
     notes: [
       "Dashboard data should use short cache only.",
       "Invalidate dashboard on writes in pessoas, funcoes and escalas.",
@@ -106,7 +106,7 @@ const MODULES = {
     mustInvalidate: ["admin-documentos", "/admin/documentos", "/admin/documentos/termos", "/admin/documentos/consentimentos", "/admin/documentos/voluntariado", "/minha-area"],
     css: ["styles/admin.css", "styles/admin-sidebar.css", "styles/globals.css"],
     writeActions: ["app/admin/documentos/actions.ts"],
-    docs: ["HANDOFF.md", "docs/AGENT_PLAYBOOK.md", "docs/MODULE_MAP.md", "docs/baseerp.md", "APPLY_MIGRATION.md"],
+    docs: ["HANDOFF.md", "docs/AGENT_PLAYBOOK.md", "docs/MODULE_MAP.md", "docs/baseerp.md", "docs/operations/migrations/APPLY_MIGRATION.md"],
     notes: [
       "Cache list views only; keep selects for forms dynamic.",
       "Invalidate on modelo, termo, consentimento and servico writes.",
@@ -126,7 +126,7 @@ const MODULES = {
     mustInvalidate: ["admin-dashboard", "admin-biblioteca", "admin-documentos", "user-area", "/admin/pessoas"],
     css: ["styles/admin.css", "styles/admin-sidebar.css", "styles/globals.css"],
     writeActions: ["app/admin/pessoas/actions.ts"],
-    docs: ["HANDOFF.md", "docs/AGENT_PLAYBOOK.md", "docs/MODULE_MAP.md", "docs/baseerp.md", "README_TESTES.md"],
+    docs: ["HANDOFF.md", "docs/AGENT_PLAYBOOK.md", "docs/MODULE_MAP.md", "docs/baseerp.md", "docs/operations/testing/README_TESTES.md"],
     notes: [
       "Writes affect dashboard, biblioteca, documentos and user area.",
     ],
@@ -165,7 +165,7 @@ const MODULES = {
     mustInvalidate: ["public-escalas", "admin-dashboard", "user-area", "/escalas", "/admin/escalas"],
     css: ["styles/admin.css", "styles/admin-sidebar.css", "styles/globals.css"],
     writeActions: ["app/admin/escalas/actions.ts", "lib/escalas/public-escalas.ts"],
-    docs: ["HANDOFF.md", "docs/AGENT_PLAYBOOK.md", "docs/MODULE_MAP.md", "docs/baseerp.md", "MIGRATION_GUIDE.md"],
+    docs: ["HANDOFF.md", "docs/AGENT_PLAYBOOK.md", "docs/MODULE_MAP.md", "docs/baseerp.md", "docs/operations/migrations/MIGRATION_GUIDE.md"],
     notes: [
       "Public page uses cached helper with tag public-escalas.",
       "Writes invalidate public, admin and user-area views.",
@@ -187,7 +187,7 @@ const MODULES = {
     mustInvalidate: ["all-surface-css"],
     css: ["styles/theme.css", "styles/globals.css", "styles/admin.css", "styles/site-header.css"],
     writeActions: [],
-    docs: ["HANDOFF.md", "docs/AGENT_PLAYBOOK.md", "docs/INDEX.md", "THEME_SYSTEM.md"],
+    docs: ["HANDOFF.md", "docs/AGENT_PLAYBOOK.md", "docs/INDEX.md", "docs/reference/THEME_SYSTEM.md"],
     notes: [
       "Prefer tokens over hardcoded colors.",
       "In light theme, avoid pure white surfaces when possible.",
@@ -209,7 +209,7 @@ const MODULES = {
     mustInvalidate: ["admin-dashboard", "admin-biblioteca", "admin-documentos", "user-area", "public-escalas"],
     css: [],
     writeActions: ["lib/admin/cache.ts", "lib/areas/invalidate-user-area.ts", "lib/escalas/public-escalas.ts", "lib/areas/user-area.ts"],
-    docs: ["HANDOFF.md", "docs/AGENT_PLAYBOOK.md", "docs/INDEX.md", "APPLY_MIGRATION.md", "MIGRATION_GUIDE.md"],
+    docs: ["HANDOFF.md", "docs/AGENT_PLAYBOOK.md", "docs/INDEX.md", "docs/operations/migrations/APPLY_MIGRATION.md", "docs/operations/migrations/MIGRATION_GUIDE.md"],
     notes: [
       "Server client is for session-aware reads.",
       "Service role is for cacheable server-only helpers.",
