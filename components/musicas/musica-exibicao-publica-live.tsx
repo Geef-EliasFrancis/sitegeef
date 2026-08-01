@@ -88,6 +88,7 @@ export function MusicaExibicaoPublicaLive({
       musica={musica}
       logoSrc={logoSrc}
       mode="exibicao"
+      displayDensity="full"
       readerDensity="full"
       showBranding={false}
       showLiveAction={false}
