@@ -24,6 +24,7 @@ export function AdminSidebar({ usuarioSistema }: AdminSidebarProps) {
   const pathname = usePathname();
   const currentPath = pathname ?? '';
   const [expandedGroups, setExpandedGroups] = useState<Record<string, boolean>>({});
+  const [mobileOpen, setMobileOpen] = useState(false);
   const isAdministrador = usuarioSistema?.perfil === 'administrador';
   const currentPerfil = usuarioSistema?.perfil ?? '';
   const { area } = useAdminShellArea();
@@ -72,6 +73,10 @@ export function AdminSidebar({ usuarioSistema }: AdminSidebarProps) {
     }
   }, []);
 
+  useEffect(() => {
+    setMobileOpen(false);
+  }, [pathname]);
+
   const toggleGroup = (groupName: string) => {
     const newState = { ...expandedGroups, [groupName]: !expandedGroups[groupName] };
     setExpandedGroups(newState);
@@ -113,7 +118,17 @@ export function AdminSidebar({ usuarioSistema }: AdminSidebarProps) {
   };
 
   return (
-    <aside className="admin-sidebar">
+    <>
+      <button
+        type="button"
+        className="admin-mobile-nav-toggle"
+        aria-expanded={mobileOpen}
+        aria-controls="admin-navigation"
+        onClick={() => setMobileOpen((open) => !open)}
+      >
+        {mobileOpen ? 'Fechar menu' : 'Abrir menu'}
+      </button>
+    <aside id="admin-navigation" className={`admin-sidebar ${mobileOpen ? 'is-mobile-open' : ''}`}>
       <nav className="admin-nav">
         {/* Dashboard */}
         {showDashboardArea && (
@@ -401,5 +416,6 @@ export function AdminSidebar({ usuarioSistema }: AdminSidebarProps) {
         )}
       </nav>
     </aside>
+    </>
   );
 }
