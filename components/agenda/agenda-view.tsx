@@ -2,24 +2,15 @@
 
 import { useMemo, useState } from 'react';
 import { IconSearch, IconX } from '@/components/icons';
+import type { PublicAgendaEvent } from '@/lib/agenda/public-agenda';
 
 type AgendaEvent = {
   id: string;
   title: string;
   description: string;
-  weekday: number;
-  start: string;
-  end: string;
+  date: string;
   category: 'estudo' | 'acolhimento' | 'publica' | 'evangelizacao';
 };
-
-const events: AgendaEvent[] = [
-  { id: 'estudo-seg', title: 'Estudo doutrinário', description: 'Leitura e conversa fraterna sobre a doutrina espírita.', weekday: 0, start: '19:30', end: '21:00', category: 'estudo' },
-  { id: 'acolhimento-ter', title: 'Atendimento fraterno', description: 'Escuta acolhedora e orientação individual.', weekday: 1, start: '15:00', end: '17:00', category: 'acolhimento' },
-  { id: 'publica-qua', title: 'Reunião pública', description: 'Palestra, passe e convivência fraterna.', weekday: 2, start: '19:30', end: '21:00', category: 'publica' },
-  { id: 'evangelizacao-sab', title: 'Evangelização', description: 'Encontro de estudo e convivência para crianças e jovens.', weekday: 5, start: '09:00', end: '11:00', category: 'evangelizacao' },
-  { id: 'publica-dom', title: 'Reunião pública', description: 'Momento de reflexão, prece e acolhimento.', weekday: 6, start: '10:00', end: '11:30', category: 'publica' },
-];
 
 const weekdayNames = ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'];
 const monthNames = ['janeiro', 'fevereiro', 'março', 'abril', 'maio', 'junho', 'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro'];
@@ -37,13 +28,22 @@ function formatDate(date: Date) {
   return new Intl.DateTimeFormat('pt-BR', { day: '2-digit', month: '2-digit' }).format(date);
 }
 
-export function AgendaView() {
+function localDateKey(date: Date) {
+  return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+}
+
+function formatAgendaDate(value: string) {
+  return new Intl.DateTimeFormat('pt-BR', { dateStyle: 'short' }).format(new Date(`${value}T12:00:00`));
+}
+
+export function AgendaView({ events: publicEvents }: { events: PublicAgendaEvent[] }) {
   const today = useMemo(() => new Date(), []);
   const [week, setWeek] = useState(() => startOfWeek(today));
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [searchOpen, setSearchOpen] = useState(false);
   const [query, setQuery] = useState('');
   const [mobileDay, setMobileDay] = useState(0);
+  const events: AgendaEvent[] = publicEvents.map((event) => ({ ...event, category: 'publica' }));
 
   const days = useMemo(() => weekdayNames.map((label, index) => {
     const date = new Date(week);
@@ -105,7 +105,8 @@ export function AgendaView() {
           </div>
           <div className="agenda-week-grid">
             {days.map(({ label, date }, index) => {
-              const dayEvents = visibleEvents.filter((event) => event.weekday === index);
+              const dayKey = localDateKey(date);
+              const dayEvents = visibleEvents.filter((event) => event.date === dayKey);
               return (
                 <article className={`agenda-day agenda-day-${index} ${mobileDay === index ? 'is-mobile-active' : ''}`} key={label}>
                   <header className="agenda-day-header">
@@ -115,7 +116,7 @@ export function AgendaView() {
                   <div className="agenda-day-events">
                     {dayEvents.length === 0 ? <span className="agenda-empty">—</span> : dayEvents.map((event) => (
                       <button key={event.id} className={`agenda-event agenda-event--${event.category} ${selectedId === event.id ? 'is-selected' : ''}`} onClick={() => setSelectedId(selectedId === event.id ? null : event.id)} aria-expanded={selectedId === event.id}>
-                        <span className="agenda-event-time">{event.start}</span>
+                        <span className="agenda-event-time">Dia marcado</span>
                         <strong>{event.title}</strong>
                         <span className="agenda-event-chevron" aria-hidden="true">{selectedId === event.id ? '−' : '+'}</span>
                       </button>
@@ -129,11 +130,11 @@ export function AgendaView() {
 
         <aside className="agenda-next" aria-label="Próximos eventos">
           <div className="agenda-section-heading"><span>Próximos</span><span aria-hidden="true">✦</span></div>
-          {events.slice(0, 3).map((event) => <button key={event.id} className="agenda-next-item" onClick={() => setSelectedId(event.id)}><time>{event.start}</time><span>{event.title}</span></button>)}
+          {events.slice(0, 3).map((event) => <button key={event.id} className="agenda-next-item" onClick={() => setSelectedId(event.id)}><time>{formatAgendaDate(event.date)}</time><span>{event.title}</span></button>)}
         </aside>
       </div>
 
-      {selected && <div className="agenda-detail" role="dialog" aria-label={`Detalhes de ${selected.title}`}><button className="agenda-detail-close" onClick={() => setSelectedId(null)} aria-label="Fechar detalhes" title="Fechar"><IconX size={16} /></button><span>{selected.start} — {selected.end}</span><h2>{selected.title}</h2><p>{selected.description}</p></div>}
+      {selected && <div className="agenda-detail" role="dialog" aria-label={`Detalhes de ${selected.title}`}><button className="agenda-detail-close" onClick={() => setSelectedId(null)} aria-label="Fechar detalhes" title="Fechar"><IconX size={16} /></button><span>{formatAgendaDate(selected.date)}</span><h2>{selected.title}</h2><p>{selected.description}</p></div>}
     </main>
   );
 }

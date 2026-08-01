@@ -16,6 +16,7 @@ Este documento alinha os nomes dos arquivos locais de migration com os checkpoin
 | `supabase/migrations/20260523_instituicao_modelagem_total.sql` | `instituicao_modelagem_total` |
 | `supabase/migrations/20260527_musica_autores_normalizacao.sql` | `20260527_musica_autores_normalizacao` |
 | `supabase/migrations/20260527030702_musica_creditos_unificados.sql` | `20260527030702_musica_creditos_unificados` |
+| `supabase/migrations/20260801020000_calendario_publico.sql` | `20260801020000_calendario_publico` |
 
 ## Observações
 

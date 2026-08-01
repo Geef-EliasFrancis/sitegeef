@@ -4,6 +4,7 @@ import { ContentPageView } from "@/components/content-page";
 import { getLocalizedContentPage } from "@/lib/multilingual/content";
 import { getRequestLocale } from "@/lib/multilingual/server";
 import { AgendaView } from "@/components/agenda/agenda-view";
+import { getPublicAgenda } from "@/lib/agenda/public-agenda";
 
 type Params = {
   slug: string;
@@ -35,5 +36,10 @@ export default async function Page({ params }: { params: Promise<Params> }) {
     notFound();
   }
 
-  return slug === "agenda" ? <AgendaView /> : <ContentPageView page={page} locale={locale} slug={slug} />;
+  if (slug === "agenda") {
+    const events = await getPublicAgenda();
+    return <AgendaView events={events} />;
+  }
+
+  return <ContentPageView page={page} locale={locale} slug={slug} />;
 }

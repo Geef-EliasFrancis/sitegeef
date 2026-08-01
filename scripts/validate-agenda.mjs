@@ -4,7 +4,7 @@ const page = fs.readFileSync('app/[slug]/page.tsx', 'utf8');
 const component = fs.readFileSync('components/agenda/agenda-view.tsx', 'utf8');
 const styles = fs.readFileSync('styles/globals.css', 'utf8');
 const checks = [
-  ['rota agenda usa componente próprio', page.includes('slug === "agenda" ? <AgendaView />')],
+  ['rota agenda carrega eventos públicos', page.includes('slug === "agenda"') && page.includes('<AgendaView events={events} />')],
   ['semana começa na segunda', component.includes('mondayOffset')],
   ['troca de mês e ano', component.includes('type="month"')],
   ['detalhes por atividade', component.includes('aria-expanded') && component.includes('role="dialog"')],
