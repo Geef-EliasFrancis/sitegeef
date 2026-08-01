@@ -70,25 +70,27 @@ export function AdminHeader({ locale, user }: AdminHeaderProps) {
         </div>
       </header>
 
-      <nav className="admin-context-menu" aria-label="Menu de contexto da reunião pública">
-        {contextMenuItems.map((item) => {
-          const itemPath = item.href.split('?')[0];
-          const isPathActive = pathname === itemPath || pathname.startsWith(`${itemPath}/`);
-          const isPrece = item.label === 'Prece';
-          const isPalestra = item.label === 'Palestra';
-          const isActive = isPathActive && (!isPrece && !isPalestra || (isPrece ? searchParams.get('categoria') === 'prece' : !searchParams.get('categoria')));
-          return (
-            <Link
-              key={item.label}
-              href={item.href}
-              className={`admin-context-menu-item ${isActive ? 'active' : ''}`}
-              aria-current={isActive ? 'page' : undefined}
-            >
-              {item.label}
-            </Link>
-          );
-        })}
-      </nav>
+      {area === 'reuniao-publica' && (
+        <nav className="admin-context-menu" aria-label="Menu de contexto da reunião pública">
+          {contextMenuItems.map((item) => {
+            const itemPath = item.href.split('?')[0];
+            const isPathActive = pathname === itemPath || pathname.startsWith(`${itemPath}/`);
+            const isPrece = item.label === 'Prece';
+            const isPalestra = item.label === 'Palestra';
+            const isActive = isPathActive && (!isPrece && !isPalestra || (isPrece ? searchParams.get('categoria') === 'prece' : !searchParams.get('categoria')));
+            return (
+              <Link
+                key={item.label}
+                href={item.href}
+                className={`admin-context-menu-item ${isActive ? 'active' : ''}`}
+                aria-current={isActive ? 'page' : undefined}
+              >
+                {item.label}
+              </Link>
+            );
+          })}
+        </nav>
+      )}
     </div>
   );
 }

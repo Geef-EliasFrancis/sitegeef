@@ -38,6 +38,7 @@ const responsiveContract = [
   ['top menu móvel tem ícones e tooltip', adminHeaderSource.includes('admin-shell-tab-icon') && adminHeaderSource.includes('title={`${item.label}: ${item.note}`}') && adminCss.includes('.admin-shell-tab-label')],
   ['top menu compartilha linha com usuário', adminCss.includes('grid-template-columns: minmax(0, 1fr) auto') && adminCss.includes('.admin-header-right') && adminCss.includes('.admin-header .admin-brand')],
   ['submenu contextual possui cinco entradas', ['Avisos', 'Música', 'Leitura', 'Palestra', 'Prece'].every((label) => adminHeaderSource.includes(`label: '${label}'`)) && adminHeaderSource.includes('admin-context-menu')],
+  ['submenu contextual é restrito à área pública', adminHeaderSource.includes("area === 'reuniao-publica' &&")],
   ['submenu contextual é responsivo', adminCss.includes('.admin-context-menu-item') && adminCss.includes('overflow-x: auto')],
 ];
 
