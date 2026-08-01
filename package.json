@@ -19,6 +19,7 @@
     "test:coverage": "vitest run --coverage",
     "test:admin-smoke": "node tests/admin-smoke.mjs",
     "test:visual-navigation": "node scripts/visual-navigation.mjs",
+    "test:visual-musicas": "node scripts/visual-musicas-all.mjs",
     "type-check": "tsc --noEmit",
     "lint": "eslint . --ext .ts,.tsx",
     "lint:design-system": "node scripts/validate-design-system.js",

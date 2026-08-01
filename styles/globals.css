@@ -366,8 +366,12 @@
 
 html.musica-display-route .site-header,
 html.musica-display-route .site-footer,
+html.musica-display-route .lgpd-cookie-banner,
+html.musica-display-route .lgpd-request-trigger,
 body.musica-display-route .site-header,
-body.musica-display-route .site-footer {
+body.musica-display-route .site-footer,
+body.musica-display-route .lgpd-cookie-banner,
+body.musica-display-route .lgpd-request-trigger {
   display: none;
 }
 
