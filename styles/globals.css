@@ -1622,6 +1622,7 @@ body.musica-display-route * {
   flex: none;
   overflow: hidden;
   padding-bottom: 0;
+  column-fill: auto;
 }
 
 .musica-display-screen--live .musica-display-header-16x9 {
