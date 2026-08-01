@@ -49,6 +49,7 @@ async function runDesktop(width, height) {
         activeBackground: activeStyle.backgroundImage,
         activeColor: activeStyle.color,
         railBackground: ribbonRail.backgroundImage,
+        railBackgroundColor: ribbonRail.backgroundColor,
         activeShadow: activeStyle.boxShadow,
       };
     });
@@ -59,7 +60,7 @@ async function runDesktop(width, height) {
     if (visualState.activeBackground === "none" || visualState.activeColor === "rgb(28, 32, 31)") {
       throw new Error(`Contraste insuficiente na aba ${index + 1}: ${JSON.stringify(visualState)}`);
     }
-    if (visualState.railBackground === "none" || visualState.activeShadow === "none") {
+    if ((visualState.railBackground === "none" && visualState.railBackgroundColor === "rgba(0, 0, 0, 0)") || visualState.activeShadow === "none") {
       throw new Error(`Acabamento visual ausente na aba ${index + 1}: ${JSON.stringify(visualState)}`);
     }
   }
