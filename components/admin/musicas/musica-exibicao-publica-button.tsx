@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { setMusicaExibicaoPublicaAction } from "@/app/admin/reuniao-publica/musicas/actions";
-import { IconExternalLink } from "@/components/icons";
+import { IconBroadcast, IconExternalLink } from "@/components/icons";
 import { showToast } from "@/components/ui/toast-notification";
 
 type MusicaExibicaoPublicaButtonProps = {
@@ -59,8 +59,11 @@ export function MusicaExibicaoPublicaButton({ musicaId, isAtiva }: MusicaExibica
       onClick={handleActivate}
       disabled={loading}
       className="admin-btn admin-btn-small musica-public-toggle-button"
+      aria-label={loading ? "Ativando exibição pública" : "Tornar música ao vivo"}
+      title={loading ? "Ativando exibição pública" : "Tornar música ao vivo"}
     >
-      {loading ? "Ativando..." : "Tornar ao vivo"}
+      <IconBroadcast size={15} />
+      <span>{loading ? "Ativando..." : "Tornar ao vivo"}</span>
     </button>
   );
 }

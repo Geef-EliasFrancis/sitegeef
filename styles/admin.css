@@ -2073,11 +2073,20 @@
     overflow-wrap: normal;
   }
 
-  .musica-catalog-table th:nth-child(4),
+  .musica-catalog-table th:nth-child(3),
   .musica-catalog-table th:nth-child(5),
-  .musica-catalog-table td:nth-child(4),
+  .musica-catalog-table td:nth-child(3),
   .musica-catalog-table td:nth-child(5) {
     display: none;
+  }
+
+  .musica-catalog-table th:nth-child(4) {
+    font-size: 0;
+  }
+
+  .musica-catalog-table th:nth-child(4)::after {
+    content: "◉";
+    font-size: 0.85rem;
   }
 
   .musica-catalog-table th:nth-child(6) {
@@ -2099,6 +2108,30 @@
   .musica-catalog-table td:nth-child(6) .flex-end-gap {
     display: flex;
     gap: 0.25rem;
+  }
+
+  .musica-catalog-table td:nth-child(4) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-inline: 0;
+  }
+
+  .musica-catalog-table .musica-public-toggle-button,
+  .musica-catalog-table .musica-public-toggle-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    min-height: 2rem;
+    padding: 0;
+    border-radius: 999px;
+  }
+
+  .musica-catalog-table .musica-public-toggle-button span,
+  .musica-catalog-table .musica-public-toggle-link span {
+    display: none;
   }
 
   .musica-catalog-table .music-catalog-row-action {
