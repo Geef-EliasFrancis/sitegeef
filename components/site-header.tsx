@@ -80,6 +80,7 @@ export function SiteHeader({
 
   return (
     <header className="site-header">
+      <div className="site-header-row">
       <Link href="/" className="site-header-brand" aria-label={site.name}>
         <span className="site-header-brand-logo">
           <Image
@@ -144,6 +145,7 @@ export function SiteHeader({
         avatarUrl={avatarUrl}
         hasAdminAccess={hasAdminAccess}
       />
+      </div>
 
       {activeGroup && !mobileMenuOpen && (
         <section className="site-context-navigation" aria-label={`Opções de ${activeGroup.label}`}>
