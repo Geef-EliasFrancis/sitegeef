@@ -24,6 +24,7 @@ export function UserMenu({
   hasAdminAccess,
 }: UserMenuProps) {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [avatarLoadFailed, setAvatarLoadFailed] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
   const { theme, toggleTheme } = useTheme();
   const copy = getMultilingualCopy(locale);
@@ -32,6 +33,10 @@ export function UserMenu({
     normalizedEmail === "contatogeef@gmail.com" ||
     normalizedEmail === "app.jmr@gmail.com";
   const canAccessAdmin = Boolean(hasAdminAccess || isAdminByEmail);
+
+  useEffect(() => {
+    setAvatarLoadFailed(false);
+  }, [avatarUrl]);
 
   useEffect(() => {
     function handleClickOutside(e: MouseEvent) {
@@ -130,7 +135,7 @@ export function UserMenu({
         aria-label={locale === "en" ? "User menu" : "Menu de usuário"}
         aria-expanded={menuOpen}
       >
-        {avatarUrl ? (
+        {avatarUrl && !avatarLoadFailed ? (
           <Image
             src={avatarUrl}
             alt="Avatar"
@@ -138,6 +143,7 @@ export function UserMenu({
             height={44}
             className="site-header-user-avatar"
             unoptimized
+            onError={() => setAvatarLoadFailed(true)}
           />
         ) : (
           <div className="site-header-user-initial">👤</div>
@@ -147,7 +153,7 @@ export function UserMenu({
       {menuOpen && (
         <div className="site-header-user-dropdown">
           <div className="site-header-user-info site-header-user-info-compact">
-            {avatarUrl ? (
+            {avatarUrl && !avatarLoadFailed ? (
               <Image
                 src={avatarUrl}
                 alt="Avatar"
@@ -155,6 +161,7 @@ export function UserMenu({
                 height={48}
                 className="site-header-user-avatar-lg"
                 unoptimized
+                onError={() => setAvatarLoadFailed(true)}
               />
             ) : (
               <div className="site-header-user-initial-lg">👤</div>
