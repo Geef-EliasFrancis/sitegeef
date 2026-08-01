@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useAdminShellArea } from '@/components/admin/use-admin-shell-area';
 
 type AdminSidebarProps = {
@@ -24,7 +24,8 @@ export function AdminSidebar({ usuarioSistema }: AdminSidebarProps) {
   const pathname = usePathname();
   const currentPath = pathname ?? '';
   const [expandedGroups, setExpandedGroups] = useState<Record<string, boolean>>({});
-  const [mobileOpen, setMobileOpen] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(true);
+  const previousPathRef = useRef(pathname);
   const isAdministrador = usuarioSistema?.perfil === 'administrador';
   const currentPerfil = usuarioSistema?.perfil ?? '';
   const { area } = useAdminShellArea();
@@ -74,7 +75,14 @@ export function AdminSidebar({ usuarioSistema }: AdminSidebarProps) {
   }, []);
 
   useEffect(() => {
-    setMobileOpen(false);
+    setMobileOpen(!window.matchMedia('(max-width: 767px)').matches);
+  }, []);
+
+  useEffect(() => {
+    if (previousPathRef.current !== pathname) {
+      setMobileOpen(false);
+      previousPathRef.current = pathname;
+    }
   }, [pathname]);
 
   const toggleGroup = (groupName: string) => {
@@ -128,7 +136,7 @@ export function AdminSidebar({ usuarioSistema }: AdminSidebarProps) {
       >
         {mobileOpen ? 'Fechar menu' : 'Abrir menu'}
       </button>
-    <aside id="admin-navigation" className={`admin-sidebar ${mobileOpen ? 'is-mobile-open' : ''}`}>
+    <aside id="admin-navigation" className={`admin-sidebar ${mobileOpen ? 'is-mobile-open' : 'is-collapsed'}`}>
       <nav className="admin-nav">
         {/* Dashboard */}
         {showDashboardArea && (
