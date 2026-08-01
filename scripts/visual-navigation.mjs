@@ -72,9 +72,22 @@ async function runDesktop(width, height) {
   const animationName = await page.locator(".site-context-navigation").first().evaluate((element) => getComputedStyle(element).animationName);
   if (animationName === "none") throw new Error("Dropdown desktop sem animação");
   const headerBox = await page.locator(".site-header").boundingBox();
+  const navigationBox = await page.locator(".site-nav-primary").boundingBox();
+  const profileBox = await page.locator(".site-header-right").boundingBox();
+  if (!navigationBox || !profileBox || navigationBox.x + navigationBox.width > profileBox.x + 1) {
+    throw new Error(`Barra sobrepõe o perfil em ${width}px: ${JSON.stringify({ navigationBox, profileBox })}`);
+  }
+  const segmentsInsideNavigation = await page.locator(".site-nav-primary > *").evaluateAll((segments, navigation) => {
+    const navigationBox = navigation.getBoundingClientRect();
+    return segments.every((segment) => {
+      const segmentBox = segment.getBoundingClientRect();
+      return segmentBox.left >= navigationBox.left - 1 && segmentBox.right <= navigationBox.right + 1;
+    });
+  }, await page.locator(".site-nav-primary").elementHandle());
+  if (!segmentsInsideNavigation) throw new Error(`Aba fora dos limites da barra em ${width}px`);
   await page.screenshot({
     path: `${outputDir}/desktop-${width}-dropdown-focused.png`,
-    clip: headerBox ? { x: 0, y: 0, width: Math.min(width, headerBox.width), height: Math.min(height, headerBox.y + headerBox.height + 280) } : undefined,
+    clip: headerBox ? { x: 0, y: 0, width, height: Math.min(height, headerBox.y + headerBox.height + 280) } : undefined,
   });
 
   const noHorizontalOverflow = await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth + 1);
@@ -125,7 +138,9 @@ async function runMobile(width, height) {
 
 try {
   await runDesktop(1440, 900);
+  await runDesktop(1024, 900);
   await runDesktop(900, 900);
+  await runDesktop(768, 900);
   await runMobile(390, 844);
   console.log(JSON.stringify({ ok: true, screenshots: outputDir, results }, null, 2));
 } finally {

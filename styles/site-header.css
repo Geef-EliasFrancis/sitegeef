@@ -1615,3 +1615,52 @@
     text-decoration: none;
   }
 }
+
+/* Contrato responsivo final: a barra nunca ultrapassa logo e perfil. */
+@media (min-width: 768px) {
+  .site-header-row {
+    gap: clamp(0.25rem, 0.7vw, 0.55rem);
+  }
+
+  .site-header-brand,
+  .site-header-right {
+    flex: 0 0 auto;
+  }
+
+  .site-nav-primary {
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+    flex: 1 1 0;
+    width: auto;
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  .site-nav-primary > *,
+  .site-nav-group,
+  .site-nav-home-btn,
+  .site-nav-group-trigger,
+  .site-nav-primary > .site-nav-contact-btn {
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  .site-nav-home-btn,
+  .site-nav-group-trigger,
+  .site-nav-primary > .site-nav-contact-btn {
+    padding-inline: clamp(0.18rem, 0.55vw, 0.44rem);
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .site-header-brand-logo {
+    height: clamp(2.7rem, 5.5vw, 3.25rem);
+  }
+
+  .site-nav-home-btn,
+  .site-nav-group-trigger,
+  .site-nav-primary > .site-nav-contact-btn {
+    font-size: clamp(0.57rem, 1.05vw, 0.66rem);
+  }
+}
