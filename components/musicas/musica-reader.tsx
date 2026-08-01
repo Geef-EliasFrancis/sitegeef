@@ -492,16 +492,38 @@ export function MusicaReader({
         ref={displayScreenRef}
         className="musica-display-screen musica-display-screen--reader musica-display-screen--live"
       >
-        <div className="musica-display-floating-controls">
+        <div className="musica-display-command-bar" role="toolbar" aria-label="Comandos da exibição">
           <Link
             href="/musicas"
-            className="musica-display-back-btn"
+            className="musica-display-command-button"
             aria-label="Voltar ao catálogo"
             title="Voltar ao catálogo"
           >
             <IconArrowLeft size={16} />
             <span>Voltar</span>
           </Link>
+          <button
+            type="button"
+            className="musica-display-command-button"
+            onClick={() => window.print()}
+            aria-label="Imprimir música"
+            title="Imprimir música"
+          >
+            <IconPrinter size={16} />
+            <span>Imprimir</span>
+          </button>
+          {hasMedia ? (
+            <button
+              type="button"
+              className="musica-display-command-button"
+              onClick={() => setPipHidden((hidden) => !hidden)}
+              aria-label={pipHidden ? "Mostrar vídeo" : "Ocultar vídeo"}
+              title={pipHidden ? "Mostrar vídeo" : "Ocultar vídeo"}
+            >
+              <span aria-hidden="true">{pipHidden ? "▶" : "■"}</span>
+              <span>{pipHidden ? "Vídeo" : "Ocultar"}</span>
+            </button>
+          ) : null}
         </div>
 
         <div className="musica-display-header-16x9">
@@ -545,8 +567,26 @@ export function MusicaReader({
                   </div>
                 </div>
               );
-            })}
+          })}
         </div>
+
+        {hasMedia && !pipHidden ? (
+          <div className="musica-display-video-overlay" role="dialog" aria-label="Vídeo da música">
+            {musica.youtube_url ? (
+              <iframe
+                src={musica.youtube_url.replace("watch?v=", "embed/")}
+                title="Vídeo da música"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowFullScreen
+              />
+            ) : (
+              <audio controls autoPlay>
+                <source src={musica.audio_url ?? undefined} type="audio/mpeg" />
+                Seu navegador não suporta reprodução de áudio.
+              </audio>
+            )}
+          </div>
+        ) : null}
       </main>
     );
   }

@@ -1604,8 +1604,8 @@ body.musica-display-route .site-shell {
   padding-bottom: clamp(0.5rem, calc(1.15rem * var(--display-fit-scale, 1)), 1.4rem);
 }
 
-.musica-display-screen--live .musica-display-floating-controls {
-  display: none;
+.musica-display-screen--live .musica-display-command-bar {
+  display: flex;
 }
 
 .musica-display-screen--live .musica-display-body-16x9 {
@@ -1689,6 +1689,98 @@ body.musica-display-route .musica-display-screen--reader {
   top: clamp(0.85rem, 1.5vw, 1.2rem);
   left: clamp(0.85rem, 1.5vw, 1.2rem);
   z-index: 20;
+}
+
+.musica-display-command-bar {
+  position: fixed;
+  right: clamp(0.85rem, 1.5vw, 1.2rem);
+  bottom: clamp(0.85rem, 1.5vw, 1.2rem);
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.35rem;
+  border: 1px solid rgba(101, 0, 76, 0.16);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 8px 24px rgba(56, 26, 52, 0.16);
+  backdrop-filter: blur(12px);
+}
+
+.musica-display-command-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.38rem;
+  min-height: 2.35rem;
+  padding: 0.55rem 0.78rem;
+  border: 1px solid rgba(101, 0, 76, 0.2);
+  border-radius: 999px;
+  background: #fff;
+  color: #3a2834;
+  font: inherit;
+  font-size: 0.82rem;
+  font-weight: 750;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.musica-display-command-button:hover,
+.musica-display-command-button:focus-visible {
+  border-color: #8a005a;
+  color: #65004c;
+  outline: 3px solid rgba(138, 0, 90, 0.16);
+  outline-offset: 2px;
+}
+
+.musica-display-video-overlay {
+  position: fixed;
+  right: clamp(0.85rem, 1.5vw, 1.2rem);
+  bottom: 4.5rem;
+  z-index: 25;
+  width: min(30vw, 28rem);
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border: 2px solid #65004c;
+  border-radius: 1rem;
+  background: #181318;
+  box-shadow: 0 16px 40px rgba(28, 10, 25, 0.3);
+}
+
+.musica-display-video-overlay iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.musica-display-video-overlay audio {
+  width: calc(100% - 1.5rem);
+  margin: 2rem 0.75rem;
+}
+
+@media (max-width: 600px) {
+  .musica-display-command-bar {
+    right: 0.65rem;
+    bottom: 0.65rem;
+    left: 0.65rem;
+    justify-content: center;
+  }
+
+  .musica-display-command-button {
+    flex: 1;
+    padding-inline: 0.5rem;
+  }
+
+  .musica-display-command-button span:last-child {
+    display: none;
+  }
+
+  .musica-display-video-overlay {
+    right: 0.65rem;
+    bottom: 4.2rem;
+    left: 0.65rem;
+    width: auto;
+  }
 }
 
 .musica-display-back-btn {
