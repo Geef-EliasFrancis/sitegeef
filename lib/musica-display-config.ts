@@ -24,7 +24,7 @@ const configs: Record<string, MusicaDisplayConfig> = {
   "Paz Pela Paz": { columns: 3, scale: 0.62 },
   "Quanta Luz": { columns: 2, scale: 1.35 },
   Reencarnação: { columns: 3, scale: 0.62 },
-  "Santa Casa Santa": { columns: 3, scale: 0.52 },
+  "Santa Casa Santa": { columns: 3, scale: 0.45 },
   "VIDA E MAGIA": { columns: 3, scale: 0.62 },
 };
 
