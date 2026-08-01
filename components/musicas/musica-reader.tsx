@@ -202,8 +202,10 @@ export function MusicaReader({
 
     // Para músicas curtas: force mais colunas para melhor legibilidade
     let columns;
-    if (viewport.width < 980) {
+    if (viewport.width < 600) {
       columns = 1;
+    } else if (viewport.width < 980 && viewport.width > viewport.height) {
+      columns = 3;
     } else if (totalLines <= 16) {
       // Música muito curta: prefira 3-4 colunas
       columns = Math.min(maxColumnsByWidth, 4);
