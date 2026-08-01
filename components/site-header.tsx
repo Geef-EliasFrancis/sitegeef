@@ -103,7 +103,7 @@ export function SiteHeader({
               aria-expanded={openGroup === group.key}
               onClick={() => setOpenGroup(openGroup === group.key ? null : group.key)}
             >
-              {group.label}<span aria-hidden="true">⌄</span>
+              {group.label}
             </button>
           </div>
         ))}
@@ -126,7 +126,7 @@ export function SiteHeader({
           {navGroups.map((group) => (
             <div key={group.key} className="site-mobile-nav-group">
               <button type="button" className="site-mobile-nav-group-trigger" onClick={() => setOpenGroup(openGroup === group.key ? null : group.key)} aria-expanded={openGroup === group.key}>
-                {group.label}<span aria-hidden="true">{openGroup === group.key ? "−" : "+"}</span>
+                {group.label}
               </button>
               {openGroup === group.key && group.links.map((item) => (
                 <Link key={`${group.key}-mobile-${item.href}`} href={item.href} className="site-nav-dropdown-item" onClick={() => setMobileMenuOpen(false)}>
