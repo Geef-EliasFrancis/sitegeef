@@ -23,6 +23,7 @@
     "type-check": "tsc --noEmit",
     "lint": "eslint . --ext .ts,.tsx",
     "lint:design-system": "node scripts/validate-design-system.js",
+    "gate:responsive-admin": "node scripts/validate-admin-responsive.mjs",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "postbuild": "node scripts/copy-standalone-assets.js",
