@@ -77,13 +77,6 @@ export function MusicasCatalog({ musicas, activeMusicaId = null }: MusicasCatalo
           </article>
         ) : (
           filtered.map((musica) => {
-            const meta = [
-              musica.tom ? `Tom ${musica.tom}` : null,
-              musica.versao ?? null,
-            ]
-              .filter(Boolean)
-              .join(" • ");
-
             return (
               <article
                 key={musica.id}
@@ -94,9 +87,6 @@ export function MusicasCatalog({ musicas, activeMusicaId = null }: MusicasCatalo
                     className="musica-catalog-line"
                     title={`${musica.autor} • ${musica.titulo}`}
                   >
-                    <span className="musica-catalog-author-inline">
-                      {musica.autor}
-                    </span>
                     <Link
                       href={`/musicas/${musica.slug}`}
                       className="musica-catalog-title-inline musica-catalog-title-link"
@@ -105,9 +95,6 @@ export function MusicasCatalog({ musicas, activeMusicaId = null }: MusicasCatalo
                     >
                       {musica.titulo}
                     </Link>
-                    {meta && (
-                      <span className="musica-catalog-meta-inline">{meta}</span>
-                    )}
                   </p>
 
                   <div className="musica-catalog-actions">
