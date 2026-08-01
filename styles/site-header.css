@@ -918,6 +918,7 @@
     grid-template-columns: repeat(5, minmax(0, 1fr));
     gap: 0;
     align-items: stretch;
+    padding-right: 0.4rem;
   }
 
   .site-nav-group {
@@ -928,14 +929,16 @@
     width: 100%;
     min-height: 2.55rem;
     justify-content: center;
-    padding-inline: 0.55rem;
+    margin-left: -0.45rem;
+    padding-inline: 0.85rem;
     border-radius: 0;
     white-space: nowrap;
-    clip-path: polygon(0.5rem 0, calc(100% - 0.5rem) 0, 100% 50%, calc(100% - 0.5rem) 100%, 0.5rem 100%, 0 50%);
-    background: var(--surface-secondary);
-    border: 1px solid var(--border-medium);
+    clip-path: polygon(1rem 0, calc(100% - 1rem) 0, 100% 50%, calc(100% - 1rem) 100%, 1rem 100%, 0 50%);
+    background: var(--surface-secondary-hover);
+    border: 2px solid var(--border-medium);
     box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5), inset 0 -1px 0 rgba(0, 0, 0, 0.06);
     transform: skewX(-10deg);
+    z-index: 1;
   }
 
   .site-nav-group-trigger > span,
@@ -947,13 +950,20 @@
     background: var(--surface-primary);
   }
 
+  .site-nav-group:first-child .site-nav-group-trigger {
+    margin-left: 0;
+    clip-path: polygon(0 0, calc(100% - 1rem) 0, 100% 50%, calc(100% - 1rem) 100%, 0 100%);
+  }
+
   .site-nav-group-trigger[aria-expanded="true"] {
     background: var(--surface-primary-hover);
   }
 
   .site-nav-contact-btn {
+    margin-left: -0.35rem;
+    padding-inline: 0.85rem;
     border-radius: 0;
-    clip-path: polygon(0.5rem 0, calc(100% - 0.5rem) 0, 100% 50%, calc(100% - 0.5rem) 100%, 0.5rem 100%, 0 50%);
+    clip-path: polygon(0.85rem 0, calc(100% - 0.85rem) 0, 100% 50%, calc(100% - 0.85rem) 100%, 0.85rem 100%, 0 50%);
     transform: skewX(-10deg);
   }
 
@@ -966,11 +976,12 @@
   }
 
   .site-nav-group:first-child .site-nav-group-trigger {
-    clip-path: polygon(0 0, calc(100% - 0.5rem) 0, 100% 50%, calc(100% - 0.5rem) 100%, 0 100%);
+    margin-left: 0;
+    clip-path: polygon(0 0, calc(100% - 1rem) 0, 100% 50%, calc(100% - 1rem) 100%, 0 100%);
   }
 
   .site-nav-group:last-child .site-nav-group-trigger {
-    clip-path: polygon(0.5rem 0, 100% 0, 100% 100%, 0.5rem 100%, 0 50%);
+    clip-path: polygon(1rem 0, 100% 0, 100% 100%, 1rem 100%, 0 50%);
   }
 
   .site-context-navigation {
