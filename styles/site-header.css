@@ -945,6 +945,11 @@
     background: var(--surface-primary-hover);
   }
 
+  .site-nav-contact-btn {
+    border-radius: 0;
+    clip-path: polygon(0.5rem 0, calc(100% - 0.5rem) 0, 100% 50%, calc(100% - 0.5rem) 100%, 0.5rem 100%, 0 50%);
+  }
+
   .site-nav-group-label-full {
     display: none;
   }
