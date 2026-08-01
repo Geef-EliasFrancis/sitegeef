@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { setMusicaExibicaoPublicaAction } from "@/app/admin/reuniao-publica/musicas/actions";
-import { IconBroadcast, IconExternalLink } from "@/components/icons";
+import { IconBroadcast } from "@/components/icons";
 import { showToast } from "@/components/ui/toast-notification";
 
 type MusicaExibicaoPublicaButtonProps = {
@@ -47,8 +47,7 @@ export function MusicaExibicaoPublicaButton({ musicaId, isAtiva }: MusicaExibica
         aria-label="Abrir exibição pública"
         title="Abrir exibição pública"
       >
-        <span>Ao vivo</span>
-        <IconExternalLink size={12} />
+        <IconBroadcast className="musica-public-live-icon" size={15} />
       </Link>
     );
   }
@@ -62,7 +61,7 @@ export function MusicaExibicaoPublicaButton({ musicaId, isAtiva }: MusicaExibica
       aria-label={loading ? "Ativando exibição pública" : "Tornar música ao vivo"}
       title={loading ? "Ativando exibição pública" : "Tornar música ao vivo"}
     >
-      <IconBroadcast size={15} />
+      <IconBroadcast className="musica-public-live-icon" size={15} />
       <span>{loading ? "Ativando..." : "Tornar ao vivo"}</span>
     </button>
   );

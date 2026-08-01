@@ -925,6 +925,33 @@
   font-size: 0.8rem;
 }
 
+.musica-catalog-table .music-catalog-row-action,
+.musica-catalog-table .musica-public-toggle-button,
+.musica-catalog-table .musica-public-toggle-link {
+  width: 2.1rem;
+  height: 2.1rem;
+  min-height: 2.1rem;
+  padding: 0;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.musica-catalog-table .music-catalog-row-action span,
+.musica-catalog-table .musica-public-toggle-button span,
+.musica-catalog-table .musica-public-toggle-link span {
+  display: none;
+}
+
+.musica-catalog-table .musica-public-toggle-button .musica-public-live-icon {
+  color: var(--uva);
+}
+
+.musica-catalog-table .musica-public-toggle-link .musica-public-live-icon {
+  color: var(--status-success-text);
+}
+
 .admin-btn-danger {
   color: var(--danger);
   border-color: rgba(239, 68, 68, 0.25);
