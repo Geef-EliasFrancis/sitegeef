@@ -3,6 +3,7 @@
 import { getNomeMes, getProximaQuinta, formatarDataLonga } from "@/lib/escalas/datas";
 import { useAdminShellArea } from "@/components/admin/use-admin-shell-area";
 import type { AdminDashboardSummary } from "@/lib/admin/dashboard";
+import { AdminMetricCard, AdminPanel } from "@/components/admin/ui";
 
 type AdminDashboardWorkspaceProps = {
   summary: AdminDashboardSummary;
@@ -18,11 +19,7 @@ function SectionCard({
   actions: Array<{ href: string; label: string }>;
 }) {
   return (
-    <div className="admin-card admin-dashboard-panel admin-area-panel">
-      <div className="admin-section-heading">
-        <span className="admin-dashboard-kicker">{title}</span>
-        <p>{description}</p>
-      </div>
+    <AdminPanel eyebrow={title} description={description}>
 
       {actions.length > 0 && (
         <div className="admin-dashboard-actions">
@@ -33,7 +30,7 @@ function SectionCard({
           ))}
         </div>
       )}
-    </div>
+    </AdminPanel>
   );
 }
 
@@ -80,14 +77,8 @@ export function AdminDashboardWorkspace({ summary }: AdminDashboardWorkspaceProp
           <div className="admin-card admin-dashboard-panel admin-subtle-card">
             <span className="admin-inline-pill">Atalhos</span>
             <div className="admin-card-grid admin-metric-grid">
-              <div className="admin-card admin-stat-card">
-                <p className="admin-stat-value">2</p>
-                <p className="admin-stat-label">Rotas principais</p>
-              </div>
-              <div className="admin-card admin-stat-card">
-                <p className="admin-stat-value">1</p>
-                <p className="admin-stat-label">Sessão ativa</p>
-              </div>
+              <AdminMetricCard value="2" label="Rotas principais" />
+              <AdminMetricCard value="1" label="Sessão ativa" />
             </div>
           </div>
         </div>

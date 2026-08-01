@@ -11,6 +11,8 @@
 - [Handoff de ativação completa do MCP Supabase](./SUPABASE_MCP_ACTIVATION_HANDOFF.md)
 - [Sistema de tema](./reference/THEME_SYSTEM.md)
 - [Padrão de tema, contraste e identidade](./PADRAO_TEMA_CONTRASTE_IDENTIDADE.md)
+- [Catálogo visual de telas e componentes](./UI-CATALOG.md)
+- [Arquitetura SOLID do frontend](./SOLID-ARCHITECTURE.md)
 
 ## Por assunto
 
@@ -20,6 +22,7 @@
 - [Sistema de tema](./reference/THEME_SYSTEM.md)
 - [Padrão de tema, contraste e identidade](./PADRAO_TEMA_CONTRASTE_IDENTIDADE.md)
 - [CSS correction summary](./reference/CSS_CORRECTION_SUMMARY.md)
+- [Catálogo visual de telas e componentes](./UI-CATALOG.md)
 
 ### Cache e Supabase
 
