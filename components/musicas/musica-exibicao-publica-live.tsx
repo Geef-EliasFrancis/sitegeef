@@ -49,7 +49,17 @@ export function MusicaExibicaoPublicaLive({
 
         const nextData = (await response.json()) as SessaoResponse;
         if (!cancelled) {
-          setData(nextData);
+          setData((current) => {
+            const currentSession = current?.sessao;
+            const nextSession = nextData.sessao;
+            const sameSessionState =
+              currentSession?.codigo_pareamento === nextSession?.codigo_pareamento &&
+              currentSession?.musica_id === nextSession?.musica_id &&
+              currentSession?.ativo === nextSession?.ativo &&
+              current?.musica?.id === nextData.musica?.id;
+
+            return sameSessionState ? current : nextData;
+          });
         }
       } catch (error) {
         console.error("Erro ao atualizar exibição pública:", error);
