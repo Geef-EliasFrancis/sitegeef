@@ -902,3 +902,59 @@
     background-color: rgba(34, 31, 29, 0.95) !important;
   }
 }
+
+/* Organização estrutural do menu: navegação primária segmentada + contexto em faixa própria. */
+@media (min-width: 1024px) {
+  .site-nav-primary {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 0;
+    align-items: stretch;
+  }
+
+  .site-nav-group {
+    min-width: 0;
+  }
+
+  .site-nav-group-trigger {
+    width: 100%;
+    min-height: 2.55rem;
+    justify-content: center;
+    padding-inline: 0.55rem;
+    border-radius: 0;
+    white-space: nowrap;
+    clip-path: polygon(0.5rem 0, calc(100% - 0.5rem) 0, 100% 50%, calc(100% - 0.5rem) 100%, 0.5rem 100%, 0 50%);
+  }
+
+  .site-nav-group:first-child .site-nav-group-trigger {
+    clip-path: polygon(0 0, calc(100% - 0.5rem) 0, 100% 50%, calc(100% - 0.5rem) 100%, 0 100%);
+  }
+
+  .site-nav-group:last-child .site-nav-group-trigger {
+    clip-path: polygon(0.5rem 0, 100% 0, 100% 100%, 0.5rem 100%, 0 50%);
+  }
+
+  .site-context-navigation {
+    grid-template-columns: minmax(12rem, 0.75fr) minmax(0, 2fr);
+    align-items: center;
+  }
+
+  .site-context-navigation-links {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scrollbar-width: thin;
+  }
+
+  .site-context-navigation-link {
+    flex: 0 0 auto;
+    min-width: max-content;
+    border-radius: 0.55rem;
+    white-space: nowrap;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .site-nav-group-trigger {
+    white-space: nowrap;
+  }
+}
