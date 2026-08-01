@@ -182,7 +182,7 @@ export function MusicaDisplayLive({
   let estrofeCount = 0;
 
   return (
-    <main className="musica-display-screen">
+    <main className="musica-display-screen musica-display-screen--live">
       {/* Header */}
       <div className="musica-display-header-16x9">
         <div className="musica-display-header-title">

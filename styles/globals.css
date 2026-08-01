@@ -1568,6 +1568,49 @@ body.musica-display-route .site-shell {
   box-sizing: border-box;
 }
 
+/* Modo projetor: contraste alto, tipografia grande e leitura a distancia. */
+.musica-display-screen--live {
+  --display-columns: 2;
+  --display-title-size: clamp(2.4rem, 4vw, 4.2rem);
+  --display-subtitle-size: clamp(1rem, 1.5vw, 1.45rem);
+  --display-verse-text: clamp(1.45rem, 2.05vw, 2.35rem);
+  --display-body-gap: clamp(1rem, 2.2vw, 2rem);
+  --display-body-pad-top: clamp(1rem, 2vw, 2rem);
+  --display-body-pad-x: clamp(1.2rem, 2.5vw, 3rem);
+  background: #10131c;
+  color: #ffffff;
+}
+
+.musica-display-screen--live .musica-display-header-16x9 {
+  border-bottom-color: rgba(255, 255, 255, 0.2);
+}
+
+.musica-display-screen--live .musica-display-header-title h1,
+.musica-display-screen--live .musica-display-verse-content pre {
+  color: #ffffff;
+  text-shadow: 0 2px 0 rgba(0, 0, 0, 0.5), 0 3px 12px rgba(0, 0, 0, 0.55);
+  -webkit-text-stroke: 0;
+}
+
+.musica-display-screen--live .musica-display-header-subtitle {
+  color: #dce5f5;
+  text-shadow: 0 2px 5px rgba(0, 0, 0, 0.55);
+}
+
+.musica-display-screen--live .musica-display-verse-num {
+  width: clamp(2.4rem, 3.2vw, 3.4rem);
+  height: clamp(2.4rem, 3.2vw, 3.4rem);
+  background: #8a005a;
+  font-size: clamp(1.2rem, 1.7vw, 1.8rem);
+}
+
+@media (max-width: 767px) {
+  .musica-display-screen--live {
+    --display-columns: 1;
+    --display-verse-text: 1.2rem;
+  }
+}
+
 .musica-display-screen--reader {
   background: linear-gradient(to bottom, #fafaf8, #f5f0fa);
   position: relative;
