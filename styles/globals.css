@@ -1579,6 +1579,12 @@ body.musica-display-route .site-shell {
   --display-body-pad-x: clamp(0.8rem, 2.5vw, 3rem);
   background: #10131c;
   color: #ffffff;
+  width: 100vw;
+  height: 100dvh;
+  min-height: 0;
+  overflow: hidden;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
 }
 
 .musica-display-screen--live .musica-display-header-16x9 {
@@ -1588,7 +1594,9 @@ body.musica-display-route .site-shell {
 }
 
 .musica-display-screen--live .musica-display-body-16x9 {
-  height: 0;
+  height: auto;
+  min-height: 0;
+  flex: none;
   overflow: hidden;
   padding-bottom: 0;
 }
