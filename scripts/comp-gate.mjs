@@ -30,6 +30,7 @@ const responsiveContract = [
   ['catálogo tem busca móvel recolhida', musicCatalogSource.includes('music-catalog-search-toggle') && musicCatalogSource.includes('setSearchOpen(false)')],
   ['catálogo tem ação móvel por ícone', musicCatalogSource.includes('music-catalog-create-label') && adminCss.includes('.music-catalog-create-label')],
   ['catálogo não repete área no título', !musicCatalogSource.includes('>Reunião pública<')],
+  ['catálogo móvel prioriza leitura', musicCatalogSource.includes('musica-catalog-table') && adminCss.includes('.musica-catalog-table') && adminCss.includes('grid-template-columns: minmax(0, 1.45fr)')],
   ['top menu móvel tem ícones e tooltip', adminHeaderSource.includes('admin-shell-tab-icon') && adminHeaderSource.includes('title={`${item.label}: ${item.note}`}') && adminCss.includes('.admin-shell-tab-label')],
   ['top menu móvel compartilha linha com usuário', adminCss.includes('grid-template-columns: minmax(0, 1fr) auto') && adminCss.includes('.admin-header-right') && adminCss.includes('.admin-header .admin-brand')],
 ];
@@ -68,10 +69,13 @@ try {
         const right = document.querySelector('.admin-header-right')?.getBoundingClientRect();
         const tabTops = tabs.map((tab) => Math.round(tab.getBoundingClientRect().top));
         const noHorizontalOverflow = document.documentElement.scrollWidth <= window.innerWidth + 1;
+        const catalog = document.querySelector('.musica-catalog-table');
+        const catalogNoOverflow = !catalog || catalog.scrollWidth <= catalog.clientWidth + 1;
         const sameTabRow = tabTops.length < 2 || Math.max(...tabTops) - Math.min(...tabTops) <= 2;
         const sidebarVisible = window.innerWidth < 768 || (sidebar && getComputedStyle(sidebar).display !== 'none' && (navigation?.getBoundingClientRect().width ?? 0) > 0);
         return {
           noHorizontalOverflow,
+          catalogNoOverflow,
           sameTabRow,
           sidebarVisible,
           headerHeight: headerBox?.height ?? 0,
@@ -110,6 +114,7 @@ try {
       if (!result.noHorizontalOverflow) errors.push('overflow horizontal');
       if (viewport.width >= 768 && !result.sameTabRow) errors.push('top menu quebrou linha');
       if (viewport.width < 768 && !result.headerSingleRow) errors.push('header mobile quebrou linha');
+      if (route.endsWith('/musicas') && viewport.width < 768 && !result.catalogNoOverflow) errors.push('catálogo com overflow horizontal');
       if (!result.sidebarVisible) errors.push('menu lateral oculto');
       if (errors.length) failures.push(`${route} @ ${viewport.width}x${viewport.height}: ${errors.join(', ')}`);
       console.log(`${errors.length ? '✗' : '✓'} ${route} @ ${viewport.width}x${viewport.height}`);

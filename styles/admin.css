@@ -2030,6 +2030,77 @@
     border-radius: 999px;
   }
 
+  .musica-catalog-surface {
+    min-width: 0;
+    padding: 0.65rem;
+    overflow: hidden;
+  }
+
+  .musica-catalog-table {
+    display: block;
+    min-width: 0;
+    border-radius: 0;
+  }
+
+  .musica-catalog-table thead,
+  .musica-catalog-table tbody,
+  .musica-catalog-table tr {
+    display: grid;
+    min-width: 0;
+  }
+
+  .musica-catalog-table thead,
+  .musica-catalog-table tr {
+    grid-template-columns: minmax(0, 1.45fr) minmax(0, 1fr) 2.3rem 4.4rem;
+  }
+
+  .musica-catalog-table th,
+  .musica-catalog-table td {
+    min-width: 0;
+    padding: 0.65rem 0.45rem;
+    overflow-wrap: anywhere;
+  }
+
+  .musica-catalog-table th:nth-child(4),
+  .musica-catalog-table th:nth-child(5),
+  .musica-catalog-table td:nth-child(4),
+  .musica-catalog-table td:nth-child(5) {
+    display: none;
+  }
+
+  .musica-catalog-table th:nth-child(6) {
+    visibility: hidden;
+  }
+
+  .musica-catalog-table td:nth-child(1),
+  .musica-catalog-table td:nth-child(2) {
+    line-height: 1.25;
+  }
+
+  .musica-catalog-table td:nth-child(6) {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-inline: 0;
+  }
+
+  .musica-catalog-table td:nth-child(6) .flex-end-gap {
+    display: flex;
+    gap: 0.25rem;
+  }
+
+  .musica-catalog-table .music-catalog-row-action {
+    width: 2rem;
+    height: 2rem;
+    min-height: 2rem;
+    padding: 0;
+    border-radius: 999px;
+  }
+
+  .musica-catalog-table .music-catalog-row-action span {
+    display: none;
+  }
+
   .music-catalog-create-label {
     display: none;
   }

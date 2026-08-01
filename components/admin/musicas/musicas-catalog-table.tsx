@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useDeferredValue, useEffect, useMemo, useRef, useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { IconPlus, IconSearch, IconX } from "@/components/icons";
+import { IconEdit, IconExternalLink, IconPlus, IconSearch, IconX } from "@/components/icons";
 import type { Musica } from "@/lib/musicas";
 import { getStatusLabel } from "@/lib/musicas";
 import { MusicaExibicaoPublicaButton } from "./musica-exibicao-publica-button";
@@ -207,7 +207,7 @@ export function MusicasCatalogTable({
       )}
 
       <section className="area-section">
-        <div className="admin-card table-surface">
+        <div className="admin-card table-surface musica-catalog-surface">
           <div className="area-section-title flex-space-between">
             <h2>Catálogo</h2>
             <span className="table-cell-text-muted">
@@ -225,7 +225,7 @@ export function MusicasCatalogTable({
               )}
             </div>
           ) : (
-            <table className="admin-table">
+            <table className="admin-table musica-catalog-table">
               <thead>
                 <tr>
                   <th>Título</th>
@@ -252,11 +252,13 @@ export function MusicasCatalogTable({
                     </td>
                     <td className="table-align-right">
                       <div className="flex-end-gap">
-                        <Link href={`/admin/reuniao-publica/musicas/${musica.id}`} className="admin-btn admin-btn-small">
-                          Editar
+                        <Link href={`/admin/reuniao-publica/musicas/${musica.id}`} className="admin-btn admin-btn-small music-catalog-row-action" aria-label={`Editar ${musica.titulo}`} title={`Editar ${musica.titulo}`}>
+                          <IconEdit size={15} />
+                          <span>Editar</span>
                         </Link>
-                        <Link href={`/musicas/${musica.slug}`} className="admin-btn admin-btn-small" target="_blank" rel="noreferrer">
-                          Ler
+                        <Link href={`/musicas/${musica.slug}`} className="admin-btn admin-btn-small music-catalog-row-action" target="_blank" rel="noreferrer" aria-label={`Ler ${musica.titulo}`} title={`Ler ${musica.titulo}`}>
+                          <IconExternalLink size={15} />
+                          <span>Ler</span>
                         </Link>
                       </div>
                     </td>
