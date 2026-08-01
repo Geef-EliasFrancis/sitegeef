@@ -320,6 +320,10 @@
   white-space: nowrap;
 }
 
+.admin-shell-tab-icon {
+  display: none;
+}
+
 .admin-shell-tab small {
   font-size: 0.68rem;
   color: var(--muted);
@@ -1895,15 +1899,29 @@
 
   .admin-shell-tabs {
     display: flex;
-    width: max-content;
-    min-width: 100%;
+    width: 100%;
+    min-width: 0;
     gap: 0.35rem;
   }
 
   .admin-shell-tab {
-    flex: 0 0 auto;
+    flex: 1 1 0;
+    align-items: center;
+    justify-content: center;
     min-height: 2.7rem;
-    padding-inline: 0.75rem;
+    padding: 0.35rem;
+  }
+
+  .admin-shell-tab-label {
+    display: none;
+  }
+
+  .admin-shell-tab-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+    line-height: 1;
   }
 
   .admin-user-card {

@@ -18,6 +18,7 @@ const viewports = [
 const adminCss = fs.readFileSync('styles/admin.css', 'utf8');
 const sidebarCss = fs.readFileSync('styles/admin-sidebar.css', 'utf8');
 const musicCatalogSource = fs.readFileSync('components/admin/musicas/musicas-catalog-table.tsx', 'utf8');
+const adminHeaderSource = fs.readFileSync('components/admin/admin-header.tsx', 'utf8');
 const shellTabsBlock = adminCss.match(/\.admin-shell-tabs\s*\{[^}]*\}/s)?.[0] ?? '';
 const responsiveContract = [
   ['header tablet em duas colunas', adminCss.includes('grid-template-columns: minmax(0, 1fr) auto')],
@@ -28,6 +29,7 @@ const responsiveContract = [
   ['conteúdo pode encolher', adminCss.includes('.admin-main') && adminCss.includes('min-width: 0')],
   ['catálogo tem busca móvel recolhida', musicCatalogSource.includes('music-catalog-search-toggle') && musicCatalogSource.includes('setSearchOpen(false)')],
   ['catálogo tem ação móvel por ícone', musicCatalogSource.includes('music-catalog-create-label') && adminCss.includes('.music-catalog-create-label')],
+  ['top menu móvel tem ícones e tooltip', adminHeaderSource.includes('admin-shell-tab-icon') && adminHeaderSource.includes('title={`${item.label}: ${item.note}`}') && adminCss.includes('.admin-shell-tab-label')],
 ];
 
 for (const [name, passed] of responsiveContract) console.log(`${passed ? '✓' : '✗'} contrato: ${name}`);

@@ -4,6 +4,19 @@ import Link from 'next/link';
 import { useAdminShellArea } from '@/components/admin/use-admin-shell-area';
 import { AdminUserMenu } from '@/components/admin/admin-user-menu';
 import type { Locale } from '@/lib/multilingual';
+import type { AdminShellArea } from '@/components/admin/use-admin-shell-area';
+
+const shellIcons: Record<AdminShellArea, string> = {
+  painel: '⌂',
+  perfil: '◉',
+  geef: '✦',
+  pessoas: '♙',
+  'reuniao-publica': '♫',
+  governanca: '◇',
+  documentos: '▤',
+  operacao: '⚙',
+  sistema: '◌',
+};
 
 interface AdminHeaderProps {
   locale: Locale;
@@ -30,9 +43,11 @@ export function AdminHeader({ locale, user }: AdminHeaderProps) {
               href={routes[item.key]}
               className={`admin-shell-tab ${area === item.key ? 'active' : ''}`}
               aria-current={area === item.key ? 'page' : undefined}
-              title={item.note}
+              aria-label={`${item.label}: ${item.note}`}
+              title={`${item.label}: ${item.note}`}
             >
-              <span>{item.label}</span>
+              <span className="admin-shell-tab-icon" aria-hidden="true">{shellIcons[item.key]}</span>
+              <span className="admin-shell-tab-label">{item.label}</span>
             </Link>
           ))}
         </div>
