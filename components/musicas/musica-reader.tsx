@@ -193,8 +193,8 @@ export function MusicaReader({
     const density = totalLines * 24 + totalChars / 22 + partesVisiveis.length * 72;
     const heightFactor = Math.min(1, viewport.height / 900);
     const widthFactor = Math.min(1, viewport.width / 1600);
-    const densityFactor = density > 1200 ? 0.78 : density > 900 ? 0.86 : density > 650 ? 0.92 : 1;
-    const scale = Math.max(0.78, Math.min(1, heightFactor * widthFactor * densityFactor + 0.08));
+    const densityFactor = density > 1200 ? 0.9 : density > 900 ? 0.95 : density > 650 ? 0.98 : 1;
+    const scale = Math.max(0.88, Math.min(1, heightFactor * widthFactor * densityFactor + 0.15));
     const maxColumnsByWidth = isFullDisplay
       ? Math.min(4, Math.max(2, Math.floor((viewport.width - 80) / 300)))
       : Math.min(4, Math.max(2, Math.floor((viewport.width - 80) / 280)));
