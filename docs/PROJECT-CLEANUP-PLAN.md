@@ -70,3 +70,5 @@ Reduzir ruído no checkout, separar código-fonte de artefatos gerados, organiza
 - Índices, lint de agentes, Autoreflex e `agent-map.json` foram atualizados para os novos caminhos.
 - Revisão de scripts concluída nesta etapa: seis duplicatas/one-offs sem referência foram removidos; scripts de migração, MCP, Autoreflex e recuperação operacional foram preservados.
 - Arquivos históricos `baseinicial.md`, `bootstrap.txt` e `migration-log.txt` foram movidos para `docs/archive/legacy/`.
+- Validação final da organização: type-check, 66 testes, comp gate estrutural, gate responsivo, lint dos dez módulos e `git diff --check` aprovados.
+- Commits desta limpeza: `d12ae9a`, `61897ed`, `eb61ebf` e `7c1b270`.
