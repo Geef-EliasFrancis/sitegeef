@@ -378,6 +378,8 @@ body.musica-display-route .lgpd-request-trigger {
 html.musica-display-route,
 body.musica-display-route {
   overflow: hidden;
+  width: 100%;
+  height: 100%;
 }
 
 html.musica-display-route .site-shell-main,
@@ -1686,8 +1688,13 @@ body.musica-display-route * {
 
 html.musica-display-route .musica-display-screen--reader,
 body.musica-display-route .musica-display-screen--reader {
-  width: 100vw;
-  min-height: 100dvh;
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100vh;
+  min-height: 0;
+  max-height: 100vh;
+  overflow: hidden;
 }
 
 .musica-display-floating-controls {
