@@ -1501,7 +1501,7 @@
 @media (min-width: 768px) {
   .site-nav-primary {
     align-items: end;
-    gap: 0;
+    gap: 0.12rem;
     padding: 0.18rem 0.18rem 0;
     background: #f4f4f4;
     border: 1px solid #bdbdbd;
@@ -1521,10 +1521,10 @@
   .site-nav-home-btn,
   .site-nav-group-trigger,
   .site-nav-primary > .site-nav-contact-btn {
-    width: calc(100% + 0.22rem);
+    width: 100%;
     height: 2.28rem;
     min-height: 2.28rem;
-    align-self: stretch;
+    align-self: end;
     margin-left: 0;
     padding: 0.36rem 0.44rem 0.48rem;
     border: 1px solid rgba(255, 255, 255, 0.48);
@@ -1548,7 +1548,8 @@
   }
 
   .site-nav-group {
-    margin-left: -0.22rem;
+    align-self: end;
+    margin-left: 0;
   }
 
   .site-nav-group:nth-child(3) .site-nav-group-trigger,
@@ -1556,12 +1557,16 @@
     background: linear-gradient(180deg, #ff8140, #df321d) !important;
   }
 
-  .site-nav-group:nth-child(4) .site-nav-group-trigger {
-    background: linear-gradient(180deg, #7b7b7b, #4f4f4f) !important;
-  }
-
   .site-nav-group:nth-child(6) .site-nav-group-trigger {
     background: linear-gradient(180deg, #ff6e36, #cf2119) !important;
+  }
+
+  .site-nav-group:not(:first-child)::after,
+  .site-nav-primary > .site-nav-contact-btn::before,
+  .site-nav-group-trigger::after,
+  .site-nav-primary > .site-nav-contact-btn::after {
+    display: none !important;
+    content: none !important;
   }
 
   .site-nav-group-trigger::after,
@@ -1587,7 +1592,8 @@
     margin-top: 0;
     color: #ffffff;
     background: linear-gradient(180deg, #747474, #4b4b4b) !important;
-    box-shadow: inset 0 1px rgba(255, 255, 255, 0.42), 0 -0.1rem 0.26rem rgba(55, 55, 55, 0.28);
+    font-weight: 700;
+    box-shadow: inset 0 1px rgba(255, 255, 255, 0.42), inset 0 -0.2rem #3f3f3f, 0 -0.1rem 0.26rem rgba(55, 55, 55, 0.28);
   }
 
   .site-nav-group.is-active .site-nav-group-trigger[data-state="active"]::before {
@@ -1605,7 +1611,7 @@
 
   .site-nav-primary > .site-nav-contact-btn {
     z-index: 8;
-    margin-left: -0.22rem;
+    margin-left: 0;
     text-decoration: none;
   }
 }
