@@ -1102,6 +1102,15 @@
 @media (min-width: 768px) {
   .site-nav-primary {
     align-items: center;
+    column-gap: 0;
+  }
+
+  .site-nav-group {
+    margin-left: -0.35rem;
+  }
+
+  .site-nav-group:first-child {
+    margin-left: 0;
   }
 
   .site-nav-group-trigger,
@@ -1109,6 +1118,8 @@
   .site-nav-group:last-child .site-nav-group-trigger,
   .site-nav-contact-btn {
     min-height: 2.3rem;
+    width: calc(100% + 0.35rem);
+    margin-left: 0;
     border: 1px solid var(--border-medium);
     border-radius: 1.5rem 0.7rem 1.5rem 0.7rem;
     transform: skewX(-8deg);
@@ -1160,7 +1171,23 @@
   }
 
   .site-nav-contact-btn {
+    width: auto;
+    margin-left: -0.45rem;
     background: var(--surface-primary);
     box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.65);
+  }
+
+  .site-header-right {
+    gap: 0;
+  }
+
+  .site-header-user {
+    margin-left: 0.35rem;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .site-nav-contact-btn {
+    width: 4rem;
   }
 }
