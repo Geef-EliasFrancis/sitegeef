@@ -524,6 +524,18 @@ export function MusicaReader({
               <span>{pipHidden ? "Vídeo" : "Ocultar"}</span>
             </button>
           ) : null}
+          {podeAlternarCifra ? (
+            <button
+              type="button"
+              className="musica-display-command-button"
+              onClick={() => setViewMode(viewMode === "letra" ? "cifra" : "letra")}
+              aria-label={`Exibir ${viewMode === "letra" ? "cifra" : "letra"}`}
+              title={`Exibir ${viewMode === "letra" ? "cifra" : "letra"}`}
+            >
+              <span aria-hidden="true">🎼</span>
+              <span>{viewMode === "letra" ? "Cifra" : "Letra"}</span>
+            </button>
+          ) : null}
         </div>
 
         <div className="musica-display-header-16x9">
