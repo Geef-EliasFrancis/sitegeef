@@ -30,6 +30,7 @@ const responsiveContract = [
   ['catálogo tem busca móvel recolhida', musicCatalogSource.includes('music-catalog-search-toggle') && musicCatalogSource.includes('setSearchOpen(false)')],
   ['catálogo tem ação móvel por ícone', musicCatalogSource.includes('music-catalog-create-label') && adminCss.includes('.music-catalog-create-label')],
   ['top menu móvel tem ícones e tooltip', adminHeaderSource.includes('admin-shell-tab-icon') && adminHeaderSource.includes('title={`${item.label}: ${item.note}`}') && adminCss.includes('.admin-shell-tab-label')],
+  ['top menu móvel compartilha linha com usuário', adminCss.includes('grid-template-columns: minmax(0, 1fr) auto') && adminCss.includes('.admin-header-right')],
 ];
 
 for (const [name, passed] of responsiveContract) console.log(`${passed ? '✓' : '✗'} contrato: ${name}`);
@@ -62,6 +63,8 @@ try {
         const sidebar = document.querySelector('.admin-sidebar');
         const main = document.querySelector('.admin-main');
         const headerBox = header?.getBoundingClientRect();
+        const middle = document.querySelector('.admin-header-middle')?.getBoundingClientRect();
+        const right = document.querySelector('.admin-header-right')?.getBoundingClientRect();
         const tabTops = tabs.map((tab) => Math.round(tab.getBoundingClientRect().top));
         const noHorizontalOverflow = document.documentElement.scrollWidth <= window.innerWidth + 1;
         const sameTabRow = tabTops.length < 2 || Math.max(...tabTops) - Math.min(...tabTops) <= 2;
@@ -71,6 +74,7 @@ try {
           sameTabRow,
           sidebarVisible,
           headerHeight: headerBox?.height ?? 0,
+          headerSingleRow: window.innerWidth >= 768 || !middle || !right || Math.abs(middle.top - right.top) <= 3,
           loginRedirect: location.pathname === '/login',
         };
       });
@@ -99,6 +103,7 @@ try {
       if (result.loginRedirect) errors.push('sessão não autenticada');
       if (!result.noHorizontalOverflow) errors.push('overflow horizontal');
       if (viewport.width >= 768 && !result.sameTabRow) errors.push('top menu quebrou linha');
+      if (viewport.width < 768 && !result.headerSingleRow) errors.push('header mobile quebrou linha');
       if (!result.sidebarVisible) errors.push('menu lateral oculto');
       if (errors.length) failures.push(`${route} @ ${viewport.width}x${viewport.height}: ${errors.join(', ')}`);
       console.log(`${errors.length ? '✗' : '✓'} ${route} @ ${viewport.width}x${viewport.height}`);
