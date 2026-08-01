@@ -7,6 +7,7 @@ import type { Musica } from "@/lib/musicas";
 import { formatParteTipoLabel, isTituloSameasTipo } from "@/lib/musicas";
 import { IconArrowLeft, IconPrinter } from "@/components/icons";
 import { MusicaExibicaoPublicaButton } from "@/components/musicas/musica-exibicao-publica-button";
+import { getMusicaDisplayConfig } from "@/lib/musica-display-config";
 
 function isChordLine(line: string): boolean {
   if (!line || !line.trim()) return false;
@@ -386,10 +387,12 @@ export function MusicaReader({
                 ? 6
                 : 5.8;
 
+    const displayConfig = getMusicaDisplayConfig(musica.titulo);
+
     return {
       scale,
-      columns,
-      rows: Math.max(1, Math.ceil(partesVisiveis.length / columns)),
+      columns: displayConfig.columns ?? columns,
+      rows: Math.max(1, Math.ceil(partesVisiveis.length / (displayConfig.columns ?? columns))),
       bodyGap,
       headerPaddingY,
       headerPaddingX,
@@ -402,7 +405,7 @@ export function MusicaReader({
       verseText,
       verseMinHeight,
     };
-  }, [displayDensity, partesVisiveis, viewport.height, viewport.width]);
+  }, [displayDensity, musica.titulo, partesVisiveis, viewport.height, viewport.width]);
 
   useEffect(() => {
     const el = displayScreenRef.current;
@@ -411,22 +414,22 @@ export function MusicaReader({
     }
 
     const properties: Record<string, string> = {
-      "--display-scale": String(displayMetrics.scale),
-      "--display-fit-scale": String(displayMetrics.scale),
+      "--display-scale": String(getMusicaDisplayConfig(musica.titulo).scale ?? displayMetrics.scale),
+      "--display-fit-scale": String(getMusicaDisplayConfig(musica.titulo).scale ?? displayMetrics.scale),
       "--display-columns": String(displayMetrics.columns),
       "--display-rows": String(displayMetrics.rows),
-      "--display-body-gap": `${displayMetrics.bodyGap * displayMetrics.scale}rem`,
-      "--display-header-pad-y": `${displayMetrics.headerPaddingY * displayMetrics.scale}rem`,
-      "--display-header-pad-x": `${displayMetrics.headerPaddingX * displayMetrics.scale}rem`,
-      "--display-body-pad-x": `${displayMetrics.headerPaddingX * displayMetrics.scale}rem`,
-      "--display-title-size": `${displayMetrics.titleSize * displayMetrics.scale}rem`,
-      "--display-subtitle-size": `${displayMetrics.subtitleSize * displayMetrics.scale}rem`,
-      "--display-logo-width": `${displayMetrics.logoWidth * displayMetrics.scale}px`,
-      "--display-body-pad-top": `${displayMetrics.bodyPaddingTop * displayMetrics.scale}rem`,
-      "--display-verse-pad": `${displayMetrics.versePad * displayMetrics.scale}rem`,
-      "--display-verse-title": `${displayMetrics.verseTitle * (displayDensity === "full" ? 1.25 : 1) * displayMetrics.scale}rem`,
-      "--display-verse-text": `${displayMetrics.verseText * (displayDensity === "full" ? 1.45 : 1) * displayMetrics.scale}rem`,
-      "--display-verse-min-height": `${displayMetrics.verseMinHeight * displayMetrics.scale}rem`,
+      "--display-body-gap": `${displayMetrics.bodyGap * (getMusicaDisplayConfig(musica.titulo).scale ?? displayMetrics.scale)}rem`,
+      "--display-header-pad-y": `${displayMetrics.headerPaddingY * (getMusicaDisplayConfig(musica.titulo).scale ?? displayMetrics.scale)}rem`,
+      "--display-header-pad-x": `${displayMetrics.headerPaddingX * (getMusicaDisplayConfig(musica.titulo).scale ?? displayMetrics.scale)}rem`,
+      "--display-body-pad-x": `${displayMetrics.headerPaddingX * (getMusicaDisplayConfig(musica.titulo).scale ?? displayMetrics.scale)}rem`,
+      "--display-title-size": `${displayMetrics.titleSize * (getMusicaDisplayConfig(musica.titulo).scale ?? displayMetrics.scale)}rem`,
+      "--display-subtitle-size": `${displayMetrics.subtitleSize * (getMusicaDisplayConfig(musica.titulo).scale ?? displayMetrics.scale)}rem`,
+      "--display-logo-width": `${displayMetrics.logoWidth * (getMusicaDisplayConfig(musica.titulo).scale ?? displayMetrics.scale)}px`,
+      "--display-body-pad-top": `${displayMetrics.bodyPaddingTop * (getMusicaDisplayConfig(musica.titulo).scale ?? displayMetrics.scale)}rem`,
+      "--display-verse-pad": `${displayMetrics.versePad * (getMusicaDisplayConfig(musica.titulo).scale ?? displayMetrics.scale)}rem`,
+      "--display-verse-title": `${displayMetrics.verseTitle * (displayDensity === "full" ? 1.25 : 1) * (getMusicaDisplayConfig(musica.titulo).scale ?? displayMetrics.scale)}rem`,
+      "--display-verse-text": `${displayMetrics.verseText * (displayDensity === "full" ? 1.45 : 1) * (getMusicaDisplayConfig(musica.titulo).scale ?? displayMetrics.scale)}rem`,
+      "--display-verse-min-height": `${displayMetrics.verseMinHeight * (getMusicaDisplayConfig(musica.titulo).scale ?? displayMetrics.scale)}rem`,
     };
 
     Object.entries(properties).forEach(([property, value]) => {

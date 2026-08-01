@@ -1625,6 +1625,7 @@ body.musica-display-route * {
   display: grid;
   grid-template-columns: repeat(var(--display-columns, 3), minmax(0, 1fr));
   grid-template-rows: repeat(var(--display-rows, 5), auto);
+  grid-auto-rows: max-content;
   grid-auto-flow: column;
   align-content: start;
   column-count: initial;
