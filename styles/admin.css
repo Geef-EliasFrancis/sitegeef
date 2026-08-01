@@ -531,8 +531,8 @@
 }
 
 .admin-page-header--music-catalog {
-  grid-template-columns: minmax(0, 1fr) minmax(280px, 420px) auto;
-  align-items: end;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
 }
 
 .admin-page-header--hero {
@@ -571,10 +571,50 @@
 
 .music-catalog-search-toggle,
 .music-catalog-search-close {
-  display: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.35rem;
+  height: 2.35rem;
+  flex: 0 0 auto;
+  padding: 0;
+  border: 1px solid var(--border-medium);
+  border-radius: 999px;
+  background: var(--surface-tertiary);
+  color: var(--text-primary);
+  cursor: pointer;
 }
 
 .music-catalog-mobile-search {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  width: 100%;
+}
+
+.music-catalog-mobile-search input {
+  min-width: 0;
+  width: 100%;
+  padding: 0.65rem 0.8rem;
+  border: 1px solid var(--border-medium);
+  border-radius: 999px;
+  background: var(--input-bg);
+  color: var(--input-text);
+  font: inherit;
+}
+
+.admin-page-header--music-catalog > .admin-search-bar--catalog {
+  display: none;
+}
+
+.admin-page-header--music-catalog .music-catalog-create {
+  width: 2.7rem;
+  min-height: 2.7rem;
+  padding: 0;
+  border-radius: 999px;
+}
+
+.music-catalog-create-label {
   display: none;
 }
 
@@ -1805,7 +1845,7 @@
   }
 
   .admin-page-header--music-catalog {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr) auto;
   }
 
   .admin-header-middle {
@@ -1983,55 +2023,10 @@
     font-size: clamp(1.55rem, 8vw, 2rem);
   }
 
-  .music-catalog-search-toggle,
-  .music-catalog-search-close {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 2.35rem;
-    height: 2.35rem;
-    flex: 0 0 auto;
-    padding: 0;
-    border: 1px solid var(--border-medium);
-    border-radius: 999px;
-    background: var(--surface-tertiary);
-    color: var(--text-primary);
-    cursor: pointer;
-  }
-
   .music-catalog-search-toggle:focus-visible,
   .music-catalog-search-close:focus-visible {
     outline: 3px solid var(--focus-outline);
     outline-offset: 2px;
-  }
-
-  .music-catalog-mobile-search {
-    display: flex;
-    align-items: center;
-    gap: 0.45rem;
-    width: 100%;
-  }
-
-  .music-catalog-mobile-search input {
-    min-width: 0;
-    width: 100%;
-    padding: 0.65rem 0.8rem;
-    border: 1px solid var(--border-medium);
-    border-radius: 999px;
-    background: var(--input-bg);
-    color: var(--input-text);
-    font: inherit;
-  }
-
-  .admin-page-header--music-catalog > .admin-search-bar--catalog {
-    display: none;
-  }
-
-  .admin-page-header--music-catalog .music-catalog-create {
-    width: 2.7rem;
-    min-height: 2.7rem;
-    padding: 0;
-    border-radius: 999px;
   }
 
   .musica-catalog-surface {
@@ -2147,10 +2142,6 @@
   }
 
   .musica-catalog-table .music-catalog-row-action span {
-    display: none;
-  }
-
-  .music-catalog-create-label {
     display: none;
   }
 

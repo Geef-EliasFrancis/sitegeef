@@ -86,7 +86,7 @@ try {
           loginRedirect: location.pathname === '/login',
         };
       });
-      if (route.endsWith('/musicas') && viewport.width < 768 && !result.loginRedirect) {
+      if (route.endsWith('/musicas') && !result.loginRedirect) {
         const searchToggle = page.locator('.music-catalog-search-toggle');
         const titleRow = page.locator('.admin-page-title-row');
         const mobileSearch = page.locator('.music-catalog-mobile-search');
