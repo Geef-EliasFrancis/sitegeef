@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useDeferredValue, useEffect, useMemo, useRef, useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { IconPlus } from "@/components/icons";
+import { IconPlus, IconSearch, IconX } from "@/components/icons";
 import type { Musica } from "@/lib/musicas";
 import { getStatusLabel } from "@/lib/musicas";
 import { MusicaExibicaoPublicaButton } from "./musica-exibicao-publica-button";
@@ -59,6 +59,7 @@ export function MusicasCatalogTable({
   const searchInputRef = useRef<HTMLInputElement>(null);
   const updateTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [searchText, setSearchText] = useState(initialQuery);
+  const [searchOpen, setSearchOpen] = useState(Boolean(initialQuery.trim()));
   const deferredSearchText = useDeferredValue(searchText);
 
   const filteredMusicas = useMemo(
@@ -71,9 +72,16 @@ export function MusicasCatalogTable({
   }, [initialQuery]);
 
   useEffect(() => {
-    searchInputRef.current?.focus();
-    searchInputRef.current?.select();
-  }, []);
+    if (searchOpen) {
+      searchInputRef.current?.focus();
+      searchInputRef.current?.select();
+    }
+  }, [searchOpen]);
+
+  const closeSearch = () => {
+    setSearchOpen(false);
+    setSearchText("");
+  };
 
   useEffect(() => {
     if (updateTimerRef.current) {
@@ -112,10 +120,47 @@ export function MusicasCatalogTable({
       <div className="admin-page-header admin-page-header--music-catalog">
         <div className="admin-page-header-copy">
           <span className="admin-dashboard-kicker">Reunião pública</span>
-          <div className="admin-page-title-row">
-            <h1 className="admin-page-title">Músicas</h1>
-            <span className="music-catalog-count-pill">{musicas.length} cadastradas</span>
-          </div>
+          {!searchOpen ? (
+            <div className="admin-page-title-row">
+              <h1 className="admin-page-title">Músicas</h1>
+              <span className="music-catalog-count-pill">{musicas.length} cadastradas</span>
+              <button
+                type="button"
+                className="music-catalog-search-toggle"
+                onClick={() => setSearchOpen(true)}
+                aria-label="Abrir busca de músicas"
+                aria-expanded="false"
+                aria-controls="musicas-admin-search-mobile"
+                title="Buscar músicas"
+              >
+                <IconSearch size={17} />
+              </button>
+            </div>
+          ) : (
+            <div className="music-catalog-mobile-search" role="search">
+              <label className="sr-only" htmlFor="musicas-admin-search-mobile">
+                Buscar músicas
+              </label>
+              <input
+                ref={searchInputRef}
+                id="musicas-admin-search-mobile"
+                type="search"
+                value={searchText}
+                onChange={(event) => setSearchText(event.target.value)}
+                placeholder="Buscar música..."
+                aria-label="Buscar músicas"
+              />
+              <button
+                type="button"
+                className="music-catalog-search-close"
+                onClick={closeSearch}
+                aria-label="Fechar busca de músicas"
+                title="Fechar busca"
+              >
+                <IconX size={17} />
+              </button>
+            </div>
+          )}
         </div>
 
         <div className="admin-search-bar admin-search-bar--catalog" role="search">
@@ -133,9 +178,14 @@ export function MusicasCatalogTable({
           />
         </div>
 
-        <Link href="/admin/reuniao-publica/musicas/nova" className="admin-btn admin-btn-primary flex-center-gap">
+        <Link
+          href="/admin/reuniao-publica/musicas/nova"
+          className="admin-btn admin-btn-primary flex-center-gap music-catalog-create"
+          aria-label="Adicionar música"
+          title="Adicionar música"
+        >
           <IconPlus size={18} />
-          Nova música
+          <span className="music-catalog-create-label">Nova música</span>
         </Link>
       </div>
 

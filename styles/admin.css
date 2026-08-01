@@ -565,6 +565,15 @@
   white-space: nowrap;
 }
 
+.music-catalog-search-toggle,
+.music-catalog-search-close {
+  display: none;
+}
+
+.music-catalog-mobile-search {
+  display: none;
+}
+
 .admin-page-header-chips {
   display: flex;
   flex-wrap: wrap;
@@ -1924,6 +1933,79 @@
     flex-direction: column;
     gap: 1rem;
     padding: 0.9rem;
+  }
+
+  .admin-page-header--music-catalog {
+    gap: 0.65rem;
+    padding: 0.8rem;
+  }
+
+  .admin-page-header--music-catalog .admin-page-header-copy {
+    width: 100%;
+  }
+
+  .admin-page-header--music-catalog .admin-page-title-row {
+    flex-wrap: nowrap;
+    gap: 0.45rem;
+  }
+
+  .admin-page-header--music-catalog .admin-page-title {
+    font-size: clamp(1.55rem, 8vw, 2rem);
+  }
+
+  .music-catalog-search-toggle,
+  .music-catalog-search-close {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.35rem;
+    height: 2.35rem;
+    flex: 0 0 auto;
+    padding: 0;
+    border: 1px solid var(--border-medium);
+    border-radius: 999px;
+    background: var(--surface-tertiary);
+    color: var(--text-primary);
+    cursor: pointer;
+  }
+
+  .music-catalog-search-toggle:focus-visible,
+  .music-catalog-search-close:focus-visible {
+    outline: 3px solid var(--focus-outline);
+    outline-offset: 2px;
+  }
+
+  .music-catalog-mobile-search {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    width: 100%;
+  }
+
+  .music-catalog-mobile-search input {
+    min-width: 0;
+    width: 100%;
+    padding: 0.65rem 0.8rem;
+    border: 1px solid var(--border-medium);
+    border-radius: 999px;
+    background: var(--input-bg);
+    color: var(--input-text);
+    font: inherit;
+  }
+
+  .admin-page-header--music-catalog > .admin-search-bar--catalog {
+    display: none;
+  }
+
+  .admin-page-header--music-catalog .music-catalog-create {
+    width: 2.7rem;
+    min-height: 2.7rem;
+    padding: 0;
+    border-radius: 999px;
+  }
+
+  .music-catalog-create-label {
+    display: none;
   }
 
   .admin-search-bar--catalog {

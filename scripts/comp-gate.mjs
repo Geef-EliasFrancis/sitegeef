@@ -6,7 +6,7 @@ const baseUrl = process.env.COMP_GATE_BASE_URL ?? 'http://127.0.0.1:3500';
 const storageState = process.env.COMP_GATE_STORAGE_STATE;
 const requireLive = process.env.COMP_GATE_REQUIRE_LIVE === '1';
 const outputDir = 'test-artifacts/comp-gate';
-const routes = ['/admin/painel', '/admin/reuniao-publica', '/admin/escalas', '/admin/financeiro'];
+const routes = ['/admin/painel', '/admin/reuniao-publica', '/admin/reuniao-publica/musicas', '/admin/escalas', '/admin/financeiro'];
 const viewports = [
   { width: 1440, height: 900, name: 'desktop' },
   { width: 1024, height: 768, name: 'tablet-wide' },
@@ -17,6 +17,7 @@ const viewports = [
 
 const adminCss = fs.readFileSync('styles/admin.css', 'utf8');
 const sidebarCss = fs.readFileSync('styles/admin-sidebar.css', 'utf8');
+const musicCatalogSource = fs.readFileSync('components/admin/musicas/musicas-catalog-table.tsx', 'utf8');
 const shellTabsBlock = adminCss.match(/\.admin-shell-tabs\s*\{[^}]*\}/s)?.[0] ?? '';
 const responsiveContract = [
   ['header tablet em duas colunas', adminCss.includes('grid-template-columns: minmax(0, 1fr) auto')],
@@ -25,6 +26,8 @@ const responsiveContract = [
   ['drawer limitado ao mobile', sidebarCss.includes('@media (max-width: 767px)')],
   ['rail tablet explicitamente visível', sidebarCss.includes('Tablet: o rail continua visível')],
   ['conteúdo pode encolher', adminCss.includes('.admin-main') && adminCss.includes('min-width: 0')],
+  ['catálogo tem busca móvel recolhida', musicCatalogSource.includes('music-catalog-search-toggle') && musicCatalogSource.includes('setSearchOpen(false)')],
+  ['catálogo tem ação móvel por ícone', musicCatalogSource.includes('music-catalog-create-label') && adminCss.includes('.music-catalog-create-label')],
 ];
 
 for (const [name, passed] of responsiveContract) console.log(`${passed ? '✓' : '✗'} contrato: ${name}`);
@@ -69,6 +72,23 @@ try {
           loginRedirect: location.pathname === '/login',
         };
       });
+      if (route.endsWith('/musicas') && viewport.width < 768 && !result.loginRedirect) {
+        const searchToggle = page.locator('.music-catalog-search-toggle');
+        const titleRow = page.locator('.admin-page-title-row');
+        const mobileSearch = page.locator('.music-catalog-mobile-search');
+        if (await searchToggle.count() !== 1 || await titleRow.count() !== 1 || await mobileSearch.count() !== 0) {
+          failures.push(`${route} @ ${viewport.width}x${viewport.height}: busca móvel não inicia recolhida`);
+        } else {
+          await searchToggle.click();
+          if (await page.locator('.music-catalog-mobile-search').count() !== 1 || await page.locator('.admin-page-title-row').count() !== 0) {
+            failures.push(`${route} @ ${viewport.width}x${viewport.height}: busca móvel não expandiu substituindo o título`);
+          }
+          await page.locator('.music-catalog-search-close').click();
+          if (await page.locator('.admin-page-title-row').count() !== 1) {
+            failures.push(`${route} @ ${viewport.width}x${viewport.height}: título não voltou após fechar busca`);
+          }
+        }
+      }
       await page.screenshot({ path: `${outputDir}/${viewport.name}-${route.replaceAll('/', '_') || 'root'}.png`, fullPage: true });
       await page.close();
 
