@@ -120,6 +120,10 @@ export function SiteHeader({
             </button>
           </div>
         ))}
+        <Link href="/contato" className="site-nav-contact-btn" aria-label="Contato">
+          <span className="site-nav-group-icon" aria-hidden="true">✉</span>
+          <span>Contato</span>
+        </Link>
       </nav>
 
       <button
@@ -148,6 +152,9 @@ export function SiteHeader({
               ))}
             </div>
           ))}
+          <Link href="/contato" className="site-nav-dropdown-item" onClick={() => setMobileMenuOpen(false)}>
+            Contato
+          </Link>
         </nav>
       )}
 

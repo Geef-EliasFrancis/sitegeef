@@ -1188,6 +1188,19 @@
 
 @media (min-width: 768px) and (max-width: 1023px) {
   .site-nav-contact-btn {
-    width: 4rem;
+    width: calc(100% + 0.35rem);
+  }
+}
+
+@media (min-width: 768px) {
+  .site-nav-primary {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+
+  .site-nav-primary > .site-nav-contact-btn {
+    width: calc(100% + 0.35rem);
+    min-width: 0;
+    margin-left: -0.35rem;
+    flex: initial;
   }
 }
