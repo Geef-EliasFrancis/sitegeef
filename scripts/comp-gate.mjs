@@ -18,6 +18,7 @@ const viewports = [
 const adminCss = fs.readFileSync('styles/admin.css', 'utf8');
 const sidebarCss = fs.readFileSync('styles/admin-sidebar.css', 'utf8');
 const musicCatalogSource = fs.readFileSync('components/admin/musicas/musicas-catalog-table.tsx', 'utf8');
+const publicDisplaySource = fs.readFileSync('components/admin/musicas/musica-exibicao-publica-button.tsx', 'utf8');
 const adminHeaderSource = fs.readFileSync('components/admin/admin-header.tsx', 'utf8');
 const shellTabsBlock = adminCss.match(/\.admin-shell-tabs\s*\{[^}]*\}/s)?.[0] ?? '';
 const responsiveContract = [
@@ -32,7 +33,7 @@ const responsiveContract = [
   ['catálogo não repete área no título', !musicCatalogSource.includes('>Reunião pública<')],
   ['catálogo móvel prioriza leitura', musicCatalogSource.includes('musica-catalog-table') && adminCss.includes('.musica-catalog-table') && adminCss.includes('grid-template-columns: minmax(0, 1.45fr)') && adminCss.includes('white-space: nowrap')],
   ['catálogo móvel reduz tom e status', adminCss.includes('.musica-catalog-table th:nth-child(3)') && adminCss.includes('.musica-catalog-table th:nth-child(5)')],
-  ['catálogo móvel usa ações por ícone', musicCatalogSource.includes('IconBroadcast') && adminCss.includes('.musica-public-toggle-button span')],
+  ['catálogo móvel usa ações por ícone', publicDisplaySource.includes('IconBroadcast') && adminCss.includes('.musica-public-toggle-button span')],
   ['top menu móvel tem ícones e tooltip', adminHeaderSource.includes('admin-shell-tab-icon') && adminHeaderSource.includes('title={`${item.label}: ${item.note}`}') && adminCss.includes('.admin-shell-tab-label')],
   ['top menu móvel compartilha linha com usuário', adminCss.includes('grid-template-columns: minmax(0, 1fr) auto') && adminCss.includes('.admin-header-right') && adminCss.includes('.admin-header .admin-brand')],
 ];
