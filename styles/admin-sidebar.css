@@ -18,15 +18,28 @@
   flex: 0 0 auto;
   align-items: center;
   justify-content: center;
-  min-height: 2.8rem;
-  padding: 0.65rem 0.9rem;
+  width: 2.6rem;
+  height: 2.6rem;
+  padding: 0;
   border: 1px solid rgba(138, 0, 90, 0.18);
-  border-radius: 999px;
+  border-radius: 0.9rem;
   background: rgba(248, 240, 255, 0.96);
   color: var(--uva-700);
   font: inherit;
-  font-weight: 800;
+  font-size: 1.35rem;
+  line-height: 1;
+  font-weight: 900;
   cursor: pointer;
+  box-shadow: 0 8px 22px rgba(42, 23, 51, 0.12);
+  transition: transform 160ms ease, background 160ms ease, box-shadow 160ms ease;
+}
+
+.admin-mobile-nav-toggle:hover,
+.admin-mobile-nav-toggle:focus-visible {
+  background: #fff;
+  box-shadow: 0 10px 26px rgba(42, 23, 51, 0.18);
+  outline: 3px solid rgba(138, 0, 90, 0.14);
+  outline-offset: 2px;
 }
 
 .admin-sidebar.is-collapsed {
@@ -35,7 +48,8 @@
 
 @media (max-width: 767px) {
   .admin-mobile-nav-toggle {
-    width: 100%;
+    position: relative;
+    z-index: 130;
   }
 }
 

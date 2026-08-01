@@ -132,9 +132,10 @@ export function AdminSidebar({ usuarioSistema }: AdminSidebarProps) {
         className="admin-mobile-nav-toggle"
         aria-expanded={mobileOpen}
         aria-controls="admin-navigation"
+        title={mobileOpen ? 'Recolher menu lateral' : 'Abrir menu lateral'}
         onClick={() => setMobileOpen((open) => !open)}
       >
-        {mobileOpen ? 'Fechar menu' : 'Abrir menu'}
+        <span aria-hidden="true">{mobileOpen ? '‹' : '☰'}</span>
       </button>
     <aside id="admin-navigation" className={`admin-sidebar ${mobileOpen ? 'is-mobile-open' : 'is-collapsed'}`}>
       <nav className="admin-nav">
