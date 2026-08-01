@@ -18,9 +18,6 @@ export default function AdminIdiomasPage() {
             <p className="area-subtitle">{copy.adminLanguages.lead}</p>
           </div>
           <div className="admin-actions">
-            <Link href="/admin/sistema" className="admin-btn admin-btn-secondary">
-              Sistema
-            </Link>
             <Link href="/admin/documentos" className="admin-btn admin-btn-secondary">
               Documentos
             </Link>

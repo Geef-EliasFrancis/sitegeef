@@ -306,22 +306,13 @@ export function AdminDashboardWorkspace({ summary }: AdminDashboardWorkspaceProp
             <h1 className="admin-page-title">Saúde e suporte</h1>
             <p className="admin-page-subtitle">Observabilidade, migrações, idiomas e usuários problemáticos.</p>
           </div>
-          <div className="admin-actions">
-            <Link href="/admin/sistema" className="admin-btn admin-btn-primary">🧭 Abrir sistema</Link>
-            <Link href="/admin/observability" className="admin-btn admin-btn-secondary">🧱 Observabilidade</Link>
-          </div>
         </section>
 
         <div className="admin-dashboard-hero">
           <SectionCard
             title="Suporte operacional"
-            description="Área para manutenção e diagnósticos do sistema."
-            actions={[
-              { href: "/admin/observability", label: "Observability" },
-              { href: "/admin/migrations", label: "Migrations" },
-              { href: "/admin/fix-usuarios", label: "Fix Usuários" },
-              { href: "/admin/idiomas", label: "Idiomas" },
-            ]}
+            description="Use o menu contextual acima para acessar manutenção, diagnósticos e configurações do sistema."
+            actions={[]}
           />
           <div className="admin-card admin-dashboard-panel admin-subtle-card">
             <span className="admin-inline-pill">Status</span>

@@ -31,7 +31,6 @@ export function AdminSidebar({ usuarioSistema }: AdminSidebarProps) {
   const { area } = useAdminShellArea();
   const showUserArea = area === 'pessoas' || area === 'perfil';
   const showDocumentsArea = area === 'documentos';
-  const showSystemArea = area === 'sistema';
   const showDashboardArea = area === 'painel';
   const showReuniaoPublicaArea = area === 'reuniao-publica';
 
@@ -370,30 +369,6 @@ export function AdminSidebar({ usuarioSistema }: AdminSidebarProps) {
               className={`admin-nav-item ${isActive('/admin/documentos/auditoria') ? 'active' : ''}`}
             >
               🧭 Auditoria LGPD
-            </Link>
-          </div>
-        )}
-
-        {/* Observabilidade */}
-        {showSystemArea && isAdministrador && (
-          <div className="admin-nav-section">
-            <Link
-              href="/admin/sistema"
-              className={`admin-nav-item ${isActive('/admin/sistema') ? 'active' : ''}`}
-            >
-              🧭 Sistema
-            </Link>
-            <Link
-              href="/admin/migrations"
-              className={`admin-nav-item ${isActive('/admin/migrations') ? 'active' : ''}`}
-            >
-              🧱 Migrations
-            </Link>
-            <Link
-              href="/admin/fix-usuarios"
-              className={`admin-nav-item ${isActive('/admin/fix-usuarios') ? 'active' : ''}`}
-            >
-              🔧 Fix Usuários
             </Link>
           </div>
         )}

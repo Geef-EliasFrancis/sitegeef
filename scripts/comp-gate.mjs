@@ -44,8 +44,10 @@ const responsiveContract = [
   ['submenu contextual é restrito às áreas configuradas', adminHeaderSource.includes("'reuniao-publica': [") && adminHeaderSource.includes('contextMenuItems &&')],
   ['submenu GEEF possui instituição e seis telas', ['Início', 'Instituição', 'Dados', 'Endereço', 'Agenda', 'Departamentos', 'Contas'].every((label) => adminHeaderSource.includes(`label: '${label}'`)) && adminHeaderSource.includes("geef: [")],
   ['submenu Tarefeiros possui início pessoas e funções', ['Início', 'Pessoas', 'Funções'].every((label) => adminHeaderSource.includes(`label: '${label}'`)) && adminHeaderSource.includes("pessoas: [") && fs.existsSync('app/admin/pessoas/inicio/page.tsx')],
+  ['submenu Sistema possui cinco telas', ['Início', 'Observabilidade', 'Migrações', 'Idiomas', 'Fix Usuários'].every((label) => adminHeaderSource.includes(`label: '${label}'`)) && adminHeaderSource.includes("sistema: [")],
   ['funções pertencem à área Tarefeiros', shellAreaSource.includes('normalizedPath.startsWith("/admin/funcoes")') && shellAreaSource.includes('return "pessoas"') && !shellAreaSource.match(/normalizedPath\.startsWith\("\/admin\/funcoes"\)[\s\S]{0,180}return "geef"/)],
   ['atalhos GEEF foram centralizados', !adminSidebarSource.includes('href="/admin/instituicao/identificacao"') && !adminSidebarSource.includes('href="/admin/instituicao/endereco"') && !adminSidebarSource.includes('href="/admin/instituicao/contas"') && !adminSidebarSource.includes('href="/admin/departamentos"') && !dashboardSource.includes('href: "/admin/departamentos"')],
+  ['atalhos Sistema saíram dos corpos', !adminSidebarSource.includes('href="/admin/migrations"') && !adminSidebarSource.includes('href="/admin/fix-usuarios"') && !dashboardSource.includes('href: "/admin/observability"')],
   ['submenu contextual é responsivo', adminCss.includes('.admin-context-menu-item') && adminCss.includes('overflow-x: auto')],
   ['painel possui variante compacta', dashboardSource.includes('admin-dashboard-page--panel') && adminCss.includes('.admin-dashboard-page--panel .admin-dashboard-mini-card')],
 ];

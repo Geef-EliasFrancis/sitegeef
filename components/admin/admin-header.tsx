@@ -41,6 +41,13 @@ const contextMenus: Partial<Record<AdminShellArea, readonly { label: string; hre
     { label: 'Pessoas', href: '/admin/pessoas' },
     { label: 'Funções', href: '/admin/funcoes' },
   ],
+  sistema: [
+    { label: 'Início', href: '/admin/sistema' },
+    { label: 'Observabilidade', href: '/admin/observability' },
+    { label: 'Migrações', href: '/admin/migrations' },
+    { label: 'Idiomas', href: '/admin/idiomas' },
+    { label: 'Fix Usuários', href: '/admin/fix-usuarios' },
+  ],
 };
 
 interface AdminHeaderProps {
