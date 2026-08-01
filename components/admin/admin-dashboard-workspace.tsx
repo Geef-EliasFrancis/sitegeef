@@ -113,10 +113,6 @@ export function AdminDashboardWorkspace({ summary }: AdminDashboardWorkspaceProp
             </p>
           </div>
 
-          <div className="admin-actions">
-            <Link href="/admin/instituicao/editar" className="admin-btn admin-btn-primary">🏛️ Editar instituição</Link>
-            <Link href="/admin/funcoes" className="admin-btn admin-btn-secondary">🎯 Funções</Link>
-          </div>
         </section>
 
         <div className="admin-dashboard-hero">
@@ -124,7 +120,6 @@ export function AdminDashboardWorkspace({ summary }: AdminDashboardWorkspaceProp
             title="Estrutura institucional"
             description="Abra os cadastros que mantêm a base organizacional da casa."
             actions={[
-              { href: "/admin/funcoes", label: "Funções" },
               { href: "/admin/instituicao/documentos", label: "Documentos" },
             ]}
           />
@@ -202,7 +197,6 @@ export function AdminDashboardWorkspace({ summary }: AdminDashboardWorkspaceProp
             <p className="admin-page-subtitle">Tudo que depende de cadastro de tarefeiro, usuário e estrutura interna.</p>
           </div>
           <div className="admin-actions">
-            <Link href="/admin/pessoas" className="admin-btn admin-btn-primary">👥 Abrir tarefeiros</Link>
             <Link href="/admin/usuarios" className="admin-btn admin-btn-secondary">🔑 Usuários</Link>
           </div>
         </section>
@@ -212,7 +206,6 @@ export function AdminDashboardWorkspace({ summary }: AdminDashboardWorkspaceProp
             title="Cadastro central"
             description="Abra a base de tarefeiros, vínculos e departamentos."
             actions={[
-              { href: "/admin/pessoas", label: "Tarefeiros" },
               { href: "/admin/usuarios", label: "Usuários e permissões" },
             ]}
           />

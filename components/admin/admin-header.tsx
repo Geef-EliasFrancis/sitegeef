@@ -29,11 +29,17 @@ const contextMenus: Partial<Record<AdminShellArea, readonly { label: string; hre
   ],
   geef: [
     { label: 'Início', href: '/admin/geef' },
+    { label: 'Instituição', href: '/admin/instituicao' },
     { label: 'Dados', href: '/admin/instituicao/identificacao' },
     { label: 'Endereço', href: '/admin/instituicao/endereco' },
     { label: 'Agenda', href: '/admin/reunioes-virtuais' },
     { label: 'Departamentos', href: '/admin/departamentos' },
     { label: 'Contas', href: '/admin/instituicao/contas' },
+  ],
+  pessoas: [
+    { label: 'Início', href: '/admin/pessoas/inicio' },
+    { label: 'Pessoas', href: '/admin/pessoas' },
+    { label: 'Funções', href: '/admin/funcoes' },
   ],
 };
 

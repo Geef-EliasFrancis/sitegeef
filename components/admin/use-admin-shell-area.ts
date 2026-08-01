@@ -114,14 +114,17 @@ export function getAdminShellAreaFromPath(pathname?: string | null): AdminShellA
   if (
     normalizedPath.startsWith("/admin/geef") ||
     normalizedPath.startsWith("/admin/instituicao") ||
-    normalizedPath.startsWith("/admin/funcoes") ||
     normalizedPath.startsWith("/admin/departamentos")
   ) {
     return "geef";
   }
   if (normalizedPath.startsWith("/admin/governanca")) return "governanca";
   if (normalizedPath.startsWith("/admin/documentos") || normalizedPath.startsWith("/admin/lgpd")) return "documentos";
-  if (normalizedPath.startsWith("/admin/pessoas") || normalizedPath.startsWith("/admin/usuarios")) {
+  if (
+    normalizedPath.startsWith("/admin/pessoas") ||
+    normalizedPath.startsWith("/admin/usuarios") ||
+    normalizedPath.startsWith("/admin/funcoes")
+  ) {
     return "pessoas";
   }
   if (matchesAnyPrefix(normalizedPath, OPERACAO_PREFIXES)) {
