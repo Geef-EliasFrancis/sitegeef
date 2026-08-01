@@ -180,7 +180,6 @@ export function MusicaDisplayLive({
   const estrofes = musica.partes.filter((p) => p.tipo === "estrofe" || p.tipo === "ponte" || p.tipo === "intro");
   const refraoDestacado = musica.partes.find((p) => p.tipo === "refrao");
 
-  let estrofeCount = 0;
   const fitScale = estrofes.length <= 4 ? 1 : estrofes.length <= 6 ? 0.86 : estrofes.length <= 8 ? 0.72 : 0.6;
 
   return (
@@ -212,13 +211,8 @@ export function MusicaDisplayLive({
       {/* Body com estrofes em 2 colunas */}
       <div className="musica-display-body-16x9">
         {estrofes.map((parte) => {
-          if (parte.tipo === "estrofe") {
-            estrofeCount++;
-          }
-
           return (
             <div key={parte.id ?? `${musica.id}-${parte.ordem}`} className="musica-display-verse-16x9">
-              <div className="musica-display-verse-num">{estrofeCount}</div>
               <div className="musica-display-verse-content">
                 <pre>{parte.conteudo}</pre>
               </div>

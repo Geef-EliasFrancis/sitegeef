@@ -480,8 +480,6 @@ export function MusicaReader({
   }, [musica.id]);
 
   if (isDisplay) {
-    let estrofeCount = 0;
-
     return (
       <main
         ref={displayScreenRef}
@@ -519,13 +517,7 @@ export function MusicaReader({
           {musica.partes
             .filter((parte) => !mostrarCifra || parte.cifra)
             .map((parte, index) => {
-              if (parte.tipo === "estrofe") {
-                estrofeCount += 1;
-              }
-
               const tipoLabel = formatParteTipoLabel(parte.tipo);
-              const displayLabel =
-                parte.tipo === "estrofe" ? `${tipoLabel} ${String(estrofeCount).padStart(2, "0")}` : tipoLabel;
 
               return (
                 <div
@@ -533,7 +525,6 @@ export function MusicaReader({
                   className={`musica-display-verse-16x9 musica-display-verse-16x9--reader ${parte.destaque ? "is-highlighted" : ""}`}
                 >
                   <div className="musica-display-verse-content musica-display-verse-content--reader">
-                    <p className="musica-display-verse-label">{displayLabel}</p>
                     {parte.titulo && !isTituloSameasTipo(parte.titulo, tipoLabel) ? (
                       <h2 className="musica-display-verse-title">{parte.titulo}</h2>
                     ) : null}
@@ -634,21 +625,11 @@ export function MusicaReader({
             >
               <div className="musica-letra-blocos">
                 {partesVisiveis.map((parte, index) => {
-                  const estrofeCount = partesVisiveis
-                    .slice(0, index + 1)
-                    .filter((p) => p.tipo === "estrofe").length;
-                  const tipoLabel = formatParteTipoLabel(parte.tipo);
-                  const displayLabel =
-                    parte.tipo === "estrofe" ? `${tipoLabel} ${String(estrofeCount).padStart(2, "0")}` : tipoLabel;
-
                   return (
                     <section
                       key={parte.id ?? `${musica.id}-${index}`}
                       className={`musica-parte-musical ${parte.destaque ? "is-highlighted" : ""}`}
                     >
-                      <div className="musica-parte-type-badge">
-                        {displayLabel}
-                      </div>
                       {parte.titulo && !isTituloSameasTipo(parte.titulo, formatParteTipoLabel(parte.tipo)) && (
                         <h3 className="musica-parte-title">{parte.titulo}</h3>
                       )}
