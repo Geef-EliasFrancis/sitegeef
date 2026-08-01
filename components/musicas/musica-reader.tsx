@@ -410,6 +410,7 @@ export function MusicaReader({
 
     const properties: Record<string, string> = {
       "--display-scale": String(displayMetrics.scale),
+      "--display-fit-scale": String(displayMetrics.scale),
       "--display-columns": String(displayMetrics.columns),
       "--display-rows": String(displayMetrics.rows),
       "--display-body-gap": `${displayMetrics.bodyGap * displayMetrics.scale}rem`,
