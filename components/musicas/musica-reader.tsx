@@ -406,6 +406,13 @@ export function MusicaReader({
       verseMinHeight,
     };
   }, [displayDensity, musica.titulo, partesVisiveis, viewport.height, viewport.width]);
+  const displayColumns = useMemo(() => {
+    const columns = Math.max(1, displayMetrics.columns);
+    const perColumn = Math.ceil(partesVisiveis.length / columns);
+    return Array.from({ length: columns }, (_, columnIndex) =>
+      partesVisiveis.slice(columnIndex * perColumn, (columnIndex + 1) * perColumn),
+    );
+  }, [displayMetrics.columns, partesVisiveis]);
 
   useEffect(() => {
     const el = displayScreenRef.current;
@@ -554,28 +561,31 @@ export function MusicaReader({
         </div>
 
         <div className="musica-display-body-16x9">
-          {musica.partes
-            .filter((parte) => !mostrarCifra || parte.cifra)
-            .map((parte, index) => {
-              const tipoLabel = formatParteTipoLabel(parte.tipo);
+          {displayColumns.map((column, columnIndex) => (
+            <div className="musica-display-column" key={`${musica.id}-column-${columnIndex}`}>
+              {column.map((parte, localIndex) => {
+                const index = columnIndex * Math.ceil(partesVisiveis.length / displayMetrics.columns) + localIndex;
+                const tipoLabel = formatParteTipoLabel(parte.tipo);
 
-              return (
-                <div
-                  key={parte.id ?? `${musica.id}-${index}`}
-                  className={`musica-display-verse-16x9 musica-display-verse-16x9--reader ${parte.destaque ? "is-highlighted" : ""}`}
-                >
-                  <div className="musica-display-verse-num" aria-hidden="true">{index + 1}</div>
-                  <div className="musica-display-verse-content musica-display-verse-content--reader">
-                    {parte.titulo && !isTituloSameasTipo(parte.titulo, tipoLabel) ? (
-                      <h2 className="musica-display-verse-title">{parte.titulo}</h2>
-                    ) : null}
-                    <pre className="musica-display-verse-text">
-                      {mostrarCifra ? parte.cifra : parte.conteudo}
-                    </pre>
+                return (
+                  <div
+                    key={parte.id ?? `${musica.id}-${index}`}
+                    className={`musica-display-verse-16x9 musica-display-verse-16x9--reader ${parte.destaque ? "is-highlighted" : ""}`}
+                  >
+                    <div className="musica-display-verse-num" aria-hidden="true">{index + 1}</div>
+                    <div className="musica-display-verse-content musica-display-verse-content--reader">
+                      {parte.titulo && !isTituloSameasTipo(parte.titulo, tipoLabel) ? (
+                        <h2 className="musica-display-verse-title">{parte.titulo}</h2>
+                      ) : null}
+                      <pre className="musica-display-verse-text">
+                        {mostrarCifra ? parte.cifra : parte.conteudo}
+                      </pre>
+                    </div>
                   </div>
-                </div>
-              );
-          })}
+                );
+              })}
+            </div>
+          ))}
         </div>
 
         {hasMedia && !pipHidden ? (

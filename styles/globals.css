@@ -1624,16 +1624,18 @@ body.musica-display-route * {
   padding-bottom: 0;
   display: grid;
   grid-template-columns: repeat(var(--display-columns, 3), minmax(0, 1fr));
-  grid-template-rows: repeat(var(--display-rows, 5), auto);
-  grid-auto-rows: max-content;
-  grid-auto-flow: column;
+  grid-template-rows: none;
+  grid-auto-flow: initial;
   align-content: start;
   column-count: initial;
   column-gap: var(--display-body-gap, 0.95rem);
 }
 
-.musica-display-screen--live.is-fill-rows .musica-display-body-16x9 {
-  grid-template-rows: repeat(var(--display-rows, 2), minmax(0, 1fr));
+.musica-display-column {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: clamp(0.35rem, 0.7vw, 0.75rem);
 }
 
 .musica-display-screen--live .musica-display-header-16x9 {
