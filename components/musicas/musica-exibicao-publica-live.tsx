@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { Musica, MusicaSessao } from "@/lib/musicas";
 import { MusicaReader } from "./musica-reader";
 
@@ -25,6 +25,38 @@ export function MusicaExibicaoPublicaLive({
   const [data, setData] = useState<SessaoResponse | null>(
     initialSessao ? { sessao: initialSessao, musica: initialMusica } : null,
   );
+
+  useEffect(() => {
+    let cancelled = false;
+
+    async function refresh() {
+      try {
+        const response = await fetch(pollUrl, { cache: "no-store" });
+        if (!response.ok || cancelled) return;
+
+        const nextData = (await response.json()) as SessaoResponse;
+        setData((current) => {
+          const currentSession = current?.sessao;
+          const nextSession = nextData.sessao;
+          const sameSessionState =
+            currentSession?.codigo_pareamento === nextSession?.codigo_pareamento &&
+            currentSession?.musica_id === nextSession?.musica_id &&
+            currentSession?.ativo === nextSession?.ativo &&
+            current?.musica?.id === nextData.musica?.id;
+
+          return sameSessionState ? current : nextData;
+        });
+      } catch {
+        // A projeção continua estática se a atualização periódica falhar.
+      }
+    }
+
+    const intervalId = window.setInterval(refresh, 60_000);
+    return () => {
+      cancelled = true;
+      window.clearInterval(intervalId);
+    };
+  }, [pollUrl]);
 
   const sessao = data?.sessao ?? null;
   const musica = data?.musica ?? null;
