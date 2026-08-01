@@ -443,10 +443,8 @@ export function MusicaReader({
     const header = screen?.querySelector<HTMLElement>(".musica-display-header-16x9");
     if (!screen || !body || !header) return;
 
-    let frame = 0;
     const measure = () => {
-      cancelAnimationFrame(frame);
-      frame = requestAnimationFrame(() => {
+      window.requestAnimationFrame(() => {
         const availableHeight = Math.max(1, screen.clientHeight - header.offsetHeight - 16);
         const contentHeight = Math.max(1, body.scrollHeight);
         const availableWidth = Math.max(1, screen.clientWidth - 24);
@@ -456,12 +454,10 @@ export function MusicaReader({
       });
     };
 
-    const observer = new ResizeObserver(measure);
-    observer.observe(screen);
     measure();
+    window.addEventListener("resize", measure, { passive: true });
     return () => {
-      cancelAnimationFrame(frame);
-      observer.disconnect();
+      window.removeEventListener("resize", measure);
     };
   }, [displayMetrics, isDisplay, musica.id, mostrarCifra, viewport.height, viewport.width]);
 
