@@ -1881,6 +1881,10 @@
     top: 0;
   }
 
+  .admin-header .admin-brand {
+    display: none;
+  }
+
   .admin-brand-text small {
     display: none;
   }
