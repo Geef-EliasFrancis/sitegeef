@@ -205,6 +205,10 @@ export function MusicaDisplayLive({
 
         <img src={logoSrc} alt="Logo GEEF" className="musica-display-header-logo" />
 
+        <div className="musica-display-presentation-message">
+          Vamos praticar o amor que o Mestre nos ensinou!
+        </div>
+
         {refraoDestacado && (
           <div className="musica-display-chorus-pill">
             <p className="musica-display-chorus-pill-label">Refrão</p>
@@ -215,10 +219,11 @@ export function MusicaDisplayLive({
 
       {/* Body com estrofes em 2 colunas */}
       <div className="musica-display-body-16x9">
-        {estrofes.map((parte) => {
-          return (
-            <div key={parte.id ?? `${musica.id}-${parte.ordem}`} className="musica-display-verse-16x9">
-              <div className="musica-display-verse-content">
+          {estrofes.map((parte, index) => {
+            return (
+              <div key={parte.id ?? `${musica.id}-${parte.ordem}`} className="musica-display-verse-16x9">
+                <div className="musica-display-verse-num" aria-hidden="true">{index + 1}</div>
+                <div className="musica-display-verse-content">
                 <pre>{parte.conteudo}</pre>
               </div>
             </div>

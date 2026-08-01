@@ -217,6 +217,10 @@ export function MusicaReader({
       columns = Math.min(maxColumnsByWidth, 4);
     }
 
+    if (isFullDisplay) {
+      columns = Math.min(columns, 3);
+    }
+
     const bodyGap = isFullDisplay
       ? columns >= 4
         ? 0.36
@@ -411,8 +415,8 @@ export function MusicaReader({
       "--display-logo-width": `${displayMetrics.logoWidth}px`,
       "--display-body-pad-top": `${displayMetrics.bodyPaddingTop}rem`,
       "--display-verse-pad": `${displayMetrics.versePad}rem`,
-      "--display-verse-title": `${displayMetrics.verseTitle}rem`,
-      "--display-verse-text": `${displayMetrics.verseText}rem`,
+      "--display-verse-title": `${displayMetrics.verseTitle * (displayDensity === "full" ? 1.25 : 1)}rem`,
+      "--display-verse-text": `${displayMetrics.verseText * (displayDensity === "full" ? 1.45 : 1)}rem`,
       "--display-verse-min-height": `${displayMetrics.verseMinHeight}rem`,
     };
 
@@ -483,7 +487,7 @@ export function MusicaReader({
     return (
       <main
         ref={displayScreenRef}
-        className="musica-display-screen musica-display-screen--reader"
+        className="musica-display-screen musica-display-screen--reader musica-display-screen--live"
       >
         <div className="musica-display-floating-controls">
           <Link
@@ -498,7 +502,6 @@ export function MusicaReader({
         </div>
 
         <div className="musica-display-header-16x9">
-          <div className="musica-display-header-spacer" aria-hidden="true" />
           <div className="musica-display-header-title">
             <h1>{musica.titulo}</h1>
             <p className="musica-display-header-subtitle">
@@ -510,6 +513,10 @@ export function MusicaReader({
 
           <div className="musica-display-header-logo-wrap">
             <img src={logoSrc} alt="Logo GEEF" className="musica-display-header-logo" />
+          </div>
+
+          <div className="musica-display-presentation-message">
+            Vamos praticar o amor que o Mestre nos ensinou!
           </div>
         </div>
 
@@ -524,6 +531,7 @@ export function MusicaReader({
                   key={parte.id ?? `${musica.id}-${index}`}
                   className={`musica-display-verse-16x9 musica-display-verse-16x9--reader ${parte.destaque ? "is-highlighted" : ""}`}
                 >
+                  <div className="musica-display-verse-num" aria-hidden="true">{index + 1}</div>
                   <div className="musica-display-verse-content musica-display-verse-content--reader">
                     {parte.titulo && !isTituloSameasTipo(parte.titulo, tipoLabel) ? (
                       <h2 className="musica-display-verse-title">{parte.titulo}</h2>
