@@ -175,22 +175,10 @@ export function AdminSidebar({ usuarioSistema }: AdminSidebarProps) {
         {showGeefArea && canAccessModule('pode_pessoas', ['diretoria', 'secretaria']) && (
           <NavGroup name="instituicao" title="Instituição" collapsible>
             <Link
-              href="/admin/instituicao/identificacao"
-              className={`admin-nav-item ${isActive('/admin/instituicao/identificacao') ? 'active' : ''}`}
-            >
-              📌 Identificação
-            </Link>
-            <Link
               href="/admin/instituicao/identidade-visual"
               className={`admin-nav-item ${isActive('/admin/instituicao/identidade-visual') ? 'active' : ''}`}
             >
               🎨 Identidade Visual
-            </Link>
-            <Link
-              href="/admin/instituicao/endereco"
-              className={`admin-nav-item ${isActive('/admin/instituicao/endereco') ? 'active' : ''}`}
-            >
-              📍 Endereço
             </Link>
             <Link
               href="/admin/instituicao/descritivo"
@@ -215,12 +203,6 @@ export function AdminSidebar({ usuarioSistema }: AdminSidebarProps) {
               className={`admin-nav-item ${isActive('/admin/instituicao/contatos') ? 'active' : ''}`}
             >
               📞 Contatos
-            </Link>
-            <Link
-              href="/admin/instituicao/contas"
-              className={`admin-nav-item ${isActive('/admin/instituicao/contas') ? 'active' : ''}`}
-            >
-              <span aria-label="Contas e gestão bancária">💰</span> Contas Bancárias
             </Link>
           </NavGroup>
         )}
@@ -361,18 +343,6 @@ export function AdminSidebar({ usuarioSistema }: AdminSidebarProps) {
               🧭 Minha área
             </Link>
           </NavGroup>
-        )}
-
-        {/* Departamentos */}
-        {showUserArea && canAccessModule('pode_pessoas', ['diretoria', 'secretaria']) && (
-          <div className="admin-nav-section">
-            <Link
-              href="/admin/departamentos"
-              className={`admin-nav-item ${isActive('/admin/departamentos') ? 'active' : ''}`}
-            >
-              🗂️ Departamentos
-            </Link>
-          </div>
         )}
 
         {showDocumentsArea && canAccessModule('pode_publicar', ['comunicacao', 'secretaria']) && (

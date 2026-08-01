@@ -17,6 +17,7 @@ const viewports = [
 
 const adminCss = fs.readFileSync('styles/admin.css', 'utf8');
 const sidebarCss = fs.readFileSync('styles/admin-sidebar.css', 'utf8');
+const adminSidebarSource = fs.readFileSync('components/admin/admin-sidebar.tsx', 'utf8');
 const musicCatalogSource = fs.readFileSync('components/admin/musicas/musicas-catalog-table.tsx', 'utf8');
 const publicDisplaySource = fs.readFileSync('components/admin/musicas/musica-exibicao-publica-button.tsx', 'utf8');
 const adminHeaderSource = fs.readFileSync('components/admin/admin-header.tsx', 'utf8');
@@ -38,8 +39,10 @@ const responsiveContract = [
   ['catálogo usa ações por ícone', publicDisplaySource.includes('IconBroadcast') && adminCss.includes('.musica-public-toggle-button span') && adminCss.includes('.music-catalog-row-action span')],
   ['top menu móvel tem ícones e tooltip', adminHeaderSource.includes('admin-shell-tab-icon') && adminHeaderSource.includes('title={`${item.label}: ${item.note}`}') && adminCss.includes('.admin-shell-tab-label')],
   ['top menu compartilha linha com usuário', adminCss.includes('grid-template-columns: minmax(0, 1fr) auto') && adminCss.includes('.admin-header-right') && adminCss.includes('.admin-header .admin-brand')],
-  ['submenu contextual possui cinco entradas', ['Avisos', 'Música', 'Leitura', 'Palestra', 'Prece'].every((label) => adminHeaderSource.includes(`label: '${label}'`)) && adminHeaderSource.includes('admin-context-menu')],
-  ['submenu contextual é restrito à área pública', adminHeaderSource.includes("area === 'reuniao-publica' &&")],
+  ['submenu reunião pública possui cinco entradas', ['Avisos', 'Música', 'Leitura', 'Palestra', 'Prece'].every((label) => adminHeaderSource.includes(`label: '${label}'`)) && adminHeaderSource.includes('admin-context-menu')],
+  ['submenu contextual é restrito às áreas configuradas', adminHeaderSource.includes("'reuniao-publica': [") && adminHeaderSource.includes('contextMenuItems &&')],
+  ['submenu GEEF possui seis entradas', ['Início', 'Dados', 'Endereço', 'Agenda', 'Departamentos', 'Contas'].every((label) => adminHeaderSource.includes(`label: '${label}'`)) && adminHeaderSource.includes("geef: [")],
+  ['atalhos GEEF foram centralizados', !adminSidebarSource.includes('href="/admin/instituicao/identificacao"') && !adminSidebarSource.includes('href="/admin/instituicao/endereco"') && !adminSidebarSource.includes('href="/admin/instituicao/contas"') && !adminSidebarSource.includes('href="/admin/departamentos"') && !dashboardSource.includes('href: "/admin/departamentos"')],
   ['submenu contextual é responsivo', adminCss.includes('.admin-context-menu-item') && adminCss.includes('overflow-x: auto')],
   ['painel possui variante compacta', dashboardSource.includes('admin-dashboard-page--panel') && adminCss.includes('.admin-dashboard-page--panel .admin-dashboard-mini-card')],
 ];

@@ -124,9 +124,7 @@ export function AdminDashboardWorkspace({ summary }: AdminDashboardWorkspaceProp
             title="Estrutura institucional"
             description="Abra os cadastros que mantêm a base organizacional da casa."
             actions={[
-              { href: "/admin/instituicao", label: "Instituição" },
               { href: "/admin/funcoes", label: "Funções" },
-              { href: "/admin/departamentos", label: "Departamentos" },
               { href: "/admin/instituicao/documentos", label: "Documentos" },
             ]}
           />
@@ -161,7 +159,6 @@ export function AdminDashboardWorkspace({ summary }: AdminDashboardWorkspaceProp
 
           <div className="admin-actions">
             <Link href="/admin/reuniao-publica" className="admin-btn admin-btn-primary">📣 Avisos</Link>
-            <Link href="/admin/reunioes-virtuais" className="admin-btn admin-btn-secondary">📅 Reuniões</Link>
             <Link href="/admin/reuniao-publica/musicas" className="admin-btn admin-btn-secondary">🎵 Músicas</Link>
           </div>
         </section>
@@ -217,8 +214,6 @@ export function AdminDashboardWorkspace({ summary }: AdminDashboardWorkspaceProp
             actions={[
               { href: "/admin/pessoas", label: "Tarefeiros" },
               { href: "/admin/usuarios", label: "Usuários e permissões" },
-              { href: "/admin/departamentos", label: "Departamentos" },
-              { href: "/admin/instituicao/editar", label: "Instituição" },
             ]}
           />
           <div className="admin-card admin-dashboard-panel admin-subtle-card">

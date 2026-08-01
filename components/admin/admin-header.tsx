@@ -19,13 +19,23 @@ const shellIcons: Record<AdminShellArea, string> = {
   sistema: '◌',
 };
 
-const contextMenuItems = [
-  { label: 'Avisos', href: '/admin/reuniao-publica' },
-  { label: 'Música', href: '/admin/reuniao-publica/musicas' },
-  { label: 'Leitura', href: '/leitor' },
-  { label: 'Palestra', href: '/admin/funcoes/temas' },
-  { label: 'Prece', href: '/admin/funcoes/temas?categoria=prece' },
-] as const;
+const contextMenus: Partial<Record<AdminShellArea, readonly { label: string; href: string }[]>> = {
+  'reuniao-publica': [
+    { label: 'Avisos', href: '/admin/reuniao-publica' },
+    { label: 'Música', href: '/admin/reuniao-publica/musicas' },
+    { label: 'Leitura', href: '/leitor' },
+    { label: 'Palestra', href: '/admin/funcoes/temas' },
+    { label: 'Prece', href: '/admin/funcoes/temas?categoria=prece' },
+  ],
+  geef: [
+    { label: 'Início', href: '/admin/geef' },
+    { label: 'Dados', href: '/admin/instituicao/identificacao' },
+    { label: 'Endereço', href: '/admin/instituicao/endereco' },
+    { label: 'Agenda', href: '/admin/reunioes-virtuais' },
+    { label: 'Departamentos', href: '/admin/departamentos' },
+    { label: 'Contas', href: '/admin/instituicao/contas' },
+  ],
+};
 
 interface AdminHeaderProps {
   locale: Locale;
@@ -40,6 +50,7 @@ export function AdminHeader({ locale, user }: AdminHeaderProps) {
   const { area, topAreas, routes } = useAdminShellArea();
   const pathname = usePathname();
   const searchParams = useSearchParams();
+  const contextMenuItems = contextMenus[area];
 
   return (
     <div className="admin-header-shell">
@@ -70,7 +81,7 @@ export function AdminHeader({ locale, user }: AdminHeaderProps) {
         </div>
       </header>
 
-      {area === 'reuniao-publica' && (
+      {contextMenuItems && (
         <nav className="admin-context-menu" aria-label="Menu de contexto da reunião pública">
           {contextMenuItems.map((item) => {
             const itemPath = item.href.split('?')[0];
