@@ -40,6 +40,7 @@ async function runDesktop(width, height) {
       const inactive = document.querySelector('.site-nav-group-trigger:not([data-state="active"])');
       if (!ribbon || !active || !inactive) return null;
       const activeStyle = getComputedStyle(active);
+      const inactiveStyle = getComputedStyle(inactive);
       const ribbonRail = getComputedStyle(ribbon, "::after");
       return {
         activeHeight: active.getBoundingClientRect().height,
@@ -47,6 +48,7 @@ async function runDesktop(width, height) {
         activeTop: active.getBoundingClientRect().top,
         inactiveTop: inactive.getBoundingClientRect().top,
         activeBackground: activeStyle.backgroundImage,
+        inactiveBackground: inactiveStyle.backgroundImage,
         activeColor: activeStyle.color,
         railBackground: ribbonRail.backgroundImage,
         railBackgroundColor: ribbonRail.backgroundColor,
@@ -54,8 +56,11 @@ async function runDesktop(width, height) {
       };
     });
     if (!visualState) throw new Error(`Estado visual ausente na aba ${index + 1}`);
-    if (visualState.activeTop >= visualState.inactiveTop || visualState.activeHeight <= visualState.inactiveHeight) {
-      throw new Error(`Aba ativa não está elevada na aba ${index + 1}: ${JSON.stringify(visualState)}`);
+    if (Math.abs(visualState.activeTop - visualState.inactiveTop) > 1 || visualState.activeHeight !== visualState.inactiveHeight) {
+      throw new Error(`Altura/alinhamento inconsistente na aba ${index + 1}: ${JSON.stringify(visualState)}`);
+    }
+    if (visualState.activeBackground === visualState.inactiveBackground) {
+      throw new Error(`Estado ativo sem diferenciação na aba ${index + 1}: ${JSON.stringify(visualState)}`);
     }
     if (visualState.activeBackground === "none" || visualState.activeColor === "rgb(28, 32, 31)") {
       throw new Error(`Contraste insuficiente na aba ${index + 1}: ${JSON.stringify(visualState)}`);

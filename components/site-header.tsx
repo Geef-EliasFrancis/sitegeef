@@ -114,8 +114,7 @@ export function SiteHeader({
         <Tabs.List asChild>
           <nav className="site-nav-primary" aria-label="Navegação principal">
             <Link href="/" className="site-nav-home-btn" aria-label="Home">
-              <span aria-hidden="true">⌂</span>
-              <span>HOME</span>
+              HOME
             </Link>
             {navGroups.map((group) => (
               <div key={group.key} className={`site-nav-group${openGroup === group.key ? " is-active" : ""}`}>
@@ -125,7 +124,6 @@ export function SiteHeader({
                     className="site-nav-group-trigger"
                     aria-label={group.label}
                   >
-                    <span className="site-nav-group-icon" aria-hidden="true">{group.icon}</span>
                     <span className="site-nav-group-label-full">{group.label}</span>
                     <span className="site-nav-group-label-short" aria-hidden="true">{group.shortLabel}</span>
                   </button>
@@ -133,8 +131,7 @@ export function SiteHeader({
               </div>
             ))}
             <Link href="/contato" className="site-nav-contact-btn" aria-label="Contato">
-              <span className="site-nav-group-icon" aria-hidden="true">✉</span>
-              <span>Contato</span>
+              Contato
             </Link>
           </nav>
         </Tabs.List>
