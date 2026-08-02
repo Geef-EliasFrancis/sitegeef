@@ -1,5 +1,4 @@
-import { createServiceRoleClient } from "@/lib/supabase/service-role";
-import { deleteMusicaRecord, deleteMusicaSessaoRecord, fetchMusicasBase, getMusicaSessaoRecord, getMusicaSlugById, listMusicaSessaoRecords, patchMusicaSessaoRecord, saveMusicaRecord, saveMusicaSessaoRecord } from "@/lib/musicas-repository";
+import { deleteMusicaCreditoRecord, deleteMusicaRecord, deleteMusicaSessaoRecord, fetchMusicasBase, getMusicaCreditoRecord, getMusicaSessaoRecord, getMusicaSlugById, listMusicaCreditoRecords, listMusicaSessaoRecords, patchMusicaSessaoRecord, saveMusicaCreditoRecord, saveMusicaRecord, saveMusicaSessaoRecord } from "@/lib/musicas-repository";
 
 export type MusicaParteTipo = "estrofe" | "verso" | "refrao" | "ponte" | "intro" | "cifra";
 export type MusicaSessaoModo = "exibicao" | "catalogo";
@@ -515,25 +514,7 @@ function stripCreditoTipo(credito: MusicaCredito | null): Omit<MusicaCredito, "t
 }
 
 async function listMusicaCreditos(tipo: MusicaCreditoTipo, search = "") {
-  const supabase = createServiceRoleClient();
-
-  let query = supabase
-    .from("musica_creditos")
-    .select("id, tipo, nome, criado_em, atualizado_em")
-    .eq("tipo", tipo)
-    .order("nome", { ascending: true });
-
-  if (search.trim()) {
-    query = query.ilike("nome", `%${search.trim()}%`);
-  }
-
-  const { data, error } = await query;
-
-  if (error) {
-    return [];
-  }
-
-  return (data ?? []) as MusicaCredito[];
+  return listMusicaCreditoRecords(tipo, search);
 }
 
 export async function listMusicaAutores(search = "") {
@@ -542,20 +523,7 @@ export async function listMusicaAutores(search = "") {
 }
 
 async function getMusicaCreditoById(tipo: MusicaCreditoTipo, id: string) {
-  const supabase = createServiceRoleClient();
-
-  const { data, error } = await supabase
-    .from("musica_creditos")
-    .select("id, tipo, nome, criado_em, atualizado_em")
-    .eq("tipo", tipo)
-    .eq("id", id)
-    .maybeSingle();
-
-  if (error) {
-    return null;
-  }
-
-  return (data ?? null) as MusicaCredito | null;
+  return getMusicaCreditoRecord(tipo, id);
 }
 
 export async function getMusicaAutorById(id: string) {
@@ -570,30 +538,7 @@ export type SaveMusicaCreditoInput = {
 };
 
 async function saveMusicaCredito(input: SaveMusicaCreditoInput) {
-  const supabase = createServiceRoleClient();
-  const creditoId = input.id ?? crypto.randomUUID();
-
-  const payload = {
-    id: creditoId,
-    tipo: input.tipo,
-    nome: input.nome.trim(),
-  };
-
-  const existing = await supabase.from("musica_creditos").select("id").eq("id", creditoId).maybeSingle();
-
-  if (existing.data) {
-    const { error } = await supabase.from("musica_creditos").update(payload).eq("id", creditoId);
-    if (error) {
-      throw error;
-    }
-  } else {
-    const { error } = await supabase.from("musica_creditos").insert([payload]);
-    if (error) {
-      throw error;
-    }
-  }
-
-  return getMusicaCreditoById(input.tipo, creditoId);
+  return saveMusicaCreditoRecord(input);
 }
 
 export async function saveMusicaAutor(input: Omit<SaveMusicaCreditoInput, "tipo">) {
@@ -602,11 +547,7 @@ export async function saveMusicaAutor(input: Omit<SaveMusicaCreditoInput, "tipo"
 }
 
 export async function deleteMusicaAutor(id: string) {
-  const supabase = createServiceRoleClient();
-  const { error } = await supabase.from("musica_creditos").delete().eq("id", id).eq("tipo", "autor");
-  if (error) {
-    throw error;
-  }
+  await deleteMusicaCreditoRecord("autor", id);
 }
 
 export async function listMusicaVersoes(search = "") {
@@ -630,9 +571,5 @@ export async function saveMusicaVersao(input: SaveMusicaVersaoInput) {
 }
 
 export async function deleteMusicaVersao(id: string) {
-  const supabase = createServiceRoleClient();
-  const { error } = await supabase.from("musica_creditos").delete().eq("id", id).eq("tipo", "versao");
-  if (error) {
-    throw error;
-  }
+  await deleteMusicaCreditoRecord("versao", id);
 }

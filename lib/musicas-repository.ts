@@ -1,5 +1,5 @@
 import { createServiceRoleClient } from "@/lib/supabase/service-role";
-import type { Musica, MusicaParteTipo, MusicaSessao, MusicaSessaoModo } from "@/lib/musicas";
+import type { Musica, MusicaCredito, MusicaCreditoTipo, MusicaParteTipo, MusicaSessao, MusicaSessaoModo } from "@/lib/musicas";
 
 /** Leitura composta do catálogo e suas partes, isolada do serviço de músicas. */
 export async function fetchMusicasBase(): Promise<Musica[]> {
@@ -131,5 +131,35 @@ export async function patchMusicaSessaoRecord(codigo: string, patch: Record<stri
 export async function deleteMusicaSessaoRecord(codigo: string) {
   const supabase = createServiceRoleClient();
   const { error } = await supabase.from("musica_sessoes").delete().eq("codigo_pareamento", codigo);
+  if (error) throw error;
+}
+
+const creditoFields = "id, tipo, nome, criado_em, atualizado_em";
+
+export async function listMusicaCreditoRecords(tipo: MusicaCreditoTipo, search = ""): Promise<MusicaCredito[]> {
+  const supabase = createServiceRoleClient();
+  let query = supabase.from("musica_creditos").select(creditoFields).eq("tipo", tipo).order("nome", { ascending: true });
+  if (search.trim()) query = query.ilike("nome", `%${search.trim()}%`);
+  const { data, error } = await query;
+  return error ? [] : ((data ?? []) as MusicaCredito[]);
+}
+
+export async function getMusicaCreditoRecord(tipo: MusicaCreditoTipo, id: string): Promise<MusicaCredito | null> {
+  const supabase = createServiceRoleClient();
+  const { data, error } = await supabase.from("musica_creditos").select(creditoFields).eq("tipo", tipo).eq("id", id).maybeSingle();
+  return error || !data ? null : (data as MusicaCredito);
+}
+
+export async function saveMusicaCreditoRecord(input: { id?: string; tipo: MusicaCreditoTipo; nome: string }) {
+  const supabase = createServiceRoleClient();
+  const id = input.id ?? crypto.randomUUID();
+  const { error } = await supabase.from("musica_creditos").upsert({ id, tipo: input.tipo, nome: input.nome.trim() }, { onConflict: "id" });
+  if (error) throw error;
+  return getMusicaCreditoRecord(input.tipo, id);
+}
+
+export async function deleteMusicaCreditoRecord(tipo: MusicaCreditoTipo, id: string) {
+  const supabase = createServiceRoleClient();
+  const { error } = await supabase.from("musica_creditos").delete().eq("id", id).eq("tipo", tipo);
   if (error) throw error;
 }
