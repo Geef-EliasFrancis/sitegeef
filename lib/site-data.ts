@@ -145,7 +145,7 @@ export const schedule: ScheduleItem[] = [
   },
   {
     title: "Evangelização",
-    when: "jovens, quinta 16h30 - infantil, 19h00",
+    when: "Quintas-feiras, 19h00–20h00",
     description: "Atividades e estudo voltados para crianças e jovens.",
   },
 ];

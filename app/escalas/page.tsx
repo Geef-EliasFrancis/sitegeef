@@ -101,7 +101,7 @@ function PublicFallback({ locale }: { locale: "pt" | "en" }) {
                     .replace("Terças", "Tuesdays")
                     .replace("Quintas-feiras", "Thursdays")
                     .replace("Sob agendamento", "By appointment")
-                    .replace("jovens, quinta 16h30 - infantil, 19h00", "youth, Thursday 4:30 PM - children, 7:00 PM")
+                    .replace("Quintas-feiras, 19h00–20h00", "Thursdays, 7:00 PM–8:00 PM")
                 : item.when}
             </span>
           </div>
