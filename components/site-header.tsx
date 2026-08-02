@@ -49,7 +49,7 @@ export function SiteHeader({
       shortLabel: "Oferecemos",
       icon: "✦",
       description: "Atividades, acolhimento, estudos e formação para a comunidade.",
-      links: primaryLinks.filter((item) => ["/agenda", "/atividades", "/evangelizacao", "/atendimento-fraterno"].includes(item.href)).concat([
+      links: primaryLinks.filter((item) => ["/atividades", "/evangelizacao", "/atendimento-fraterno"].includes(item.href)).concat([
         { href: "/estudos", label: "Estudos" },
       ]),
     },
@@ -87,9 +87,8 @@ export function SiteHeader({
       label: "Participe",
       shortLabel: "Participe",
       icon: "●",
-      description: "Encontre a casa, acompanhe a agenda e fale conosco.",
+      description: "Encontre a casa, conheça as formas de apoio e fale conosco.",
       links: [
-        { href: "/agenda", label: "Agenda pública" },
         { href: "/doacoes", label: "Doações" },
         { href: "/contato", label: "Contato" },
       ],

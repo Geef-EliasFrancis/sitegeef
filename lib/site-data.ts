@@ -315,15 +315,15 @@ export const contentPages: Record<string, ContentPage> = {
   },
   participe: {
     title: "Participe",
-    summary: "Encontre a casa, acompanhe a agenda e fale conosco.",
-    intro: "A participação começa com informação clara: veja a agenda, conheça as formas de apoio e encontre os canais oficiais.",
+    summary: "Encontre a casa, conheça as formas de apoio e fale conosco.",
+    intro: "A participação começa com informação clara: conheça as formas de apoio e encontre os canais oficiais.",
     ctaLabel: "Falar com a casa",
     ctaHref: publicHref("/contato"),
     sections: [
       {
         heading: "Como participar",
-        text: "Escolha uma atividade, acompanhe a programação ou entre em contato com a equipe.",
-        bullets: ["Agenda pública.", "Doações.", "Contato e acolhimento."],
+        text: "Conheça as formas de apoio ou entre em contato com a equipe.",
+        bullets: ["Doações.", "Contato e acolhimento."],
       },
     ],
   },
