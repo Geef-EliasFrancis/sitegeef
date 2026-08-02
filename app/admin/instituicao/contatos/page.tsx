@@ -37,14 +37,14 @@ async function ContatosContent() {
               {groupedContatos.map(({ tipo, registros }) => (
                 <div key={tipo} className={`area-panel-item instituicao-contato-card${tipo === "WhatsApp" && !registros.some((contato) => contato.telefone || contato.whatsapp) ? " instituicao-contato-card--untitled" : ""}`}>
                   {!(tipo === "WhatsApp" && !registros.some((contato) => contato.telefone || contato.whatsapp)) && <strong>{tipo}</strong>}
+                  <div className="instituicao-contato-table instituicao-contato-table--group-head" role="row">
+                    <span role="columnheader">Canal</span>
+                    <span role="columnheader">Informação</span>
+                  </div>
                   <div className="instituicao-contato-records">
                     {registros.map((contato) => (
                       <div key={contato.id} className="instituicao-contato-record">
                         <div className="instituicao-contato-table" role="table" aria-label={`Dados de ${tipo}`}>
-                          <div className="instituicao-contato-table-row instituicao-contato-table-head" role="row">
-                            <span role="columnheader">Rede social</span>
-                            <span role="columnheader">Informação</span>
-                          </div>
                           {contactFields.map(([field, label]) => contato[field] && (
                             <div key={field} className="instituicao-contato-table-row" role="row">
                               <span role="cell">{label}</span>
