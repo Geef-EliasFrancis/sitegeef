@@ -6,7 +6,7 @@ const baseUrl = process.env.COMP_GATE_BASE_URL ?? 'http://127.0.0.1:3500';
 const storageState = process.env.COMP_GATE_STORAGE_STATE;
 const requireLive = process.env.COMP_GATE_REQUIRE_LIVE === '1';
 const outputDir = 'test-artifacts/comp-gate';
-const routes = ['/admin/painel', '/admin/reuniao-publica', '/admin/reuniao-publica/musica', '/admin/escalas', '/admin/financeiro'];
+const routes = ['/admin/painel', '/admin/reuniao-publica', '/admin/reuniao-publica/musica/inicio', '/admin/reuniao-publica/musica/catalogo', '/admin/escalas', '/admin/financeiro'];
 const viewports = [
   { width: 1440, height: 900, name: 'desktop' },
   { width: 1024, height: 768, name: 'tablet-wide' },
@@ -41,6 +41,7 @@ const responsiveContract = [
   ['top menu compacto sem ícones e com tooltip', !adminHeaderSource.includes('shellIcons') && adminHeaderSource.includes('title={`${item.label}: ${item.note}`}') && adminCss.includes('.admin-shell-tab-label')],
   ['top menu compartilha linha com usuário', adminCss.includes('grid-template-columns: minmax(0, 1fr) auto') && adminCss.includes('.admin-header-right') && adminCss.includes('.admin-header .admin-brand')],
   ['submenu reunião pública possui cinco entradas', ['Avisos', 'Música', 'Leitura', 'Palestra', 'Prece'].every((label) => adminHeaderSource.includes(`label: '${label}'`)) && adminHeaderSource.includes('admin-context-menu')],
+  ['submenu Música possui início catálogo autores e sessões', ['Início', 'Catálogo', 'Autores', 'Sessões'].every((label) => adminHeaderSource.includes(`label: '${label}'`)) && adminHeaderSource.includes('musicContextMenuItems') && adminHeaderSource.includes('/admin/reuniao-publica/musica/catalogo')],
   ['submenu contextual é restrito às áreas configuradas', adminHeaderSource.includes("'reuniao-publica': [") && adminHeaderSource.includes('contextMenuItems &&')],
   ['submenu GEEF possui instituição e seis telas', ['Início', 'Instituição', 'Dados', 'Endereço', 'Agenda', 'Departamentos', 'Contas'].every((label) => adminHeaderSource.includes(`label: '${label}'`)) && adminHeaderSource.includes("geef: [")],
   ['submenu Tarefeiros possui início pessoas e funções', ['Início', 'Pessoas', 'Funções'].every((label) => adminHeaderSource.includes(`label: '${label}'`)) && adminHeaderSource.includes("pessoas: [") && fs.existsSync('app/admin/pessoas/inicio/page.tsx')],

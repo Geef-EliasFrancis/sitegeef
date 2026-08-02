@@ -20,14 +20,10 @@ const contextMenus: Partial<Record<AdminShellArea, readonly { label: string; hre
     { label: 'Início', href: '/admin/reuniao-publica' },
     { label: 'Avisos', href: '/admin/reuniao-publica/avisos' },
     { label: 'Reunião', href: '/admin/reuniao-publica/reuniao' },
-    { label: 'Música', href: '/admin/reuniao-publica/musica' },
-    { label: 'Autores', href: '/admin/reuniao-publica/musica/autores' },
-    { label: 'Sessões', href: '/admin/reuniao-publica/musica/sessoes' },
+    { label: 'Música', href: '/admin/reuniao-publica/musica/inicio' },
     { label: 'Leitura', href: '/admin/reuniao-publica/leitura' },
     { label: 'Palestra', href: '/admin/reuniao-publica/palestra' },
     { label: 'Prece', href: '/admin/reuniao-publica/prece' },
-    { label: 'Controle', href: '/musicas/controle' },
-    { label: 'Exibição pública', href: '/musicas/exibir' },
   ],
   geef: [
     { label: 'Início', href: '/admin/geef' },
@@ -112,6 +108,16 @@ const contextMenus: Partial<Record<AdminShellArea, readonly { label: string; hre
   ],
 };
 
+const musicContextMenuItems = [
+  { label: 'Início', href: '/admin/reuniao-publica/musica/inicio' },
+  { label: 'Catálogo', href: '/admin/reuniao-publica/musica/catalogo' },
+  { label: 'Autores', href: '/admin/reuniao-publica/musica/autores' },
+  { label: 'Sessões', href: '/admin/reuniao-publica/musica/sessoes' },
+  { label: 'Versões', href: '/admin/reuniao-publica/musica/versoes' },
+  { label: 'Controle', href: '/musicas/controle' },
+  { label: 'Exibição pública', href: '/musicas/exibir' },
+] as const;
+
 interface AdminHeaderProps {
   locale: Locale;
   user: {
@@ -126,6 +132,7 @@ export function AdminHeader({ locale, user }: AdminHeaderProps) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const contextMenuItems = contextMenus[area];
+  const isMusicContext = area === 'reuniao-publica' && pathname.startsWith('/admin/reuniao-publica/musica');
 
   return (
     <div className="admin-header-shell">
@@ -171,6 +178,23 @@ export function AdminHeader({ locale, user }: AdminHeaderProps) {
             const isPrece = item.label === 'Prece';
             const isPalestra = item.label === 'Palestra';
             const isActive = isPathActive && (!isPrece && !isPalestra || (isPrece ? searchParams.get('categoria') === 'prece' : !searchParams.get('categoria')));
+            return (
+              <Link
+                key={item.label}
+                href={item.href}
+                className={`admin-context-menu-item ${isActive ? 'active' : ''}`}
+                aria-current={isActive ? 'page' : undefined}
+              >
+                {item.label}
+              </Link>
+            );
+          })}
+        </nav>
+      )}
+      {isMusicContext && (
+        <nav className="admin-context-menu admin-context-menu--nested" aria-label="Submenu de músicas">
+          {musicContextMenuItems.map((item) => {
+            const isActive = pathname === item.href || pathname.startsWith(`${item.href}/`);
             return (
               <Link
                 key={item.label}

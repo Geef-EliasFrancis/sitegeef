@@ -26,7 +26,7 @@ async function AutoresContent({ searchParams }: PageProps) {
           <span className="admin-dashboard-kicker">Músicas</span>
           <h1 className="admin-page-title">Autores</h1>
         </div>
-        <Link href="/admin/reuniao-publica/musica" className="admin-btn admin-btn-secondary" title="Voltar">
+        <Link href="/admin/reuniao-publica/musica/catalogo" className="admin-btn admin-btn-secondary" title="Voltar">
           <IconArrowLeft size={18} />
         </Link>
       </div>
@@ -112,7 +112,7 @@ export default function AutoresPage(props: PageProps) {
     <AdminModuleGate
       permission="pode_publicar"
       profiles={["diretoria", "secretaria", "comunicacao"]}
-      redirectPath="/admin/reuniao-publica/musica"
+      redirectPath="/admin/reuniao-publica/musica/autores"
       title="Autores"
     >
       <Suspense fallback={<div style={{ padding: "2rem", textAlign: "center" }}>Carregando...</div>}>

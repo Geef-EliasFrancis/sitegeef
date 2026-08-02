@@ -66,6 +66,7 @@ export function invalidateMusicasCache() {
   revalidatePath("/musicas/exibir");
   revalidatePath("/musicas/controle");
   revalidatePath("/admin/reuniao-publica");
-  revalidatePath("/admin/reuniao-publica/musica");
+  revalidatePath("/admin/reuniao-publica/musica/inicio");
+  revalidatePath("/admin/reuniao-publica/musica/catalogo");
   revalidatePath("/admin/reuniao-publica/musica/sessoes");
 }

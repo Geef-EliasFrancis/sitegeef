@@ -61,18 +61,18 @@ export async function saveMusicaAction(formData: FormData) {
   });
 
   invalidateMusicasCache();
-  redirect("/admin/reuniao-publica/musica?salvo=1");
+  redirect("/admin/reuniao-publica/musica/catalogo?salvo=1");
 }
 
 export async function deleteMusicaAction(formData: FormData) {
   const id = readOptionalString(formData, "id");
   if (!id) {
-    redirect("/admin/reuniao-publica/musica?erro=musica-sem-id");
+    redirect("/admin/reuniao-publica/musica/catalogo?erro=musica-sem-id");
   }
 
   await deleteMusica(id);
   invalidateMusicasCache();
-  redirect("/admin/reuniao-publica/musica?excluida=1");
+  redirect("/admin/reuniao-publica/musica/catalogo?excluida=1");
 }
 
 export async function saveMusicaSessaoAction(formData: FormData) {

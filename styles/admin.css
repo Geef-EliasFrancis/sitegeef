@@ -100,6 +100,19 @@
   color: var(--uva-700);
 }
 
+.admin-context-menu--nested {
+  margin-top: 0.2rem;
+  margin-left: 1.5rem;
+  background: #edf7e8;
+  box-shadow: 0 3px 10px rgba(38, 79, 28, 0.06);
+}
+
+.admin-context-menu--nested .admin-context-menu-item {
+  min-width: 5.5rem;
+  padding: 0.38rem 0.62rem;
+  font-size: 0.74rem;
+}
+
 .admin-brand {
   display: flex;
   align-items: center;
@@ -3709,5 +3722,9 @@
 
   .admin-context-menu {
     margin-inline: 0.35rem;
+  }
+
+  .admin-context-menu--nested {
+    margin-left: 0.75rem;
   }
 }

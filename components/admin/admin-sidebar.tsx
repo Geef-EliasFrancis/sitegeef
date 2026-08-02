@@ -230,7 +230,7 @@ export function AdminSidebar({ usuarioSistema }: AdminSidebarProps) {
 
             <NavGroup name="reuniao-publica-musicas" title="Músicas" collapsible>
               <Link
-                href="/admin/reuniao-publica/musica"
+                href="/admin/reuniao-publica/musica/inicio"
                 className={`admin-nav-item ${isActive('/admin/reuniao-publica/musica') ? 'active' : ''}`}
               >
                 Lista de músicas

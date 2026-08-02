@@ -43,7 +43,7 @@ export default async function EditarMusicaPage({ params, searchParams }: PagePro
               <IconSave size={18} />
             </button>
             <DeleteMusicaButton musicaId={musica.id} musicaTitulo={musica.titulo} iconOnly />
-            <Link href="/admin/reuniao-publica/musica" className="admin-btn admin-btn-secondary" title="Voltar" aria-label="Voltar">
+            <Link href="/admin/reuniao-publica/musica/catalogo" className="admin-btn admin-btn-secondary" title="Voltar" aria-label="Voltar">
               <IconArrowLeft size={18} />
             </Link>
           </div>

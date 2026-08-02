@@ -23,7 +23,7 @@ async function SessoesContent() {
           <span className="admin-dashboard-kicker">Músicas</span>
           <h1 className="admin-page-title">Sessões e controle</h1>
         </div>
-        <Link href="/admin/reuniao-publica/musica" className="admin-btn admin-btn-secondary" title="Voltar">
+        <Link href="/admin/reuniao-publica/musica/catalogo" className="admin-btn admin-btn-secondary" title="Voltar">
           <IconArrowLeft size={18} />
         </Link>
       </div>
