@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { getMultilingualCopy } from "@/lib/multilingual/client";
 
 export const metadata = {
@@ -16,11 +15,6 @@ export default function AdminIdiomasPage() {
             <p className="area-subtitle">Multilíngua</p>
             <h1 className="area-hero-title">{copy.adminLanguages.title}</h1>
             <p className="area-subtitle">{copy.adminLanguages.lead}</p>
-          </div>
-          <div className="admin-actions">
-            <Link href="/admin/documentos" className="admin-btn admin-btn-secondary">
-              Documentos
-            </Link>
           </div>
         </div>
 

@@ -73,17 +73,6 @@ export default async function AdminLgpdPage() {
               Visão unificada de cookies, consentimentos, fila do titular, notificações e trilha técnica.
             </p>
           </div>
-          <div className="admin-actions">
-            <Link href="/admin/observability?tab=lgpd" className="admin-btn admin-btn-secondary">
-              Observabilidade
-            </Link>
-            <Link href="/admin/documentos/pedidos" className="admin-btn admin-btn-secondary">
-              Pedidos do Titular
-            </Link>
-            <Link href="/admin/documentos/auditoria" className="admin-btn admin-btn-secondary">
-              Auditoria
-            </Link>
-          </div>
         </div>
 
         <div className="area-summary-grid">

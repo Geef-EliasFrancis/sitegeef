@@ -79,13 +79,6 @@ async function ObservabilityContent({ searchParams }: { searchParams: SearchPara
     return acc;
   }, {});
   const pendingRequests = lgpdData.solicitacoes.filter((item) => item.status === "aberta" || item.status === "em_andamento");
-  const tabs: Array<{ key: ObservabilityTab; label: string }> = [
-    { key: "geral", label: "Geral" as const },
-    { key: "erros", label: "Erros" as const },
-    { key: "supabase", label: "Supabase" as const },
-    { key: "lgpd", label: "LGPD" as const },
-    { key: "fila", label: "Fila" as const },
-  ];
   const baseParams = new URLSearchParams();
   if (typeof searchParams.level === "string" && searchParams.level.trim()) baseParams.set("level", searchParams.level);
   if (typeof searchParams.source === "string" && searchParams.source.trim()) baseParams.set("source", searchParams.source);
@@ -101,14 +94,6 @@ async function ObservabilityContent({ searchParams }: { searchParams: SearchPara
             <p className="area-subtitle">
               Erros, falhas silenciosas do Supabase, fila operacional e trilha LGPD num ponto único.
             </p>
-          </div>
-          <div className="admin-actions">
-            <Link href="/admin/lgpd" className="admin-btn admin-btn-secondary">
-              LGPD
-            </Link>
-            <Link href="/admin/documentos/pedidos" className="admin-btn admin-btn-secondary">
-              Pedidos
-            </Link>
           </div>
         </div>
 
@@ -139,52 +124,10 @@ async function ObservabilityContent({ searchParams }: { searchParams: SearchPara
           </div>
         </div>
 
-        <div className="tag-list mt-1">
-          {tabs.map((item) => (
-            <Link
-              key={item.key}
-              href={buildTabHref(baseParams, item.key)}
-              className="tag"
-              style={
-                tab === item.key
-                  ? { background: "var(--leaf)", color: "var(--bg)", borderColor: "var(--leaf)" }
-                  : undefined
-              }
-              aria-current={tab === item.key ? "page" : undefined}
-            >
-              {item.label}
-            </Link>
-          ))}
-        </div>
       </section>
 
       {tab === "geral" && (
         <>
-          <section className="area-section">
-            <div className="area-section-title">
-              <h2>Atalhos</h2>
-              <p>Entradas rápidas para triagem e conformidade.</p>
-            </div>
-            <div className="module-grid grid-auto-220">
-              <Link href={buildTabHref(baseParams, "erros")} className="module-card">
-                <p className="module-title">Erros</p>
-                <p className="text-muted">Incidentes de runtime e payload técnico.</p>
-              </Link>
-              <Link href={buildTabHref(baseParams, "supabase")} className="module-card">
-                <p className="module-title">Supabase</p>
-                <p className="text-muted">Falhas silenciosas e integrações com fallback.</p>
-              </Link>
-              <Link href={buildTabHref(baseParams, "lgpd")} className="module-card">
-                <p className="module-title">LGPD</p>
-                <p className="text-muted">Cookies, consentimentos e severidade.</p>
-              </Link>
-              <Link href={buildTabHref(baseParams, "fila")} className="module-card">
-                <p className="module-title">Fila</p>
-                <p className="text-muted">Pedidos do titular e notificações.</p>
-              </Link>
-            </div>
-          </section>
-
           <section className="area-section">
             <div className="area-section-title">
               <h2>Resumo recente</h2>

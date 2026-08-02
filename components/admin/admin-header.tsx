@@ -8,18 +8,6 @@ import { AdminUserMenu } from '@/components/admin/admin-user-menu';
 import type { Locale } from '@/lib/multilingual';
 import type { AdminShellArea } from '@/components/admin/use-admin-shell-area';
 
-const shellIcons: Record<AdminShellArea, string> = {
-  painel: '⌂',
-  perfil: '◉',
-  geef: '✦',
-  pessoas: '♙',
-  'reuniao-publica': '♫',
-  governanca: '◇',
-  documentos: '▤',
-  operacao: '⚙',
-  sistema: '◌',
-};
-
 const contextMenus: Partial<Record<AdminShellArea, readonly { label: string; href: string }[]>> = {
   painel: [
     { label: 'Início', href: '/admin/painel' },
@@ -115,6 +103,10 @@ const contextMenus: Partial<Record<AdminShellArea, readonly { label: string; hre
   sistema: [
     { label: 'Início', href: '/admin/sistema' },
     { label: 'Observabilidade', href: '/admin/sistema/observabilidade' },
+    { label: 'Erros', href: '/admin/observability?tab=erros' },
+    { label: 'Supabase', href: '/admin/observability?tab=supabase' },
+    { label: 'LGPD', href: '/admin/observability?tab=lgpd' },
+    { label: 'Fila', href: '/admin/observability?tab=fila' },
     { label: 'Migrações', href: '/admin/sistema/migrations' },
     { label: 'Idiomas', href: '/admin/sistema/idiomas' },
     { label: 'Fix Usuários', href: '/admin/sistema/fix-usuarios' },
@@ -161,7 +153,6 @@ export function AdminHeader({ locale, user }: AdminHeaderProps) {
                 aria-label={`${item.label}: ${item.note}`}
                 title={`${item.label}: ${item.note}`}
               >
-                <span className="admin-shell-tab-icon" aria-hidden="true">{shellIcons[item.key]}</span>
                 <span className="admin-shell-tab-label">{item.label}</span>
               </Link>
             ))}
