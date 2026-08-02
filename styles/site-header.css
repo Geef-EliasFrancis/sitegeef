@@ -219,6 +219,26 @@
   background: var(--surface-primary-hover);
 }
 
+.site-context-navigation-link.is-active {
+  border-color: var(--uva-700);
+  background: var(--uva-700);
+  color: #ffffff;
+  box-shadow: 0 0.2rem 0.45rem rgba(138, 0, 90, 0.2), inset 0 1px rgba(255, 255, 255, 0.3);
+}
+
+.site-context-navigation-link.is-active:hover,
+.site-context-navigation-link.is-active:focus-visible {
+  background: var(--uva-800, #72004a);
+  color: #ffffff;
+}
+
+.site-nav-dropdown-item.is-active {
+  border-color: var(--uva-700);
+  background: var(--uva-700);
+  color: #ffffff;
+  font-weight: 800;
+}
+
 .site-mobile-nav-group-trigger {
   width: 100%;
   justify-content: space-between;
