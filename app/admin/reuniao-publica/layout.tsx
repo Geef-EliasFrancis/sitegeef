@@ -1,7 +1,7 @@
 import { AdminModuleGate } from '@/components/admin/admin-module-gate';
 
 export const metadata = {
-  title: 'Avisos e reunião - Admin GEEF',
+  title: 'Reunião pública - Admin GEEF',
 };
 
 export default function ReuniaoPublicaLayout({

@@ -129,9 +129,9 @@ export function AdminDashboardWorkspace({ summary }: AdminDashboardWorkspaceProp
         <section className="admin-page-header admin-card admin-page-header--hero">
           <div className="admin-page-header-copy">
             <span className="admin-dashboard-kicker">Reunião pública</span>
-            <h1 className="admin-page-title">Avisos, reunião e músicas</h1>
+            <h1 className="admin-page-title">Reunião pública</h1>
             <p className="admin-page-subtitle">
-              Organize avisos, reuniões e a exibição pública das músicas com controle ao vivo.
+              Conduza a reunião e controle a exibição pública das músicas em um único espaço.
             </p>
           </div>
 

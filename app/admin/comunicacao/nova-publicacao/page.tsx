@@ -31,8 +31,14 @@ async function handleSubmit(formData: FormData) {
   }
 }
 
-export default async function NovaPublicacaoPage() {
+type PageProps = {
+  searchParams?: Promise<{ tipo?: string }>;
+};
+
+export default async function NovaPublicacaoPage({ searchParams }: PageProps) {
   const pessoas = (await getPessoasDisponiveis()) as PessoaOption[];
+  const params = (await searchParams) ?? {};
+  const tipoInicial = params.tipo === 'aviso' ? 'aviso' : '';
 
   return (
     <div>
@@ -61,6 +67,7 @@ export default async function NovaPublicacaoPage() {
               <select
                 name="tipo"
                 className="profile-form-input form-control-full"
+                defaultValue={tipoInicial}
               >
                 <option value="">Selecione um tipo</option>
                 <option value="noticia">📰 Notícia</option>
