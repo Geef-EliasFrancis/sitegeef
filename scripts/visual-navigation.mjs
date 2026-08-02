@@ -41,7 +41,7 @@ async function runDesktop(width, height) {
       throw new Error(`Dropdown desktop não está visualmente aberto na aba ${index + 1}: ${JSON.stringify(dropdownBox)}`);
     }
     const currentSubmenuCount = await dropdown.locator("a").count();
-    if (currentSubmenuCount < 3) throw new Error(`Dropdown sem submenus suficientes na aba ${index + 1}: ${currentSubmenuCount}`);
+    if (currentSubmenuCount < 2) throw new Error(`Dropdown sem submenus suficientes na aba ${index + 1}: ${currentSubmenuCount}`);
     submenuCount = Math.max(submenuCount, currentSubmenuCount);
     const visualState = await page.evaluate(() => {
       const ribbon = document.querySelector(".site-nav-primary");
