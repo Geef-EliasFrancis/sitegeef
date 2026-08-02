@@ -1,4 +1,4 @@
-import type { AdminShellArea } from "@/components/admin/use-admin-shell-area";
+import type { AdminShellArea } from "@/lib/admin-shell-navigation";
 
 type ContextItem = { label: string; href: string };
 

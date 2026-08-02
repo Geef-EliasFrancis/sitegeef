@@ -31,6 +31,8 @@ const adminContextMenuSource = fs.readFileSync('components/admin/admin-context-m
 const adminMusicNavigationSource = fs.readFileSync('lib/admin-music-navigation.ts', 'utf8');
 const adminContextNavigationSource = fs.readFileSync('lib/admin-context-navigation.ts', 'utf8');
 const adminShellTabsSource = fs.readFileSync('components/admin/admin-shell-tabs.tsx', 'utf8');
+const adminShellNavigationSource = fs.readFileSync('lib/admin-shell-navigation.ts', 'utf8');
+const adminShellHookSource = fs.readFileSync('components/admin/use-admin-shell-area.ts', 'utf8');
 const meetingNoticesSource = fs.readFileSync('lib/reuniao-publica/avisos.ts', 'utf8');
 const meetingNoticesRepositorySource = fs.readFileSync('lib/reuniao-publica/avisos-repository.ts', 'utf8');
 const musicRepositorySource = fs.readFileSync('lib/musicas-repository.ts', 'utf8');
@@ -107,6 +109,7 @@ const responsiveContract = [
   ['regra de ativação do submenu isolada', adminContextMenuSource.includes('isAdminContextItemActive') && adminContextNavigationSource.includes('export function isAdminContextItemActive') && !adminContextMenuSource.includes('item.href.split("?")')],
   ['header importa navegação musical', adminHeaderSource.includes('admin-music-navigation') && adminMusicNavigationSource.includes('musicContextMenuItems') && adminMusicNavigationSource.includes('/musicas/exibir')],
   ['header separa abas superiores', adminHeaderSource.includes('AdminShellTabs') && adminShellTabsSource.includes('admin-shell-tab') && !adminHeaderSource.includes('topAreas.map((item) => (')],
+  ['shell admin separa politica de rotas', adminShellNavigationSource.includes('getAdminShellAreaFromPath') && adminShellNavigationSource.includes('ADMIN_SHELL_ROUTES') && adminShellNavigationSource.includes('ADMIN_SHELL_AREAS') && adminShellHookSource.includes('useAdminShellArea')],
   ['agenda alimenta avisos da reunião sem duplicação', meetingNoticesSource.includes('schedule') && meetingNoticesSource.includes('listReuniaoPublicaAvisos') && meetingNoticesSource.includes('titulos') && meetingNoticesSource.includes('origem: "reuniao"')],
   ['submenu Música possui início catálogo autores e sessões', ['Início', 'Catálogo', 'Autores', 'Sessões'].every((label) => adminMusicNavigationSource.includes(`label: "${label}"`)) && adminHeaderSource.includes('musicContextMenuItems') && adminMusicNavigationSource.includes('/admin/reuniao-publica/musica/catalogo')],
   ['submenu contextual é restrito às áreas configuradas', adminContextNavigationSource.includes('"reuniao-publica": [') && adminHeaderSource.includes('contextMenuItems &&')],
@@ -119,7 +122,7 @@ const responsiveContract = [
   ['início não fica ativo nas rotas filhas', adminContextNavigationSource.includes('item.label === "Início"') && adminContextNavigationSource.includes('pathname === itemPath')],
   ['contextos administrativos possuem submenu', ['perfil: [', 'geef: [', 'pessoas: [', '"reuniao-publica": [', 'governanca: [', 'documentos: [', 'operacao: [', 'sistema: ['].every((context) => adminContextNavigationSource.includes(context))],
   ['rotas canônicas seguem menu e submenu', nextConfigSource.includes('contextualRouteRewrites') && nextConfigSource.includes('/admin/geef/instituicao') && nextConfigSource.includes('/admin/pessoas/funcoes') && nextConfigSource.includes('/admin/operacao/${submenu}') && nextConfigSource.includes('/admin/sistema/observabilidade')],
-  ['funções pertencem à área Tarefeiros', shellAreaSource.includes('normalizedPath.startsWith("/admin/funcoes")') && shellAreaSource.includes('return "pessoas"') && !shellAreaSource.match(/normalizedPath\.startsWith\("\/admin\/funcoes"\)[\s\S]{0,180}return "geef"/)],
+  ['funções pertencem à área Tarefeiros', adminShellNavigationSource.includes('normalizedPath.startsWith("/admin/funcoes")') && adminShellNavigationSource.includes('return "pessoas"') && !adminShellNavigationSource.match(/normalizedPath\.startsWith\("\/admin\/funcoes"\)[\s\S]{0,180}return "geef"/)],
   ['atalhos GEEF foram centralizados', !adminSidebarSource.includes('href="/admin/instituicao/identificacao"') && !adminSidebarSource.includes('href="/admin/instituicao/endereco"') && !adminSidebarSource.includes('href="/admin/instituicao/contas"') && !adminSidebarSource.includes('href="/admin/departamentos"') && !dashboardSource.includes('href: "/admin/departamentos"')],
   ['atalhos Sistema saíram dos corpos', !adminSidebarSource.includes('href="/admin/migrations"') && !adminSidebarSource.includes('href="/admin/fix-usuarios"') && !dashboardSource.includes('href: "/admin/observability"')],
   ['submenu contextual é responsivo', adminCss.includes('.admin-context-menu-item') && adminCss.includes('overflow-x: auto')],
