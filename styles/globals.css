@@ -3225,6 +3225,20 @@ a.button.musica-icon-button {
   gap: 0.85rem;
 }
 
+.public-page--compact {
+  gap: 0.35rem;
+}
+
+.public-page--compact .public-hero-shell {
+  padding: 0.65rem 0.8rem;
+}
+
+.public-page--compact .musica-toolbar {
+  margin-top: 0;
+  margin-bottom: 0.45rem;
+  padding: 0.55rem 0.4rem;
+}
+
 .public-page--animated .content-hero {
   animation: public-page-rise 540ms ease both;
 }

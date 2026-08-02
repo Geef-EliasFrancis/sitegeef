@@ -16,7 +16,7 @@ export default async function MusicasPage() {
   ]);
 
   return (
-    <main className="public-page public-page--animated">
+    <main className="public-page public-page--animated public-page--compact">
       <section className="content-hero public-hero-shell">
         <div className="musica-catalog-header">
           <MusicasCatalog musicas={musicas} activeMusicaId={exibicaoPublica?.musica?.id ?? null} />

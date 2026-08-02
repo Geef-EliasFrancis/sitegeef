@@ -215,7 +215,7 @@ export function SiteHeader({
       </div>
 
       {activeGroup && pathname !== "/" && !mobileMenuOpen && (
-        <section className="site-context-navigation" aria-label={`Opções de ${contextTitle}`}>
+        <section className={`site-context-navigation${isMusicPath ? " site-context-navigation--music" : ""}`} aria-label={`Opções de ${contextTitle}`}>
           <div className="site-context-navigation-copy">
             <strong>{contextTitle}</strong>
             <p>{isMusicPath ? "Catálogo e exibição pública das músicas." : activeGroup.description}</p>

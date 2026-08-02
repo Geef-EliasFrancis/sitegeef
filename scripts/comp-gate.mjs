@@ -41,6 +41,8 @@ const institutionContactsPageSource = fs.readFileSync('app/admin/instituicao/con
 const musicVersionsPageSource = fs.readFileSync('app/admin/reuniao-publica/musica/versoes/page.tsx', 'utf8');
 const publicMusicLiveButtonSource = fs.readFileSync('components/musicas/musica-catalog-live-button.tsx', 'utf8');
 const publicMusicCatalogCss = fs.readFileSync('styles/globals.css', 'utf8');
+const publicSiteHeaderSource = fs.readFileSync('components/site-header.tsx', 'utf8');
+const publicSiteHeaderCss = fs.readFileSync('styles/site-header.css', 'utf8');
 const meetingNoticesSource = fs.readFileSync('lib/reuniao-publica/avisos.ts', 'utf8');
 const meetingNoticesRepositorySource = fs.readFileSync('lib/reuniao-publica/avisos-repository.ts', 'utf8');
 const musicRepositorySource = fs.readFileSync('lib/musicas-repository.ts', 'utf8');
@@ -127,6 +129,7 @@ const responsiveContract = [
   ['versões não passam evento para Server Component', !musicVersionsPageSource.match(/<button[\s\S]*onClick=/) && musicVersionsPageSource.includes('action={async () =>')],
   ['botão ao vivo da lista não abre a exibição', publicMusicLiveButtonSource.includes('router.refresh()') && !publicMusicLiveButtonSource.includes('router.push("/musicas/exibir")') && !publicMusicLiveButtonSource.includes('href="/musicas/exibir"')],
   ['catálogo público de músicas é compacto', publicMusicCatalogCss.includes('gap: 0.3rem') && publicMusicCatalogCss.includes('padding: 0.42rem 0.65rem') && publicMusicCatalogCss.includes('width: 1.9rem') && publicMusicCatalogCss.includes('flex-direction: row')],
+  ['página de músicas reduz área vazia do contexto', publicSiteHeaderSource.includes('site-context-navigation--music') && publicSiteHeaderCss.includes('.site-context-navigation--music .site-context-navigation-copy p') && publicMusicCatalogCss.includes('public-page--compact .public-hero-shell') && publicMusicCatalogCss.includes('margin-top: 0')],
   ['agenda alimenta avisos da reunião sem duplicação', meetingNoticesSource.includes('schedule') && meetingNoticesSource.includes('listReuniaoPublicaAvisos') && meetingNoticesSource.includes('titulos') && meetingNoticesSource.includes('origem: "reuniao"')],
   ['submenu Música possui início catálogo autores e sessões', ['Início', 'Catálogo', 'Autores', 'Sessões'].every((label) => adminMusicNavigationSource.includes(`label: "${label}"`)) && adminHeaderSource.includes('musicContextMenuItems') && adminMusicNavigationSource.includes('/admin/reuniao-publica/musica/catalogo')],
   ['submenu contextual é restrito às áreas configuradas', adminContextNavigationSource.includes('"reuniao-publica": [') && adminHeaderSource.includes('contextMenuItems &&')],
