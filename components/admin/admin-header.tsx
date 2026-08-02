@@ -9,9 +9,6 @@ import type { Locale } from '@/lib/multilingual';
 import type { AdminShellArea } from '@/components/admin/use-admin-shell-area';
 
 const contextMenus: Partial<Record<AdminShellArea, readonly { label: string; href: string }[]>> = {
-  painel: [
-    { label: 'Início', href: '/admin/painel' },
-  ],
   perfil: [
     { label: 'Início', href: '/admin/perfil' },
     { label: 'Minha área', href: '/minha-area' },
