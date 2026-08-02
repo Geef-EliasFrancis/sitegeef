@@ -1,5 +1,5 @@
 import { createServiceRoleClient } from "@/lib/supabase/service-role";
-import { deleteMusicaRecord, fetchMusicasBase, getMusicaSlugById, saveMusicaRecord } from "@/lib/musicas-repository";
+import { deleteMusicaRecord, deleteMusicaSessaoRecord, fetchMusicasBase, getMusicaSessaoRecord, getMusicaSlugById, listMusicaSessaoRecords, patchMusicaSessaoRecord, saveMusicaRecord, saveMusicaSessaoRecord } from "@/lib/musicas-repository";
 
 export type MusicaParteTipo = "estrofe" | "verso" | "refrao" | "ponte" | "intro" | "cifra";
 export type MusicaSessaoModo = "exibicao" | "catalogo";
@@ -310,19 +310,11 @@ export async function getMusicasResumo() {
 }
 
 export async function getMusicaSessaoByCodigo(codigo: string) {
-  const supabase = createServiceRoleClient();
-
-  const { data, error } = await supabase
-    .from("musica_sessoes")
-    .select("id, codigo_pareamento, nome_tela, musica_id, modo, ativo, ultimo_acesso_em, criado_em, atualizado_em")
-    .eq("codigo_pareamento", codigo)
-    .maybeSingle();
-
-  if (error || !data) {
+  const sessao = await getMusicaSessaoRecord(codigo.trim().toUpperCase());
+  if (!sessao) {
     return null;
   }
-
-  return encerrarMusicaSessaoSeExpirada(data as MusicaSessao);
+  return encerrarMusicaSessaoSeExpirada(sessao);
 }
 
 export async function getMusicaSessaoComMusica(codigo: string) {
@@ -378,18 +370,7 @@ export async function saveMusicaExibicaoPublica(musicaId: string) {
 }
 
 export async function listMusicaSessoes() {
-  const supabase = createServiceRoleClient();
-
-  const { data, error } = await supabase
-    .from("musica_sessoes")
-    .select("id, codigo_pareamento, nome_tela, musica_id, modo, ativo, ultimo_acesso_em, criado_em, atualizado_em")
-    .order("atualizado_em", { ascending: false });
-
-  if (error) {
-    return [];
-  }
-
-  const sessoes = (data ?? []) as MusicaSessao[];
+  const sessoes = await listMusicaSessaoRecords();
   const expiradas = sessoes.filter((sessao) => musicaSessaoExpirouPorInatividade(sessao));
 
   if (expiradas.length === 0) {
@@ -462,29 +443,15 @@ export type SaveMusicaSessaoInput = {
 };
 
 export async function saveMusicaSessao(input: SaveMusicaSessaoInput) {
-  const supabase = createServiceRoleClient();
   const codigo = input.codigo_pareamento.trim().toUpperCase();
-
-  const payload = {
+  return saveMusicaSessaoRecord({
     codigo_pareamento: codigo,
     nome_tela: input.nome_tela?.trim() || null,
     musica_id: input.musica_id || null,
     modo: input.modo ?? "exibicao",
     ativo: input.ativo ?? true,
     ultimo_acesso_em: input.ultimo_acesso_em ?? null,
-  };
-
-  const { data, error } = await supabase
-    .from("musica_sessoes")
-    .upsert([payload], { onConflict: "codigo_pareamento" })
-    .select("id, codigo_pareamento, nome_tela, musica_id, modo, ativo, ultimo_acesso_em, criado_em, atualizado_em")
-    .single();
-
-  if (error) {
-    throw error;
-  }
-
-  return data as MusicaSessao;
+  });
 }
 
 export async function createMusicaSessao(input: Partial<SaveMusicaSessaoInput> = {}) {
@@ -503,7 +470,6 @@ export async function patchMusicaSessao(
   codigo_pareamento: string,
   patch: Partial<Pick<MusicaSessao, "nome_tela" | "musica_id" | "modo" | "ativo" | "ultimo_acesso_em">>,
 ) {
-  const supabase = createServiceRoleClient();
   const codigo = codigo_pareamento.trim().toUpperCase();
 
   const payload: Record<string, unknown> = {};
@@ -524,18 +490,7 @@ export async function patchMusicaSessao(
     payload.ultimo_acesso_em = patch.ultimo_acesso_em;
   }
 
-  const { data, error } = await supabase
-    .from("musica_sessoes")
-    .update(payload)
-    .eq("codigo_pareamento", codigo)
-    .select("id, codigo_pareamento, nome_tela, musica_id, modo, ativo, ultimo_acesso_em, criado_em, atualizado_em")
-    .maybeSingle();
-
-  if (error) {
-    throw error;
-  }
-
-  return data as MusicaSessao | null;
+  return patchMusicaSessaoRecord(codigo, payload);
 }
 
 export async function touchMusicaSessao(codigo_pareamento: string) {
@@ -543,14 +498,8 @@ export async function touchMusicaSessao(codigo_pareamento: string) {
 }
 
 export async function deleteMusicaSessao(codigo_pareamento: string) {
-  const supabase = createServiceRoleClient();
   const codigo = codigo_pareamento.trim().toUpperCase();
-
-  const { error } = await supabase.from("musica_sessoes").delete().eq("codigo_pareamento", codigo);
-
-  if (error) {
-    throw error;
-  }
+  await deleteMusicaSessaoRecord(codigo);
 }
 
 export type MusicaAutor = Omit<MusicaCredito, "tipo">;

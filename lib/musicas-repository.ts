@@ -1,5 +1,5 @@
 import { createServiceRoleClient } from "@/lib/supabase/service-role";
-import type { Musica, MusicaParteTipo } from "@/lib/musicas";
+import type { Musica, MusicaParteTipo, MusicaSessao, MusicaSessaoModo } from "@/lib/musicas";
 
 /** Leitura composta do catálogo e suas partes, isolada do serviço de músicas. */
 export async function fetchMusicasBase(): Promise<Musica[]> {
@@ -90,5 +90,46 @@ export async function saveMusicaRecord(input: {
 export async function deleteMusicaRecord(id: string) {
   const supabase = createServiceRoleClient();
   const { error } = await supabase.from("musicas").delete().eq("id", id);
+  if (error) throw error;
+}
+
+const sessionFields = "id, codigo_pareamento, nome_tela, musica_id, modo, ativo, ultimo_acesso_em, criado_em, atualizado_em";
+
+export async function listMusicaSessaoRecords(): Promise<MusicaSessao[]> {
+  const supabase = createServiceRoleClient();
+  const { data, error } = await supabase.from("musica_sessoes").select(sessionFields).order("atualizado_em", { ascending: false });
+  return error ? [] : ((data ?? []) as MusicaSessao[]);
+}
+
+export async function getMusicaSessaoRecord(codigo: string): Promise<MusicaSessao | null> {
+  const supabase = createServiceRoleClient();
+  const { data, error } = await supabase.from("musica_sessoes").select(sessionFields).eq("codigo_pareamento", codigo).maybeSingle();
+  return error || !data ? null : (data as MusicaSessao);
+}
+
+export async function saveMusicaSessaoRecord(input: {
+  codigo_pareamento: string;
+  nome_tela: string | null;
+  musica_id: string | null;
+  modo: MusicaSessaoModo;
+  ativo: boolean;
+  ultimo_acesso_em: string | null;
+}) {
+  const supabase = createServiceRoleClient();
+  const { data, error } = await supabase.from("musica_sessoes").upsert([input], { onConflict: "codigo_pareamento" }).select(sessionFields).single();
+  if (error) throw error;
+  return data as MusicaSessao;
+}
+
+export async function patchMusicaSessaoRecord(codigo: string, patch: Record<string, unknown>) {
+  const supabase = createServiceRoleClient();
+  const { data, error } = await supabase.from("musica_sessoes").update(patch).eq("codigo_pareamento", codigo).select(sessionFields).maybeSingle();
+  if (error) throw error;
+  return data as MusicaSessao | null;
+}
+
+export async function deleteMusicaSessaoRecord(codigo: string) {
+  const supabase = createServiceRoleClient();
+  const { error } = await supabase.from("musica_sessoes").delete().eq("codigo_pareamento", codigo);
   if (error) throw error;
 }
