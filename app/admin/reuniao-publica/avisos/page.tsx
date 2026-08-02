@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { getPublicacoes } from "@/app/admin/comunicacao/actions";
-import { IconPlus } from "@/components/icons";
+import { IconEdit, IconPlus } from "@/components/icons";
 
 export const metadata = {
   title: "Avisos - Reunião pública - Admin GEEF",
@@ -52,32 +52,39 @@ export default async function AvisosPage() {
       </section>
 
       <section className="area-section">
-        <div className="area-section-title">
-          <h2>Comunicados da reunião</h2>
-          <p>Somente publicações classificadas como aviso aparecem nesta tela.</p>
+        <div className="avisos-catalog-heading">
+          <h2>Catálogo</h2>
+          <span>{avisos.length} avisos</span>
         </div>
 
-        <div className="table-surface">
-          {avisos.length === 0 ? (
-            <div className="area-empty">
-              <p>Nenhum aviso cadastrado.</p>
-              <Link href="/admin/comunicacao/nova-publicacao?tipo=aviso" className="admin-btn admin-btn-secondary">
-                Criar primeiro aviso
-              </Link>
-            </div>
-          ) : (
-            <table className="admin-table">
-              <thead>
+        <div className="admin-card table-surface avisos-catalog-surface">
+          <table className="admin-table avisos-catalog-table">
+            <thead>
+              <tr>
+                <th>Aviso</th>
+                <th>Autor</th>
+                <th>Status</th>
+                <th>Data</th>
+                <th aria-label="Ações" />
+              </tr>
+            </thead>
+            <tbody>
+              {avisos.length === 0 ? (
                 <tr>
-                  <th>Aviso</th>
-                  <th>Autor</th>
-                  <th>Status</th>
-                  <th>Data</th>
-                  <th aria-label="Ações" />
+                  <td colSpan={5} className="avisos-catalog-empty">
+                    <span>Nenhum aviso cadastrado.</span>
+                    <Link
+                      href="/admin/comunicacao/nova-publicacao?tipo=aviso"
+                      className="admin-btn admin-btn-secondary admin-icon-action"
+                      aria-label="Adicionar primeiro aviso"
+                      title="Adicionar primeiro aviso"
+                    >
+                      <IconPlus size={18} />
+                    </Link>
+                  </td>
                 </tr>
-              </thead>
-              <tbody>
-                {avisos.map((aviso) => (
+              ) : (
+                avisos.map((aviso) => (
                   <tr key={aviso.id}>
                     <td>
                       <strong>{aviso.titulo}</strong>
@@ -89,15 +96,20 @@ export default async function AvisosPage() {
                       {new Date(aviso.publicado_em || aviso.criado_em).toLocaleDateString("pt-BR")}
                     </td>
                     <td>
-                      <Link href={`/admin/comunicacao/${aviso.id}`} className="admin-btn admin-btn-small" title="Editar aviso">
-                        Editar
+                      <Link
+                        href={`/admin/comunicacao/${aviso.id}`}
+                        className="admin-btn admin-btn-small admin-icon-action"
+                        aria-label={`Editar ${aviso.titulo}`}
+                        title={`Editar ${aviso.titulo}`}
+                      >
+                        <IconEdit size={16} />
                       </Link>
                     </td>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          )}
+                ))
+              )}
+            </tbody>
+          </table>
         </div>
       </section>
     </div>

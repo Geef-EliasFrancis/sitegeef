@@ -1529,6 +1529,55 @@
   justify-content: center;
 }
 
+.avisos-catalog-heading {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.85rem;
+}
+
+.avisos-catalog-heading h2 {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: clamp(1.45rem, 3vw, 2rem);
+}
+
+.avisos-catalog-heading span {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}
+
+.avisos-catalog-surface {
+  overflow-x: auto;
+}
+
+.avisos-catalog-table {
+  min-width: 42rem;
+}
+
+.avisos-catalog-empty {
+  height: 7rem;
+  text-align: center !important;
+  color: var(--text-muted) !important;
+}
+
+.avisos-catalog-empty .admin-icon-action {
+  margin-left: 0.75rem;
+  vertical-align: middle;
+}
+
+@media (max-width: 767px) {
+  .avisos-catalog-table {
+    min-width: 34rem;
+  }
+
+  .avisos-catalog-table th,
+  .avisos-catalog-table td {
+    padding: 0.7rem 0.65rem;
+  }
+}
+
 @media (max-width: 767px) {
   .admin-icon-action {
     width: 2.75rem;
