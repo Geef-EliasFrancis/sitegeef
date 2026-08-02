@@ -1,5 +1,6 @@
 import { site } from "@/lib/site-data";
 import { loadPublicContactRows, type AddressRow } from "@/lib/site-contact-repository";
+import { normalizeHandle, normalizePhoneLink, normalizeWebsite } from "@/lib/site-contact-formatters";
 
 export type PublicChannelLink = {
   label: string;
@@ -41,32 +42,6 @@ export type PublicContactData = {
 function cleanText(value?: string | null) {
   const trimmed = value?.trim();
   return trimmed ? trimmed : "";
-}
-
-function normalizeWebsite(value?: string | null) {
-  const raw = cleanText(value);
-  if (!raw) {
-    return "";
-  }
-
-  if (/^https?:\/\//i.test(raw)) {
-    return raw;
-  }
-
-  return `https://${raw.replace(/^\/+/, "")}`;
-}
-
-function normalizeHandle(value?: string | null) {
-  const raw = cleanText(value);
-  if (!raw) {
-    return "";
-  }
-
-  return raw.replace(/^@/, "").trim();
-}
-
-function normalizePhoneLink(value: string) {
-  return `tel:${value.replace(/[^\d+]/g, "")}`;
 }
 
 function normalizeWhatsAppLink(value: string) {

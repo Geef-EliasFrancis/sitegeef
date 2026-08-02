@@ -1,31 +1,6 @@
 import { site } from "@/lib/site-data";
 import type { PublicContactData, PublicChannelLink } from "@/lib/site-contact";
-
-function normalizeWebsite(value?: string | null) {
-  const raw = value?.trim();
-  if (!raw) {
-    return "";
-  }
-
-  if (/^https?:\/\//i.test(raw)) {
-    return raw;
-  }
-
-  return `https://${raw.replace(/^\/+/, "")}`;
-}
-
-function normalizeHandle(value?: string | null) {
-  const raw = value?.trim();
-  if (!raw) {
-    return "";
-  }
-
-  return raw.replace(/^@/, "").trim();
-}
-
-function normalizePhoneLink(value: string) {
-  return `tel:${value.replace(/[^\d+]/g, "")}`;
-}
+import { normalizeHandle, normalizePhoneLink, normalizeWebsite } from "@/lib/site-contact-formatters";
 
 function collectSocials(): PublicChannelLink[] {
   return [
