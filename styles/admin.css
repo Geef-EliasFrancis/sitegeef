@@ -3323,6 +3323,122 @@
   backdrop-filter: none;
 }
 
+.admin-layout {
+  --surface-primary: rgba(252, 254, 248, 0.92);
+  --surface-secondary: rgba(247, 252, 241, 0.96);
+  --surface-tertiary: rgba(241, 249, 232, 0.96);
+  --surface-primary-hover: rgba(239, 248, 231, 0.98);
+  --surface-secondary-hover: rgba(225, 241, 211, 0.98);
+  --text-primary: #132218;
+  --text-secondary: #405247;
+  --text-muted: #405247;
+  --text-hint: #718174;
+  --border-light: #e1ecd9;
+  --border-medium: #cbd9c4;
+  --border-dark: #aec5a4;
+  --nav-tab-bg: rgba(252, 254, 248, 0.92);
+  --nav-tab-text: #132218;
+  --nav-tab-border: #cbd9c4;
+  --nav-tab-hover-bg: rgba(239, 248, 231, 0.98);
+  --nav-tab-hover-text: #132218;
+  --admin-bg: #f3f8ef;
+  --admin-card-bg: rgba(252, 254, 248, 0.92);
+  color: #132218;
+  background: linear-gradient(180deg, #f8fcf5 0%, #f0f7eb 52%, #e9f2e7 100%);
+}
+
+.admin-layout .admin-card,
+.admin-layout .admin-page-header,
+.admin-layout .admin-table-wrapper,
+.admin-layout .admin-dashboard-hero,
+.admin-layout .admin-dashboard-panel {
+  border: 1px solid #cbd9c4;
+  border-radius: 20px;
+  background: rgba(252, 254, 248, 0.92);
+  box-shadow: 0 12px 28px rgba(38, 79, 28, 0.08);
+  backdrop-filter: blur(8px);
+}
+
+.admin-layout .admin-stat-card,
+.admin-layout .admin-table thead {
+  border: 1px solid #d9e6d2;
+  border-radius: 14px;
+  background: rgba(247, 252, 241, 0.96);
+}
+
+.admin-layout .admin-page-title,
+.admin-layout .admin-dashboard-panel h2,
+.admin-layout .admin-dashboard-panel h3 {
+  color: #132218;
+}
+
+.admin-header .admin-brand {
+  display: flex;
+}
+
+@media (max-width: 767px) {
+  .admin-header .admin-brand {
+    display: flex;
+  }
+}
+
+:root.dark .admin-layout {
+  --surface-primary: #221f1d;
+  --surface-secondary: rgba(45, 41, 38, 0.96);
+  --surface-tertiary: rgba(40, 36, 33, 0.96);
+  --surface-primary-hover: #2d2926;
+  --surface-secondary-hover: rgba(60, 52, 45, 0.96);
+  --text-primary: #f4efe7;
+  --text-secondary: #e8dfd4;
+  --text-muted: #d4ccc1;
+  --text-hint: #b5a89d;
+  --border-light: #6d6258;
+  --border-medium: #5a5349;
+  --border-dark: #403a35;
+  --nav-tab-bg: #221f1d;
+  --nav-tab-text: #f4efe7;
+  --nav-tab-border: #5a5349;
+  --nav-tab-hover-bg: #2d2926;
+  --nav-tab-hover-text: #ffffff;
+  --admin-bg: #171513;
+  --admin-card-bg: #221f1d;
+  color: #f4efe7;
+  background: linear-gradient(180deg, #1d1a18 0%, #171513 100%);
+}
+
+:root.dark .admin-layout .admin-card,
+:root.dark .admin-layout .admin-page-header,
+:root.dark .admin-layout .admin-table-wrapper,
+:root.dark .admin-layout .admin-dashboard-hero,
+:root.dark .admin-layout .admin-dashboard-panel {
+  border-color: #5a5349;
+  background: #221f1d;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.22);
+}
+
+:root.dark .admin-layout .admin-stat-card,
+:root.dark .admin-layout .admin-table thead {
+  border-color: #5a5349;
+  background: #2d2926;
+}
+
+:root.dark .admin-layout .admin-page-title,
+:root.dark .admin-layout .admin-dashboard-panel h2,
+:root.dark .admin-layout .admin-dashboard-panel h3 {
+  color: #f4efe7;
+}
+
+:root.dark .admin-header {
+  border-color: #5a5349;
+  background: #221f1d;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+}
+
+:root.dark .admin-context-menu {
+  border-color: #5a5349;
+  background: #221f1d;
+}
+
 .admin-header {
   padding: 0.55rem 0.75rem;
   border-top-color: #4ca4da;
