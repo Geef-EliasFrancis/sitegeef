@@ -19,17 +19,6 @@
   --admin-border: #5a5349;
 }
 
-.site-shell {
-  width: 100%;
-  margin: 0;
-  padding: 0;
-}
-
-.site-shell > .site-header,
-.site-shell > .site-footer {
-  display: none !important;
-}
-
 .admin-layout {
   display: flex;
   flex-direction: column;
