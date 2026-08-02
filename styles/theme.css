@@ -19,16 +19,16 @@
   --uva-100: #f8ddef;
 
   /* Secundárias (Videira) */
-  --videira-950: #1a3d2e;
-  --videira-900: #2d5a47;
-  --videira-800: #3d7a5a;
-  --videira-700: #4d9a6d;
-  --videira-600: #63c984;
-  --videira-500: #7dd99a;
-  --videira-400: #9ae5b0;
-  --videira-300: #b5f0c9;
-  --videira-200: #d4f8e0;
-  --videira-100: #edfdf5;
+  --videira-950: #102e18;
+  --videira-900: #1c5a24;
+  --videira-800: #2f8125;
+  --videira-700: #45a91e;
+  --videira-600: #5bcf22;
+  --videira-500: #79df35;
+  --videira-400: #a5eb5d;
+  --videira-300: #c8f28e;
+  --videira-200: #e1f8be;
+  --videira-100: #f1fbe0;
 
   /* Neutros (Luz) */
   --light-950: #1c201f;
@@ -44,16 +44,16 @@
   --light-50: #f8f9fa;
 
   /* Tema Light (padrão) */
-  --bg: #f7f2fb;
-  --surface: rgba(246, 237, 252, 0.96);
-  --surface-hover: rgba(239, 226, 249, 0.98);
-  --text: #1c201f;
-  --text-muted: #3d3846; /* Melhorado contraste: de #63586f */
-  --border: #d1c4db; /* Mais escuro: de #e1d4ee */
-  --line: #d1c4db;
-  --shadow: 0 24px 60px rgba(124, 63, 163, 0.08);
-  --shadow-lg: 0 40px 100px rgba(124, 63, 163, 0.12);
-  --shadow-sm: 0 4px 12px rgba(124, 63, 163, 0.06);
+  --bg: #f6f8f1;
+  --surface: rgba(252, 254, 248, 0.96);
+  --surface-hover: rgba(239, 248, 231, 0.98);
+  --text: #132218;
+  --text-muted: #405247;
+  --border: #cbd9c4;
+  --line: #cbd9c4;
+  --shadow: 0 24px 60px rgba(34, 83, 32, 0.1);
+  --shadow-lg: 0 40px 100px rgba(34, 83, 32, 0.14);
+  --shadow-sm: 0 4px 12px rgba(34, 83, 32, 0.07);
 
   /* Cores de Estado */
   --success: #63c984;
@@ -63,8 +63,8 @@
 
   /* Gradientes */
   --gradient-uva: linear-gradient(135deg, #8a005a 0%, #b82d8a 100%);
-  --gradient-videira: linear-gradient(135deg, #4d9a6d 0%, #63c984 100%);
-  --gradient-light: linear-gradient(135deg, #f7f2fb 0%, #efe0fa 100%);
+  --gradient-videira: linear-gradient(135deg, #2f8125 0%, #63cf22 100%);
+  --gradient-light: linear-gradient(135deg, #f6f8f1 0%, #eaf4df 100%);
 }
 
 /* Dark Mode */
@@ -92,10 +92,10 @@
 
 /* Cores principais - sempre acessíveis */
 :root {
-  --primary: #8a005a; /* Uva padrão */
+  --primary: #8a005a;
   --primary-hover: #a01470;
-  --secondary: #63c984; /* Videira padrão */
-  --secondary-hover: #4d9a6d;
+  --secondary: #5bcf22;
+  --secondary-hover: #45a91e;
 
   /* Radius padrão */
   --radius-sm: 8px;
