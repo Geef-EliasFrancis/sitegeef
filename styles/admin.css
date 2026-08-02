@@ -713,6 +713,15 @@
   text-shadow: 0 1px 0 rgba(255, 255, 255, 0.68);
 }
 
+.admin-shell-tab:not(.active),
+.admin-shell-tab:not(.active) span {
+  color: #102a0c !important;
+}
+
+.admin-shell-tab:not(.active) span {
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.68) !important;
+}
+
 .admin-shell-tab.active {
   border-color: #77003f;
   color: #ffffff;
