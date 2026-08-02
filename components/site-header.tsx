@@ -26,8 +26,10 @@ export function SiteHeader({
 }: SiteHeaderProps) {
   const pathname = usePathname();
   const router = useRouter();
+
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [openGroup, setOpenGroup] = useState<string | null>(null);
+
   const primaryLinks = getLocalizedNavItems(locale).filter((item) => item.primary);
   const navGroups = [
     {
@@ -101,6 +103,10 @@ export function SiteHeader({
   useEffect(() => {
     setOpenGroup(routeGroup?.key ?? null);
   }, [routeGroup?.key]);
+
+  if (pathname.startsWith("/admin")) {
+    return null;
+  }
 
   function selectGroup(group: (typeof navGroups)[number]) {
     setOpenGroup(group.key);
