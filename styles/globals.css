@@ -5904,6 +5904,40 @@ a.button.musica-icon-button {
   margin-top: 0;
 }
 
+.instituicao-contato-table {
+  display: grid;
+  min-width: 0;
+  flex: 1;
+}
+
+.instituicao-contato-table-row {
+  display: grid;
+  grid-template-columns: minmax(8rem, 0.4fr) minmax(0, 1fr);
+  gap: 1rem;
+  padding: 0.55rem 0;
+  border-top: 1px solid var(--border-light);
+}
+
+.instituicao-contato-table-row > :last-child {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  color: var(--text-secondary);
+}
+
+.instituicao-contato-table-head {
+  padding-top: 0;
+  border-top: 0;
+  color: var(--text);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.instituicao-contato-table-head > :last-child {
+  color: var(--text);
+}
+
 .instituicao-contato-field {
   display: flex;
   align-items: baseline;

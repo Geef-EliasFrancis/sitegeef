@@ -6,8 +6,8 @@ import ContatosDeleteButton from "@/components/admin/instituicao/contatos-delete
 export const metadata = { title: "Contatos - Instituição - Admin GEEF" };
 
 const contactFields = [
-  ["telefone", "☎"], ["whatsapp", "◉"], ["email", "@"], ["instagram", "◎"],
-  ["facebook", "f"], ["youtube", "▶"], ["site", "↗"],
+  ["telefone", "Telefone"], ["whatsapp", "WhatsApp"], ["email", "E-mail"], ["instagram", "Instagram"],
+  ["facebook", "Facebook"], ["youtube", "YouTube"], ["site", "Site"],
 ] as const;
 
 async function ContatosContent() {
@@ -40,14 +40,23 @@ async function ContatosContent() {
                   <div className="instituicao-contato-records">
                     {registros.map((contato) => (
                       <div key={contato.id} className="instituicao-contato-record">
-                        <div className="instituicao-contato-fields">
-                          {contactFields.map(([field, icon]) => contato[field] && (
-                            <span key={field} className="instituicao-contato-field">
-                              <span className="instituicao-contato-field-icon" aria-hidden="true">{icon}</span>
-                              <span>{contato[field]}</span>
-                            </span>
+                        <div className="instituicao-contato-table" role="table" aria-label={`Dados de ${tipo}`}>
+                          <div className="instituicao-contato-table-row instituicao-contato-table-head" role="row">
+                            <span role="columnheader">Rede social</span>
+                            <span role="columnheader">Informação</span>
+                          </div>
+                          {contactFields.map(([field, label]) => contato[field] && (
+                            <div key={field} className="instituicao-contato-table-row" role="row">
+                              <span role="cell">{label}</span>
+                              <span role="cell">{contato[field]}</span>
+                            </div>
                           ))}
-                          {contato.pessoas?.nome && <span className="instituicao-contato-field">{contato.pessoas.nome}</span>}
+                          {contato.pessoas?.nome && (
+                            <div className="instituicao-contato-table-row" role="row">
+                              <span role="cell">Responsável</span>
+                              <span role="cell">{contato.pessoas.nome}</span>
+                            </div>
+                          )}
                         </div>
                         <ContatosDeleteButton contatoId={contato.id} />
                       </div>
