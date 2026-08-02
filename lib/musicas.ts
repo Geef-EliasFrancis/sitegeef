@@ -1,5 +1,5 @@
 import { createServiceRoleClient } from "@/lib/supabase/service-role";
-import { fetchMusicasBase } from "@/lib/musicas-repository";
+import { deleteMusicaRecord, fetchMusicasBase, getMusicaSlugById, saveMusicaRecord } from "@/lib/musicas-repository";
 
 export type MusicaParteTipo = "estrofe" | "verso" | "refrao" | "ponte" | "intro" | "cifra";
 export type MusicaSessaoModo = "exibicao" | "catalogo";
@@ -429,15 +429,11 @@ export type SaveMusicaInput = {
 };
 
 export async function saveMusica(input: SaveMusicaInput) {
-  const supabase = createServiceRoleClient();
   const musicaId = input.id ?? crypto.randomUUID();
-
-  const existing = await supabase.from("musicas").select("id, slug").eq("id", musicaId).maybeSingle();
-  const slug = existing.data?.slug ?? slugifyMusica(input.titulo, musicaId.slice(0, 8));
-
-  const musicaPayload = {
+  const existingSlug = input.id ? await getMusicaSlugById(musicaId) : null;
+  await saveMusicaRecord({
     id: musicaId,
-    slug,
+    slug: existingSlug ?? slugifyMusica(input.titulo, musicaId.slice(0, 8)),
     titulo: input.titulo.trim(),
     autor: input.autor.trim(),
     tom: input.tom?.trim() || null,
@@ -446,48 +442,14 @@ export async function saveMusica(input: SaveMusicaInput) {
     observacoes: input.observacoes?.trim() || null,
     youtube_url: input.youtube_url?.trim() || null,
     audio_url: input.audio_url?.trim() || null,
-  };
-
-  if (existing.data) {
-    const { error } = await supabase.from("musicas").update(musicaPayload).eq("id", musicaId);
-    if (error) {
-      throw error;
-    }
-  } else {
-    const { error } = await supabase.from("musicas").insert([musicaPayload]);
-    if (error) {
-      throw error;
-    }
-  }
-
-  await supabase.from("musica_partes").delete().eq("musica_id", musicaId);
-
-  if (input.partes.length > 0) {
-    const partesPayload = input.partes.map((parte) => ({
-      musica_id: musicaId,
-      ordem: parte.ordem,
-      tipo: parte.tipo,
-      titulo: parte.titulo || null,
-      conteudo: parte.conteudo,
-      cifra: parte.cifra || null,
-      destaque: parte.destaque,
-    }));
-
-    const { error } = await supabase.from("musica_partes").insert(partesPayload);
-    if (error) {
-      throw error;
-    }
-  }
+    partes: input.partes,
+  });
 
   return getMusicaById(musicaId);
 }
 
 export async function deleteMusica(id: string) {
-  const supabase = createServiceRoleClient();
-  const { error } = await supabase.from("musicas").delete().eq("id", id);
-  if (error) {
-    throw error;
-  }
+  await deleteMusicaRecord(id);
 }
 
 export type SaveMusicaSessaoInput = {
