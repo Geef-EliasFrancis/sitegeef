@@ -33,6 +33,8 @@ const shellAreaSource = fs.readFileSync('components/admin/use-admin-shell-area.t
 const nextConfigSource = fs.readFileSync('next.config.ts', 'utf8');
 const dashboardSource = fs.readFileSync('components/admin/admin-dashboard-workspace.tsx', 'utf8');
 const dashboardRepositorySource = fs.readFileSync('lib/admin/dashboard-repository.ts', 'utf8');
+const contactSource = fs.readFileSync('lib/site-contact.ts', 'utf8');
+const contactRepositorySource = fs.readFileSync('lib/site-contact-repository.ts', 'utf8');
 const shellTabsBlock = adminCss.match(/\.admin-shell-tabs\s*\{[^}]*\}/s)?.[0] ?? '';
 const responsiveContract = [
   ['header tablet em duas colunas', adminCss.includes('grid-template-columns: minmax(0, 1fr) auto')],
@@ -58,6 +60,7 @@ const responsiveContract = [
   ['avisos não dependem de publicacoes legadas', !meetingNoticesSource.includes('mergeAvisosComAgenda') && !avisosSource.includes('getPublicacoes')],
   ['músicas isolam catálogo, sessões e créditos do banco', musicRepositorySource.includes('saveMusicaRecord') && musicRepositorySource.includes('saveMusicaSessaoRecord') && musicRepositorySource.includes('saveMusicaCreditoRecord') && !musicasSource.includes('.from("musicas").upsert') && !musicasSource.includes('.from("musica_sessoes").upsert') && !musicasSource.includes('.from("musica_creditos").select')],
   ['dashboard separa consultas e cache', dashboardRepositorySource.includes('loadAdminDashboardSummary') && dashboardRepositorySource.includes('createServiceRoleClient') && !fs.readFileSync('lib/admin/dashboard.ts', 'utf8').includes('createServiceRoleClient')],
+  ['contato público separa consulta e composição', contactRepositorySource.includes('loadPublicContactRows') && contactRepositorySource.includes('createServiceRoleClient') && contactSource.includes('loadPublicContactRows') && !contactSource.includes('.from("instituicao")')],
   ['avisos possui catálogo tabular persistente', avisosSource.includes('avisos-catalog-table') && avisosSource.includes('<th>Aviso</th>') && !avisosSource.includes('avisos-catalog-empty') && adminCss.includes('.avisos-catalog-table')],
   ['ao vivo pertence ao submenu de músicas', siteHeaderSource.includes('const musicLinks') && siteHeaderSource.includes('/musicas/exibir') && siteHeaderSource.includes('const isMusicPath') && !siteHeaderSource.match(/key: "reuniao-publica"[\s\S]{0,700}musicas\/exibir/)],
   ['reunião pública possui início e live separados', siteHeaderSource.includes('/reuniao-publica/live') && presentationSource.includes('reuniao-publica-presentation') && presentationSource.includes('requestFullscreen') && presentationSource.includes('ArrowRight') && presentationSource.includes('avisos') && fs.existsSync('app/reuniao-publica/page.tsx') && fs.existsSync('app/reuniao-publica/live/page.tsx')],
