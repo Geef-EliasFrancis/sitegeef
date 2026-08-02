@@ -285,6 +285,48 @@ export const contentPages: Record<string, ContentPage> = {
       },
     ],
   },
+  "reuniao-publica": {
+    title: "Reunião pública",
+    summary: "Programação, música, leitura e acolhimento em uma mesma experiência.",
+    intro: "A reunião pública organiza os momentos de estudo, reflexão e convivência da casa para quem chega presencialmente ou acompanha à distância.",
+    ctaLabel: "Ver programação",
+    ctaHref: publicHref("/agenda"),
+    sections: [
+      {
+        heading: "Acompanhe a reunião",
+        text: "Consulte a agenda, as músicas e as leituras relacionadas a cada encontro.",
+        bullets: ["Programação pública.", "Músicas e leituras.", "Transmissões quando disponíveis."],
+      },
+    ],
+  },
+  biblioteca: {
+    title: "Biblioteca e conteúdos",
+    summary: "Materiais para leitura, estudo e formação espírita.",
+    intro: "A biblioteca reúne conteúdos que ajudam a casa a estudar com serenidade, continuidade e acesso simples.",
+    ctaLabel: "Abrir área do leitor",
+    ctaHref: publicHref("/leitor"),
+    sections: [
+      {
+        heading: "Conteúdos disponíveis",
+        text: "Encontre leituras, músicas e estudos organizados para consulta pública.",
+        bullets: ["Área do leitor.", "Catálogo de músicas.", "Estudos e materiais de apoio."],
+      },
+    ],
+  },
+  participe: {
+    title: "Participe",
+    summary: "Encontre a casa, acompanhe a agenda e fale conosco.",
+    intro: "A participação começa com informação clara: veja a agenda, conheça as formas de apoio e encontre os canais oficiais.",
+    ctaLabel: "Falar com a casa",
+    ctaHref: publicHref("/contato"),
+    sections: [
+      {
+        heading: "Como participar",
+        text: "Escolha uma atividade, acompanhe a programação ou entre em contato com a equipe.",
+        bullets: ["Agenda pública.", "Doações.", "Contato e acolhimento."],
+      },
+    ],
+  },
   doacoes: {
     title: "Doações",
     summary: "Apoio simples e transparente à manutenção da casa.",

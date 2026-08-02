@@ -21,6 +21,10 @@ async function runDesktop(width, height) {
   const groups = page.locator(".site-nav-group-trigger");
   const groupCount = await groups.count();
   if (groupCount !== 5) throw new Error(`Esperados 5 grupos no desktop; encontrados ${groupCount}`);
+  const groupRoutes = await groups.evaluateAll((buttons) => buttons.map((button) => button.dataset.route));
+  if (new Set(groupRoutes).size !== 5 || groupRoutes.some((route) => !route)) {
+    throw new Error(`Menus superiores sem rotas próprias: ${JSON.stringify(groupRoutes)}`);
+  }
   const primarySegments = await page.locator(".site-nav-primary > *").count();
   if (primarySegments !== 7 || await page.locator(".site-nav-home-btn").count() !== 1) {
     throw new Error(`Barra fora do formato HOME + 5 menus + CONTATO: segmentos=${primarySegments}`);

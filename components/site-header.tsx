@@ -1,9 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import * as Tabs from "@radix-ui/react-tabs";
 import { site } from "@/lib/site-data";
 import { getLocalizedNavItems, type Locale } from "@/lib/multilingual";
@@ -25,12 +25,14 @@ export function SiteHeader({
   hasAdminAccess,
 }: SiteHeaderProps) {
   const pathname = usePathname();
+  const router = useRouter();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [openGroup, setOpenGroup] = useState<string | null>(null);
   const primaryLinks = getLocalizedNavItems(locale).filter((item) => item.primary);
   const navGroups = [
     {
       key: "quem-somos",
+      href: "/quem-somos",
       label: "Quem somos",
       shortLabel: "Quem somos",
       icon: "⌂",
@@ -42,6 +44,7 @@ export function SiteHeader({
     },
     {
       key: "oferecemos",
+      href: "/atividades",
       label: "O que oferecemos",
       shortLabel: "Oferecemos",
       icon: "✦",
@@ -52,6 +55,7 @@ export function SiteHeader({
     },
     {
       key: "reuniao-publica",
+      href: "/reuniao-publica",
       label: "Reunião pública",
       shortLabel: "Reunião",
       icon: "♫",
@@ -66,6 +70,7 @@ export function SiteHeader({
     },
     {
       key: "biblioteca",
+      href: "/biblioteca",
       label: "Biblioteca e conteúdos",
       shortLabel: "Biblioteca",
       icon: "▦",
@@ -78,6 +83,7 @@ export function SiteHeader({
     },
     {
       key: "participe",
+      href: "/participe",
       label: "Participe",
       shortLabel: "Participe",
       icon: "●",
@@ -89,7 +95,18 @@ export function SiteHeader({
       ],
     },
   ];
-  const activeGroup = navGroups.find((group) => group.key === openGroup);
+  const routeGroup = navGroups.find((group) => pathname === group.href)
+    ?? navGroups.find((group) => group.links.some((item) => pathname === item.href || pathname.startsWith(`${item.href}/`)));
+  const activeGroup = navGroups.find((group) => group.key === openGroup) ?? routeGroup;
+
+  useEffect(() => {
+    setOpenGroup(routeGroup?.key ?? null);
+  }, [routeGroup?.key]);
+
+  function selectGroup(group: (typeof navGroups)[number]) {
+    setOpenGroup(group.key);
+    router.push(group.href);
+  }
 
   return (
     <header className="site-header">
@@ -125,6 +142,8 @@ export function SiteHeader({
                     type="button"
                     className="site-nav-group-trigger"
                     aria-label={group.label}
+                    data-route={group.href}
+                    onClick={() => selectGroup(group)}
                   >
                     <span className="site-nav-group-label-full">{group.label}</span>
                     <span className="site-nav-group-label-short" aria-hidden="true">{group.shortLabel}</span>
@@ -155,7 +174,7 @@ export function SiteHeader({
         <nav id="site-mobile-navigation" className="site-mobile-navigation" aria-label="Navegação mobile">
           {navGroups.map((group) => (
             <div key={group.key} className="site-mobile-nav-group">
-              <button type="button" className="site-mobile-nav-group-trigger" onClick={() => setOpenGroup(openGroup === group.key ? null : group.key)} aria-expanded={openGroup === group.key}>
+              <button type="button" className="site-mobile-nav-group-trigger" onClick={() => selectGroup(group)} aria-expanded={openGroup === group.key}>
                 {group.label}
               </button>
               {openGroup === group.key && group.links.map((item) => (
