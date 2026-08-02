@@ -54,19 +54,6 @@ async function EstudosContent() {
       </section>
 
       <section className="area-section">
-        <div className="module-grid">
-          <Link href="/admin/estudos/cursos" className="module-card">
-            <p className="module-title">📚 Cursos</p>
-            <p>Gerencie conteúdos, status e organização dos estudos.</p>
-          </Link>
-          <Link href="/admin/estudos/turmas" className="module-card">
-            <p className="module-title">👨‍🏫 Turmas</p>
-            <p>Controle grupos em andamento, histórico e acompanhamento.</p>
-          </Link>
-        </div>
-      </section>
-
-      <section className="area-section">
         <div className="area-section-title">
           <h2>Cursos disponíveis</h2>
           <p>Cards de acesso rápido para cada curso.</p>

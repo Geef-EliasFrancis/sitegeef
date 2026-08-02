@@ -64,14 +64,6 @@ async function AtendimentoContent() {
             {new Date(anoAtual, mesAtual - 1).toLocaleDateString('pt-BR', { month: 'long', year: 'numeric' })}
           </p>
         </div>
-        <div className="admin-actions">
-          <Link href="/admin/atendimento/recepcao" className="admin-btn admin-btn-secondary">
-            👥 Recepção
-          </Link>
-          <Link href="/admin/atendimento/fraterno" className="admin-btn admin-btn-secondary">
-            🤝 Fraterno
-          </Link>
-        </div>
       </div>
 
       <section className="area-section">
@@ -83,27 +75,6 @@ async function AtendimentoContent() {
               <span>{item.note}</span>
             </div>
           ))}
-        </div>
-      </section>
-
-      <section className="area-section">
-        <div className="module-grid">
-          <Link href="/admin/atendimento/recepcao" className="module-card">
-            <p className="module-title">👥 Recepção</p>
-            <p>Registros de acolhimento e atendimentos da área.</p>
-          </Link>
-          <Link href="/admin/atendimento/fraterno" className="module-card">
-            <p className="module-title">🤝 Fraterno</p>
-            <p>Acompanhamento dos atendimentos fraternos recentes.</p>
-          </Link>
-          <Link href="/admin/atendimento/evangelhos-lar" className="module-card">
-            <p className="module-title">🏠 Evangelho no Lar</p>
-            <p>Sessões e cadastros do evangelho no lar.</p>
-          </Link>
-          <Link href="/admin/atendimento/irradiacao" className="module-card">
-            <p className="module-title">✨ Irradiação</p>
-            <p>Monitoramento de atividades ativas e histórico.</p>
-          </Link>
         </div>
       </section>
 

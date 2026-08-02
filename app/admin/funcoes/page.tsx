@@ -32,19 +32,6 @@ async function FuncoesList() {
       </section>
 
       <section className="area-section">
-        <div className="area-panel-grid">
-          <Link href="/admin/funcoes" className="module-card module-card-accent">
-            <h3 className="module-title">Funções</h3>
-            <p>Cadastros de funções usadas nas escalas.</p>
-          </Link>
-          <Link href="/admin/funcoes/temas" className="module-card">
-            <h3 className="module-title">Temas doutrinários</h3>
-            <p>Categoria de temas utilizados em estudos e palestras.</p>
-          </Link>
-        </div>
-      </section>
-
-      <section className="area-section">
         <div className="table-surface">
           {funcaoList.length === 0 ? (
             <div className="area-empty">

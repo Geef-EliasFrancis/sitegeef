@@ -61,23 +61,6 @@ async function ApseContent() {
       </section>
 
       <section className="area-section">
-        <div className="module-grid">
-          <Link href="/admin/apse/familias" className="module-card">
-            <p className="module-title">👨‍👩‍👧‍👦 Famílias</p>
-            <p>Cadastro e acompanhamento das famílias assistidas.</p>
-          </Link>
-          <Link href="/admin/apse/campanhas" className="module-card">
-            <p className="module-title">📢 Campanhas</p>
-            <p>Planejamento e execução das campanhas sociais.</p>
-          </Link>
-          <Link href="/admin/apse/atendimentos" className="module-card">
-            <p className="module-title">🤝 Atendimentos</p>
-            <p>Histórico consolidado de atendimentos realizados.</p>
-          </Link>
-        </div>
-      </section>
-
-      <section className="area-section">
         <div className="area-section-title">
           <h2>Campanhas ativas</h2>
           <p>Campanhas em planejamento ou andamento.</p>

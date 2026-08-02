@@ -32,7 +32,7 @@ export const ADMIN_SHELL_AREAS: AdminShellAreaItem[] = [
 ];
 
 export const ADMIN_SHELL_TOP_AREAS: AdminShellAreaItem[] = ADMIN_SHELL_AREAS.filter(
-  (item) => item.key !== "perfil" && item.key !== "governanca" && item.key !== "documentos",
+  (item) => item.key !== "perfil",
 );
 
 export const ADMIN_SHELL_ROUTES: Record<AdminShellArea, string> = {

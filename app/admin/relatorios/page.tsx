@@ -1,4 +1,3 @@
-import Link from 'next/link';
 import { getRelatorioFinanceiro, getEstatisticasGerais, getMesesDisponiveis, getAnosDisponiveis } from './actions';
 import { Suspense } from 'react';
 
@@ -11,39 +10,6 @@ async function RelatoriosContent() {
   const relatorio = await getRelatorioFinanceiro();
   const meses = await getMesesDisponiveis();
   const anos = await getAnosDisponiveis();
-  const moduleLinks = [
-    {
-      href: '/admin/financeiro/dre',
-      title: 'DRE Financeiro',
-      text: 'Receitas, despesas e resultado por centro de custo',
-    },
-    {
-      href: '/admin/estudos',
-      title: 'Estudos Doutrinários',
-      text: 'Cursos, turmas, frequências, facilitadores',
-    },
-    {
-      href: '/admin/livraria',
-      title: 'Livraria',
-      text: 'Vendas, estoque, movimentos e relatórios',
-    },
-    {
-      href: '/admin/biblioteca',
-      title: 'Biblioteca',
-      text: 'Empréstimos, reservas, acervo e devoluções',
-    },
-    {
-      href: '/admin/operacao',
-      title: 'Atendimento Espiritual',
-      text: 'Estatísticas, histórico e irradiações ativas',
-    },
-    {
-      href: '/admin/apse',
-      title: 'APSE',
-      text: 'Famílias assistidas, campanhas e atendimentos',
-    },
-  ];
-
   return (
     <div className="area-page">
       <section className="area-hero">
@@ -110,16 +76,6 @@ async function RelatoriosContent() {
         </div>
       </section>
 
-      <section className="area-section">
-        <div className="module-grid">
-          {moduleLinks.map((item) => (
-            <Link key={item.href} href={item.href} className="module-card">
-              <p className="module-title">{item.title}</p>
-              <p>{item.text}</p>
-            </Link>
-          ))}
-        </div>
-      </section>
     </div>
   );
 }

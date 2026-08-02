@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { getDiretorias, getCargos, getCargoOcupacoes, getAssembleias } from "./actions";
 import { Suspense } from "react";
 
@@ -57,27 +56,6 @@ async function GovernancaContent() {
               <strong>{item.value}</strong>
             </div>
           ))}
-        </div>
-      </section>
-
-      <section className="area-section">
-        <div className="module-grid">
-          <Link href="/admin/governanca/diretorias" className="module-card">
-            <p className="module-title">👔 Diretorias</p>
-            <p>Cadastros e períodos de gestão.</p>
-          </Link>
-          <Link href="/admin/governanca/cargos" className="module-card">
-            <p className="module-title">🎖️ Cargos</p>
-            <p>Estrutura de funções e responsabilidades.</p>
-          </Link>
-          <Link href="/admin/governanca/assembleias" className="module-card">
-            <p className="module-title">🏛️ Assembleias</p>
-            <p>Reuniões e atas institucionais.</p>
-          </Link>
-          <Link href="/admin/governanca/documentos" className="module-card">
-            <p className="module-title">📚 Documentos institucionais</p>
-            <p>Leitura online do estatuto, CNPJ, cartório e regimento.</p>
-          </Link>
         </div>
       </section>
 

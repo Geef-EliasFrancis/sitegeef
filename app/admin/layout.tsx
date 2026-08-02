@@ -3,12 +3,10 @@ import { Suspense } from 'react';
 import Link from 'next/link';
 import { createClient } from '@/lib/supabase/server';
 import { withTimeout } from '@/lib/admin/safe-supabase';
-import { AdminSidebar } from '@/components/admin/admin-sidebar';
 import { AdminHeader } from '@/components/admin/admin-header';
 import { NotificationFlashBridge } from '@/components/notification-flash-bridge';
 import { getRequestLocale } from '@/lib/multilingual/server';
 import '@/styles/admin.css';
-import '@/styles/admin-sidebar.css';
 
 export const metadata = {
   title: 'Admin - GEEF',
@@ -117,19 +115,6 @@ export default async function AdminLayout({
     );
   }
 
-  const resolvedUsuarioSistema = usuarioSistema ?? {
-    perfil: 'administrador',
-    pode_mediunidade: appMetadata.pode_mediunidade === true,
-    pode_escalas: appMetadata.pode_escalas === true,
-    pode_biblioteca: appMetadata.pode_biblioteca === true,
-    pode_livraria: appMetadata.pode_livraria === true,
-    pode_financeiro: appMetadata.pode_financeiro === true,
-    pode_pessoas: appMetadata.pode_pessoas === true,
-    pode_publicar: appMetadata.pode_publicar === true,
-    pode_atendimento: appMetadata.pode_atendimento === true,
-    pode_apse: appMetadata.pode_apse === true,
-  };
-
   const displayName =
     (user.user_metadata?.full_name as string | undefined) ||
     (user.user_metadata?.name as string | undefined) ||
@@ -146,7 +131,6 @@ export default async function AdminLayout({
         user={{ email: user.email ?? undefined, fullName: displayName }}
       />
       <div className="admin-container">
-        <AdminSidebar usuarioSistema={resolvedUsuarioSistema} />
         <main className="admin-main">
           {children}
         </main>

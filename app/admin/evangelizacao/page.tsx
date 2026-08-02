@@ -54,23 +54,6 @@ async function EvangelizacaoContent() {
 
       <section className="area-section">
         <div className="area-section-title">
-          <h2>Acessos rápidos</h2>
-          <p>Atalhos para os cadastros mais usados do módulo.</p>
-        </div>
-        <div className="module-grid">
-          <Link href="/admin/evangelizacao/turmas" className="module-card">
-            <h3 className="module-title">Turmas</h3>
-            <p>Gerencie encontros, horários e responsáveis.</p>
-          </Link>
-          <Link href="/admin/evangelizacao/criancas" className="module-card">
-            <h3 className="module-title">Crianças</h3>
-            <p>Cadastre e acompanhe os participantes.</p>
-          </Link>
-        </div>
-      </section>
-
-      <section className="area-section">
-        <div className="area-section-title">
           <h2>Turmas ativas</h2>
           <p>Cards de acesso rápido para abrir cada turma.</p>
         </div>

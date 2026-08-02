@@ -24,13 +24,6 @@ async function FinanceiroContent() {
   const movimentos = await getMovimentosFinanceiros(mesAtual, anoAtual);
   const movimentoList = movimentos as MovimentoItem[];
 
-  const quickLinks = [
-    { href: "/admin/financeiro/plano-contas", title: "Plano de Contas", text: "Estrutura contábil e categorias" },
-    { href: "/admin/financeiro/centros-custo", title: "Centros de Custo", text: "Organização por áreas" },
-    { href: "/admin/financeiro/lancamentos", title: "Lançamentos", text: "Movimentos e registros" },
-    { href: "/admin/financeiro/dre", title: "Relatório DRE", text: "Resumo gerencial e análise" },
-  ];
-
   return (
     <div className="area-page">
       <div className="admin-page-header">
@@ -57,17 +50,6 @@ async function FinanceiroContent() {
             <span>Saldo</span>
             <strong className={saldo >= 0 ? "text-primary" : "text-danger"}>R$ {saldo.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}</strong>
           </div>
-        </div>
-      </section>
-
-      <section className="area-section">
-        <div className="module-grid">
-          {quickLinks.map((item) => (
-            <Link key={item.href} href={item.href} className="module-card">
-              <p className="module-title">{item.title}</p>
-              <p>{item.text}</p>
-            </Link>
-          ))}
         </div>
       </section>
 

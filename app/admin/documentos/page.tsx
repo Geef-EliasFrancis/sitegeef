@@ -18,16 +18,6 @@ async function ModelosList() {
   const modelos = await getModelosDocumentos();
   const modeloList = modelos as ModeloDocumentoItem[];
 
-  const tabs = [
-    { href: "/admin/documentos", label: "📄 Modelos" },
-    { href: "/admin/lgpd", label: "🛡️ Central LGPD" },
-    { href: "/admin/documentos/pedidos", label: "📮 Pedidos do Titular" },
-    { href: "/admin/documentos/termos", label: "✍️ Termos Assinados" },
-    { href: "/admin/documentos/consentimentos", label: "🔒 Consentimentos LGPD" },
-    { href: "/admin/documentos/voluntariado", label: "🤝 Serviços Voluntários" },
-    { href: "/admin/documentos/auditoria", label: "🧭 Auditoria LGPD" },
-  ];
-
   return (
     <div className="area-page">
       <section className="area-hero">
@@ -49,16 +39,6 @@ async function ModelosList() {
           <p className="mt-035">
             Antes de registrar ou revogar consentimento, confirme finalidade, base legal e necessidade real do dado.
           </p>
-        </div>
-      </section>
-
-      <section className="area-section">
-        <div className="module-grid grid-auto-220">
-          {tabs.map((tab) => (
-            <Link key={tab.href} href={tab.href} className="module-card">
-              <p className="module-title">{tab.label}</p>
-            </Link>
-          ))}
         </div>
       </section>
 
