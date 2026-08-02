@@ -41,6 +41,7 @@ const shellAreaSource = fs.readFileSync('components/admin/use-admin-shell-area.t
 const nextConfigSource = fs.readFileSync('next.config.ts', 'utf8');
 const dashboardSource = fs.readFileSync('components/admin/admin-dashboard-workspace.tsx', 'utf8');
 const dashboardRepositorySource = fs.readFileSync('lib/admin/dashboard-repository.ts', 'utf8');
+const dashboardViewModelSource = fs.readFileSync('lib/admin/dashboard-view-model.ts', 'utf8');
 const contactSource = fs.readFileSync('lib/site-contact.ts', 'utf8');
 const contactRepositorySource = fs.readFileSync('lib/site-contact-repository.ts', 'utf8');
 const publicationsRepositorySource = fs.readFileSync('lib/publicacoes-repository.ts', 'utf8');
@@ -87,6 +88,7 @@ const responsiveContract = [
   ['avisos não dependem de publicacoes legadas', !meetingNoticesSource.includes('mergeAvisosComAgenda') && !avisosSource.includes('getPublicacoes')],
   ['músicas isolam catálogo, sessões e créditos do banco', musicRepositorySource.includes('saveMusicaRecord') && musicRepositorySource.includes('saveMusicaSessaoRecord') && musicRepositorySource.includes('saveMusicaCreditoRecord') && !musicasSource.includes('.from("musicas").upsert') && !musicasSource.includes('.from("musica_sessoes").upsert') && !musicasSource.includes('.from("musica_creditos").select')],
   ['dashboard separa consultas e cache', dashboardRepositorySource.includes('loadAdminDashboardSummary') && dashboardRepositorySource.includes('createServiceRoleClient') && !fs.readFileSync('lib/admin/dashboard.ts', 'utf8').includes('createServiceRoleClient')],
+  ['dashboard separa transformação da view', dashboardViewModelSource.includes('createAdminDashboardViewModel') && dashboardSource.includes('createAdminDashboardViewModel') && !dashboardSource.includes('getProximaQuinta')],
   ['contato público separa consulta e composição', contactRepositorySource.includes('loadPublicContactRows') && contactRepositorySource.includes('createServiceRoleClient') && contactSource.includes('loadPublicContactRows') && !contactSource.includes('.from("instituicao")')],
   ['comunicação separa actions e persistência', publicationsRepositorySource.includes('listPublicacoes') && publicationsRepositorySource.includes('updatePublicacaoRecord') && !fs.readFileSync('app/admin/comunicacao/actions.ts', 'utf8').includes('.from(\'publicacoes\')')],
   ['agenda separa consulta e transformação', agendaRepositorySource.includes('listUpcomingAgendaRows') && agendaRepositorySource.includes('reunioes') && agendaSource.includes('PublicAgendaEvent') && !agendaSource.includes('.from("reunioes")')],

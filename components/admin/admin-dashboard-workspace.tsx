@@ -1,8 +1,8 @@
 "use client";
 
-import { getNomeMes, getProximaQuinta, formatarDataLonga } from "@/lib/escalas/datas";
 import { useAdminShellArea } from "@/components/admin/use-admin-shell-area";
 import type { AdminDashboardSummary } from "@/lib/admin/dashboard";
+import { createAdminDashboardViewModel } from "@/lib/admin/dashboard-view-model";
 import { AdminMetricCard, AdminPanel } from "@/components/admin/ui";
 
 type AdminDashboardWorkspaceProps = {
@@ -36,23 +36,7 @@ function SectionCard({
 
 export function AdminDashboardWorkspace({ summary }: AdminDashboardWorkspaceProps) {
   const { area } = useAdminShellArea();
-  const {
-    totalPessoas,
-    totalFuncoes,
-    totalTemas,
-    totalEscalasPublicadas,
-    escalaMesAtual,
-    mesAtual,
-    anoAtual,
-  } = summary;
-
-  const proximaQuinta = getProximaQuinta();
-  const summaryCards = [
-    { label: "Tarefeiros ativos", value: totalPessoas },
-    { label: "Funções", value: totalFuncoes },
-    { label: "Temas doutrinários", value: totalTemas },
-    { label: "Escalas publicadas", value: totalEscalasPublicadas },
-  ];
+  const { summaryCards, monthLabel, nextMeetingLabel, scale } = createAdminDashboardViewModel(summary);
 
   if (area === "perfil") {
     return (
@@ -296,11 +280,11 @@ export function AdminDashboardWorkspace({ summary }: AdminDashboardWorkspaceProp
             <span className="admin-inline-pill">Resumo</span>
             <div className="admin-card-grid admin-metric-grid">
               <div className="admin-card admin-stat-card">
-                <p className="admin-stat-value">{getNomeMes(mesAtual)}</p>
+                <p className="admin-stat-value">{monthLabel}</p>
                 <p className="admin-stat-label">Mês atual</p>
               </div>
               <div className="admin-card admin-stat-card">
-                <p className="admin-stat-value">{formatarDataLonga(proximaQuinta)}</p>
+                <p className="admin-stat-value">{nextMeetingLabel}</p>
                 <p className="admin-stat-label">Próxima reunião</p>
               </div>
             </div>
@@ -328,39 +312,20 @@ export function AdminDashboardWorkspace({ summary }: AdminDashboardWorkspaceProp
 
         <div className="admin-card admin-dashboard-mini-card admin-dashboard-mini-card-wide">
           <span className="admin-inline-pill">Mês atual</span>
-          <strong>{getNomeMes(mesAtual)} / {anoAtual}</strong>
+          <strong>{monthLabel}</strong>
           <p className="admin-page-subtitle">Leitura rápida da operação sem atalhos de criação.</p>
         </div>
 
         <div className="admin-card admin-dashboard-mini-card admin-dashboard-mini-card-wide">
           <span className="admin-inline-pill">Próxima reunião</span>
-          <strong>{formatarDataLonga(proximaQuinta)}</strong>
+          <strong>{nextMeetingLabel}</strong>
           <p className="admin-page-subtitle">Apenas a informação essencial para o dia.</p>
         </div>
 
         <div className="admin-card admin-dashboard-mini-card admin-dashboard-mini-card-wide">
           <span className="admin-inline-pill">Escala do mês</span>
-          {escalaMesAtual ? (
-            <>
-              <strong>
-                {escalaMesAtual.status === 'publicada'
-                  ? 'Publicada'
-                  : escalaMesAtual.status === 'revisada'
-                    ? 'Em revisão'
-                    : 'Rascunho'}
-              </strong>
-              <p className="admin-page-subtitle">
-                {escalaMesAtual.status === 'publicada'
-                  ? 'A escala atual já está visível.'
-                  : 'A escala atual ainda precisa de atenção.'}
-              </p>
-            </>
-          ) : (
-            <>
-              <strong>Sem escala</strong>
-              <p className="admin-page-subtitle">Nenhuma escala criada para este mês.</p>
-            </>
-          )}
+          <strong>{scale.title}</strong>
+          <p className="admin-page-subtitle">{scale.description}</p>
         </div>
       </section>
     </div>
