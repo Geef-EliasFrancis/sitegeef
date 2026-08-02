@@ -9,9 +9,10 @@ export function MusicaDisplayRouteSync() {
   useEffect(() => {
     const root = document.documentElement;
     const body = document.body;
-    const isDisplayRoute = pathname.startsWith("/musicas/exibir");
+    const isMusicDisplayRoute = pathname.startsWith("/musicas/exibir");
+    const isMeetingDisplayRoute = pathname === "/reuniao-publica";
 
-    if (isDisplayRoute) {
+    if (isMusicDisplayRoute) {
       root.classList.add("musica-display-route");
       body.classList.add("musica-display-route");
     } else {
@@ -19,9 +20,19 @@ export function MusicaDisplayRouteSync() {
       body.classList.remove("musica-display-route");
     }
 
+    if (isMeetingDisplayRoute) {
+      root.classList.add("reuniao-publica-display-route");
+      body.classList.add("reuniao-publica-display-route");
+    } else {
+      root.classList.remove("reuniao-publica-display-route");
+      body.classList.remove("reuniao-publica-display-route");
+    }
+
     return () => {
       root.classList.remove("musica-display-route");
       body.classList.remove("musica-display-route");
+      root.classList.remove("reuniao-publica-display-route");
+      body.classList.remove("reuniao-publica-display-route");
     };
   }, [pathname]);
 

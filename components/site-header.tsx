@@ -66,7 +66,6 @@ export function SiteHeader({
         { href: "/programacao", label: "Programação" },
         { href: "/musicas", label: "Músicas" },
         { href: "/leitor", label: "Leituras" },
-        { href: "/musicas/exibir", label: "Ao vivo", openInNewTab: true },
         { href: "/escalas", label: "Escalas" },
       ],
     },
@@ -96,9 +95,16 @@ export function SiteHeader({
       ],
     },
   ];
+  const musicLinks = [
+    { href: "/musicas", label: "Catálogo" },
+    { href: "/musicas/exibir", label: "Ao vivo", openInNewTab: true },
+  ];
+  const isMusicPath = pathname === "/musicas" || pathname.startsWith("/musicas/");
   const routeGroup = navGroups.find((group) => pathname === group.href)
     ?? navGroups.find((group) => group.links.some((item) => pathname === item.href || pathname.startsWith(`${item.href}/`)));
   const activeGroup = navGroups.find((group) => group.key === openGroup) ?? routeGroup;
+  const contextLinks = isMusicPath ? musicLinks : activeGroup?.links ?? [];
+  const contextTitle = isMusicPath ? "Músicas" : activeGroup?.label;
 
   useEffect(() => {
     setOpenGroup(routeGroup?.key ?? null);
@@ -208,13 +214,13 @@ export function SiteHeader({
       </div>
 
       {activeGroup && pathname !== "/" && !mobileMenuOpen && (
-        <section className="site-context-navigation" aria-label={`Opções de ${activeGroup.label}`}>
+        <section className="site-context-navigation" aria-label={`Opções de ${contextTitle}`}>
           <div className="site-context-navigation-copy">
-            <strong>{activeGroup.label}</strong>
-            <p>{activeGroup.description}</p>
+            <strong>{contextTitle}</strong>
+            <p>{isMusicPath ? "Catálogo e exibição pública das músicas." : activeGroup.description}</p>
           </div>
           <nav className="site-context-navigation-links">
-            {activeGroup.links.map((item) => (
+            {contextLinks.map((item) => (
               <Link key={`context-${activeGroup.key}-${item.href}`} href={item.href} className="site-context-navigation-link" target={"openInNewTab" in item && item.openInNewTab ? "_blank" : undefined} rel={"openInNewTab" in item && item.openInNewTab ? "noopener noreferrer" : undefined} onClick={() => setOpenGroup(null)}>
                 {item.label}
               </Link>

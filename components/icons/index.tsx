@@ -7,6 +7,36 @@ export function IconArrowLeft({ className = "", size = 20 }: { className?: strin
   );
 }
 
+export function IconArrowRight({ className = "", size = 20 }: { className?: string; size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} aria-hidden="true">
+      <line x1="5" y1="12" x2="19" y2="12"></line>
+      <polyline points="12 5 19 12 12 19"></polyline>
+    </svg>
+  );
+}
+
+export function IconMusic({ className = "", size = 20 }: { className?: string; size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} aria-hidden="true">
+      <path d="M9 18V5l10-2v13"></path>
+      <circle cx="6" cy="18" r="3"></circle>
+      <circle cx="16" cy="16" r="3"></circle>
+    </svg>
+  );
+}
+
+export function IconMaximize({ className = "", size = 20 }: { className?: string; size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} aria-hidden="true">
+      <polyline points="8 3 3 3 3 8"></polyline>
+      <polyline points="16 3 21 3 21 8"></polyline>
+      <polyline points="8 21 3 21 3 16"></polyline>
+      <polyline points="21 16 21 21 16 21"></polyline>
+    </svg>
+  );
+}
+
 export function IconPlus({ className = "", size = 20 }: { className?: string; size?: number }) {
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} aria-hidden="true">

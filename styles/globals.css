@@ -398,6 +398,171 @@ body.musica-display-route .site-shell {
   padding: 0;
 }
 
+html.reuniao-publica-display-route .site-header,
+html.reuniao-publica-display-route .site-footer,
+html.reuniao-publica-display-route .lgpd-cookie-banner,
+html.reuniao-publica-display-route .lgpd-request-trigger,
+body.reuniao-publica-display-route .site-header,
+body.reuniao-publica-display-route .site-footer,
+body.reuniao-publica-display-route .lgpd-cookie-banner,
+body.reuniao-publica-display-route .lgpd-request-trigger {
+  display: none;
+}
+
+html.reuniao-publica-display-route,
+body.reuniao-publica-display-route {
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+}
+
+html.reuniao-publica-display-route .site-shell,
+body.reuniao-publica-display-route .site-shell,
+html.reuniao-publica-display-route .site-shell-main,
+body.reuniao-publica-display-route .site-shell-main {
+  width: 100vw;
+  max-width: none;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+}
+
+.reuniao-publica-presentation {
+  position: relative;
+  display: grid;
+  min-height: 100vh;
+  width: 100%;
+  overflow: hidden;
+  color: #f8fff2;
+  background: radial-gradient(circle at 50% 20%, rgba(106, 174, 76, 0.26), transparent 34%), linear-gradient(135deg, #142b1b, #07140c 72%);
+}
+
+.reuniao-publica-slide {
+  display: grid;
+  place-items: center;
+  min-height: calc(100vh - 4rem);
+  padding: clamp(2rem, 7vw, 7rem);
+  text-align: center;
+}
+
+.reuniao-publica-opening,
+.reuniao-publica-content {
+  display: grid;
+  justify-items: center;
+  gap: 1rem;
+  max-width: 58rem;
+}
+
+.reuniao-publica-opening img {
+  width: min(34rem, 70vw);
+  height: auto;
+  filter: drop-shadow(0 1rem 2rem rgba(0, 0, 0, 0.34));
+}
+
+.reuniao-publica-opening p,
+.reuniao-publica-content p {
+  margin: 0;
+  font-size: clamp(1rem, 2vw, 1.35rem);
+  color: rgba(248, 255, 242, 0.78);
+}
+
+.reuniao-publica-kicker {
+  color: #b7e58e;
+  font-size: 0.82rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.reuniao-publica-content h1 {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: clamp(3rem, 9vw, 7rem);
+  line-height: 0.95;
+}
+
+.reuniao-publica-primary-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-top: 1.2rem;
+  padding: 0.9rem 1.2rem;
+  border: 1px solid rgba(207, 245, 173, 0.55);
+  border-radius: 0.75rem;
+  color: #102313;
+  background: #b7e58e;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.reuniao-publica-content--wide {
+  width: min(68rem, 100%);
+}
+
+.reuniao-publica-notices {
+  display: grid;
+  gap: 0.85rem;
+  width: 100%;
+  max-height: 55vh;
+  overflow: auto;
+  text-align: left;
+}
+
+.reuniao-publica-notice {
+  padding: 1.1rem 1.25rem;
+  border: 1px solid rgba(207, 245, 173, 0.24);
+  border-radius: 0.8rem;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.reuniao-publica-notice h2 {
+  margin: 0 0 0.4rem;
+  color: #e5ffd1;
+  font-size: clamp(1.2rem, 2.2vw, 1.8rem);
+}
+
+.reuniao-publica-controls {
+  position: absolute;
+  right: 1.25rem;
+  bottom: 1.25rem;
+  left: 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+  color: rgba(248, 255, 242, 0.7);
+  font-size: 0.8rem;
+}
+
+.reuniao-publica-controls button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border: 1px solid rgba(207, 245, 173, 0.3);
+  border-radius: 50%;
+  color: #e5ffd1;
+  background: rgba(255, 255, 255, 0.08);
+  cursor: pointer;
+}
+
+.reuniao-publica-controls button:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+@media (max-width: 767px) {
+  .reuniao-publica-slide {
+    min-height: calc(100vh - 5rem);
+    padding: 2rem 1.1rem 5rem;
+  }
+
+  .reuniao-publica-controls {
+    bottom: 0.75rem;
+  }
+}
+
 .musica-hero {
   margin-bottom: var(--spacing-md);
 }
