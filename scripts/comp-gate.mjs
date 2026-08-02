@@ -80,6 +80,7 @@ const responsiveContract = [
   ['catálogo móvel reduz tom e status', adminCss.includes('.musica-catalog-table th:nth-child(3)') && adminCss.includes('.musica-catalog-table th:nth-child(5)')],
   ['catálogo usa ações por ícone', publicDisplaySource.includes('IconBroadcast') && adminCss.includes('.musica-public-toggle-button span') && adminCss.includes('.music-catalog-row-action span')],
   ['top menu compacto sem ícones e com tooltip', !adminShellTabsSource.includes('shellIcons') && adminShellTabsSource.includes('title={`${item.label}: ${item.note}`}') && adminCss.includes('.admin-shell-tab-label')],
+  ['top menu verde possui contraste de borda e sombra', adminCss.includes('border-color: #2f7d16') && adminCss.includes('inset 0 -2px 0 rgba(28, 88, 10, 0.46)') && adminCss.includes('text-shadow: 0 1px 2px rgba(17, 55, 8, 0.72)')],
   ['top menu compartilha linha com usuário', adminCss.includes('grid-template-columns: minmax(0, 1fr) auto') && adminCss.includes('.admin-header-right') && adminCss.includes('.admin-header .admin-brand')],
   ['submenu reunião pública possui cinco entradas', ['Avisos', 'Música', 'Leitura', 'Palestra', 'Prece'].every((label) => adminContextNavigationSource.includes(`label: "${label}"`)) && adminHeaderSource.includes('admin-context-menu')],
   ['avisos possui tela própria', fs.existsSync('app/admin/reuniao-publica/avisos/page.tsx') && !nextConfigSource.includes('source: "/admin/reuniao-publica/avisos"')],
