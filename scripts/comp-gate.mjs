@@ -27,6 +27,8 @@ const siteHeaderSource = fs.readFileSync('components/site-header.tsx', 'utf8');
 const presentationSource = fs.readFileSync('components/reuniao-publica-presentation.tsx', 'utf8');
 const meetingNoticesSource = fs.readFileSync('lib/reuniao-publica/avisos.ts', 'utf8');
 const meetingNoticesRepositorySource = fs.readFileSync('lib/reuniao-publica/avisos-repository.ts', 'utf8');
+const musicRepositorySource = fs.readFileSync('lib/musicas-repository.ts', 'utf8');
+const musicasSource = fs.readFileSync('lib/musicas.ts', 'utf8');
 const shellAreaSource = fs.readFileSync('components/admin/use-admin-shell-area.ts', 'utf8');
 const nextConfigSource = fs.readFileSync('next.config.ts', 'utf8');
 const dashboardSource = fs.readFileSync('components/admin/admin-dashboard-workspace.tsx', 'utf8');
@@ -53,6 +55,7 @@ const responsiveContract = [
   ['avisos usam persistência própria', meetingNoticesRepositorySource.includes('reuniao_publica_avisos') && meetingNoticesRepositorySource.includes('savePersistedAviso') && fs.existsSync('supabase/migrations/20260802010000_reuniao_publica_avisos.sql')],
   ['avisos separam domínio e persistência', meetingNoticesSource.includes('listPersistedAvisos') && meetingNoticesRepositorySource.includes('createServiceRoleClient') && !meetingNoticesSource.includes('createServiceRoleClient')],
   ['avisos não dependem de publicacoes legadas', !meetingNoticesSource.includes('mergeAvisosComAgenda') && !avisosSource.includes('getPublicacoes')],
+  ['músicas isolam leitura composta do catálogo', musicRepositorySource.includes('fetchMusicasBase') && musicRepositorySource.includes('musica_partes') && !musicasSource.includes('.from("musica_partes").select')],
   ['avisos possui catálogo tabular persistente', avisosSource.includes('avisos-catalog-table') && avisosSource.includes('<th>Aviso</th>') && !avisosSource.includes('avisos-catalog-empty') && adminCss.includes('.avisos-catalog-table')],
   ['ao vivo pertence ao submenu de músicas', siteHeaderSource.includes('const musicLinks') && siteHeaderSource.includes('/musicas/exibir') && siteHeaderSource.includes('const isMusicPath') && !siteHeaderSource.match(/key: "reuniao-publica"[\s\S]{0,700}musicas\/exibir/)],
   ['reunião pública possui início e live separados', siteHeaderSource.includes('/reuniao-publica/live') && presentationSource.includes('reuniao-publica-presentation') && presentationSource.includes('requestFullscreen') && presentationSource.includes('ArrowRight') && presentationSource.includes('avisos') && fs.existsSync('app/reuniao-publica/page.tsx') && fs.existsSync('app/reuniao-publica/live/page.tsx')],

@@ -1,4 +1,5 @@
 import { createServiceRoleClient } from "@/lib/supabase/service-role";
+import { fetchMusicasBase } from "@/lib/musicas-repository";
 
 export type MusicaParteTipo = "estrofe" | "verso" | "refrao" | "ponte" | "intro" | "cifra";
 export type MusicaSessaoModo = "exibicao" | "catalogo";
@@ -281,49 +282,6 @@ export function musicaMatchesSearch(musica: Pick<Musica, "titulo" | "autor" | "t
   }
 
   return buildSearchBlob(musica).includes(normalizedSearch);
-}
-
-async function fetchMusicasBase() {
-  const supabase = createServiceRoleClient();
-
-  const [musicasResult, partesResult] = await Promise.all([
-    supabase
-      .from("musicas")
-      .select("id, slug, titulo, autor, tom, versao, status, observacoes, youtube_url, audio_url, criado_em, atualizado_em")
-      .order("titulo", { ascending: true }),
-    supabase
-      .from("musica_partes")
-      .select("id, musica_id, ordem, tipo, titulo, conteudo, cifra, destaque")
-      .order("musica_id", { ascending: true })
-      .order("ordem", { ascending: true }),
-  ]);
-
-  const musicas = musicasResult.data ?? [];
-  const partes = partesResult.data ?? [];
-
-  const partesPorMusica = partes.reduce<Record<string, MusicaParte[]>>((acc, parte) => {
-    const musicaId = parte.musica_id as string;
-    if (!acc[musicaId]) {
-      acc[musicaId] = [];
-    }
-
-    acc[musicaId].push({
-      id: parte.id,
-      ordem: parte.ordem,
-      tipo: parte.tipo as MusicaParteTipo,
-      titulo: parte.titulo ?? "",
-      conteudo: parte.conteudo ?? "",
-      cifra: parte.cifra ?? undefined,
-      destaque: parte.destaque ?? false,
-    });
-
-    return acc;
-  }, {});
-
-  return musicas.map((musica) => ({
-    ...musica,
-    partes: partesPorMusica[musica.id] ?? [],
-  })) as Musica[];
 }
 
 export async function listMusicas(search = "") {
