@@ -24,7 +24,7 @@ export const ADMIN_SHELL_AREAS: AdminShellAreaItem[] = [
   { key: "perfil", label: "Perfil", note: "Conta e acesso" },
   { key: "geef", label: "Geef", note: "Gestão da instituição" },
   { key: "pessoas", label: "Tarefeiros", note: "Cadastro e vínculo" },
-  { key: "reuniao-publica", label: "Reunião pública", note: "Avisos, reunião e músicas" },
+  { key: "reuniao-publica", label: "Reunião pública", note: "Avisos da reunião, apresentação e músicas" },
   { key: "governanca", label: "Governança", note: "Gestão e direção" },
   { key: "documentos", label: "Documentos", note: "LGPD e registros" },
   { key: "operacao", label: "Operação", note: "Rotinas do dia a dia" },

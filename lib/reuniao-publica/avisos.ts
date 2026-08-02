@@ -6,7 +6,7 @@ export type ReuniaoPublicaAviso = {
   conteudo: string;
   quando?: string | null;
   status: "publicado" | "rascunho";
-  origem: "agenda" | "publicacao";
+  origem: "agenda" | "reuniao";
   autor?: string | null;
   publicadoEm?: string | null;
 };
@@ -45,7 +45,7 @@ export function mergeAvisosComAgenda(
       titulo: publicacao.titulo,
       conteudo: publicacao.conteudo || "",
       status: publicacao.status === "publicado" ? "publicado" : "rascunho",
-      origem: "publicacao",
+      origem: "reuniao",
       autor: typeof publicacao.autor === "string" ? publicacao.autor : publicacao.autor?.nome,
       publicadoEm: publicacao.publicado_em,
     });

@@ -21,7 +21,7 @@ export function ReuniaoPublicaPresentation({ avisos }: PresentationProps) {
     { id: "abertura", label: "Abertura" },
     { id: "musicas", label: "Músicas ao vivo" },
     { id: "inicio", label: "Início da reunião" },
-    { id: "avisos", label: "Avisos" },
+    { id: "avisos", label: "Avisos da reunião" },
   ], []);
 
   function goToSlide(index: number) {
@@ -94,7 +94,7 @@ export function ReuniaoPublicaPresentation({ avisos }: PresentationProps) {
         {slide.id === "avisos" && (
           <div className="reuniao-publica-content reuniao-publica-content--wide">
             <span className="reuniao-publica-kicker">Reunião pública</span>
-            <h1>Avisos</h1>
+            <h1>Avisos da reunião</h1>
             {avisos.length > 0 ? (
               <div className="reuniao-publica-notices">
                 {avisos.map((aviso) => (

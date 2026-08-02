@@ -4,7 +4,7 @@ import { IconEdit, IconPlus } from "@/components/icons";
 import { mergeAvisosComAgenda } from "@/lib/reuniao-publica/avisos";
 
 export const metadata = {
-  title: "Avisos - Reunião pública - Admin GEEF",
+  title: "Avisos da reunião - Admin GEEF",
 };
 
 type Aviso = {
@@ -17,7 +17,7 @@ type Aviso = {
   publicado_em?: string | null;
   criado_em?: string;
   quando?: string | null;
-  origem?: "agenda" | "publicacao";
+  origem?: "agenda" | "reuniao";
 };
 
 function statusLabel(status?: string | null) {
@@ -41,7 +41,7 @@ export default async function AvisosPage() {
       <section className="area-hero">
         <div className="area-hero-top">
           <div>
-            <h1 className="area-hero-title">Avisos</h1>
+            <h1 className="area-hero-title">Avisos da reunião</h1>
           </div>
           <Link
             href="/admin/comunicacao/nova-publicacao?tipo=aviso"
@@ -56,7 +56,7 @@ export default async function AvisosPage() {
 
       <section className="area-section">
         <div className="avisos-catalog-heading">
-          <h2>Catálogo</h2>
+          <h2>Avisos da reunião</h2>
           <span>{avisos.length} avisos</span>
         </div>
 
@@ -80,7 +80,7 @@ export default async function AvisosPage() {
                     </td>
                     <td>{aviso.quando || "—"}</td>
                     <td><span className={statusClass(aviso.status)}>{statusLabel(aviso.status)}</span></td>
-                    <td>{aviso.origem === "agenda" ? "Agenda" : "Publicação"}</td>
+                    <td>{aviso.origem === "agenda" ? "Agenda" : "Reunião"}</td>
                     <td>
                       {aviso.origem === "agenda" ? (
                         <span className="text-sm-muted">Fixo</span>
