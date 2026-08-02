@@ -1,11 +1,14 @@
 import Link from "next/link";
-import { getContatos } from "../actions";
 import { Suspense } from "react";
+import { getContatos } from "../actions";
 import ContatosDeleteButton from "@/components/admin/instituicao/contatos-delete-button";
 
-export const metadata = {
-  title: "Contatos - Instituição - Admin GEEF",
-};
+export const metadata = { title: "Contatos - Instituição - Admin GEEF" };
+
+const contactFields = [
+  ["telefone", "☎"], ["whatsapp", "◉"], ["email", "@"], ["instagram", "◎"],
+  ["facebook", "f"], ["youtube", "▶"], ["site", "↗"],
+] as const;
 
 async function ContatosContent() {
   const contatos = await getContatos();
@@ -14,44 +17,30 @@ async function ContatosContent() {
     <div className="area-page">
       <section className="area-hero">
         <div className="area-hero-top">
-          <div>
-            <p className="area-subtitle">Instituição</p>
-            <h1 className="area-hero-title">Contatos</h1>
-          </div>
-          <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", flexWrap: "wrap", justifyContent: "flex-end" }}>
-            <Link href="/admin/instituicao/contatos/editar" className="profile-form-btn profile-form-btn-primary">
-              + Adicionar Contato
-            </Link>
-          </div>
+          <h1 className="area-hero-title">Contatos</h1>
+          <Link href="/admin/instituicao/contatos/editar" className="profile-form-btn profile-form-btn-primary instituicao-contatos-add" aria-label="Adicionar contato" title="Adicionar contato">+</Link>
         </div>
       </section>
 
       <section className="area-section">
         <div className="table-surface">
-          {contatos.length === 0 ? (
-            <div className="area-empty">Nenhum contato registrado.</div>
-          ) : (
-            <div className="module-grid" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))" }}>
+          {contatos.length === 0 ? <div className="area-empty">Nenhum contato registrado.</div> : (
+            <div className="instituicao-contatos-list">
               {contatos.map((contato: any) => (
-                <div key={contato.id} className="area-panel-item instituicao-contato-card" style={{ position: 'relative', paddingRight: '2.5rem' }}>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '0.5rem', marginBottom: '0.5rem' }}>
+                <div key={contato.id} className="area-panel-item instituicao-contato-card">
+                  <div className="instituicao-contato-card-head">
                     <strong>{contato.tipo || "Contato"}</strong>
                     <ContatosDeleteButton contatoId={contato.id} />
                   </div>
-                  <p style={{ margin: '0.5rem 0 0 0', fontSize: '0.9rem' }}>
-                    {contato.telefone && <>☎️ {contato.telefone}<br /></>}
-                    {contato.whatsapp && <>💬 {contato.whatsapp}<br /></>}
-                    {contato.email && <>📧 {contato.email}<br /></>}
-                    {contato.instagram && <>📸 @{contato.instagram}<br /></>}
-                    {contato.facebook && <>f {contato.facebook}<br /></>}
-                    {contato.youtube && <>▶️ {contato.youtube}<br /></>}
-                    {contato.site && <>🌐 {contato.site}<br /></>}
-                  </p>
-                  {contato.pessoas?.nome && (
-                    <p style={{ margin: '0.75rem 0 0 0', fontSize: '0.85rem', color: 'var(--text-secondary)' }}>
-                      👤 {contato.pessoas.nome}
-                    </p>
-                  )}
+                  <div className="instituicao-contato-fields">
+                    {contactFields.map(([field, icon]) => contato[field] && (
+                      <span key={field} className="instituicao-contato-field">
+                        <span className="instituicao-contato-field-icon" aria-hidden="true">{icon}</span>
+                        <span>{contato[field]}</span>
+                      </span>
+                    ))}
+                    {contato.pessoas?.nome && <span className="instituicao-contato-field">{contato.pessoas.nome}</span>}
+                  </div>
                 </div>
               ))}
             </div>
@@ -63,9 +52,5 @@ async function ContatosContent() {
 }
 
 export default function ContatosPage() {
-  return (
-    <Suspense fallback={<div style={{ padding: "2rem", textAlign: "center" }}>Carregando...</div>}>
-      <ContatosContent />
-    </Suspense>
-  );
+  return <Suspense fallback={<div className="area-loading">Carregando...</div>}><ContatosContent /></Suspense>;
 }

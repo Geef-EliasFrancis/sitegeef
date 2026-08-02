@@ -5843,6 +5843,56 @@ a.button.musica-icon-button {
   line-height: 1.35;
 }
 
+.instituicao-contatos-add {
+  display: inline-grid;
+  width: 3rem;
+  height: 3rem;
+  padding: 0;
+  place-items: center;
+  font-size: 1.65rem;
+  line-height: 1;
+}
+
+.instituicao-contatos-list {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1rem;
+}
+
+.instituicao-contato-card {
+  padding: 1.1rem 1.25rem;
+}
+
+.instituicao-contato-card-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.instituicao-contato-fields {
+  display: grid;
+  gap: 0.55rem;
+  margin-top: 0.8rem;
+}
+
+.instituicao-contato-field {
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+  min-width: 0;
+  overflow-wrap: anywhere;
+  color: var(--text-secondary);
+  line-height: 1.45;
+}
+
+.instituicao-contato-field-icon {
+  flex: 0 0 1.1rem;
+  color: var(--accent);
+  font-weight: 800;
+  text-align: center;
+}
+
 .instituicao-contatos-layout {
   display: grid;
   gap: var(--spacing-md);
