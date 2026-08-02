@@ -51,6 +51,7 @@ const responsiveContract = [
   ['home do painel não duplica o início no submenu', !adminHeaderSource.includes('painel: [')],
   ['estilos admin não escondem o cabeçalho público', !adminCss.includes('.site-shell > .site-header') && !adminCss.includes('.site-shell > .site-footer')],
   ['cabeçalho público não duplica no Admin', siteHeaderSource.includes('if (pathname.startsWith("/admin"))') && siteHeaderSource.includes('return null;')],
+  ['início não fica ativo nas rotas filhas', adminHeaderSource.includes("item.label === 'Início'") && adminHeaderSource.includes('pathname === itemPath')],
   ['contextos administrativos possuem submenu', ['perfil: [', 'geef: [', 'pessoas: [', "'reuniao-publica': [", 'governanca: [', 'documentos: [', 'operacao: [', 'sistema: ['].every((context) => adminHeaderSource.includes(context))],
   ['rotas canônicas seguem menu e submenu', nextConfigSource.includes('contextualRouteRewrites') && nextConfigSource.includes('/admin/geef/instituicao') && nextConfigSource.includes('/admin/pessoas/funcoes') && nextConfigSource.includes('/admin/operacao/${submenu}') && nextConfigSource.includes('/admin/sistema/observabilidade')],
   ['funções pertencem à área Tarefeiros', shellAreaSource.includes('normalizedPath.startsWith("/admin/funcoes")') && shellAreaSource.includes('return "pessoas"') && !shellAreaSource.match(/normalizedPath\.startsWith\("\/admin\/funcoes"\)[\s\S]{0,180}return "geef"/)],

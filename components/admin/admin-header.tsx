@@ -171,7 +171,9 @@ export function AdminHeader({ locale, user }: AdminHeaderProps) {
         <nav className="admin-context-menu" aria-label={`Menu de contexto de ${area}`}>
           {contextMenuItems.map((item) => {
             const itemPath = item.href.split('?')[0];
-            const isPathActive = pathname === itemPath || pathname.startsWith(`${itemPath}/`);
+            const isPathActive = item.label === 'Início'
+              ? pathname === itemPath
+              : pathname === itemPath || pathname.startsWith(`${itemPath}/`);
             const isPrece = item.label === 'Prece';
             const isPalestra = item.label === 'Palestra';
             const isActive = isPathActive && (!isPrece && !isPalestra || (isPrece ? searchParams.get('categoria') === 'prece' : !searchParams.get('categoria')));
