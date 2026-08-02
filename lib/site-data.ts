@@ -290,12 +290,31 @@ export const contentPages: Record<string, ContentPage> = {
     summary: "Programação, música, leitura e acolhimento em uma mesma experiência.",
     intro: "A reunião pública organiza os momentos de estudo, reflexão e convivência da casa para quem chega presencialmente ou acompanha à distância.",
     ctaLabel: "Ver programação",
-    ctaHref: publicHref("/agenda"),
+    ctaHref: publicHref("/programacao"),
     sections: [
       {
         heading: "Acompanhe a reunião",
-        text: "Consulte a agenda, as músicas e as leituras relacionadas a cada encontro.",
+        text: "Conheça o roteiro, as músicas e as leituras relacionadas a cada encontro.",
         bullets: ["Programação pública.", "Músicas e leituras.", "Transmissões quando disponíveis."],
+      },
+    ],
+  },
+  programacao: {
+    title: "Programação",
+    summary: "Um roteiro simples para acompanhar a reunião pública do GEEF.",
+    intro: "A reunião pública acontece às quintas-feiras, das 19h às 20h, com momentos de acolhimento, estudo, reflexão e prece.",
+    ctaLabel: "Ver músicas",
+    ctaHref: publicHref("/musicas"),
+    sections: [
+      {
+        heading: "Roteiro da reunião",
+        text: "Cada encontro percorre uma sequência preparada para acolher quem chega e favorecer a participação de todos.",
+        bullets: ["Avisos", "Música", "Leitura", "Palestra", "Prece"],
+      },
+      {
+        heading: "Quinta-feira",
+        text: "A programação pública está prevista para todas as quintas-feiras, das 19h às 20h.",
+        bullets: ["Chegue alguns minutos antes.", "Acompanhe as orientações da casa.", "Participe presencialmente ou pelos canais disponíveis."],
       },
     ],
   },

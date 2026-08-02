@@ -61,7 +61,7 @@ export function SiteHeader({
       icon: "♫",
       description: "Acompanhe a programação, as músicas e as escalas da casa.",
       links: [
-        { href: "/agenda", label: "Programação" },
+        { href: "/programacao", label: "Programação" },
         { href: "/musicas", label: "Músicas" },
         { href: "/leitor", label: "Leituras" },
         { href: "/musicas/exibir", label: "Ao vivo" },
