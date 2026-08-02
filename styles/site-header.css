@@ -1703,4 +1703,18 @@
     background: linear-gradient(90deg, #a50068, #62cf26, #a50068);
     box-shadow: 0 0.1rem 0.22rem rgba(69, 132, 35, 0.38);
   }
+
+  /* Contraste final das abas públicas sobre a base branca. */
+  .site-nav-home-btn,
+  .site-nav-group-trigger,
+  .site-nav-primary > .site-nav-contact-btn {
+    border-color: #2c7f13;
+    box-shadow: inset 0 1px rgba(255, 255, 255, 0.42), inset 0 -0.2rem rgba(25, 82, 9, 0.5), 0 0.12rem 0.28rem rgba(27, 74, 16, 0.28);
+    text-shadow: 0 1px 2px rgba(14, 52, 7, 0.72);
+  }
+
+  .site-nav-group.is-active .site-nav-group-trigger[data-state="active"] {
+    border-color: #76003f;
+    box-shadow: inset 0 1px rgba(255, 255, 255, 0.45), inset 0 -0.2rem rgba(73, 0, 42, 0.55), 0 -0.1rem 0.3rem rgba(96, 0, 64, 0.32);
+  }
 }
