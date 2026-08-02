@@ -1,4 +1,4 @@
-import { createServiceRoleClient } from "@/lib/supabase/service-role";
+import { listContatoMensagens } from "@/lib/contato-mensagens-repository";
 
 export type ContatoMensagem = {
   id: string;
@@ -18,13 +18,7 @@ export type ContatoMensagem = {
 
 export async function loadContatoMensagensAdmin() {
   try {
-    const supabase = createServiceRoleClient();
-
-    const { data, error } = await supabase
-      .from("contato_mensagens")
-      .select("*")
-      .order("criado_em", { ascending: false })
-      .limit(60);
+    const { data, error } = await listContatoMensagens();
 
     if (error) {
       return [];
