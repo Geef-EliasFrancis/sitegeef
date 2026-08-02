@@ -12,6 +12,14 @@ const contactFields = [
 
 async function ContatosContent() {
   const contatos = await getContatos();
+  const groupedContatos = Array.from(
+    contatos.reduce((groups: Map<string, any[]>, contato: any) => {
+      const key = contato.tipo || "Contato";
+      groups.set(key, [...(groups.get(key) || []), contato]);
+      return groups;
+    }, new Map<string, any[]>()),
+    ([tipo, registros]) => ({ tipo, registros }),
+  );
 
   return (
     <div className="area-page">
@@ -26,20 +34,24 @@ async function ContatosContent() {
         <div className="table-surface">
           {contatos.length === 0 ? <div className="area-empty">Nenhum contato registrado.</div> : (
             <div className="instituicao-contatos-list">
-              {contatos.map((contato: any) => (
-                <div key={contato.id} className="area-panel-item instituicao-contato-card">
-                  <div className="instituicao-contato-card-head">
-                    <strong>{contato.tipo || "Contato"}</strong>
-                    <ContatosDeleteButton contatoId={contato.id} />
-                  </div>
-                  <div className="instituicao-contato-fields">
-                    {contactFields.map(([field, icon]) => contato[field] && (
-                      <span key={field} className="instituicao-contato-field">
-                        <span className="instituicao-contato-field-icon" aria-hidden="true">{icon}</span>
-                        <span>{contato[field]}</span>
-                      </span>
+              {groupedContatos.map(({ tipo, registros }) => (
+                <div key={tipo} className="area-panel-item instituicao-contato-card">
+                  <strong>{tipo}</strong>
+                  <div className="instituicao-contato-records">
+                    {registros.map((contato) => (
+                      <div key={contato.id} className="instituicao-contato-record">
+                        <div className="instituicao-contato-fields">
+                          {contactFields.map(([field, icon]) => contato[field] && (
+                            <span key={field} className="instituicao-contato-field">
+                              <span className="instituicao-contato-field-icon" aria-hidden="true">{icon}</span>
+                              <span>{contato[field]}</span>
+                            </span>
+                          ))}
+                          {contato.pessoas?.nome && <span className="instituicao-contato-field">{contato.pessoas.nome}</span>}
+                        </div>
+                        <ContatosDeleteButton contatoId={contato.id} />
+                      </div>
                     ))}
-                    {contato.pessoas?.nome && <span className="instituicao-contato-field">{contato.pessoas.nome}</span>}
                   </div>
                 </div>
               ))}
