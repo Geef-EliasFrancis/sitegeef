@@ -2,6 +2,7 @@ import { unstable_cache } from "next/cache";
 import { recordSupabaseFailureEvent } from "@/lib/observability";
 import { loadUserAreaIdentity } from "@/lib/areas/user-area-identity-repository";
 import { loadUserAreaOperations } from "@/lib/areas/user-area-operations-repository";
+import { loadUserAreaCompliance } from "@/lib/areas/user-area-compliance-repository";
 
 type UserAreaData = {
   perfil: UserAreaProfile | null;
@@ -104,11 +105,7 @@ export async function loadUserArea(userId: string): Promise<UserAreaData> {
     livraria: usuario?.pode_livraria,
     escalas: usuario?.pode_escalas,
   });
-  const [voluntariosResult, consentimentosResult, pedidosResult] = await Promise.all([
-    supabase.from("servicos_voluntarios").select("*").eq("pessoa_id", pessoaId).eq("status", "ativo"),
-    supabase.from("consentimentos_lgpd").select("*").eq("pessoa_id", pessoaId).eq("status", "ativo"),
-    supabase.from("lgpd_solicitacoes").select("*").eq("pessoa_id", pessoaId).order("created_at", { ascending: false }).limit(8),
-  ]);
+  const [voluntariosResult, consentimentosResult, pedidosResult] = await loadUserAreaCompliance(supabase, pessoaId);
 
   await Promise.all([
     logUserAreaFallback("load pessoa", "pessoas", getQueryError(pessoaResult), "null", { userId, pessoaId }),
