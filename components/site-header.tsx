@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 import * as Tabs from "@radix-ui/react-tabs";
 import { site } from "@/lib/site-data";
 import { getLocalizedNavItems, type Locale } from "@/lib/multilingual";
@@ -23,6 +24,7 @@ export function SiteHeader({
   avatarUrl,
   hasAdminAccess,
 }: SiteHeaderProps) {
+  const pathname = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [openGroup, setOpenGroup] = useState<string | null>(null);
   const primaryLinks = getLocalizedNavItems(locale).filter((item) => item.primary);
@@ -181,7 +183,7 @@ export function SiteHeader({
       />
       </div>
 
-      {activeGroup && !mobileMenuOpen && (
+      {activeGroup && pathname !== "/" && !mobileMenuOpen && (
         <section className="site-context-navigation" aria-label={`Opções de ${activeGroup.label}`}>
           <div className="site-context-navigation-copy">
             <strong>{activeGroup.label}</strong>

@@ -12,6 +12,11 @@ async function runDesktop(width, height) {
   const page = await browser.newPage({ viewport: { width, height }, deviceScaleFactor: 1 });
   await page.goto(baseUrl, { waitUntil: "networkidle" });
   await page.screenshot({ path: `${outputDir}/desktop-${width}.png`, fullPage: true });
+  if (await page.locator(".site-context-navigation").count() !== 0) {
+    throw new Error(`Home exibe submenu contextual indevido em ${width}px`);
+  }
+
+  await page.goto(`${baseUrl}/quem-somos`, { waitUntil: "networkidle" });
 
   const groups = page.locator(".site-nav-group-trigger");
   const groupCount = await groups.count();
