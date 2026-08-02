@@ -25,7 +25,7 @@ export default function ReuniaoPublicaReuniaoPage() {
             <strong>Abrir</strong>
             <small style={{ color: "var(--text-muted)", marginTop: "0.5rem" }}>Agenda, edição e histórico</small>
           </Link>
-          <Link href="/admin/reuniao-publica/musicas/sessoes" className="stat-card" style={{ textDecoration: "none", color: "inherit" }}>
+          <Link href="/admin/reuniao-publica/musica/sessoes" className="stat-card" style={{ textDecoration: "none", color: "inherit" }}>
             <span>Sessões ao vivo</span>
             <strong>Controle</strong>
             <small style={{ color: "var(--text-muted)", marginTop: "0.5rem" }}>Exibição pública e troca de música</small>

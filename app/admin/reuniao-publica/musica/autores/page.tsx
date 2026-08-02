@@ -26,7 +26,7 @@ async function AutoresContent({ searchParams }: PageProps) {
           <span className="admin-dashboard-kicker">Músicas</span>
           <h1 className="admin-page-title">Autores</h1>
         </div>
-        <Link href="/admin/reuniao-publica/musicas" className="admin-btn admin-btn-secondary" title="Voltar">
+        <Link href="/admin/reuniao-publica/musica" className="admin-btn admin-btn-secondary" title="Voltar">
           <IconArrowLeft size={18} />
         </Link>
       </div>
@@ -52,7 +52,7 @@ async function AutoresContent({ searchParams }: PageProps) {
               <IconSearch size={18} />
             </button>
           </form>
-          <Link href="/admin/reuniao-publica/musicas/autores/novo" className="admin-btn admin-btn-primary" title="Novo autor">
+          <Link href="/admin/reuniao-publica/musica/autores/novo" className="admin-btn admin-btn-primary" title="Novo autor">
             <IconPlus size={18} />
           </Link>
         </div>
@@ -77,7 +77,7 @@ async function AutoresContent({ searchParams }: PageProps) {
                     <td style={{ textAlign: "right" }}>
                       <div style={{ display: "flex", gap: "0.5rem", justifyContent: "flex-end" }}>
                         <Link
-                          href={`/admin/reuniao-publica/musicas/autores/novo?id=${autor.id}`}
+                          href={`/admin/reuniao-publica/musica/autores/novo?id=${autor.id}`}
                           className="admin-btn admin-btn-small"
                           title="Editar"
                         >
@@ -112,7 +112,7 @@ export default function AutoresPage(props: PageProps) {
     <AdminModuleGate
       permission="pode_publicar"
       profiles={["diretoria", "secretaria", "comunicacao"]}
-      redirectPath="/admin/reuniao-publica/musicas"
+      redirectPath="/admin/reuniao-publica/musica"
       title="Autores"
     >
       <Suspense fallback={<div style={{ padding: "2rem", textAlign: "center" }}>Carregando...</div>}>

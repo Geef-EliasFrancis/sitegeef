@@ -9,7 +9,7 @@ Resumo operacional para continuidade sem reexplorar o codigo.
 - Mantida compatibilidade com o caminho antigo `/admin/instituicao/musicas` via redirect.
 - Criadas as rotas novas:
   - `/admin/reuniao-publica`
-  - `/admin/reuniao-publica/musicas`
+  - `/admin/reuniao-publica/musica`
 - Criado o catalogo publico de musicas em:
   - `/musicas`
   - `/musicas/[slug]`
@@ -40,7 +40,7 @@ Resumo operacional para continuidade sem reexplorar o codigo.
 ## Arquivos principais
 
 - `app/admin/reuniao-publica/page.tsx`
-- `app/admin/reuniao-publica/musicas/page.tsx`
+- `app/admin/reuniao-publica/musica/page.tsx`
 - `app/admin/instituicao/musicas/page.tsx`
 - `app/admin/instituicao/musicas/actions.ts`
 - `app/api/musicas/sessoes/[codigo]/route.ts`
@@ -107,7 +107,7 @@ Resumo operacional para continuidade sem reexplorar o codigo.
 ## Proxima acao recomendada
 
 1. Criar uma musica real de exemplo.
-2. Testar pareamento em `/admin/reuniao-publica/musicas`.
+2. Testar pareamento em `/admin/reuniao-publica/musica`.
 3. Confirmar que `/musicas/exibir` nao cria sessao por conta propria.
 4. Confirmar que `/musicas/[slug]` continua sendo o padrão unico de leitura completa.
 5. Decidir se o bloco `catalogo` continua necessario no fluxo operacional.

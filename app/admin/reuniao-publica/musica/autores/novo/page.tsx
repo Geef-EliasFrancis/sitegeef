@@ -28,7 +28,7 @@ async function NovoAutorContent({ searchParams }: PageProps) {
           <span className="admin-dashboard-kicker">Músicas</span>
           <h1 className="admin-page-title">{isEditing ? "Editar autor" : "Novo autor"}</h1>
         </div>
-        <Link href="/admin/reuniao-publica/musicas/autores" className="admin-btn admin-btn-secondary" title="Voltar">
+        <Link href="/admin/reuniao-publica/musica/autores" className="admin-btn admin-btn-secondary" title="Voltar">
           <IconArrowLeft size={18} />
         </Link>
       </div>
@@ -78,7 +78,7 @@ export default function NovoAutorPage(props: PageProps) {
     <AdminModuleGate
       permission="pode_publicar"
       profiles={["diretoria", "secretaria", "comunicacao"]}
-      redirectPath="/admin/reuniao-publica/musicas/autores"
+      redirectPath="/admin/reuniao-publica/musica/autores"
       title="Novo autor"
     >
       <Suspense fallback={<div style={{ padding: "2rem", textAlign: "center" }}>Carregando...</div>}>

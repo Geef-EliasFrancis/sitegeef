@@ -20,7 +20,7 @@ async function handleSave(formData: FormData) {
   const id = formData.get("id");
 
   if (typeof nome !== "string" || !nome.trim()) {
-    redirect("/admin/reuniao-publica/musicas/versoes/novo?erro=nome-obrigatorio");
+    redirect("/admin/reuniao-publica/musica/versoes/novo?erro=nome-obrigatorio");
   }
 
   await saveMusicaVersao({
@@ -29,8 +29,8 @@ async function handleSave(formData: FormData) {
   });
 
   invalidateMusicasCache();
-  revalidatePath("/admin/reuniao-publica/musicas/versoes");
-  redirect("/admin/reuniao-publica/musicas/versoes");
+  revalidatePath("/admin/reuniao-publica/musica/versoes");
+  redirect("/admin/reuniao-publica/musica/versoes");
 }
 
 export default async function NovaVersaoPage({ searchParams }: PageProps) {
@@ -46,7 +46,7 @@ export default async function NovaVersaoPage({ searchParams }: PageProps) {
           <span className="admin-dashboard-kicker">Músicas</span>
           <h1 className="admin-page-title">{isEdit ? "Editar versão" : "Nova versão"}</h1>
         </div>
-        <Link href="/admin/reuniao-publica/musicas/versoes" className="admin-btn admin-btn-secondary" title="Voltar">
+        <Link href="/admin/reuniao-publica/musica/versoes" className="admin-btn admin-btn-secondary" title="Voltar">
           <IconArrowLeft size={18} />
         </Link>
       </div>

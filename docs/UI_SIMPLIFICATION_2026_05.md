@@ -55,8 +55,8 @@ Grupo Espírita Elias Francis · Rua Gwyer de Azevedo, 35... · contato@geef... 
 ```tsx
 // Novo:
 <Link
-  href="/admin/reuniao-publica/musicas/autores"
-  className={`admin-nav-item ${isActive('/admin/reuniao-publica/musicas/autores') ? 'active' : ''}`}
+  href="/admin/reuniao-publica/musica/autores"
+  className={`admin-nav-item ${isActive('/admin/reuniao-publica/musica/autores') ? 'active' : ''}`}
 >
   Autores
 </Link>
@@ -89,7 +89,7 @@ npm run build
 
 ### Rotas Afetadas
 - `/` — home pública (textos removidos)
-- `/admin/reuniao-publica/musicas/autores` — acessível via menu
+- `/admin/reuniao-publica/musica/autores` — acessível via menu
 - Todas as páginas com site-shell — rodapé reduzido
 
 ### Regressão

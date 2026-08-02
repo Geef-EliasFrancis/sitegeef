@@ -132,7 +132,7 @@ http://localhost:3500
 - Inputs: placeholder em bege claro
 
 ### 5. Navegue para testar
-- `/admin/reuniao-publica/musicas` → Botões "Autores", "Sessões"
+- `/admin/reuniao-publica/musica` → Botões "Autores", "Sessões"
 - `/admin/financeiro/plano-contas` → Botões "Ativar/Inativar"
 - Qualquer página admin em dark mode
 

@@ -32,7 +32,7 @@ async function NovoSessaoContent({ searchParams }: PageProps) {
           <span className="admin-dashboard-kicker">Músicas</span>
           <h1 className="admin-page-title">{isEditing ? "Editar sessão" : "Nova sessão"}</h1>
         </div>
-        <Link href="/admin/reuniao-publica/musicas/sessoes" className="admin-btn admin-btn-secondary" title="Voltar">
+        <Link href="/admin/reuniao-publica/musica/sessoes" className="admin-btn admin-btn-secondary" title="Voltar">
           <IconArrowLeft size={18} />
         </Link>
       </div>
@@ -124,7 +124,7 @@ export default function NovoSessaoPage(props: PageProps) {
     <AdminModuleGate
       permission="pode_publicar"
       profiles={["diretoria", "secretaria", "comunicacao"]}
-      redirectPath="/admin/reuniao-publica/musicas/sessoes"
+      redirectPath="/admin/reuniao-publica/musica/sessoes"
       title="Nova sessão"
     >
       <Suspense fallback={<div style={{ padding: "2rem", textAlign: "center" }}>Carregando...</div>}>

@@ -23,7 +23,7 @@ async function SessoesContent() {
           <span className="admin-dashboard-kicker">Músicas</span>
           <h1 className="admin-page-title">Sessões e controle</h1>
         </div>
-        <Link href="/admin/reuniao-publica/musicas" className="admin-btn admin-btn-secondary" title="Voltar">
+        <Link href="/admin/reuniao-publica/musica" className="admin-btn admin-btn-secondary" title="Voltar">
           <IconArrowLeft size={18} />
         </Link>
       </div>
@@ -75,7 +75,7 @@ async function SessoesContent() {
       <section className="area-section">
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1rem" }}>
           <h2 style={{ margin: 0 }}>Sessões ativas</h2>
-          <Link href="/admin/reuniao-publica/musicas/sessoes/novo" className="admin-btn admin-btn-primary" title="Nova sessão">
+          <Link href="/admin/reuniao-publica/musica/sessoes/novo" className="admin-btn admin-btn-primary" title="Nova sessão">
             <IconPlus size={18} />
           </Link>
         </div>
@@ -103,7 +103,7 @@ export default function SessoesPage() {
     <AdminModuleGate
       permission="pode_publicar"
       profiles={["diretoria", "secretaria", "comunicacao"]}
-      redirectPath="/admin/reuniao-publica/musicas/sessoes"
+      redirectPath="/admin/reuniao-publica/musica/sessoes"
       title="Sessões"
     >
       <Suspense fallback={<div style={{ padding: "2rem", textAlign: "center" }}>Carregando...</div>}>

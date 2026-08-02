@@ -6,7 +6,7 @@ const baseUrl = process.env.COMP_GATE_BASE_URL ?? 'http://127.0.0.1:3500';
 const storageState = process.env.COMP_GATE_STORAGE_STATE;
 const requireLive = process.env.COMP_GATE_REQUIRE_LIVE === '1';
 const outputDir = 'test-artifacts/comp-gate';
-const routes = ['/admin/painel', '/admin/reuniao-publica', '/admin/reuniao-publica/musicas', '/admin/escalas', '/admin/financeiro'];
+const routes = ['/admin/painel', '/admin/reuniao-publica', '/admin/reuniao-publica/musica', '/admin/escalas', '/admin/financeiro'];
 const viewports = [
   { width: 1440, height: 900, name: 'desktop' },
   { width: 1024, height: 768, name: 'tablet-wide' },

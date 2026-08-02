@@ -19,24 +19,24 @@ export async function saveMusicaAutorAction(formData: FormData) {
   const nome = readString(formData, "nome").trim();
 
   if (!nome) {
-    redirect("/admin/reuniao-publica/musicas/autores/novo?erro=preencha-nome");
+    redirect("/admin/reuniao-publica/musica/autores/novo?erro=preencha-nome");
   }
 
   const autor = await saveMusicaAutor({ id, nome });
 
   invalidateMusicasCache();
   redirect(
-    `/admin/reuniao-publica/musicas/autores/novo?id=${autor?.id ?? id ?? ""}&salvo=1`
+    `/admin/reuniao-publica/musica/autores/novo?id=${autor?.id ?? id ?? ""}&salvo=1`
   );
 }
 
 export async function deleteMusicaAutorAction(formData: FormData) {
   const id = readOptionalString(formData, "id");
   if (!id) {
-    redirect("/admin/reuniao-publica/musicas/autores?erro=autor-sem-id");
+    redirect("/admin/reuniao-publica/musica/autores?erro=autor-sem-id");
   }
 
   await deleteMusicaAutor(id);
   invalidateMusicasCache();
-  redirect("/admin/reuniao-publica/musicas/autores?excluido=1");
+  redirect("/admin/reuniao-publica/musica/autores?excluido=1");
 }

@@ -2,7 +2,7 @@
 
 import { useRef } from "react";
 import { IconTrash } from "@/components/icons";
-import { deleteMusicaAction } from "@/app/admin/reuniao-publica/musicas/actions";
+import { deleteMusicaAction } from "@/app/admin/reuniao-publica/musica/actions";
 
 type DeleteMusicaButtonProps = {
   musicaId: string;

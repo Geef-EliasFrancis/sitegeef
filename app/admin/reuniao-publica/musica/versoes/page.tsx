@@ -20,7 +20,7 @@ async function VersoesContent() {
           <span className="admin-dashboard-kicker">Músicas</span>
           <h1 className="admin-page-title">Versões</h1>
         </div>
-        <Link href="/admin/reuniao-publica/musicas" className="admin-btn admin-btn-secondary" title="Voltar">
+        <Link href="/admin/reuniao-publica/musica" className="admin-btn admin-btn-secondary" title="Voltar">
           <IconArrowLeft size={18} />
         </Link>
       </div>
@@ -28,7 +28,7 @@ async function VersoesContent() {
       <section className="area-section">
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1rem" }}>
           <h2 style={{ margin: 0 }}>Versões cadastradas</h2>
-          <Link href="/admin/reuniao-publica/musicas/versoes/novo" className="admin-btn admin-btn-primary" title="Nova versão">
+          <Link href="/admin/reuniao-publica/musica/versoes/novo" className="admin-btn admin-btn-primary" title="Nova versão">
             <IconPlus size={18} />
           </Link>
         </div>
@@ -53,7 +53,7 @@ async function VersoesContent() {
                     <td style={{ textAlign: "right" }}>
                       <div style={{ display: "flex", gap: "0.5rem", justifyContent: "flex-end" }}>
                         <Link
-                          href={`/admin/reuniao-publica/musicas/versoes/novo?id=${versao.id}`}
+                          href={`/admin/reuniao-publica/musica/versoes/novo?id=${versao.id}`}
                           className="admin-btn admin-btn-small"
                           title="Editar"
                         >
@@ -64,7 +64,7 @@ async function VersoesContent() {
                             "use server";
                             await deleteMusicaVersao(versao.id);
                             invalidateMusicasCache();
-                            revalidatePath("/admin/reuniao-publica/musicas/versoes");
+                            revalidatePath("/admin/reuniao-publica/musica/versoes");
                           }}
                           style={{ display: "inline" }}
                         >
@@ -101,7 +101,7 @@ export default function VersoesPage() {
     <AdminModuleGate
       permission="pode_publicar"
       profiles={["diretoria", "secretaria", "comunicacao"]}
-      redirectPath="/admin/reuniao-publica/musicas/versoes"
+      redirectPath="/admin/reuniao-publica/musica/versoes"
       title="Versões"
     >
       <Suspense fallback={<div style={{ padding: "2rem", textAlign: "center" }}>Carregando...</div>}>

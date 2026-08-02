@@ -90,7 +90,7 @@
 - [ ] Status badges: cores com bom contraste
 
 ### Páginas Específicas
-- [ ] `/admin/reuniao-publica/musicas`
+- [ ] `/admin/reuniao-publica/musica`
   - Botões "Autores", "Sessões", "Nova música"
   - Contraste em dark mode: ✓
 

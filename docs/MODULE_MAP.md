@@ -139,7 +139,7 @@
 ### Reuniao publica e musicas
 
 - `app/admin/reuniao-publica/page.tsx`
-- `app/admin/reuniao-publica/musicas/page.tsx`
+- `app/admin/reuniao-publica/musica/page.tsx`
 - `app/admin/instituicao/musicas/page.tsx` - alias legado para a nova area
 - `app/admin/instituicao/musicas/actions.ts` - actions compartilhadas do editor
 - `app/musicas/page.tsx`

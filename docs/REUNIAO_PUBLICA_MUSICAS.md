@@ -20,8 +20,8 @@ Este documento descreve o modulo de musicas e a navegacao da area de reuniao pub
 ### Admin
 
 - `/admin/reuniao-publica` - pagina-resumo do modulo.
-- `/admin/reuniao-publica/musicas` - cadastro, edicao e pareamento.
-- `/admin/instituicao/musicas` - alias legado que redireciona para `/admin/reuniao-publica/musicas`.
+- `/admin/reuniao-publica/musica` - cadastro, edicao e pareamento.
+- `/admin/instituicao/musicas` - alias legado que redireciona para `/admin/reuniao-publica/musica`.
 
 ## Navegacao do admin
 
@@ -95,7 +95,7 @@ Regras de exibicao:
 - músicas muito longas podem cair automaticamente no layout compacto de exibição para caber sem scroll;
 - se uma sessao ficar sem acesso por mais de 1 hora, ela e encerrada como inativa na proxima leitura do estado;
 - enquanto a apresentacao estiver aberta, o polling da tela publica renova `ultimo_acesso_em`;
-- quando a abertura precisar ser manual, o atalho do admin deve apontar para `/admin/reuniao-publica/musicas/sessoes`.
+- quando a abertura precisar ser manual, o atalho do admin deve apontar para `/admin/reuniao-publica/musica/sessoes`.
 
 Observacoes:
 
@@ -108,7 +108,7 @@ Observacoes:
 
 Arquivo:
 
-- `app/admin/reuniao-publica/musicas/page.tsx`
+- `app/admin/reuniao-publica/musica/page.tsx`
 
 O que essa pagina faz:
 
@@ -130,7 +130,7 @@ Formularios e actions:
 
 Mesmo estando em `app/admin/instituicao`, este arquivo agora serve a rota nova e redireciona para:
 
-- `/admin/reuniao-publica/musicas`
+- `/admin/reuniao-publica/musica`
 
 Mudancas de estado:
 
@@ -150,7 +150,7 @@ Cache:
   - `/musicas/exibir`
   - `/admin/instituicao/musicas`
   - `/admin/reuniao-publica`
-  - `/admin/reuniao-publica/musicas`
+  - `/admin/reuniao-publica/musica`
 
 ## Fluxo da tela publica
 
@@ -238,7 +238,7 @@ Valido no momento em que este doc foi escrito:
 - `/musicas` responde
 - `/musicas/exibir` responde
 - `/admin/reuniao-publica` responde
-- `/admin/reuniao-publica/musicas` responde
+- `/admin/reuniao-publica/musica` responde
 
 ## Cuidados para o proximo agente
 

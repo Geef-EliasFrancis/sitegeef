@@ -4,7 +4,7 @@ import { useState } from "react";
 import { IconPower, IconTrash, IconExternalLink, IconEdit } from "@/components/icons";
 import Link from "next/link";
 import type { MusicaSessao } from "@/lib/musicas";
-import { setMusicaSessaoAtivaAction, deleteMusicaSessaoAction } from "@/app/admin/reuniao-publica/musicas/actions";
+import { setMusicaSessaoAtivaAction, deleteMusicaSessaoAction } from "@/app/admin/reuniao-publica/musica/actions";
 import { ConfirmModal } from "@/components/ui/confirm-modal";
 import { showToast } from "@/components/ui/toast-notification";
 
@@ -61,7 +61,7 @@ export function SessaoActionsButton({ sessao: initialSessao, onUpdate, onDelete 
   return (
     <div className="flex-end-gap">
       <Link
-        href={`/admin/reuniao-publica/musicas/sessoes/novo?codigo=${sessao.codigo_pareamento}`}
+        href={`/admin/reuniao-publica/musica/sessoes/novo?codigo=${sessao.codigo_pareamento}`}
         className="admin-btn admin-btn-small"
         title="Editar"
       >

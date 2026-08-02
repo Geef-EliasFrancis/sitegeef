@@ -35,7 +35,7 @@ export default function MusicasPage(props: PageProps) {
     <AdminModuleGate
       permission="pode_publicar"
       profiles={["diretoria", "secretaria", "comunicacao"]}
-      redirectPath="/admin/reuniao-publica/musicas"
+      redirectPath="/admin/reuniao-publica/musica"
       title="Músicas"
     >
       <Suspense fallback={<div style={{ padding: "2rem", textAlign: "center" }}>Carregando...</div>}>

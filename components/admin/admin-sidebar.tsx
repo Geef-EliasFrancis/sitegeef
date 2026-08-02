@@ -216,7 +216,7 @@ export function AdminSidebar({ usuarioSistema }: AdminSidebarProps) {
             <NavGroup name="reuniao-publica-avisos" title="Avisos e reunião" collapsible>
               <Link
                 href="/admin/reuniao-publica"
-                className={`admin-nav-item ${isActive('/admin/reuniao-publica') && !isActive('/admin/reuniao-publica/musicas') ? 'active' : ''}`}
+                className={`admin-nav-item ${isActive('/admin/reuniao-publica') && !isActive('/admin/reuniao-publica/musica') ? 'active' : ''}`}
               >
                 Avisos
               </Link>
@@ -230,14 +230,14 @@ export function AdminSidebar({ usuarioSistema }: AdminSidebarProps) {
 
             <NavGroup name="reuniao-publica-musicas" title="Músicas" collapsible>
               <Link
-                href="/admin/reuniao-publica/musicas"
-                className={`admin-nav-item ${isActive('/admin/reuniao-publica/musicas') ? 'active' : ''}`}
+                href="/admin/reuniao-publica/musica"
+                className={`admin-nav-item ${isActive('/admin/reuniao-publica/musica') ? 'active' : ''}`}
               >
                 Lista de músicas
               </Link>
               <Link
-                href="/admin/reuniao-publica/musicas/autores"
-                className={`admin-nav-item ${isActive('/admin/reuniao-publica/musicas/autores') ? 'active' : ''}`}
+                href="/admin/reuniao-publica/musica/autores"
+                className={`admin-nav-item ${isActive('/admin/reuniao-publica/musica/autores') ? 'active' : ''}`}
               >
                 Autores
               </Link>
@@ -245,8 +245,8 @@ export function AdminSidebar({ usuarioSistema }: AdminSidebarProps) {
 
             <NavGroup name="reuniao-publica-sessoes" title="Sessões" collapsible>
               <Link
-                href="/admin/reuniao-publica/musicas/sessoes"
-                className={`admin-nav-item ${isActive('/admin/reuniao-publica/musicas/sessoes') ? 'active' : ''}`}
+                href="/admin/reuniao-publica/musica/sessoes"
+                className={`admin-nav-item ${isActive('/admin/reuniao-publica/musica/sessoes') ? 'active' : ''}`}
               >
                 Dashboard
               </Link>

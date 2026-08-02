@@ -176,7 +176,7 @@ export function MusicasCatalogTable({
         </div>
 
         <Link
-          href="/admin/reuniao-publica/musicas/nova"
+          href="/admin/reuniao-publica/musica/nova"
           className="admin-btn admin-btn-primary flex-center-gap music-catalog-create"
           aria-label="Adicionar música"
           title="Adicionar música"
@@ -233,7 +233,7 @@ export function MusicasCatalogTable({
                     </td>
                     <td className="table-align-right">
                       <div className="flex-end-gap">
-                        <Link href={`/admin/reuniao-publica/musicas/${musica.id}`} className="admin-btn admin-btn-small music-catalog-row-action" aria-label={`Editar ${musica.titulo}`} title={`Editar ${musica.titulo}`}>
+                        <Link href={`/admin/reuniao-publica/musica/${musica.id}`} className="admin-btn admin-btn-small music-catalog-row-action" aria-label={`Editar ${musica.titulo}`} title={`Editar ${musica.titulo}`}>
                           <IconEdit size={15} />
                           <span>Editar</span>
                         </Link>

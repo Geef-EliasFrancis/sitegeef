@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { setMusicaExibicaoPublicaAction } from "@/app/admin/reuniao-publica/musicas/actions";
+import { setMusicaExibicaoPublicaAction } from "@/app/admin/reuniao-publica/musica/actions";
 import { IconBroadcast } from "@/components/icons";
 import { showToast } from "@/components/ui/toast-notification";
 
