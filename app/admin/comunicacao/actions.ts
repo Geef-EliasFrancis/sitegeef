@@ -1,23 +1,12 @@
 'use server';
 
 import { createClient } from '@/lib/supabase/server';
+import { deletePublicacaoRecord, getPublicacao, insertPublicacao, listPessoasDisponiveis, listPublicacoes, updatePublicacaoRecord } from '@/lib/publicacoes-repository';
 
 export async function getPublicacoes(status?: string) {
   const supabase = await createClient();
 
-  let query = supabase
-    .from('publicacoes')
-    .select(`
-      *,
-      autor:pessoas (nome)
-    `)
-    .order('criado_em', { ascending: false });
-
-  if (status) {
-    query = query.eq('status', status);
-  }
-
-  const { data, error } = await query;
+  const { data, error } = await listPublicacoes(supabase, status);
 
   if (error) return [];
 
@@ -27,14 +16,7 @@ export async function getPublicacoes(status?: string) {
 export async function getPublicacaoById(id: string) {
   const supabase = await createClient();
 
-  const { data, error } = await supabase
-    .from('publicacoes')
-    .select(`
-      *,
-      autor:pessoas (id, nome)
-    `)
-    .eq('id', id)
-    .single();
+  const { data, error } = await getPublicacao(supabase, id);
 
   if (error) return null;
 
@@ -49,11 +31,7 @@ export async function createPublicacao(formData: {
 }) {
   const supabase = await createClient();
 
-  const { data, error } = await supabase
-    .from('publicacoes')
-    .insert([{ ...formData, status: 'rascunho' }])
-    .select()
-    .single();
+  const { data, error } = await insertPublicacao(supabase, formData);
 
   if (error) return null;
 
@@ -71,16 +49,7 @@ export async function updatePublicacao(
 ) {
   const supabase = await createClient();
 
-  const updateData: any = { ...formData };
-
-  if (formData.status === 'publicado') {
-    updateData.publicado_em = new Date().toISOString();
-  }
-
-  const { error } = await supabase
-    .from('publicacoes')
-    .update(updateData)
-    .eq('id', id);
+  const { error } = await updatePublicacaoRecord(supabase, id, formData);
 
   if (error) return { success: false };
 
@@ -90,10 +59,7 @@ export async function updatePublicacao(
 export async function deletePublicacao(id: string) {
   const supabase = await createClient();
 
-  const { error } = await supabase
-    .from('publicacoes')
-    .delete()
-    .eq('id', id);
+  const { error } = await deletePublicacaoRecord(supabase, id);
 
   if (error) return { success: false };
 
@@ -103,11 +69,7 @@ export async function deletePublicacao(id: string) {
 export async function getPessoasDisponiveis() {
   const supabase = await createClient();
 
-  const { data, error } = await supabase
-    .from('pessoas')
-    .select('id, nome')
-    .eq('status', 'ativo')
-    .order('nome');
+  const { data, error } = await listPessoasDisponiveis(supabase);
 
   if (error) return [];
 
