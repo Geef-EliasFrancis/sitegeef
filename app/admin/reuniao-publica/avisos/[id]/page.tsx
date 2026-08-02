@@ -2,13 +2,13 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { IconArrowLeft, IconSave, IconTrash } from "@/components/icons";
 import { deleteAvisoReuniaoAction, saveAvisoReuniaoAction } from "../actions";
-import { getReuniaoPublicaAvisoById } from "@/lib/reuniao-publica/avisos";
+import { getPersistedAvisoById } from "@/lib/reuniao-publica/avisos-repository";
 
 export const metadata = { title: "Editar aviso da reunião - Admin GEEF" };
 
 export default async function EditarAvisoPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
-  const aviso = await getReuniaoPublicaAvisoById(id);
+  const aviso = await getPersistedAvisoById(id);
   if (!aviso) notFound();
 
   return (

@@ -3,10 +3,7 @@
 import { redirect } from "next/navigation";
 import { requirePermission } from "@/lib/auth/permissions";
 import { invalidateReuniaoPublicaAvisosCache } from "@/lib/admin/cache";
-import {
-  deleteReuniaoPublicaAviso,
-  saveReuniaoPublicaAviso,
-} from "@/lib/reuniao-publica/avisos";
+import { deletePersistedAviso, savePersistedAviso } from "@/lib/reuniao-publica/avisos-repository";
 
 function readString(formData: FormData, key: string) {
   const value = formData.get(key);
@@ -24,7 +21,7 @@ export async function saveAvisoReuniaoAction(formData: FormData) {
     redirect(`/admin/reuniao-publica/avisos${id ? `/${id}` : "/novo"}?erro=titulo-obrigatorio`);
   }
 
-  const result = await saveReuniaoPublicaAviso({
+  const result = await savePersistedAviso({
     id,
     titulo,
     conteudo: readString(formData, "conteudo"),
@@ -45,7 +42,7 @@ export async function deleteAvisoReuniaoAction(formData: FormData) {
   await requirePermission("pode_publicar", "/admin/reuniao-publica/avisos");
   const id = readString(formData, "id");
   if (!id) redirect("/admin/reuniao-publica/avisos?erro=id");
-  const result = await deleteReuniaoPublicaAviso(id);
+  const result = await deletePersistedAviso(id);
   if (!result.success) redirect(`/admin/reuniao-publica/avisos/${id}?erro=excluir`);
   invalidateReuniaoPublicaAvisosCache();
   redirect("/admin/reuniao-publica/avisos?excluido=1");
