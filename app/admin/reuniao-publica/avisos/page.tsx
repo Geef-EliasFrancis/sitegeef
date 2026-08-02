@@ -69,22 +69,7 @@ export default async function AvisosPage() {
               </tr>
             </thead>
             <tbody>
-              {avisos.length === 0 ? (
-                <tr>
-                  <td colSpan={5} className="avisos-catalog-empty">
-                    <span>Nenhum aviso cadastrado.</span>
-                    <Link
-                      href="/admin/comunicacao/nova-publicacao?tipo=aviso"
-                      className="admin-btn admin-btn-secondary admin-icon-action"
-                      aria-label="Adicionar primeiro aviso"
-                      title="Adicionar primeiro aviso"
-                    >
-                      <IconPlus size={18} />
-                    </Link>
-                  </td>
-                </tr>
-              ) : (
-                avisos.map((aviso) => (
+              {avisos.map((aviso) => (
                   <tr key={aviso.id}>
                     <td>
                       <strong>{aviso.titulo}</strong>
@@ -106,8 +91,7 @@ export default async function AvisosPage() {
                       </Link>
                     </td>
                   </tr>
-                ))
-              )}
+              ))}
             </tbody>
           </table>
         </div>

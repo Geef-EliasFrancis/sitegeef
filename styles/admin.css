@@ -1556,17 +1556,6 @@
   min-width: 42rem;
 }
 
-.avisos-catalog-empty {
-  height: 7rem;
-  text-align: center !important;
-  color: var(--text-muted) !important;
-}
-
-.avisos-catalog-empty .admin-icon-action {
-  margin-left: 0.75rem;
-  vertical-align: middle;
-}
-
 @media (max-width: 767px) {
   .avisos-catalog-table {
     min-width: 34rem;
