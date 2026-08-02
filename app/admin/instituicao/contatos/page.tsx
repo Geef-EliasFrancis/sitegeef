@@ -6,7 +6,7 @@ import ContatosDeleteButton from "@/components/admin/instituicao/contatos-delete
 export const metadata = { title: "Contatos - Instituição - Admin GEEF" };
 
 const contactFields = [
-  ["telefone", "Telefone"], ["email", "E-mail"], ["instagram", "Instagram"],
+  ["telefone", "Telefone"], ["whatsapp", "WhatsApp"], ["email", "E-mail"], ["instagram", "Instagram"],
   ["facebook", "Facebook"], ["youtube", "YouTube"], ["site", "Site"],
 ] as const;
 
