@@ -1,6 +1,7 @@
 import { unstable_cache } from "next/cache";
 import { recordSupabaseFailureEvent } from "@/lib/observability";
 import { loadUserAreaIdentity } from "@/lib/areas/user-area-identity-repository";
+import { loadUserAreaOperations } from "@/lib/areas/user-area-operations-repository";
 
 type UserAreaData = {
   perfil: UserAreaProfile | null;
@@ -97,71 +98,17 @@ export async function loadUserArea(userId: string): Promise<UserAreaData> {
     };
   }
 
-  const [pessoaResult, emprestimosResult, reservasResult, movimentosResult, escalasResult, voluntariosResult, consentimentosResult, pedidosResult] =
-    await Promise.all([
-      supabase.from("pessoas").select("*").eq("id", pessoaId).single(),
-      usuario?.pode_biblioteca
-        ? supabase
-            .from("emprestimos")
-            .select(`
-              id, data_retirada, prazo_devolucao, status,
-              exemplares (codigo, obra:obras (titulo, autor))
-            `)
-            .eq("pessoa_id", pessoaId)
-            .eq("status", "em_aberto")
-            .order("prazo_devolucao", { ascending: true })
-        : Promise.resolve({ data: [] as unknown[] }),
-      usuario?.pode_biblioteca
-        ? supabase
-            .from("reservas")
-            .select(`
-              id, posicao_fila, criado_em,
-              obras (titulo, autor)
-            `)
-            .eq("pessoa_id", pessoaId)
-            .eq("status", "aguardando")
-            .order("posicao_fila", { ascending: true })
-        : Promise.resolve({ data: [] as unknown[] }),
-      usuario?.pode_livraria
-        ? supabase
-            .from("movimentos_livraria")
-            .select(`
-              id, tipo, quantidade, valor_total, criado_em,
-              produtos_livraria (titulo, autor)
-            `)
-            .eq("pessoa_id", pessoaId)
-            .order("criado_em", { ascending: false })
-            .limit(10)
-        : Promise.resolve({ data: [] as unknown[] }),
-      usuario?.pode_escalas
-        ? supabase
-            .from("escala_funcoes")
-            .select(`
-              id, observacao,
-              reunioes (data, escala:escalas_mensais (mes, ano)),
-              funcoes (nome)
-            `)
-            .eq("pessoa_id", pessoaId)
-            .order("reunioes(data)", { ascending: false })
-            .limit(10)
-        : Promise.resolve({ data: [] as unknown[] }),
-      supabase
-        .from("servicos_voluntarios")
-        .select("*")
-        .eq("pessoa_id", pessoaId)
-        .eq("status", "ativo"),
-      supabase
-        .from("consentimentos_lgpd")
-        .select("*")
-        .eq("pessoa_id", pessoaId)
-        .eq("status", "ativo"),
-      supabase
-        .from("lgpd_solicitacoes")
-        .select("*")
-        .eq("pessoa_id", pessoaId)
-        .order("created_at", { ascending: false })
-        .limit(8),
-    ]);
+  const pessoaResult = await supabase.from("pessoas").select("*").eq("id", pessoaId).single();
+  const [emprestimosResult, reservasResult, movimentosResult, escalasResult] = await loadUserAreaOperations(supabase, pessoaId, {
+    biblioteca: usuario?.pode_biblioteca,
+    livraria: usuario?.pode_livraria,
+    escalas: usuario?.pode_escalas,
+  });
+  const [voluntariosResult, consentimentosResult, pedidosResult] = await Promise.all([
+    supabase.from("servicos_voluntarios").select("*").eq("pessoa_id", pessoaId).eq("status", "ativo"),
+    supabase.from("consentimentos_lgpd").select("*").eq("pessoa_id", pessoaId).eq("status", "ativo"),
+    supabase.from("lgpd_solicitacoes").select("*").eq("pessoa_id", pessoaId).order("created_at", { ascending: false }).limit(8),
+  ]);
 
   await Promise.all([
     logUserAreaFallback("load pessoa", "pessoas", getQueryError(pessoaResult), "null", { userId, pessoaId }),
