@@ -1,5 +1,6 @@
 import { getPublicacoes } from "@/app/admin/comunicacao/actions";
 import { ReuniaoPublicaPresentation } from "@/components/reuniao-publica-presentation";
+import { mergeAvisosComAgenda } from "@/lib/reuniao-publica/avisos";
 
 export const metadata = {
   title: "Ao vivo - Reunião pública - GEEF",
@@ -16,9 +17,9 @@ type Aviso = {
 
 export default async function ReuniaoPublicaPage() {
   const publicacoes = (await getPublicacoes("publicado")) as Array<Aviso & { tipo?: string | null }>;
-  const avisos = publicacoes
+  const avisos = mergeAvisosComAgenda(publicacoes
     .filter((publicacao) => publicacao.tipo === "aviso")
-    .map(({ id, titulo, conteudo }) => ({ id, titulo, conteudo }));
+  ).map(({ id, titulo, conteudo }) => ({ id, titulo, conteudo }));
 
   return <ReuniaoPublicaPresentation avisos={avisos} />;
 }

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { getPublicacoes } from "@/app/admin/comunicacao/actions";
 import { IconEdit, IconPlus } from "@/components/icons";
+import { mergeAvisosComAgenda } from "@/lib/reuniao-publica/avisos";
 
 export const metadata = {
   title: "Avisos - Reunião pública - Admin GEEF",
@@ -12,9 +13,11 @@ type Aviso = {
   tipo?: string | null;
   conteudo?: string | null;
   status?: string | null;
-  autor?: { nome?: string | null } | null;
+  autor?: { nome?: string | null } | string | null;
   publicado_em?: string | null;
-  criado_em: string;
+  criado_em?: string;
+  quando?: string | null;
+  origem?: "agenda" | "publicacao";
 };
 
 function statusLabel(status?: string | null) {
@@ -32,7 +35,7 @@ function statusClass(status?: string | null) {
 
 export default async function AvisosPage() {
   const publicacoes = (await getPublicacoes()) as Aviso[];
-  const avisos = publicacoes.filter((publicacao) => publicacao.tipo === "aviso");
+  const avisos = mergeAvisosComAgenda(publicacoes.filter((publicacao) => publicacao.tipo === "aviso"));
   return (
     <div className="area-page">
       <section className="area-hero">
@@ -62,9 +65,9 @@ export default async function AvisosPage() {
             <thead>
               <tr>
                 <th>Aviso</th>
-                <th>Autor</th>
+                <th>Quando</th>
                 <th>Status</th>
-                <th>Data</th>
+                <th>Origem</th>
                 <th aria-label="Ações" />
               </tr>
             </thead>
@@ -75,20 +78,22 @@ export default async function AvisosPage() {
                       <strong>{aviso.titulo}</strong>
                       {aviso.conteudo && <p className="text-sm-muted">{aviso.conteudo.slice(0, 110)}</p>}
                     </td>
-                    <td>{aviso.autor?.nome || "—"}</td>
+                    <td>{aviso.quando || "—"}</td>
                     <td><span className={statusClass(aviso.status)}>{statusLabel(aviso.status)}</span></td>
-                    <td className="text-sm-muted">
-                      {new Date(aviso.publicado_em || aviso.criado_em).toLocaleDateString("pt-BR")}
-                    </td>
+                    <td>{aviso.origem === "agenda" ? "Agenda" : "Publicação"}</td>
                     <td>
-                      <Link
-                        href={`/admin/comunicacao/${aviso.id}`}
-                        className="admin-btn admin-btn-small admin-icon-action"
-                        aria-label={`Editar ${aviso.titulo}`}
-                        title={`Editar ${aviso.titulo}`}
-                      >
-                        <IconEdit size={16} />
-                      </Link>
+                      {aviso.origem === "agenda" ? (
+                        <span className="text-sm-muted">Fixo</span>
+                      ) : (
+                        <Link
+                          href={`/admin/comunicacao/${aviso.id}`}
+                          className="admin-btn admin-btn-small admin-icon-action"
+                          aria-label={`Editar ${aviso.titulo}`}
+                          title={`Editar ${aviso.titulo}`}
+                        >
+                          <IconEdit size={16} />
+                        </Link>
+                      )}
                     </td>
                   </tr>
               ))}

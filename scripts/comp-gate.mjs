@@ -24,6 +24,7 @@ const publicDisplaySource = fs.readFileSync('components/admin/musicas/musica-exi
 const adminHeaderSource = fs.readFileSync('components/admin/admin-header.tsx', 'utf8');
 const siteHeaderSource = fs.readFileSync('components/site-header.tsx', 'utf8');
 const presentationSource = fs.readFileSync('components/reuniao-publica-presentation.tsx', 'utf8');
+const meetingNoticesSource = fs.readFileSync('lib/reuniao-publica/avisos.ts', 'utf8');
 const shellAreaSource = fs.readFileSync('components/admin/use-admin-shell-area.ts', 'utf8');
 const nextConfigSource = fs.readFileSync('next.config.ts', 'utf8');
 const dashboardSource = fs.readFileSync('components/admin/admin-dashboard-workspace.tsx', 'utf8');
@@ -49,6 +50,7 @@ const responsiveContract = [
   ['avisos possui catálogo tabular persistente', avisosSource.includes('avisos-catalog-table') && avisosSource.includes('<th>Aviso</th>') && !avisosSource.includes('avisos-catalog-empty') && adminCss.includes('.avisos-catalog-table')],
   ['ao vivo pertence ao submenu de músicas', siteHeaderSource.includes('const musicLinks') && siteHeaderSource.includes('/musicas/exibir') && siteHeaderSource.includes('const isMusicPath') && !siteHeaderSource.match(/key: "reuniao-publica"[\s\S]{0,700}musicas\/exibir/)],
   ['reunião pública possui início e live separados', siteHeaderSource.includes('/reuniao-publica/live') && presentationSource.includes('reuniao-publica-presentation') && presentationSource.includes('requestFullscreen') && presentationSource.includes('ArrowRight') && presentationSource.includes('avisos') && fs.existsSync('app/reuniao-publica/page.tsx') && fs.existsSync('app/reuniao-publica/live/page.tsx')],
+  ['agenda alimenta avisos sem duplicação', meetingNoticesSource.includes('schedule') && meetingNoticesSource.includes('mergeAvisosComAgenda') && meetingNoticesSource.includes('titulos')],
   ['submenu Música possui início catálogo autores e sessões', ['Início', 'Catálogo', 'Autores', 'Sessões'].every((label) => adminHeaderSource.includes(`label: '${label}'`)) && adminHeaderSource.includes('musicContextMenuItems') && adminHeaderSource.includes('/admin/reuniao-publica/musica/catalogo')],
   ['submenu contextual é restrito às áreas configuradas', adminHeaderSource.includes("'reuniao-publica': [") && adminHeaderSource.includes('contextMenuItems &&')],
   ['submenu GEEF possui instituição e seis telas', ['Início', 'Instituição', 'Dados', 'Endereço', 'Agenda', 'Departamentos', 'Contas'].every((label) => adminHeaderSource.includes(`label: '${label}'`)) && adminHeaderSource.includes("geef: [")],
