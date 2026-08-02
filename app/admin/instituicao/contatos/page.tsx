@@ -6,7 +6,7 @@ import ContatosDeleteButton from "@/components/admin/instituicao/contatos-delete
 export const metadata = { title: "Contatos - Instituição - Admin GEEF" };
 
 const contactFields = [
-  ["telefone", "Telefone"], ["whatsapp", "WhatsApp"], ["email", "E-mail"], ["instagram", "Instagram"],
+  ["telefone", "Telefone"], ["email", "E-mail"], ["instagram", "Instagram"],
   ["facebook", "Facebook"], ["youtube", "YouTube"], ["site", "Site"],
 ] as const;
 
@@ -35,8 +35,8 @@ async function ContatosContent() {
           {contatos.length === 0 ? <div className="area-empty">Nenhum contato registrado.</div> : (
             <div className="instituicao-contatos-list">
               {groupedContatos.map(({ tipo, registros }) => (
-                <div key={tipo} className={`area-panel-item instituicao-contato-card${tipo === "WhatsApp" && !registros.some((contato) => contato.telefone || contato.whatsapp) ? " instituicao-contato-card--untitled" : ""}`}>
-                  {!(tipo === "WhatsApp" && !registros.some((contato) => contato.telefone || contato.whatsapp)) && <strong>{tipo}</strong>}
+                <div key={tipo} className={`area-panel-item instituicao-contato-card${tipo === "WhatsApp" ? " instituicao-contato-card--untitled" : ""}`}>
+                  {tipo !== "WhatsApp" && <strong>{tipo}</strong>}
                   <div className="instituicao-contato-table instituicao-contato-table--group-head" role="row">
                     <span role="columnheader">Canal</span>
                     <span role="columnheader">Informação</span>
