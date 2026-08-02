@@ -61,7 +61,6 @@ const contextualRouteRewrites = [
   { source: "/admin/geef/contas", destination: "/admin/instituicao/contas" },
   { source: "/admin/pessoas/pessoas", destination: "/admin/pessoas" },
   { source: "/admin/pessoas/funcoes", destination: "/admin/funcoes" },
-  { source: "/admin/reuniao-publica/avisos", destination: "/admin/reuniao-publica" },
   { source: "/admin/reuniao-publica/leitura", destination: "/leitor" },
   { source: "/admin/reuniao-publica/palestra", destination: "/admin/funcoes/temas" },
   { source: "/admin/reuniao-publica/prece", destination: "/admin/funcoes/temas?categoria=prece" },
