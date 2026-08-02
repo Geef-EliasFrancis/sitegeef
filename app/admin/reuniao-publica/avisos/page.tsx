@@ -1,23 +1,9 @@
 import Link from "next/link";
-import { getPublicacoes } from "@/app/admin/comunicacao/actions";
 import { IconEdit, IconPlus } from "@/components/icons";
-import { mergeAvisosComAgenda } from "@/lib/reuniao-publica/avisos";
+import { listReuniaoPublicaAvisos } from "@/lib/reuniao-publica/avisos";
 
 export const metadata = {
   title: "Avisos da reunião - Admin GEEF",
-};
-
-type Aviso = {
-  id: string;
-  titulo: string;
-  tipo?: string | null;
-  conteudo?: string | null;
-  status?: string | null;
-  autor?: { nome?: string | null } | string | null;
-  publicado_em?: string | null;
-  criado_em?: string;
-  quando?: string | null;
-  origem?: "agenda" | "reuniao";
 };
 
 function statusLabel(status?: string | null) {
@@ -34,8 +20,7 @@ function statusClass(status?: string | null) {
 }
 
 export default async function AvisosPage() {
-  const publicacoes = (await getPublicacoes()) as Aviso[];
-  const avisos = mergeAvisosComAgenda(publicacoes.filter((publicacao) => publicacao.tipo === "aviso"));
+  const avisos = await listReuniaoPublicaAvisos();
   return (
     <div className="area-page">
       <section className="area-hero">
@@ -44,7 +29,7 @@ export default async function AvisosPage() {
             <h1 className="area-hero-title">Avisos da reunião</h1>
           </div>
           <Link
-            href="/admin/comunicacao/nova-publicacao?tipo=aviso"
+            href="/admin/reuniao-publica/avisos/novo"
             className="admin-btn admin-btn-primary admin-icon-action"
             aria-label="Adicionar aviso"
             title="Adicionar aviso"
@@ -86,7 +71,7 @@ export default async function AvisosPage() {
                         <span className="text-sm-muted">Fixo</span>
                       ) : (
                         <Link
-                          href={`/admin/comunicacao/${aviso.id}`}
+                          href={`/admin/reuniao-publica/avisos/${aviso.id}`}
                           className="admin-btn admin-btn-small admin-icon-action"
                           aria-label={`Editar ${aviso.titulo}`}
                           title={`Editar ${aviso.titulo}`}

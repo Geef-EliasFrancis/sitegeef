@@ -70,3 +70,8 @@ export function invalidateMusicasCache() {
   revalidatePath("/admin/reuniao-publica/musica/catalogo");
   revalidatePath("/admin/reuniao-publica/musica/sessoes");
 }
+
+export function invalidateReuniaoPublicaAvisosCache() {
+  revalidatePath("/admin/reuniao-publica/avisos");
+  revalidatePath("/reuniao-publica/live");
+}
