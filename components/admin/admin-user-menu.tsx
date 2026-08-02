@@ -6,6 +6,7 @@ import { MoonIcon, SunIcon } from "@/components/site-icons";
 import { clearUserData } from "@/hooks/useUserPersistence";
 import { useTheme } from "@/hooks/useTheme";
 import { getMultilingualCopy, MULTILINGUAL_COOKIE_NAME, type Locale } from "@/lib/multilingual/client";
+import { ADMIN_USER_LOGOUT_LINK, ADMIN_USER_MENU_LINKS } from "@/lib/admin-user-navigation";
 
 type AdminUserMenuProps = {
   locale: Locale;
@@ -84,18 +85,11 @@ export function AdminUserMenu({ locale, email, fullName }: AdminUserMenuProps) {
           </div>
 
           <nav className="admin-user-menu-nav">
-            <Link href="/perfil" className="admin-user-menu-item" onClick={() => setOpen(false)}>
-              👤 Perfil
-            </Link>
-            <Link href="/minha-area" className="admin-user-menu-item" onClick={() => setOpen(false)}>
-              🧭 Minha área
-            </Link>
-            <Link href="/admin/painel" className="admin-user-menu-item" onClick={() => setOpen(false)}>
-              🛠️ Painel
-            </Link>
-            <Link href="/" className="admin-user-menu-item" onClick={() => setOpen(false)}>
-              🌐 Ver site
-            </Link>
+            {ADMIN_USER_MENU_LINKS.map((item) => (
+              <Link key={item.href} href={item.href} className="admin-user-menu-item" onClick={() => setOpen(false)}>
+                {item.label}
+              </Link>
+            ))}
 
             <div className="admin-user-menu-controls">
               <div className="admin-user-menu-controls-label">Idioma e tema</div>
@@ -127,14 +121,14 @@ export function AdminUserMenu({ locale, email, fullName }: AdminUserMenuProps) {
             </div>
 
             <Link
-              href="/logout"
+              href={ADMIN_USER_LOGOUT_LINK.href}
               className="admin-user-menu-item admin-user-menu-item-logout"
               onClick={() => {
                 clearUserData();
                 setOpen(false);
               }}
             >
-              🚪 Sair
+              {ADMIN_USER_LOGOUT_LINK.label}
             </Link>
           </nav>
         </div>
