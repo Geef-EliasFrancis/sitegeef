@@ -77,8 +77,8 @@ function PublicFallback({ locale }: { locale: "pt" | "en" }) {
               {locale === "en"
                 ? item.title === "Estudo doutrinário"
                   ? "Doctrinal study"
-                  : item.title === "Reunião pública"
-                    ? "Public meeting"
+                  : item.title === "Palestra pública"
+                    ? "Public lecture"
                     : item.title === "Atendimento fraterno"
                       ? "Fraternal care"
                       : item.title === "Evangelização"
@@ -99,7 +99,7 @@ function PublicFallback({ locale }: { locale: "pt" | "en" }) {
               {locale === "en"
                 ? item.when
                     .replace("Terças", "Tuesdays")
-                    .replace("Quinta", "Thursday")
+                    .replace("Quintas-feiras", "Thursdays")
                     .replace("Sob agendamento", "By appointment")
                     .replace("jovens, quinta 16h30 - infantil, 19h00", "youth, Thursday 4:30 PM - children, 7:00 PM")
                 : item.when}

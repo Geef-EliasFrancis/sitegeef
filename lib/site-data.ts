@@ -134,9 +134,9 @@ export const schedule: ScheduleItem[] = [
     description: "Leitura, conversa e reflexão sobre a Doutrina Espírita.",
   },
   {
-    title: "Reunião pública",
-    when: "Quinta, 19h",
-    description: "Palestra, acolhimento e encerramento com prece.",
+    title: "Palestra pública",
+    when: "Quintas-feiras, 19h00",
+    description: "Palestra pública, acolhimento e encerramento com prece.",
   },
   {
     title: "Atendimento fraterno",

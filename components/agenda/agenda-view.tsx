@@ -3,6 +3,7 @@
 import { useMemo, useState } from 'react';
 import { IconSearch, IconX } from '@/components/icons';
 import type { PublicAgendaEvent } from '@/lib/agenda/public-agenda';
+import { schedule } from '@/lib/site-data';
 
 type AgendaEvent = {
   id: string;
@@ -95,6 +96,22 @@ export function AgendaView({ events: publicEvents }: { events: PublicAgendaEvent
           <input autoFocus value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Buscar atividade" aria-label="Buscar atividade" />
         </div>
       )}
+
+      <section className="agenda-programming" aria-labelledby="agenda-programming-title">
+        <header className="agenda-section-heading">
+          <h2 id="agenda-programming-title">Programação semanal</h2>
+          <span aria-hidden="true">✦</span>
+        </header>
+        <div className="agenda-programming-grid">
+          {schedule.map((item) => (
+            <article className="agenda-programming-item" key={item.title}>
+              <strong>{item.title}</strong>
+              <time>{item.when}</time>
+              <p>{item.description}</p>
+            </article>
+          ))}
+        </div>
+      </section>
 
       <div className="agenda-layout">
         <section className="agenda-board" aria-label="Semana de atividades">
