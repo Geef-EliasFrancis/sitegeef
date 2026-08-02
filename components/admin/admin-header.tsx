@@ -9,6 +9,7 @@ import { AdminContextMenu } from '@/components/admin/admin-context-menu';
 import type { Locale } from '@/lib/multilingual';
 import { musicContextMenuItems } from '@/lib/admin-music-navigation';
 import { contextMenus } from '@/lib/admin-context-navigation';
+import { AdminShellTabs } from '@/components/admin/admin-shell-tabs';
 
 interface AdminHeaderProps {
   locale: Locale;
@@ -41,20 +42,7 @@ export function AdminHeader({ locale, user }: AdminHeaderProps) {
         </Link>
 
         <div className="admin-header-middle">
-          <div className="admin-shell-tabs" aria-label="Seções do painel">
-            {topAreas.map((item) => (
-              <Link
-                key={item.key}
-                href={routes[item.key]}
-                className={`admin-shell-tab ${area === item.key ? 'active' : ''}`}
-                aria-current={area === item.key ? 'page' : undefined}
-                aria-label={`${item.label}: ${item.note}`}
-                title={`${item.label}: ${item.note}`}
-              >
-                <span className="admin-shell-tab-label">{item.label}</span>
-              </Link>
-            ))}
-          </div>
+          <AdminShellTabs items={topAreas} activeKey={area} routes={routes} />
         </div>
 
         <div className="admin-header-right">

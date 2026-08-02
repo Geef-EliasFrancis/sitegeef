@@ -30,6 +30,7 @@ const presentationNavigationSource = fs.readFileSync('hooks/use-reuniao-publica-
 const adminContextMenuSource = fs.readFileSync('components/admin/admin-context-menu.tsx', 'utf8');
 const adminMusicNavigationSource = fs.readFileSync('lib/admin-music-navigation.ts', 'utf8');
 const adminContextNavigationSource = fs.readFileSync('lib/admin-context-navigation.ts', 'utf8');
+const adminShellTabsSource = fs.readFileSync('components/admin/admin-shell-tabs.tsx', 'utf8');
 const meetingNoticesSource = fs.readFileSync('lib/reuniao-publica/avisos.ts', 'utf8');
 const meetingNoticesRepositorySource = fs.readFileSync('lib/reuniao-publica/avisos-repository.ts', 'utf8');
 const musicRepositorySource = fs.readFileSync('lib/musicas-repository.ts', 'utf8');
@@ -73,7 +74,7 @@ const responsiveContract = [
   ['catálogo móvel prioriza leitura', musicCatalogSource.includes('musica-catalog-table') && adminCss.includes('.musica-catalog-table') && adminCss.includes('grid-template-columns: minmax(0, 1.45fr)') && adminCss.includes('white-space: nowrap')],
   ['catálogo móvel reduz tom e status', adminCss.includes('.musica-catalog-table th:nth-child(3)') && adminCss.includes('.musica-catalog-table th:nth-child(5)')],
   ['catálogo usa ações por ícone', publicDisplaySource.includes('IconBroadcast') && adminCss.includes('.musica-public-toggle-button span') && adminCss.includes('.music-catalog-row-action span')],
-  ['top menu compacto sem ícones e com tooltip', !adminHeaderSource.includes('shellIcons') && adminHeaderSource.includes('title={`${item.label}: ${item.note}`}') && adminCss.includes('.admin-shell-tab-label')],
+  ['top menu compacto sem ícones e com tooltip', !adminShellTabsSource.includes('shellIcons') && adminShellTabsSource.includes('title={`${item.label}: ${item.note}`}') && adminCss.includes('.admin-shell-tab-label')],
   ['top menu compartilha linha com usuário', adminCss.includes('grid-template-columns: minmax(0, 1fr) auto') && adminCss.includes('.admin-header-right') && adminCss.includes('.admin-header .admin-brand')],
   ['submenu reunião pública possui cinco entradas', ['Avisos', 'Música', 'Leitura', 'Palestra', 'Prece'].every((label) => adminContextNavigationSource.includes(`label: "${label}"`)) && adminHeaderSource.includes('admin-context-menu')],
   ['avisos possui tela própria', fs.existsSync('app/admin/reuniao-publica/avisos/page.tsx') && !nextConfigSource.includes('source: "/admin/reuniao-publica/avisos"')],
@@ -104,6 +105,7 @@ const responsiveContract = [
   ['apresentação separa navegação e configuração', presentationSource.includes('useReuniaoPublicaNavigation') && presentationSource.includes('REUNIAO_PUBLICA_SLIDES') && presentationNavigationSource.includes('ArrowRight') && fs.existsSync('lib/reuniao-publica-presentation.ts')],
   ['header separa renderização do submenu', adminHeaderSource.includes('AdminContextMenu') && adminContextMenuSource.includes('admin-context-menu-item') && !adminHeaderSource.includes('contextMenuItems.map((item) => {')],
   ['header importa navegação musical', adminHeaderSource.includes('admin-music-navigation') && adminMusicNavigationSource.includes('musicContextMenuItems') && adminMusicNavigationSource.includes('/musicas/exibir')],
+  ['header separa abas superiores', adminHeaderSource.includes('AdminShellTabs') && adminShellTabsSource.includes('admin-shell-tab') && !adminHeaderSource.includes('topAreas.map((item) => (')],
   ['agenda alimenta avisos da reunião sem duplicação', meetingNoticesSource.includes('schedule') && meetingNoticesSource.includes('listReuniaoPublicaAvisos') && meetingNoticesSource.includes('titulos') && meetingNoticesSource.includes('origem: "reuniao"')],
   ['submenu Música possui início catálogo autores e sessões', ['Início', 'Catálogo', 'Autores', 'Sessões'].every((label) => adminMusicNavigationSource.includes(`label: "${label}"`)) && adminHeaderSource.includes('musicContextMenuItems') && adminMusicNavigationSource.includes('/admin/reuniao-publica/musica/catalogo')],
   ['submenu contextual é restrito às áreas configuradas', adminContextNavigationSource.includes('"reuniao-publica": [') && adminHeaderSource.includes('contextMenuItems &&')],
