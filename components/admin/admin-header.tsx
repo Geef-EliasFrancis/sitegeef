@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname, useSearchParams } from 'next/navigation';
 import { useAdminShellArea } from '@/components/admin/use-admin-shell-area';
 import { AdminUserMenu } from '@/components/admin/admin-user-menu';
@@ -109,6 +110,14 @@ export function AdminHeader({ locale, user }: AdminHeaderProps) {
     <div className="admin-header-shell">
       <header className="admin-header">
         <Link href="/admin/painel" className="admin-brand">
+          <Image
+            className="admin-brand-logo"
+            src="/brand/logo-oficial-transparent.png"
+            alt="GEEF"
+            width={360}
+            height={156}
+            priority
+          />
         </Link>
 
         <div className="admin-header-middle">
