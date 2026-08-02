@@ -64,7 +64,7 @@ export function SiteHeader({
         { href: "/programacao", label: "Programação" },
         { href: "/musicas", label: "Músicas" },
         { href: "/leitor", label: "Leituras" },
-        { href: "/musicas/exibir", label: "Ao vivo" },
+        { href: "/musicas/exibir", label: "Ao vivo", openInNewTab: true },
         { href: "/escalas", label: "Escalas" },
       ],
     },
@@ -177,7 +177,7 @@ export function SiteHeader({
                 {group.label}
               </button>
               {openGroup === group.key && group.links.map((item) => (
-                <Link key={`${group.key}-mobile-${item.href}`} href={item.href} className="site-nav-dropdown-item" onClick={() => setMobileMenuOpen(false)}>
+                <Link key={`${group.key}-mobile-${item.href}`} href={item.href} className="site-nav-dropdown-item" target={"openInNewTab" in item && item.openInNewTab ? "_blank" : undefined} rel={"openInNewTab" in item && item.openInNewTab ? "noopener noreferrer" : undefined} onClick={() => setMobileMenuOpen(false)}>
                   {item.label}
                 </Link>
               ))}
@@ -209,7 +209,7 @@ export function SiteHeader({
           </div>
           <nav className="site-context-navigation-links">
             {activeGroup.links.map((item) => (
-              <Link key={`context-${activeGroup.key}-${item.href}`} href={item.href} className="site-context-navigation-link" onClick={() => setOpenGroup(null)}>
+              <Link key={`context-${activeGroup.key}-${item.href}`} href={item.href} className="site-context-navigation-link" target={"openInNewTab" in item && item.openInNewTab ? "_blank" : undefined} rel={"openInNewTab" in item && item.openInNewTab ? "noopener noreferrer" : undefined} onClick={() => setOpenGroup(null)}>
                 {item.label}
               </Link>
             ))}
