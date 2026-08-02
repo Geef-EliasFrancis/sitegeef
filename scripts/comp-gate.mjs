@@ -46,6 +46,8 @@ const userAreaOperationsRepositorySource = fs.readFileSync('lib/areas/user-area-
 const userAreaComplianceRepositorySource = fs.readFileSync('lib/areas/user-area-compliance-repository.ts', 'utf8');
 const contactMessagesSource = fs.readFileSync('lib/contato-mensagens.ts', 'utf8');
 const contactMessagesRepositorySource = fs.readFileSync('lib/contato-mensagens-repository.ts', 'utf8');
+const opsEventsSource = fs.readFileSync('lib/ops-events.ts', 'utf8');
+const opsEventsRepositorySource = fs.readFileSync('lib/ops-events-repository.ts', 'utf8');
 const shellTabsBlock = adminCss.match(/\.admin-shell-tabs\s*\{[^}]*\}/s)?.[0] ?? '';
 const responsiveContract = [
   ['header tablet em duas colunas', adminCss.includes('grid-template-columns: minmax(0, 1fr) auto')],
@@ -80,6 +82,7 @@ const responsiveContract = [
   ['minha área separa voluntariado e LGPD', userAreaComplianceRepositorySource.includes('loadUserAreaCompliance') && userAreaComplianceRepositorySource.includes('consentimentos_lgpd') && userAreaSource.includes('loadUserAreaCompliance') && !userAreaSource.includes('.from("consentimentos_lgpd")')],
   ['mensagens de contato separam leitura e apresentação', contactMessagesRepositorySource.includes('listContatoMensagens') && contactMessagesRepositorySource.includes('contato_mensagens') && contactMessagesSource.includes('listContatoMensagens') && !contactMessagesSource.includes('createServiceRoleClient')],
   ['contato público compartilha normalizadores', fs.existsSync('lib/site-contact-formatters.ts') && contactSource.includes('site-contact-formatters') && fs.readFileSync('lib/site-contact-public.ts', 'utf8').includes('site-contact-formatters')],
+  ['observabilidade separa persistência e métricas', opsEventsRepositorySource.includes('recordOpsEventRecord') && opsEventsRepositorySource.includes('ops_events') && opsEventsSource.includes('getOpsEventStats') && !opsEventsSource.includes('createClient')],
   ['avisos possui catálogo tabular persistente', avisosSource.includes('avisos-catalog-table') && avisosSource.includes('<th>Aviso</th>') && !avisosSource.includes('avisos-catalog-empty') && adminCss.includes('.avisos-catalog-table')],
   ['ao vivo pertence ao submenu de músicas', siteHeaderSource.includes('const musicLinks') && siteHeaderSource.includes('/musicas/exibir') && siteHeaderSource.includes('const isMusicPath') && !siteHeaderSource.match(/key: "reuniao-publica"[\s\S]{0,700}musicas\/exibir/)],
   ['reunião pública possui início e live separados', siteHeaderSource.includes('/reuniao-publica/live') && presentationSource.includes('reuniao-publica-presentation') && presentationSource.includes('requestFullscreen') && presentationSource.includes('ArrowRight') && presentationSource.includes('avisos') && fs.existsSync('app/reuniao-publica/page.tsx') && fs.existsSync('app/reuniao-publica/live/page.tsx')],
