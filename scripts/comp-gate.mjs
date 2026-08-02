@@ -36,6 +36,8 @@ const dashboardRepositorySource = fs.readFileSync('lib/admin/dashboard-repositor
 const contactSource = fs.readFileSync('lib/site-contact.ts', 'utf8');
 const contactRepositorySource = fs.readFileSync('lib/site-contact-repository.ts', 'utf8');
 const publicationsRepositorySource = fs.readFileSync('lib/publicacoes-repository.ts', 'utf8');
+const agendaSource = fs.readFileSync('lib/agenda/public-agenda.ts', 'utf8');
+const agendaRepositorySource = fs.readFileSync('lib/agenda/public-agenda-repository.ts', 'utf8');
 const shellTabsBlock = adminCss.match(/\.admin-shell-tabs\s*\{[^}]*\}/s)?.[0] ?? '';
 const responsiveContract = [
   ['header tablet em duas colunas', adminCss.includes('grid-template-columns: minmax(0, 1fr) auto')],
@@ -63,6 +65,7 @@ const responsiveContract = [
   ['dashboard separa consultas e cache', dashboardRepositorySource.includes('loadAdminDashboardSummary') && dashboardRepositorySource.includes('createServiceRoleClient') && !fs.readFileSync('lib/admin/dashboard.ts', 'utf8').includes('createServiceRoleClient')],
   ['contato público separa consulta e composição', contactRepositorySource.includes('loadPublicContactRows') && contactRepositorySource.includes('createServiceRoleClient') && contactSource.includes('loadPublicContactRows') && !contactSource.includes('.from("instituicao")')],
   ['comunicação separa actions e persistência', publicationsRepositorySource.includes('listPublicacoes') && publicationsRepositorySource.includes('updatePublicacaoRecord') && !fs.readFileSync('app/admin/comunicacao/actions.ts', 'utf8').includes('.from(\'publicacoes\')')],
+  ['agenda separa consulta e transformação', agendaRepositorySource.includes('listUpcomingAgendaRows') && agendaRepositorySource.includes('reunioes') && agendaSource.includes('PublicAgendaEvent') && !agendaSource.includes('.from("reunioes")')],
   ['avisos possui catálogo tabular persistente', avisosSource.includes('avisos-catalog-table') && avisosSource.includes('<th>Aviso</th>') && !avisosSource.includes('avisos-catalog-empty') && adminCss.includes('.avisos-catalog-table')],
   ['ao vivo pertence ao submenu de músicas', siteHeaderSource.includes('const musicLinks') && siteHeaderSource.includes('/musicas/exibir') && siteHeaderSource.includes('const isMusicPath') && !siteHeaderSource.match(/key: "reuniao-publica"[\s\S]{0,700}musicas\/exibir/)],
   ['reunião pública possui início e live separados', siteHeaderSource.includes('/reuniao-publica/live') && presentationSource.includes('reuniao-publica-presentation') && presentationSource.includes('requestFullscreen') && presentationSource.includes('ArrowRight') && presentationSource.includes('avisos') && fs.existsSync('app/reuniao-publica/page.tsx') && fs.existsSync('app/reuniao-publica/live/page.tsx')],
