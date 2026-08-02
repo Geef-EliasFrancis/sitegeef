@@ -27,6 +27,7 @@ const siteHeaderSource = fs.readFileSync('components/site-header.tsx', 'utf8');
 const presentationSource = fs.readFileSync('components/reuniao-publica-presentation.tsx', 'utf8');
 const presentationSlideSource = fs.readFileSync('components/reuniao-publica-slide.tsx', 'utf8');
 const presentationNavigationSource = fs.readFileSync('hooks/use-reuniao-publica-navigation.ts', 'utf8');
+const adminContextMenuSource = fs.readFileSync('components/admin/admin-context-menu.tsx', 'utf8');
 const meetingNoticesSource = fs.readFileSync('lib/reuniao-publica/avisos.ts', 'utf8');
 const meetingNoticesRepositorySource = fs.readFileSync('lib/reuniao-publica/avisos-repository.ts', 'utf8');
 const musicRepositorySource = fs.readFileSync('lib/musicas-repository.ts', 'utf8');
@@ -99,6 +100,7 @@ const responsiveContract = [
   ['reunião pública possui início e live separados', siteHeaderSource.includes('/reuniao-publica/live') && presentationSource.includes('reuniao-publica-presentation') && presentationSource.includes('requestFullscreen') && presentationSource.includes('ArrowRight') && presentationSource.includes('avisos') && fs.existsSync('app/reuniao-publica/page.tsx') && fs.existsSync('app/reuniao-publica/live/page.tsx')],
   ['apresentação separa controles e conteúdo', presentationSource.includes('ReuniaoPublicaSlide') && presentationSlideSource.includes('reuniao-publica-notices') && !presentationSource.includes('reuniao-publica-opening')],
   ['apresentação separa navegação e configuração', presentationSource.includes('useReuniaoPublicaNavigation') && presentationSource.includes('REUNIAO_PUBLICA_SLIDES') && presentationNavigationSource.includes('ArrowRight') && fs.existsSync('lib/reuniao-publica-presentation.ts')],
+  ['header separa renderização do submenu', adminHeaderSource.includes('AdminContextMenu') && adminContextMenuSource.includes('admin-context-menu-item') && !adminHeaderSource.includes('contextMenuItems.map((item) => {')],
   ['agenda alimenta avisos da reunião sem duplicação', meetingNoticesSource.includes('schedule') && meetingNoticesSource.includes('listReuniaoPublicaAvisos') && meetingNoticesSource.includes('titulos') && meetingNoticesSource.includes('origem: "reuniao"')],
   ['submenu Música possui início catálogo autores e sessões', ['Início', 'Catálogo', 'Autores', 'Sessões'].every((label) => adminHeaderSource.includes(`label: '${label}'`)) && adminHeaderSource.includes('musicContextMenuItems') && adminHeaderSource.includes('/admin/reuniao-publica/musica/catalogo')],
   ['submenu contextual é restrito às áreas configuradas', adminHeaderSource.includes("'reuniao-publica': [") && adminHeaderSource.includes('contextMenuItems &&')],
@@ -108,7 +110,7 @@ const responsiveContract = [
   ['home do painel não duplica o início no submenu', !adminHeaderSource.includes('painel: [')],
   ['estilos admin não escondem o cabeçalho público', !adminCss.includes('.site-shell > .site-header') && !adminCss.includes('.site-shell > .site-footer')],
   ['cabeçalho público não duplica no Admin', siteHeaderSource.includes('if (pathname.startsWith("/admin"))') && siteHeaderSource.includes('return null;')],
-  ['início não fica ativo nas rotas filhas', adminHeaderSource.includes("item.label === 'Início'") && adminHeaderSource.includes('pathname === itemPath')],
+  ['início não fica ativo nas rotas filhas', adminContextMenuSource.includes('item.label === "Início"') && adminContextMenuSource.includes('pathname === itemPath')],
   ['contextos administrativos possuem submenu', ['perfil: [', 'geef: [', 'pessoas: [', "'reuniao-publica': [", 'governanca: [', 'documentos: [', 'operacao: [', 'sistema: ['].every((context) => adminHeaderSource.includes(context))],
   ['rotas canônicas seguem menu e submenu', nextConfigSource.includes('contextualRouteRewrites') && nextConfigSource.includes('/admin/geef/instituicao') && nextConfigSource.includes('/admin/pessoas/funcoes') && nextConfigSource.includes('/admin/operacao/${submenu}') && nextConfigSource.includes('/admin/sistema/observabilidade')],
   ['funções pertencem à área Tarefeiros', shellAreaSource.includes('normalizedPath.startsWith("/admin/funcoes")') && shellAreaSource.includes('return "pessoas"') && !shellAreaSource.match(/normalizedPath\.startsWith\("\/admin\/funcoes"\)[\s\S]{0,180}return "geef"/)],

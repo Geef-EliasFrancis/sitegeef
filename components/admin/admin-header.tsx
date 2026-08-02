@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { usePathname, useSearchParams } from 'next/navigation';
 import { useAdminShellArea } from '@/components/admin/use-admin-shell-area';
 import { AdminUserMenu } from '@/components/admin/admin-user-menu';
+import { AdminContextMenu } from '@/components/admin/admin-context-menu';
 import type { Locale } from '@/lib/multilingual';
 import type { AdminShellArea } from '@/components/admin/use-admin-shell-area';
 
@@ -168,44 +169,10 @@ export function AdminHeader({ locale, user }: AdminHeaderProps) {
       </header>
 
       {contextMenuItems && (
-        <nav className="admin-context-menu" aria-label={`Menu de contexto de ${area}`}>
-          {contextMenuItems.map((item) => {
-            const itemPath = item.href.split('?')[0];
-            const isPathActive = item.label === 'Início'
-              ? pathname === itemPath
-              : pathname === itemPath || pathname.startsWith(`${itemPath}/`);
-            const isPrece = item.label === 'Prece';
-            const isPalestra = item.label === 'Palestra';
-            const isActive = isPathActive && (!isPrece && !isPalestra || (isPrece ? searchParams.get('categoria') === 'prece' : !searchParams.get('categoria')));
-            return (
-              <Link
-                key={item.label}
-                href={item.href}
-                className={`admin-context-menu-item ${isActive ? 'active' : ''}`}
-                aria-current={isActive ? 'page' : undefined}
-              >
-                {item.label}
-              </Link>
-            );
-          })}
-        </nav>
+        <AdminContextMenu items={contextMenuItems} pathname={pathname} searchParams={searchParams} label={`Menu de contexto de ${area}`} />
       )}
       {isMusicContext && (
-        <nav className="admin-context-menu admin-context-menu--nested" aria-label="Submenu de músicas">
-          {musicContextMenuItems.map((item) => {
-            const isActive = pathname === item.href || pathname.startsWith(`${item.href}/`);
-            return (
-              <Link
-                key={item.label}
-                href={item.href}
-                className={`admin-context-menu-item ${isActive ? 'active' : ''}`}
-                aria-current={isActive ? 'page' : undefined}
-              >
-                {item.label}
-              </Link>
-            );
-          })}
-        </nav>
+        <AdminContextMenu items={musicContextMenuItems} pathname={pathname} searchParams={searchParams} nested label="Submenu de músicas" />
       )}
     </div>
   );
