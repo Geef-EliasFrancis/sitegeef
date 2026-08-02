@@ -74,11 +74,6 @@ async function VersoesContent() {
                             className="admin-btn admin-btn-small"
                             style={{ color: "var(--danger)", borderColor: "rgba(239, 68, 68, 0.25)" }}
                             title="Excluir"
-                            onClick={(e) => {
-                              if (!confirm(`Excluir "${versao.nome}"?`)) {
-                                e.preventDefault();
-                              }
-                            }}
                           >
                             <IconTrash size={16} />
                           </button>
