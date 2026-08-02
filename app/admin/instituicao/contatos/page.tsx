@@ -35,8 +35,8 @@ async function ContatosContent() {
           {contatos.length === 0 ? <div className="area-empty">Nenhum contato registrado.</div> : (
             <div className="instituicao-contatos-list">
               {groupedContatos.map(({ tipo, registros }) => (
-                <div key={tipo} className="area-panel-item instituicao-contato-card">
-                  <strong>{tipo}</strong>
+                <div key={tipo} className={`area-panel-item instituicao-contato-card${tipo === "WhatsApp" && !registros.some((contato) => contato.telefone || contato.whatsapp) ? " instituicao-contato-card--untitled" : ""}`}>
+                  {!(tipo === "WhatsApp" && !registros.some((contato) => contato.telefone || contato.whatsapp)) && <strong>{tipo}</strong>}
                   <div className="instituicao-contato-records">
                     {registros.map((contato) => (
                       <div key={contato.id} className="instituicao-contato-record">

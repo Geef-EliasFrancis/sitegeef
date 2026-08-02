@@ -5882,6 +5882,10 @@ a.button.musica-icon-button {
   margin-top: 0.8rem;
 }
 
+.instituicao-contato-card--untitled .instituicao-contato-records {
+  margin-top: 0;
+}
+
 .instituicao-contato-record {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;

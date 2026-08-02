@@ -16,6 +16,7 @@ const viewports = [
 ];
 
 const adminCss = fs.readFileSync('styles/admin.css', 'utf8');
+const globalsCss = fs.readFileSync('styles/globals.css', 'utf8');
 const siteHeaderCss = fs.readFileSync('styles/site-header.css', 'utf8');
 const sidebarCss = fs.readFileSync('styles/admin-sidebar.css', 'utf8');
 const adminSidebarSource = fs.readFileSync('components/admin/admin-sidebar.tsx', 'utf8');
@@ -119,7 +120,7 @@ const responsiveContract = [
   ['header separa abas superiores', adminHeaderSource.includes('AdminShellTabs') && adminShellTabsSource.includes('admin-shell-tab') && !adminHeaderSource.includes('topAreas.map((item) => (')],
   ['shell admin separa politica de rotas', adminShellNavigationSource.includes('getAdminShellAreaFromPath') && adminShellNavigationSource.includes('ADMIN_SHELL_ROUTES') && adminShellNavigationSource.includes('ADMIN_SHELL_AREAS') && adminShellHookSource.includes('useAdminShellArea')],
   ['menu do usuário separa links de navegação', adminUserMenuSource.includes('ADMIN_USER_MENU_LINKS.map') && adminUserNavigationSource.includes('ADMIN_USER_LOGOUT_LINK') && !adminUserMenuSource.includes('href="/perfil"')],
-  ['contatos usa ação compacta e agrupa por tipo', institutionContactsPageSource.includes('instituicao-contatos-add') && institutionContactsPageSource.includes('instituicao-contatos-list') && institutionContactsPageSource.includes('groupedContatos') && institutionContactsPageSource.includes('instituicao-contato-records') && !institutionContactsPageSource.includes('Adicionar Contato') && !institutionContactsPageSource.includes('Instituição</p>')],
+  ['contatos remove tipo sem dado correspondente', institutionContactsPageSource.includes('instituicao-contato-card--untitled') && institutionContactsPageSource.includes('!registros.some((contato) => contato.telefone || contato.whatsapp)') && globalsCss.includes('.instituicao-contato-card--untitled .instituicao-contato-records') && globalsCss.includes('margin-top: 0')],
   ['agenda alimenta avisos da reunião sem duplicação', meetingNoticesSource.includes('schedule') && meetingNoticesSource.includes('listReuniaoPublicaAvisos') && meetingNoticesSource.includes('titulos') && meetingNoticesSource.includes('origem: "reuniao"')],
   ['submenu Música possui início catálogo autores e sessões', ['Início', 'Catálogo', 'Autores', 'Sessões'].every((label) => adminMusicNavigationSource.includes(`label: "${label}"`)) && adminHeaderSource.includes('musicContextMenuItems') && adminMusicNavigationSource.includes('/admin/reuniao-publica/musica/catalogo')],
   ['submenu contextual é restrito às áreas configuradas', adminContextNavigationSource.includes('"reuniao-publica": [') && adminHeaderSource.includes('contextMenuItems &&')],
