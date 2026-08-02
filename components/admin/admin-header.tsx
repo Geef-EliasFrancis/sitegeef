@@ -8,6 +8,7 @@ import { AdminUserMenu } from '@/components/admin/admin-user-menu';
 import { AdminContextMenu } from '@/components/admin/admin-context-menu';
 import type { Locale } from '@/lib/multilingual';
 import type { AdminShellArea } from '@/components/admin/use-admin-shell-area';
+import { musicContextMenuItems } from '@/lib/admin-music-navigation';
 
 const contextMenus: Partial<Record<AdminShellArea, readonly { label: string; href: string }[]>> = {
   perfil: [
@@ -105,16 +106,6 @@ const contextMenus: Partial<Record<AdminShellArea, readonly { label: string; hre
     { label: 'Fix Usuários', href: '/admin/sistema/fix-usuarios' },
   ],
 };
-
-const musicContextMenuItems = [
-  { label: 'Início', href: '/admin/reuniao-publica/musica/inicio' },
-  { label: 'Catálogo', href: '/admin/reuniao-publica/musica/catalogo' },
-  { label: 'Autores', href: '/admin/reuniao-publica/musica/autores' },
-  { label: 'Sessões', href: '/admin/reuniao-publica/musica/sessoes' },
-  { label: 'Versões', href: '/admin/reuniao-publica/musica/versoes' },
-  { label: 'Controle', href: '/musicas/controle' },
-  { label: 'Exibição pública', href: '/musicas/exibir' },
-] as const;
 
 interface AdminHeaderProps {
   locale: Locale;

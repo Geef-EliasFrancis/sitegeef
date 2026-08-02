@@ -28,6 +28,7 @@ const presentationSource = fs.readFileSync('components/reuniao-publica-presentat
 const presentationSlideSource = fs.readFileSync('components/reuniao-publica-slide.tsx', 'utf8');
 const presentationNavigationSource = fs.readFileSync('hooks/use-reuniao-publica-navigation.ts', 'utf8');
 const adminContextMenuSource = fs.readFileSync('components/admin/admin-context-menu.tsx', 'utf8');
+const adminMusicNavigationSource = fs.readFileSync('lib/admin-music-navigation.ts', 'utf8');
 const meetingNoticesSource = fs.readFileSync('lib/reuniao-publica/avisos.ts', 'utf8');
 const meetingNoticesRepositorySource = fs.readFileSync('lib/reuniao-publica/avisos-repository.ts', 'utf8');
 const musicRepositorySource = fs.readFileSync('lib/musicas-repository.ts', 'utf8');
@@ -101,6 +102,7 @@ const responsiveContract = [
   ['apresentação separa controles e conteúdo', presentationSource.includes('ReuniaoPublicaSlide') && presentationSlideSource.includes('reuniao-publica-notices') && !presentationSource.includes('reuniao-publica-opening')],
   ['apresentação separa navegação e configuração', presentationSource.includes('useReuniaoPublicaNavigation') && presentationSource.includes('REUNIAO_PUBLICA_SLIDES') && presentationNavigationSource.includes('ArrowRight') && fs.existsSync('lib/reuniao-publica-presentation.ts')],
   ['header separa renderização do submenu', adminHeaderSource.includes('AdminContextMenu') && adminContextMenuSource.includes('admin-context-menu-item') && !adminHeaderSource.includes('contextMenuItems.map((item) => {')],
+  ['header importa navegação musical', adminHeaderSource.includes('admin-music-navigation') && adminMusicNavigationSource.includes('musicContextMenuItems') && adminMusicNavigationSource.includes('/musicas/exibir')],
   ['agenda alimenta avisos da reunião sem duplicação', meetingNoticesSource.includes('schedule') && meetingNoticesSource.includes('listReuniaoPublicaAvisos') && meetingNoticesSource.includes('titulos') && meetingNoticesSource.includes('origem: "reuniao"')],
   ['submenu Música possui início catálogo autores e sessões', ['Início', 'Catálogo', 'Autores', 'Sessões'].every((label) => adminHeaderSource.includes(`label: '${label}'`)) && adminHeaderSource.includes('musicContextMenuItems') && adminHeaderSource.includes('/admin/reuniao-publica/musica/catalogo')],
   ['submenu contextual é restrito às áreas configuradas', adminHeaderSource.includes("'reuniao-publica': [") && adminHeaderSource.includes('contextMenuItems &&')],
