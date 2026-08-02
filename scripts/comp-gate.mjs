@@ -29,6 +29,7 @@ const presentationSlideSource = fs.readFileSync('components/reuniao-publica-slid
 const presentationNavigationSource = fs.readFileSync('hooks/use-reuniao-publica-navigation.ts', 'utf8');
 const adminContextMenuSource = fs.readFileSync('components/admin/admin-context-menu.tsx', 'utf8');
 const adminMusicNavigationSource = fs.readFileSync('lib/admin-music-navigation.ts', 'utf8');
+const adminContextNavigationSource = fs.readFileSync('lib/admin-context-navigation.ts', 'utf8');
 const meetingNoticesSource = fs.readFileSync('lib/reuniao-publica/avisos.ts', 'utf8');
 const meetingNoticesRepositorySource = fs.readFileSync('lib/reuniao-publica/avisos-repository.ts', 'utf8');
 const musicRepositorySource = fs.readFileSync('lib/musicas-repository.ts', 'utf8');
@@ -74,7 +75,7 @@ const responsiveContract = [
   ['catálogo usa ações por ícone', publicDisplaySource.includes('IconBroadcast') && adminCss.includes('.musica-public-toggle-button span') && adminCss.includes('.music-catalog-row-action span')],
   ['top menu compacto sem ícones e com tooltip', !adminHeaderSource.includes('shellIcons') && adminHeaderSource.includes('title={`${item.label}: ${item.note}`}') && adminCss.includes('.admin-shell-tab-label')],
   ['top menu compartilha linha com usuário', adminCss.includes('grid-template-columns: minmax(0, 1fr) auto') && adminCss.includes('.admin-header-right') && adminCss.includes('.admin-header .admin-brand')],
-  ['submenu reunião pública possui cinco entradas', ['Avisos', 'Música', 'Leitura', 'Palestra', 'Prece'].every((label) => adminHeaderSource.includes(`label: '${label}'`)) && adminHeaderSource.includes('admin-context-menu')],
+  ['submenu reunião pública possui cinco entradas', ['Avisos', 'Música', 'Leitura', 'Palestra', 'Prece'].every((label) => adminContextNavigationSource.includes(`label: "${label}"`)) && adminHeaderSource.includes('admin-context-menu')],
   ['avisos possui tela própria', fs.existsSync('app/admin/reuniao-publica/avisos/page.tsx') && !nextConfigSource.includes('source: "/admin/reuniao-publica/avisos"')],
   ['avisos usa ação de criação por ícone', avisosSource.includes('IconPlus') && avisosSource.includes('admin-icon-action') && avisosSource.includes('aria-label="Adicionar aviso"') && adminCss.includes('.admin-icon-action')],
   ['avisos possui cadastro próprio', avisosSource.includes('/admin/reuniao-publica/avisos/novo') && avisosActionsSource.includes('saveAvisoReuniaoAction') && fs.existsSync('app/admin/reuniao-publica/avisos/novo/page.tsx') && fs.existsSync('app/admin/reuniao-publica/avisos/[id]/page.tsx')],
@@ -105,15 +106,15 @@ const responsiveContract = [
   ['header importa navegação musical', adminHeaderSource.includes('admin-music-navigation') && adminMusicNavigationSource.includes('musicContextMenuItems') && adminMusicNavigationSource.includes('/musicas/exibir')],
   ['agenda alimenta avisos da reunião sem duplicação', meetingNoticesSource.includes('schedule') && meetingNoticesSource.includes('listReuniaoPublicaAvisos') && meetingNoticesSource.includes('titulos') && meetingNoticesSource.includes('origem: "reuniao"')],
   ['submenu Música possui início catálogo autores e sessões', ['Início', 'Catálogo', 'Autores', 'Sessões'].every((label) => adminMusicNavigationSource.includes(`label: "${label}"`)) && adminHeaderSource.includes('musicContextMenuItems') && adminMusicNavigationSource.includes('/admin/reuniao-publica/musica/catalogo')],
-  ['submenu contextual é restrito às áreas configuradas', adminHeaderSource.includes("'reuniao-publica': [") && adminHeaderSource.includes('contextMenuItems &&')],
-  ['submenu GEEF possui instituição e seis telas', ['Início', 'Instituição', 'Dados', 'Endereço', 'Agenda', 'Departamentos', 'Contas'].every((label) => adminHeaderSource.includes(`label: '${label}'`)) && adminHeaderSource.includes("geef: [")],
-  ['submenu Tarefeiros possui início pessoas e funções', ['Início', 'Pessoas', 'Funções'].every((label) => adminHeaderSource.includes(`label: '${label}'`)) && adminHeaderSource.includes("pessoas: [") && fs.existsSync('app/admin/pessoas/inicio/page.tsx')],
-  ['submenu Sistema possui cinco telas', ['Início', 'Observabilidade', 'Migrações', 'Idiomas', 'Fix Usuários'].every((label) => adminHeaderSource.includes(`label: '${label}'`)) && adminHeaderSource.includes("sistema: [")],
+  ['submenu contextual é restrito às áreas configuradas', adminContextNavigationSource.includes('"reuniao-publica": [') && adminHeaderSource.includes('contextMenuItems &&')],
+  ['submenu GEEF possui instituição e seis telas', ['Início', 'Instituição', 'Dados', 'Endereço', 'Agenda', 'Departamentos', 'Contas'].every((label) => adminContextNavigationSource.includes(`label: "${label}"`)) && adminContextNavigationSource.includes("geef: [")],
+  ['submenu Tarefeiros possui início pessoas e funções', ['Início', 'Pessoas', 'Funções'].every((label) => adminContextNavigationSource.includes(`label: "${label}"`)) && adminContextNavigationSource.includes("pessoas: [") && fs.existsSync('app/admin/pessoas/inicio/page.tsx')],
+  ['submenu Sistema possui cinco telas', ['Início', 'Observabilidade', 'Migrações', 'Idiomas', 'Fix Usuários'].every((label) => adminContextNavigationSource.includes(`label: "${label}"`)) && adminContextNavigationSource.includes("sistema: [")],
   ['home do painel não duplica o início no submenu', !adminHeaderSource.includes('painel: [')],
   ['estilos admin não escondem o cabeçalho público', !adminCss.includes('.site-shell > .site-header') && !adminCss.includes('.site-shell > .site-footer')],
   ['cabeçalho público não duplica no Admin', siteHeaderSource.includes('if (pathname.startsWith("/admin"))') && siteHeaderSource.includes('return null;')],
   ['início não fica ativo nas rotas filhas', adminContextMenuSource.includes('item.label === "Início"') && adminContextMenuSource.includes('pathname === itemPath')],
-  ['contextos administrativos possuem submenu', ['perfil: [', 'geef: [', 'pessoas: [', "'reuniao-publica': [", 'governanca: [', 'documentos: [', 'operacao: [', 'sistema: ['].every((context) => adminHeaderSource.includes(context))],
+  ['contextos administrativos possuem submenu', ['perfil: [', 'geef: [', 'pessoas: [', '"reuniao-publica": [', 'governanca: [', 'documentos: [', 'operacao: [', 'sistema: ['].every((context) => adminContextNavigationSource.includes(context))],
   ['rotas canônicas seguem menu e submenu', nextConfigSource.includes('contextualRouteRewrites') && nextConfigSource.includes('/admin/geef/instituicao') && nextConfigSource.includes('/admin/pessoas/funcoes') && nextConfigSource.includes('/admin/operacao/${submenu}') && nextConfigSource.includes('/admin/sistema/observabilidade')],
   ['funções pertencem à área Tarefeiros', shellAreaSource.includes('normalizedPath.startsWith("/admin/funcoes")') && shellAreaSource.includes('return "pessoas"') && !shellAreaSource.match(/normalizedPath\.startsWith\("\/admin\/funcoes"\)[\s\S]{0,180}return "geef"/)],
   ['atalhos GEEF foram centralizados', !adminSidebarSource.includes('href="/admin/instituicao/identificacao"') && !adminSidebarSource.includes('href="/admin/instituicao/endereco"') && !adminSidebarSource.includes('href="/admin/instituicao/contas"') && !adminSidebarSource.includes('href="/admin/departamentos"') && !dashboardSource.includes('href: "/admin/departamentos"')],
