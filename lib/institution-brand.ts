@@ -1,4 +1,4 @@
-import { createServiceRoleClient } from "@/lib/supabase/service-role";
+import { getInstitutionBrandRecord } from "@/lib/institution-brand-repository";
 
 export type InstitutionBrand = {
   logoSemFundoUrl: string;
@@ -9,6 +9,17 @@ export type InstitutionBrand = {
   composicao: string;
   uso: string;
   exemplos: string;
+};
+
+type InstitutionBrandRow = {
+  logo_url?: string | null;
+  logo_com_fundo_url?: string | null;
+  identidade_visual_descricao?: string | null;
+  identidade_visual_letras_descricao?: string | null;
+  identidade_visual_visual_descricao?: string | null;
+  identidade_visual_composicao?: string | null;
+  identidade_visual_uso?: string | null;
+  identidade_visual_exemplos?: string | null;
 };
 
 const FALLBACK_BRAND: InstitutionBrand = {
@@ -46,18 +57,11 @@ async function withTimeout<T>(promise: PromiseLike<T>, timeoutMs: number, fallba
 }
 
 export async function getInstitutionBrand(): Promise<InstitutionBrand> {
-  const supabase = createServiceRoleClient();
-
   try {
-    const query = supabase
-      .from("instituicao")
-      .select("*")
-      .order("criado_em", { ascending: true })
-      .limit(1)
-      .maybeSingle();
+    const query = getInstitutionBrandRecord();
 
-    const result = await withTimeout(query as PromiseLike<any>, 1800, { data: null, error: null });
-    const { data, error } = result as { data: any; error: unknown };
+    const result = await withTimeout(query as PromiseLike<{ data: InstitutionBrandRow | null; error: unknown }>, 1800, { data: null, error: null });
+    const { data, error } = result;
 
     if (error || !data) {
       return FALLBACK_BRAND;
