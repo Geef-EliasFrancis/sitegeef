@@ -19,6 +19,7 @@ const adminCss = fs.readFileSync('styles/admin.css', 'utf8');
 const sidebarCss = fs.readFileSync('styles/admin-sidebar.css', 'utf8');
 const adminSidebarSource = fs.readFileSync('components/admin/admin-sidebar.tsx', 'utf8');
 const musicCatalogSource = fs.readFileSync('components/admin/musicas/musicas-catalog-table.tsx', 'utf8');
+const avisosSource = fs.readFileSync('app/admin/reuniao-publica/avisos/page.tsx', 'utf8');
 const publicDisplaySource = fs.readFileSync('components/admin/musicas/musica-exibicao-publica-button.tsx', 'utf8');
 const adminHeaderSource = fs.readFileSync('components/admin/admin-header.tsx', 'utf8');
 const siteHeaderSource = fs.readFileSync('components/site-header.tsx', 'utf8');
@@ -43,6 +44,7 @@ const responsiveContract = [
   ['top menu compartilha linha com usuário', adminCss.includes('grid-template-columns: minmax(0, 1fr) auto') && adminCss.includes('.admin-header-right') && adminCss.includes('.admin-header .admin-brand')],
   ['submenu reunião pública possui cinco entradas', ['Avisos', 'Música', 'Leitura', 'Palestra', 'Prece'].every((label) => adminHeaderSource.includes(`label: '${label}'`)) && adminHeaderSource.includes('admin-context-menu')],
   ['avisos possui tela própria', fs.existsSync('app/admin/reuniao-publica/avisos/page.tsx') && !nextConfigSource.includes('source: "/admin/reuniao-publica/avisos"')],
+  ['avisos usa ação de criação por ícone', avisosSource.includes('IconPlus') && avisosSource.includes('admin-icon-action') && avisosSource.includes('aria-label="Adicionar aviso"') && adminCss.includes('.admin-icon-action')],
   ['submenu Música possui início catálogo autores e sessões', ['Início', 'Catálogo', 'Autores', 'Sessões'].every((label) => adminHeaderSource.includes(`label: '${label}'`)) && adminHeaderSource.includes('musicContextMenuItems') && adminHeaderSource.includes('/admin/reuniao-publica/musica/catalogo')],
   ['submenu contextual é restrito às áreas configuradas', adminHeaderSource.includes("'reuniao-publica': [") && adminHeaderSource.includes('contextMenuItems &&')],
   ['submenu GEEF possui instituição e seis telas', ['Início', 'Instituição', 'Dados', 'Endereço', 'Agenda', 'Departamentos', 'Contas'].every((label) => adminHeaderSource.includes(`label: '${label}'`)) && adminHeaderSource.includes("geef: [")],

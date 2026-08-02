@@ -1519,6 +1519,24 @@
   font-size: 0.8rem;
 }
 
+.admin-icon-action {
+  width: 2.9rem;
+  min-width: 2.9rem;
+  height: 2.9rem;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (max-width: 767px) {
+  .admin-icon-action {
+    width: 2.75rem;
+    min-width: 2.75rem;
+    height: 2.75rem;
+  }
+}
+
 .musica-catalog-table .music-catalog-row-action,
 .musica-catalog-table .musica-public-toggle-button,
 .musica-catalog-table .musica-public-toggle-link {
