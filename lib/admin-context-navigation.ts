@@ -1,5 +1,16 @@
 import type { AdminShellArea } from "@/components/admin/use-admin-shell-area";
 
+type ContextItem = { label: string; href: string };
+
+export function isAdminContextItemActive(item: ContextItem, pathname: string, searchParams: { get(name: string): string | null }) {
+  const itemPath = item.href.split("?")[0];
+  const isPathActive = item.label === "Início" ? pathname === itemPath : pathname === itemPath || pathname.startsWith(`${itemPath}/`);
+  if (!isPathActive) return false;
+  if (item.label === "Prece") return searchParams.get("categoria") === "prece";
+  if (item.label === "Palestra") return !searchParams.get("categoria");
+  return true;
+}
+
 export const contextMenus: Partial<Record<AdminShellArea, readonly { label: string; href: string }[]>> = {
   perfil: [{ label: "Início", href: "/admin/perfil" }, { label: "Minha área", href: "/minha-area" }],
   "reuniao-publica": [
