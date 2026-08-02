@@ -6,7 +6,7 @@ const baseUrl = process.env.COMP_GATE_BASE_URL ?? 'http://127.0.0.1:3500';
 const storageState = process.env.COMP_GATE_STORAGE_STATE;
 const requireLive = process.env.COMP_GATE_REQUIRE_LIVE === '1';
 const outputDir = 'test-artifacts/comp-gate';
-const routes = ['/admin/painel', '/admin/reuniao-publica', '/admin/reuniao-publica/avisos', '/admin/reuniao-publica/musica/inicio', '/admin/reuniao-publica/musica/catalogo', '/reuniao-publica', '/admin/escalas', '/admin/financeiro'];
+const routes = ['/admin/painel', '/admin/reuniao-publica', '/admin/reuniao-publica/avisos', '/admin/reuniao-publica/musica/inicio', '/admin/reuniao-publica/musica/catalogo', '/reuniao-publica', '/reuniao-publica/live', '/admin/escalas', '/admin/financeiro'];
 const viewports = [
   { width: 1440, height: 900, name: 'desktop' },
   { width: 1024, height: 768, name: 'tablet-wide' },
@@ -48,7 +48,7 @@ const responsiveContract = [
   ['avisos usa ação de criação por ícone', avisosSource.includes('IconPlus') && avisosSource.includes('admin-icon-action') && avisosSource.includes('aria-label="Adicionar aviso"') && adminCss.includes('.admin-icon-action')],
   ['avisos possui catálogo tabular persistente', avisosSource.includes('avisos-catalog-table') && avisosSource.includes('<th>Aviso</th>') && !avisosSource.includes('avisos-catalog-empty') && adminCss.includes('.avisos-catalog-table')],
   ['ao vivo pertence ao submenu de músicas', siteHeaderSource.includes('const musicLinks') && siteHeaderSource.includes('/musicas/exibir') && siteHeaderSource.includes('const isMusicPath') && !siteHeaderSource.match(/key: "reuniao-publica"[\s\S]{0,700}musicas\/exibir/)],
-  ['reunião pública possui apresentação navegável', presentationSource.includes('reuniao-publica-presentation') && presentationSource.includes('requestFullscreen') && presentationSource.includes('ArrowRight') && presentationSource.includes('avisos') && fs.existsSync('app/reuniao-publica/page.tsx')],
+  ['reunião pública possui início e live separados', siteHeaderSource.includes('/reuniao-publica/live') && presentationSource.includes('reuniao-publica-presentation') && presentationSource.includes('requestFullscreen') && presentationSource.includes('ArrowRight') && presentationSource.includes('avisos') && fs.existsSync('app/reuniao-publica/page.tsx') && fs.existsSync('app/reuniao-publica/live/page.tsx')],
   ['submenu Música possui início catálogo autores e sessões', ['Início', 'Catálogo', 'Autores', 'Sessões'].every((label) => adminHeaderSource.includes(`label: '${label}'`)) && adminHeaderSource.includes('musicContextMenuItems') && adminHeaderSource.includes('/admin/reuniao-publica/musica/catalogo')],
   ['submenu contextual é restrito às áreas configuradas', adminHeaderSource.includes("'reuniao-publica': [") && adminHeaderSource.includes('contextMenuItems &&')],
   ['submenu GEEF possui instituição e seis telas', ['Início', 'Instituição', 'Dados', 'Endereço', 'Agenda', 'Departamentos', 'Contas'].every((label) => adminHeaderSource.includes(`label: '${label}'`)) && adminHeaderSource.includes("geef: [")],

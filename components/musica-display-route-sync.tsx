@@ -10,7 +10,7 @@ export function MusicaDisplayRouteSync() {
     const root = document.documentElement;
     const body = document.body;
     const isMusicDisplayRoute = pathname.startsWith("/musicas/exibir");
-    const isMeetingDisplayRoute = pathname === "/reuniao-publica";
+    const isMeetingDisplayRoute = pathname === "/reuniao-publica/live";
 
     if (isMusicDisplayRoute) {
       root.classList.add("musica-display-route");

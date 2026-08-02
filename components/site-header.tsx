@@ -65,6 +65,7 @@ export function SiteHeader({
       links: [
         { href: "/programacao", label: "Programação" },
         { href: "/musicas", label: "Músicas" },
+        { href: "/reuniao-publica/live", label: "Ao vivo" },
         { href: "/leitor", label: "Leituras" },
         { href: "/escalas", label: "Escalas" },
       ],
