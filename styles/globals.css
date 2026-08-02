@@ -1496,7 +1496,7 @@ body.reuniao-publica-display-route .site-shell-main {
 .musica-catalog-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
-  gap: 0.45rem;
+  gap: 0.3rem;
   width: 100%;
   align-items: start;
 }
@@ -1505,7 +1505,7 @@ body.reuniao-publica-display-route .site-shell-main {
   display: grid;
   gap: var(--spacing-sm);
   min-height: 0;
-  padding: 0.6rem 0.85rem;
+  padding: 0.42rem 0.65rem;
   border: 1px solid var(--line);
   border-radius: var(--radius-lg);
   background: var(--surface-tertiary);
@@ -1550,7 +1550,7 @@ body.reuniao-publica-display-route .site-shell-main {
 
 .musica-catalog-title-inline {
   font-family: var(--font-heading);
-  font-size: 1.15rem;
+  font-size: 1rem;
   line-height: 1.1;
   color: var(--text);
   flex: 0 1 auto;
@@ -1595,16 +1595,16 @@ body.reuniao-publica-display-route .site-shell-main {
 }
 
 .musica-catalog-live-button {
-  width: 2.25rem;
-  min-width: 2.25rem !important;
-  height: 2.25rem;
+  width: 1.9rem;
+  min-width: 1.9rem !important;
+  height: 1.9rem;
   padding: 0 !important;
   gap: 0;
   font-size: 0.78rem;
 }
 
 .musica-catalog-live-button--active {
-  min-width: 2.25rem !important;
+  min-width: 1.9rem !important;
 }
 
 .musica-catalog-live-button span {
@@ -1613,13 +1613,13 @@ body.reuniao-publica-display-route .site-shell-main {
 
 @media (max-width: 767px) {
   .musica-catalog-summary-row {
-    flex-direction: column;
-    align-items: flex-start;
+    flex-direction: row;
+    align-items: center;
   }
 
   .musica-catalog-actions {
-    justify-content: flex-start;
-    margin-left: 0;
+    justify-content: flex-end;
+    margin-left: auto;
   }
 }
 
