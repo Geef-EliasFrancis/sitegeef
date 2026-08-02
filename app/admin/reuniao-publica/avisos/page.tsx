@@ -38,7 +38,6 @@ export default async function AvisosPage() {
       <section className="area-hero">
         <div className="area-hero-top">
           <div>
-            <p className="area-subtitle">Reunião pública</p>
             <h1 className="area-hero-title">Avisos</h1>
           </div>
           <Link
@@ -50,7 +49,6 @@ export default async function AvisosPage() {
             <IconPlus size={20} />
           </Link>
         </div>
-        <p className="area-subtitle">Prepare e acompanhe os comunicados que serão apresentados à comunidade.</p>
       </section>
 
       <section className="area-section">
