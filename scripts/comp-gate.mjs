@@ -39,6 +39,7 @@ const adminUserMenuSource = fs.readFileSync('components/admin/admin-user-menu.ts
 const adminUserNavigationSource = fs.readFileSync('lib/admin-user-navigation.ts', 'utf8');
 const institutionContactsPageSource = fs.readFileSync('app/admin/instituicao/contatos/page.tsx', 'utf8');
 const musicVersionsPageSource = fs.readFileSync('app/admin/reuniao-publica/musica/versoes/page.tsx', 'utf8');
+const publicMusicLiveButtonSource = fs.readFileSync('components/musicas/musica-catalog-live-button.tsx', 'utf8');
 const meetingNoticesSource = fs.readFileSync('lib/reuniao-publica/avisos.ts', 'utf8');
 const meetingNoticesRepositorySource = fs.readFileSync('lib/reuniao-publica/avisos-repository.ts', 'utf8');
 const musicRepositorySource = fs.readFileSync('lib/musicas-repository.ts', 'utf8');
@@ -123,6 +124,7 @@ const responsiveContract = [
   ['menu do usuário separa links de navegação', adminUserMenuSource.includes('ADMIN_USER_MENU_LINKS.map') && adminUserNavigationSource.includes('ADMIN_USER_LOGOUT_LINK') && !adminUserMenuSource.includes('href="/perfil"')],
   ['contatos mantém canal e remove titulo WhatsApp', institutionContactsPageSource.includes('["whatsapp", "WhatsApp"]') && institutionContactsPageSource.includes('tipo !== "WhatsApp"') && institutionContactsPageSource.includes('instituicao-contato-card--untitled')],
   ['versões não passam evento para Server Component', !musicVersionsPageSource.match(/<button[\s\S]*onClick=/) && musicVersionsPageSource.includes('action={async () =>')],
+  ['botão ao vivo da lista não abre a exibição', publicMusicLiveButtonSource.includes('router.refresh()') && !publicMusicLiveButtonSource.includes('router.push("/musicas/exibir")') && !publicMusicLiveButtonSource.includes('href="/musicas/exibir"')],
   ['agenda alimenta avisos da reunião sem duplicação', meetingNoticesSource.includes('schedule') && meetingNoticesSource.includes('listReuniaoPublicaAvisos') && meetingNoticesSource.includes('titulos') && meetingNoticesSource.includes('origem: "reuniao"')],
   ['submenu Música possui início catálogo autores e sessões', ['Início', 'Catálogo', 'Autores', 'Sessões'].every((label) => adminMusicNavigationSource.includes(`label: "${label}"`)) && adminHeaderSource.includes('musicContextMenuItems') && adminMusicNavigationSource.includes('/admin/reuniao-publica/musica/catalogo')],
   ['submenu contextual é restrito às áreas configuradas', adminContextNavigationSource.includes('"reuniao-publica": [') && adminHeaderSource.includes('contextMenuItems &&')],
