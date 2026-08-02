@@ -1,5 +1,5 @@
 import { headers } from "next/headers";
-import { createServiceRoleClient } from "@/lib/supabase/service-role";
+import { insertLgpdRecord } from "@/lib/lgpd/persistence-repository";
 import { LGPD_VERSIONS, type LgpdCategoria, type LgpdStatus } from "./constants";
 
 export type LgpdEventInput = {
@@ -74,7 +74,6 @@ export async function getLgpdRequestMeta() {
 }
 
 export async function recordLgpdEvent(input: LgpdEventInput) {
-  const supabase = createServiceRoleClient();
   const now = new Date().toISOString();
   const severity = resolveSeverity(input);
   const escopo = {
@@ -82,9 +81,7 @@ export async function recordLgpdEvent(input: LgpdEventInput) {
     severity,
   };
 
-  const { data, error } = await supabase
-    .from("lgpd_registros")
-    .insert({
+  const { data, error } = await insertLgpdRecord({
       user_id: input.userId ?? null,
       pessoa_id: input.pessoaId ?? null,
       categoria: input.categoria,
@@ -101,15 +98,13 @@ export async function recordLgpdEvent(input: LgpdEventInput) {
       revogado_em: input.revogadoEm ?? null,
       expires_at: input.expiresAt ?? null,
       updated_at: now,
-    })
-    .select("id")
-    .single();
+  });
 
   if (error) {
     return { success: false, error: error.message };
   }
 
-  return { success: true, id: data.id as string };
+  return { success: true, id: data?.id as string };
 }
 
 export async function recordLgpdEvents(inputs: LgpdEventInput[]) {
