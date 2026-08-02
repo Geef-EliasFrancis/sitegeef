@@ -82,7 +82,7 @@ const responsiveContract = [
   ['catálogo usa ações por ícone', publicDisplaySource.includes('IconBroadcast') && adminCss.includes('.musica-public-toggle-button span') && adminCss.includes('.music-catalog-row-action span')],
   ['top menu compacto sem ícones e com tooltip', !adminShellTabsSource.includes('shellIcons') && adminShellTabsSource.includes('title={`${item.label}: ${item.note}`}') && adminCss.includes('.admin-shell-tab-label')],
   ['top menu verde possui contraste de borda e sombra', adminCss.includes('border-color: #2f7d16') && adminCss.includes('inset 0 -2px 0 rgba(28, 88, 10, 0.46)') && adminCss.includes('text-shadow: 0 1px 2px rgba(17, 55, 8, 0.72)')],
-  ['menu público verde possui contraste de borda e sombra', siteHeaderCss.includes('border-color: #2c7f13') && siteHeaderCss.includes('inset 0 -0.2rem rgba(25, 82, 9, 0.5)') && siteHeaderCss.includes('text-shadow: 0 1px 2px rgba(14, 52, 7, 0.72)')],
+  ['menu público verde possui contraste forte', siteHeaderCss.includes('border-bottom: 3px solid #174d0b') && siteHeaderCss.includes('color: #102a0c !important') && siteHeaderCss.includes('text-shadow: 0 1px 0 rgba(255, 255, 255, 0.68)')],
   ['top menu compartilha linha com usuário', adminCss.includes('grid-template-columns: minmax(0, 1fr) auto') && adminCss.includes('.admin-header-right') && adminCss.includes('.admin-header .admin-brand')],
   ['submenu reunião pública possui cinco entradas', ['Avisos', 'Música', 'Leitura', 'Palestra', 'Prece'].every((label) => adminContextNavigationSource.includes(`label: "${label}"`)) && adminHeaderSource.includes('admin-context-menu')],
   ['avisos possui tela própria', fs.existsSync('app/admin/reuniao-publica/avisos/page.tsx') && !nextConfigSource.includes('source: "/admin/reuniao-publica/avisos"')],
