@@ -1559,30 +1559,63 @@ body.reuniao-publica-display-route .site-shell-main {
   flex: 0 0 auto;
 }
 
-.musica-passes-waveform {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.18rem;
+.musica-passes-speaker {
+  display: grid;
+  place-items: center;
   width: 100%;
-  height: 3.5rem;
-  padding: 0 0.2rem;
+  height: 4rem;
   overflow: hidden;
-  border-radius: 0.5rem;
-  background: color-mix(in srgb, var(--surface-secondary) 82%, transparent);
+  border-radius: 0.6rem;
+  background: radial-gradient(circle at 50% 48%, #f8fbff 0%, #dbe5ef 38%, #c4d0dc 100%);
 }
 
-.musica-passes-waveform span {
-  flex: 1 1 0;
-  min-width: 0.12rem;
-  max-width: 0.24rem;
-  border-radius: 999px;
-  background: color-mix(in srgb, var(--secondary) 72%, var(--text));
+.musica-passes-speaker-ring {
+  display: grid;
+  place-items: center;
+  width: 3.25rem;
+  height: 3.25rem;
+  border: 0.38rem solid #29303a;
+  border-radius: 50%;
+  background: radial-gradient(circle at 42% 35%, #6287c7 0%, #1b315b 58%, #0e1727 100%);
+  box-shadow: 0 0.35rem 0.65rem rgba(14, 23, 39, 0.3), inset 0 0 0 0.14rem rgba(255, 255, 255, 0.15);
+  transform: scale(1);
+  transition: transform 180ms ease;
+}
+
+.musica-passes-speaker-cone {
+  display: grid;
+  place-items: center;
+  width: 1.55rem;
+  height: 1.55rem;
+  border-radius: 50%;
+  background: radial-gradient(circle at 40% 35%, #5d6c82 0%, #202833 68%, #11161d 100%);
+  box-shadow: inset 0 0 0 0.1rem rgba(255, 255, 255, 0.12);
+}
+
+.musica-passes-speaker-cap {
+  width: 0.62rem;
+  height: 0.62rem;
+  border-radius: 50%;
+  background: #11161d;
+}
+
+.musica-passes-speaker.is-playing .musica-passes-speaker-ring {
+  animation: musica-passes-speaker-beat 720ms ease-in-out infinite;
+}
+
+@keyframes musica-passes-speaker-beat {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.08); }
+}
+
+.musica-passes-speaker + .musica-passes-progress-row {
+  margin-top: -0.15rem;
 }
 
 .musica-passes-progress-row {
   display: flex;
   align-items: center;
+  width: 100%;
   gap: 0.55rem;
   color: var(--muted);
   font-size: 0.74rem;
@@ -1809,7 +1842,7 @@ body.reuniao-publica-display-route .site-shell-main {
     min-width: 0;
   }
 
-  .musica-passes-waveform,
+  .musica-passes-speaker,
   .musica-passes-progress-row {
     grid-column: 1 / -1;
   }
@@ -1831,6 +1864,12 @@ body.reuniao-publica-display-route .site-shell-main {
 
   .musica-passes-file-field {
     width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .musica-passes-speaker.is-playing .musica-passes-speaker-ring {
+    animation: none;
   }
 }
 

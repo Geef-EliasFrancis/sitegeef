@@ -5,8 +5,6 @@ import type { MusicaPasse } from "@/lib/musica-passes";
 
 type RepeatMode = "off" | "one" | "all";
 
-const WAVEFORM = [24, 38, 18, 48, 29, 61, 35, 52, 27, 72, 43, 31, 67, 39, 56, 23, 47, 74, 34, 58, 28, 45, 64, 36, 52, 26, 69, 42, 55, 30, 63, 40, 71, 33, 49, 25, 59, 76, 37, 53, 29, 62, 45, 68, 31, 50, 23, 57, 73, 35, 48, 27, 64, 41, 55, 30, 70, 38, 52, 24, 61, 44, 67, 32, 49, 26, 58, 75, 36, 53, 29, 63, 42, 69];
-
 function formatTime(value: number) {
   if (!Number.isFinite(value) || value < 0) return "0:00";
   const minutes = Math.floor(value / 60);
@@ -109,8 +107,8 @@ export function MusicaPassesPlayer({ items }: { items: MusicaPasse[] }) {
           <span className="musica-passes-count">{hasItems ? `${index + 1} de ${items.length}` : "Vazio"}</span>
         </div>
 
-        <div className="musica-passes-waveform" aria-hidden="true">
-          {WAVEFORM.map((height, barIndex) => <span key={barIndex} style={{ height: `${height}%` }} />)}
+        <div className={`musica-passes-speaker${isPlaying ? " is-playing" : ""}`} aria-label={isPlaying ? "Alto-falante reproduzindo" : "Alto-falante pausado"} role="img">
+          <span className="musica-passes-speaker-ring"><span className="musica-passes-speaker-cone"><span className="musica-passes-speaker-cap" /></span></span>
         </div>
 
         <div className="musica-passes-progress-row">
