@@ -1577,7 +1577,7 @@ body.reuniao-publica-display-route .site-shell-main {
   min-width: 0.12rem;
   max-width: 0.24rem;
   border-radius: 999px;
-  background: color-mix(in srgb, var(--accent) 72%, var(--text));
+  background: color-mix(in srgb, var(--secondary) 72%, var(--text));
 }
 
 .musica-passes-progress-row {
@@ -1592,7 +1592,7 @@ body.reuniao-publica-display-route .site-shell-main {
 .musica-passes-progress-row input[type="range"] {
   flex: 1;
   min-width: 8rem;
-  accent-color: var(--accent);
+  accent-color: var(--secondary);
 }
 
 .musica-passes-control,
@@ -1621,15 +1621,16 @@ body.reuniao-publica-display-route .site-shell-main {
 }
 
 .musica-passes-control.is-active {
-  color: var(--accent-contrast, #fff);
-  background: var(--accent);
-  border-color: var(--accent);
+  color: var(--videira-950);
+  background: var(--videira-500);
+  border-color: var(--videira-700);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--videira-300) 70%, transparent);
 }
 
 .musica-passes-control--primary {
-  color: var(--accent-contrast, #fff);
-  background: var(--accent);
-  border-color: var(--accent);
+  color: var(--videira-950);
+  background: var(--videira-500);
+  border-color: var(--videira-700);
 }
 
 .musica-passes-control:disabled {
@@ -1641,7 +1642,7 @@ body.reuniao-publica-display-route .site-shell-main {
 .musica-passes-control:not(:disabled):focus-visible,
 .musica-passes-track:hover,
 .musica-passes-track:focus-visible {
-  outline: 2px solid color-mix(in srgb, var(--accent) 40%, transparent);
+  outline: 2px solid color-mix(in srgb, var(--secondary) 40%, transparent);
   outline-offset: 2px;
 }
 
@@ -1673,9 +1674,9 @@ body.reuniao-publica-display-route .site-shell-main {
 }
 
 .musica-passes-track--active {
-  color: var(--accent-contrast, #fff);
-  background: var(--accent);
-  border-color: var(--accent);
+  color: var(--videira-950);
+  background: var(--videira-500);
+  border-color: var(--videira-700);
 }
 
 .musica-passes-track-number,
