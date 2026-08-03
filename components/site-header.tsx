@@ -98,7 +98,6 @@ export function SiteHeader({
   ];
   const musicLinks = [
     { href: "/musicas", label: "Catálogo" },
-    { href: "/musicas/exibir", label: "Ao vivo", openInNewTab: true },
   ];
   const isMusicPath = pathname === "/musicas" || pathname.startsWith("/musicas/");
   const routeGroup = navGroups.find((group) => pathname === group.href)

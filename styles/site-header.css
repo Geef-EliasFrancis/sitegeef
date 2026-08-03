@@ -184,6 +184,10 @@
   display: none;
 }
 
+.site-context-navigation--music .site-context-navigation-copy {
+  display: none;
+}
+
 .site-context-navigation--music .site-context-navigation-links {
   gap: 0.3rem;
 }
