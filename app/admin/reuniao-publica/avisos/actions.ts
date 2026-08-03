@@ -11,7 +11,11 @@ function readString(formData: FormData, key: string) {
 }
 
 export async function saveAvisoReuniaoAction(formData: FormData) {
-  await requirePermission("pode_publicar", "/admin/reuniao-publica/avisos");
+  try {
+    await requirePermission("pode_publicar", "/admin/reuniao-publica/avisos");
+  } catch (_error) {
+    redirect("/admin/reuniao-publica/avisos?erro=sem-permissao");
+  }
   const id = readString(formData, "id") || undefined;
   const titulo = readString(formData, "titulo");
   const status = readString(formData, "status") === "publicado" ? "publicado" : "rascunho";
@@ -39,7 +43,11 @@ export async function saveAvisoReuniaoAction(formData: FormData) {
 }
 
 export async function deleteAvisoReuniaoAction(formData: FormData) {
-  await requirePermission("pode_publicar", "/admin/reuniao-publica/avisos");
+  try {
+    await requirePermission("pode_publicar", "/admin/reuniao-publica/avisos");
+  } catch (_error) {
+    redirect("/admin/reuniao-publica/avisos?erro=sem-permissao");
+  }
   const id = readString(formData, "id");
   if (!id) redirect("/admin/reuniao-publica/avisos?erro=id");
   const result = await deletePersistedAviso(id);

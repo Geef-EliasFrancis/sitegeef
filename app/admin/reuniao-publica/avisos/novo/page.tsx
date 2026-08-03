@@ -1,11 +1,12 @@
 import Link from "next/link";
 import { IconArrowLeft, IconSave } from "@/components/icons";
+import { AdminModuleGate } from "@/components/admin/admin-module-gate";
 import { saveAvisoReuniaoAction } from "../actions";
 
 export const metadata = { title: "Novo aviso da reunião - Admin GEEF" };
 
 export default function NovoAvisoPage() {
-  return (
+  return <AdminModuleGate permission="pode_publicar" redirectPath="/admin/reuniao-publica/avisos/novo" title="Novo aviso da reunião">
     <div className="area-page">
       <div className="admin-page-header">
         <div>
@@ -31,5 +32,5 @@ export default function NovoAvisoPage() {
         </div>
       </section>
     </div>
-  );
+  </AdminModuleGate>;
 }

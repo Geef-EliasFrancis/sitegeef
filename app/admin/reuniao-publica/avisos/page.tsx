@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { IconEdit, IconPlus } from "@/components/icons";
+import { checkPermission } from "@/lib/auth/permissions";
 import { listReuniaoPublicaAvisos } from "@/lib/reuniao-publica/avisos";
 
 export const metadata = {
@@ -20,7 +21,10 @@ function statusClass(status?: string | null) {
 }
 
 export default async function AvisosPage() {
-  const avisos = await listReuniaoPublicaAvisos();
+  const [avisos, canPublish] = await Promise.all([
+    listReuniaoPublicaAvisos(),
+    checkPermission("pode_publicar"),
+  ]);
   return (
     <div className="area-page">
       <section className="area-hero">
@@ -28,14 +32,14 @@ export default async function AvisosPage() {
           <div>
             <h1 className="area-hero-title">Avisos da reunião</h1>
           </div>
-          <Link
-            href="/admin/reuniao-publica/avisos/novo"
-            className="admin-btn admin-btn-primary admin-icon-action"
-            aria-label="Adicionar aviso"
-            title="Adicionar aviso"
-          >
-            <IconPlus size={20} />
-          </Link>
+          {canPublish && <Link
+              href="/admin/reuniao-publica/avisos/novo"
+              className="admin-btn admin-btn-primary admin-icon-action"
+              aria-label="Adicionar aviso"
+              title="Adicionar aviso"
+            >
+              <IconPlus size={20} />
+            </Link>}
         </div>
       </section>
 
