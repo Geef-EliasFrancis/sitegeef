@@ -1,7 +1,7 @@
 import { AdminAreaPage } from '@/components/admin/admin-area-page';
 
 export const metadata = {
-  title: 'Início dos Tarefeiros - Admin GEEF',
+  title: 'Início de Pessoas - Admin GEEF',
 };
 
 export const dynamic = 'force-dynamic';

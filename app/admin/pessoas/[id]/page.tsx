@@ -6,7 +6,7 @@ import { buildFlashNoticeUrl } from '@/lib/notificacoes/flash-notice';
 import { LgpdFormNotice } from '@/components/lgpd/lgpd-form-notice';
 
 export const metadata = {
-  title: 'Editar Tarefeiro - Admin GEEF',
+  title: 'Editar pessoa - Admin GEEF',
 };
 
 const TIPOS_VINCULO = [
@@ -80,15 +80,18 @@ async function handleUpdatePessoa(pessoaId: string, formData: FormData) {
     redirect(
       buildFlashNoticeUrl('/admin/pessoas', {
         variant: 'success',
-        message: 'Tarefeiro salvo.',
+        message: 'Pessoa salva.',
       }),
     );
   } catch (error) {
+    if (typeof error === 'object' && error !== null && 'digest' in error && String((error as { digest?: string }).digest || '').startsWith('NEXT_REDIRECT')) {
+      throw error;
+    }
     console.error('Erro ao atualizar pessoa:', error);
     redirect(
       buildFlashNoticeUrl(`/admin/pessoas/${pessoaId}`, {
         variant: 'error',
-        message: 'Não foi possível salvar o tarefeiro.',
+        message: 'Não foi possível salvar a pessoa.',
       }),
     );
   }
@@ -103,18 +106,18 @@ async function EditPessoaContent({ id }: { id: string }) {
         <section className="area-hero">
           <div className="area-hero-top">
             <div>
-              <p className="area-subtitle">Cadastro de tarefeiro</p>
-              <h1 className="area-hero-title">Editar Tarefeiro</h1>
+              <p className="area-subtitle">Cadastro de pessoa</p>
+              <h1 className="area-hero-title">Editar pessoa</h1>
             </div>
           </div>
-          <p className="area-subtitle">O tarefeiro solicitado não foi encontrado ou ainda não está disponível.</p>
+          <p className="area-subtitle">A pessoa solicitada não foi encontrada ou ainda não está disponível.</p>
         </section>
 
         <section className="area-section">
           <div className="area-empty">
-            <p>Não foi possível carregar o cadastro deste tarefeiro.</p>
+            <p>Não foi possível carregar o cadastro desta pessoa.</p>
             <Link href="/admin/pessoas" className="profile-form-btn profile-form-btn-secondary">
-              Voltar para tarefeiros
+              Voltar para pessoas
             </Link>
           </div>
         </section>
@@ -130,8 +133,8 @@ async function EditPessoaContent({ id }: { id: string }) {
         <section className="area-hero">
           <div className="area-hero-top">
             <div>
-              <p className="area-subtitle">Cadastro de tarefeiro</p>
-              <h1 className="area-hero-title">Editar Tarefeiro</h1>
+              <p className="area-subtitle">Cadastro de pessoa</p>
+              <h1 className="area-hero-title">Editar pessoa</h1>
             </div>
             <div className="tag-list">
               <span className="tag">{pessoa.status}</span>
@@ -143,7 +146,7 @@ async function EditPessoaContent({ id }: { id: string }) {
         <section className="area-section">
           <div className="area-section-title">
             <h2>Identificação</h2>
-            <p>Dados principais do tarefeiro cadastrado.</p>
+            <p>Dados principais da pessoa cadastrada.</p>
           </div>
           <div className="table-surface">
             <LgpdFormNotice text="Usamos estes dados para atualizar o cadastro e manter o vínculo institucional." />
@@ -226,10 +229,6 @@ async function EditPessoaContent({ id }: { id: string }) {
               <label className="profile-form-field">
                 <span>Número</span>
                 <input type="text" name="numero" defaultValue={pessoa.numero || ''} className="profile-form-input" />
-              </label>
-              <label className="profile-form-field">
-                <span>Complemento</span>
-                <input type="text" name="complemento" defaultValue={pessoa.complemento || ''} className="profile-form-input" />
               </label>
               <label className="profile-form-field">
                 <span>Cidade</span>

@@ -26,7 +26,7 @@ export const contextMenus: Partial<Record<AdminShellArea, readonly { label: stri
     { label: "Agenda", href: "/admin/geef/agenda" }, { label: "Departamentos", href: "/admin/geef/departamentos" }, { label: "Contas", href: "/admin/geef/contas" },
   ],
   pessoas: [
-    { label: "Início", href: "/admin/pessoas/inicio" }, { label: "Pessoas", href: "/admin/pessoas/pessoas" },
+    { label: "Início", href: "/admin/pessoas/inicio" }, { label: "Pessoas", href: "/admin/pessoas" },
     { label: "Funções", href: "/admin/pessoas/funcoes" }, { label: "Usuários", href: "/admin/usuarios" }, { label: "Temas", href: "/admin/funcoes/temas" },
   ],
   governanca: [

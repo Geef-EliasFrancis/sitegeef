@@ -3,7 +3,7 @@ import { getPessoas } from "./actions";
 import { Suspense } from "react";
 
 export const metadata = {
-  title: "Tarefeiros - Admin GEEF",
+  title: "Pessoas - Admin GEEF",
 };
 
 async function PessoasList({ searchParams }: { searchParams: { page?: string; search?: string } }) {
@@ -18,10 +18,10 @@ async function PessoasList({ searchParams }: { searchParams: { page?: string; se
       <div className="admin-page-header">
         <div>
           <span className="admin-dashboard-kicker">Cadastro</span>
-          <h1 className="admin-page-title">Tarefeiros</h1>
+          <h1 className="admin-page-title">Pessoas</h1>
         </div>
         <Link href="/admin/pessoas/nova" className="admin-btn admin-btn-primary">
-          ➕ Novo Tarefeiro
+          ➕ Nova pessoa
         </Link>
       </div>
 
@@ -58,9 +58,9 @@ async function PessoasList({ searchParams }: { searchParams: { page?: string; se
         <div className="admin-card table-surface">
           {pessoas.length === 0 ? (
             <div style={{ padding: "2rem", textAlign: "center", color: "var(--muted)" }}>
-                <p>Nenhum tarefeiro encontrado.</p>
+                <p>Nenhuma pessoa encontrada.</p>
               <Link href="/admin/pessoas/nova" className="admin-btn admin-btn-primary" style={{ marginTop: "1rem" }}>
-                ➕ Criar primeiro tarefeiro
+                ➕ Criar primeira pessoa
               </Link>
             </div>
           ) : (

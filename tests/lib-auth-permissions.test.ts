@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
-import { getUserPermissions, requirePermission, checkPermission, type PermissionFlag } from '@/lib/auth/permissions';
+import { getUserPermissions, requirePermission, checkPermission, checkModuleAccess, type PermissionFlag } from '@/lib/auth/permissions';
 import * as supabaseServer from '@/lib/supabase/server';
 
 vi.mock('@/lib/supabase/server');
@@ -319,6 +319,38 @@ describe('lib/auth/permissions', () => {
 
       const result = await checkPermission('pode_escalas');
       expect(result).toBe(false);
+    });
+  });
+
+  describe('checkModuleAccess', () => {
+    it('allows an authorized module profile without the boolean flag', async () => {
+      mockCreateClient.mockResolvedValueOnce({
+        auth: { getUser: vi.fn().mockResolvedValueOnce({ data: { user: { id: 'user-123', app_metadata: {} } } }) },
+        from: vi.fn().mockReturnValueOnce({
+          select: vi.fn().mockReturnValueOnce({
+            eq: vi.fn().mockReturnValueOnce({
+              maybeSingle: vi.fn().mockResolvedValueOnce({ data: { id: 'user-123', perfil: 'secretaria', pode_pessoas: false } }),
+            }),
+          }),
+        }),
+      } as any);
+
+      await expect(checkModuleAccess('pode_pessoas', ['diretoria', 'secretaria'])).resolves.toBe(true);
+    });
+
+    it('denies an unrelated profile without the boolean flag', async () => {
+      mockCreateClient.mockResolvedValueOnce({
+        auth: { getUser: vi.fn().mockResolvedValueOnce({ data: { user: { id: 'user-123', app_metadata: {} } } }) },
+        from: vi.fn().mockReturnValueOnce({
+          select: vi.fn().mockReturnValueOnce({
+            eq: vi.fn().mockReturnValueOnce({
+              maybeSingle: vi.fn().mockResolvedValueOnce({ data: { id: 'user-123', perfil: 'voluntario', pode_pessoas: false } }),
+            }),
+          }),
+        }),
+      } as any);
+
+      await expect(checkModuleAccess('pode_pessoas', ['diretoria', 'secretaria'])).resolves.toBe(false);
     });
   });
 });

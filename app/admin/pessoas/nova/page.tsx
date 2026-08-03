@@ -6,7 +6,7 @@ import { buildFlashNoticeUrl } from '@/lib/notificacoes/flash-notice';
 import { LgpdFormNotice } from '@/components/lgpd/lgpd-form-notice';
 
 export const metadata = {
-  title: 'Novo Tarefeiro - Admin GEEF',
+  title: 'Nova pessoa - Admin GEEF',
 };
 
 const TIPOS_VINCULO = [
@@ -109,6 +109,15 @@ async function savePessoaStep(formData: FormData) {
           rg: identificacao.rg,
         });
 
+        if (!pessoa) {
+          redirect(
+            buildFlashNoticeUrl(buildHref(null, 'identificacao'), {
+              variant: 'error',
+              message: 'Não foi possível criar a pessoa.',
+            }),
+          );
+        }
+
         const nextStep = getNextStep(step) ?? step;
         redirect(
           buildFlashNoticeUrl(buildHref(pessoa.id, nextStep), {
@@ -132,7 +141,7 @@ async function savePessoaStep(formData: FormData) {
       redirect(
         buildFlashNoticeUrl(buildHref(null, 'identificacao'), {
           variant: 'error',
-        message: 'Crie o tarefeiro pela etapa de identificação.',
+        message: 'Crie a pessoa pela etapa de identificação.',
         }),
       );
     }
@@ -211,7 +220,7 @@ async function savePessoaStep(formData: FormData) {
       redirect(
         buildFlashNoticeUrl('/admin/pessoas', {
           variant: 'success',
-          message: 'Tarefeiro salvo.',
+          message: 'Pessoa salva.',
         }),
       );
     }
@@ -243,7 +252,7 @@ async function NovaPessoaContent({ searchParams }: { searchParams: { id?: string
       <div className="area-page">
         <div className="admin-page-header">
           <div>
-            <h1 className="admin-page-title">Novo Tarefeiro</h1>
+            <h1 className="admin-page-title">Nova pessoa</h1>
           </div>
           <div className="admin-actions">
             <Link href="/admin/pessoas" className="admin-btn admin-btn-secondary">Cancelar</Link>
@@ -287,7 +296,7 @@ async function NovaPessoaContent({ searchParams }: { searchParams: { id?: string
     <div className="area-page">
       <div className="admin-page-header">
         <div>
-          <h1 className="admin-page-title">Novo Tarefeiro</h1>
+          <h1 className="admin-page-title">Nova pessoa</h1>
         </div>
         <div className="admin-actions">
           <button type="submit" form="pessoa-step-form" className="admin-btn admin-btn-primary">

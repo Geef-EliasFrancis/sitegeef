@@ -6,6 +6,36 @@ import { type tipo_vinculo, type status_pessoa } from '@/lib/supabase/types';
 import { invalidateUserAreaCache } from '@/lib/areas/invalidate-user-area';
 import { invalidateAdminDashboardCache, invalidateAdminBibliotecaCache, invalidateAdminDocumentosCache } from '@/lib/admin/cache';
 import { applySearchFilter, calculateRange } from '@/lib/admin/query-helpers';
+import { checkModuleAccess } from '@/lib/auth/permissions';
+
+const PESSOAS_PROFILES = ['diretoria', 'secretaria'] as const;
+
+type PessoaUpdate = Partial<{
+  nome: string;
+  nome_social: string;
+  email: string;
+  telefone: string;
+  whatsapp: string;
+  data_nascimento: string;
+  cpf: string;
+  rg: string;
+  logradouro: string;
+  numero: string;
+  bairro: string;
+  cidade: string;
+  estado: string;
+  cep: string;
+  observacoes: string;
+  contato_emergencia: string;
+  status: status_pessoa;
+  autoriza_notificacao: boolean;
+  autoriza_imagem_voz: boolean;
+}>;
+
+async function requirePessoasAccess() {
+  const allowed = await checkModuleAccess('pode_pessoas', [...PESSOAS_PROFILES]);
+  if (!allowed) throw new Error('Acesso negado: cadastro de pessoas');
+}
 
 export async function getPessoas(
   page = 1,
@@ -149,6 +179,7 @@ export async function createPessoa(formData: {
   autoriza_imagem_voz?: boolean;
   vinculos?: tipo_vinculo[];
 }) {
+  await requirePessoasAccess();
   const supabase = await createClient();
 
   const { data: pessoa, error: pessoaError } = await supabase
@@ -203,13 +234,25 @@ export async function createPessoa(formData: {
   return pessoa;
 }
 
-export async function updatePessoa(id: string, formData: Partial<typeof getPessoaById.prototype>) {
+export async function updatePessoa(id: string, formData: PessoaUpdate) {
+  await requirePessoasAccess();
   const supabase = await createClient();
+
+  const allowedFields: Array<keyof PessoaUpdate> = [
+    'nome', 'nome_social', 'email', 'telefone', 'whatsapp', 'data_nascimento', 'cpf', 'rg',
+    'logradouro', 'numero', 'bairro', 'cidade', 'estado', 'cep', 'observacoes',
+    'contato_emergencia', 'status', 'autoriza_notificacao', 'autoriza_imagem_voz',
+  ];
+  const payload = Object.fromEntries(
+    allowedFields
+      .filter((field) => field in (formData as Record<string, unknown>))
+      .map((field) => [field, (formData as Record<string, unknown>)[field]])
+  );
 
   const { error } = await supabase
     .from('pessoas')
     .update({
-      ...formData,
+      ...payload,
       atualizado_em: new Date().toISOString(),
     })
     .eq('id', id);
@@ -224,6 +267,7 @@ export async function updatePessoa(id: string, formData: Partial<typeof getPesso
 }
 
 export async function addVinculo(pessoaId: string, vinculo: tipo_vinculo) {
+  await requirePessoasAccess();
   const supabase = await createClient();
 
   const { error } = await supabase.from('pessoa_vinculos').insert([
@@ -244,6 +288,7 @@ export async function addVinculo(pessoaId: string, vinculo: tipo_vinculo) {
 }
 
 export async function removeVinculo(pessoaId: string, vinculo: tipo_vinculo) {
+  await requirePessoasAccess();
   const supabase = await createClient();
 
   const { error } = await supabase
@@ -262,6 +307,7 @@ export async function removeVinculo(pessoaId: string, vinculo: tipo_vinculo) {
 }
 
 export async function togglePessoaStatus(id: string, novoStatus: status_pessoa) {
+  await requirePessoasAccess();
   const supabase = await createClient();
 
   const { error } = await supabase
