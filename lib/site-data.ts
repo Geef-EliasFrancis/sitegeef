@@ -323,12 +323,12 @@ export const contentPages: Record<string, ContentPage> = {
     summary: "Materiais para leitura, estudo e formação espírita.",
     intro: "A biblioteca reúne conteúdos que ajudam a casa a estudar com serenidade, continuidade e acesso simples.",
     ctaLabel: "Abrir área do leitor",
-    ctaHref: publicHref("/biblioteca/leitor"),
+    ctaHref: publicHref("/biblioteca/livros"),
     sections: [
       {
         heading: "Conteúdos disponíveis",
         text: "Encontre leituras, músicas e estudos organizados para consulta pública.",
-        bullets: ["Área do leitor.", "Catálogo de músicas.", "Estudos e materiais de apoio."],
+        bullets: ["Área do leitor.", "Livros do acervo.", "Consulta pública do catálogo."],
       },
     ],
   },

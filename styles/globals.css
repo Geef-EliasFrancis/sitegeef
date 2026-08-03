@@ -3643,6 +3643,174 @@ a.button.musica-icon-button {
   padding: 0.55rem 0.4rem;
 }
 
+.biblioteca-books-page {
+  gap: 1rem;
+}
+
+.biblioteca-books-hero .content-hero-body {
+  align-items: end;
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+}
+
+.biblioteca-books-reader-link {
+  flex: 0 0 auto;
+}
+
+.biblioteca-books-catalog {
+  background: rgba(255, 255, 255, 0.58);
+  border: 1px solid var(--color-border, #cbdcc2);
+  border-radius: 1.25rem;
+  padding: clamp(1rem, 2vw, 1.5rem);
+}
+
+.biblioteca-books-section-heading {
+  align-items: end;
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.biblioteca-books-section-heading h2,
+.biblioteca-book-card h3 {
+  margin: 0;
+}
+
+.biblioteca-books-section-heading p {
+  color: var(--color-text-muted, #526154);
+  margin: 0.25rem 0 0;
+}
+
+.biblioteca-books-search label {
+  display: block;
+  font-size: 0.78rem;
+  font-weight: 600;
+  margin-bottom: 0.35rem;
+}
+
+.biblioteca-books-search > div {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.biblioteca-books-search input {
+  background: rgba(255, 255, 255, 0.86);
+  border: 1px solid var(--color-border, #cbdcc2);
+  border-radius: 0.7rem;
+  min-width: min(18rem, 42vw);
+  padding: 0.65rem 0.8rem;
+}
+
+.biblioteca-books-grid {
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.biblioteca-book-card {
+  background: rgba(248, 252, 244, 0.86);
+  border: 1px solid var(--color-border, #cbdcc2);
+  border-radius: 0.95rem;
+  min-width: 0;
+  padding: 1rem;
+}
+
+.biblioteca-book-card-header {
+  align-items: start;
+  display: flex;
+  gap: 0.75rem;
+  justify-content: space-between;
+}
+
+.biblioteca-book-card h3 {
+  font-size: 1.1rem;
+  line-height: 1.2;
+}
+
+.biblioteca-book-status {
+  background: rgba(80, 88, 80, 0.1);
+  border-radius: 999px;
+  color: #526154;
+  flex: 0 0 auto;
+  font-size: 0.75rem;
+  padding: 0.3rem 0.55rem;
+}
+
+.biblioteca-book-status.is-available {
+  background: rgba(80, 176, 34, 0.14);
+  color: #236418;
+}
+
+.biblioteca-book-author {
+  color: var(--color-text-muted, #526154);
+  margin: 0.45rem 0;
+}
+
+.biblioteca-book-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.biblioteca-book-meta span {
+  background: rgba(224, 239, 215, 0.7);
+  border-radius: 999px;
+  font-size: 0.75rem;
+  padding: 0.25rem 0.5rem;
+}
+
+.biblioteca-book-summary {
+  color: var(--color-text-muted, #526154);
+  font-size: 0.9rem;
+  line-height: 1.45;
+  margin: 0.75rem 0 0;
+}
+
+.biblioteca-books-empty {
+  background: rgba(248, 252, 244, 0.86);
+  border: 1px dashed var(--color-border, #cbdcc2);
+  border-radius: 0.9rem;
+  padding: 1.5rem;
+  text-align: center;
+}
+
+.biblioteca-books-empty h2,
+.biblioteca-books-empty p {
+  margin: 0;
+}
+
+.biblioteca-books-empty p {
+  color: var(--color-text-muted, #526154);
+  margin-top: 0.35rem;
+}
+
+@media (max-width: 700px) {
+  .biblioteca-books-hero .content-hero-body,
+  .biblioteca-books-section-heading {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .biblioteca-books-reader-link {
+    align-self: flex-start;
+  }
+
+  .biblioteca-books-search input {
+    min-width: 0;
+    width: 100%;
+  }
+
+  .biblioteca-books-search > div {
+    align-items: stretch;
+  }
+
+  .biblioteca-books-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 .public-page--animated .content-hero {
   animation: public-page-rise 540ms ease both;
 }

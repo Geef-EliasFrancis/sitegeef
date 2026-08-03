@@ -21,7 +21,9 @@ export function invalidateAdminDashboardCache() {
 
 export function invalidateAdminBibliotecaCache() {
   revalidateTag(ADMIN_BIBLIOTECA_CACHE_TAG);
+  revalidateTag("public-library-books");
   revalidatePath("/admin/biblioteca");
+  revalidatePath("/biblioteca/livros");
   revalidatePath("/admin/biblioteca/emprestimos");
   revalidatePath("/admin/biblioteca/reservas");
 }

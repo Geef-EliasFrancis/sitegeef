@@ -79,7 +79,7 @@ export function SiteHeader({
       description: "Materiais para leitura, estudo e acompanhamento da Doutrina Espírita.",
       links: [
         { href: "/biblioteca/leitor", label: "Área do leitor" },
-        { href: "/estudos", label: "Estudos" },
+        { href: "/biblioteca/livros", label: "Livros" },
       ],
     },
     {
