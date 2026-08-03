@@ -7,8 +7,9 @@
 - OAuth renovado nesta sessão com `codex mcp login supabase-geef`.
 - Leitura remota confirmada depois da renovação:
   - `list_tables` respondeu sem erro.
-  - `public.musica_passes` ainda não existe.
+- `public.musica_passes` foi criada nesta retomada e está vazia.
   - `list_migrations` respondeu sem erro e ainda não contém a migração da playlist de passes.
+- Migração aplicada remotamente via `apply_migration` com o nome `musica_passes_playlist`.
 - Não usar MCP Supabase genérico nem executar `db push` às cegas.
 
 ## Última entrega funcional
@@ -36,12 +37,9 @@ O admin possui cadastro por título, URL de áudio e ordem, além de exclusão. 
 ## Próxima retomada segura
 
 1. Reabrir/recarregar o contexto se as ferramentas MCP não aparecerem atualizadas.
-2. Repetir leitura somente leitura de tabelas e migrações pelo `supabase-geef`.
-3. Comparar a migração local com o histórico remoto.
-4. Aplicar somente `20260802010000_musica_passes.sql` usando `apply_migration`, após confirmar que não houve divergência.
-5. Confirmar remotamente a existência de `public.musica_passes`.
-6. Executar smoke autenticado do admin e smoke público de `/musicas/passes`.
-7. Rerodar os gates e registrar o resultado antes de considerar a etapa concluída.
+2. Executar smoke autenticado do admin em `/admin/reuniao-publica/musica/passes`.
+3. Cadastrar um áudio de teste e confirmar a leitura pública em `/musicas/passes`.
+4. Rerodar os gates visual e ao vivo com `COMP_GATE_STORAGE_STATE` antes de considerar a etapa concluída.
 
 ## Cuidados pendentes
 
