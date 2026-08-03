@@ -1,9 +1,11 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { MusicaPasse } from "@/lib/musica-passes";
 
 export function MusicaPassesPlayer({ items }: { items: MusicaPasse[] }) {
+  const audioRef = useRef<HTMLAudioElement>(null);
+  const continuePlaylistRef = useRef(false);
   const [index, setIndex] = useState(0);
   const current = items[index];
   const hasItems = items.length > 0;
@@ -11,7 +13,19 @@ export function MusicaPassesPlayer({ items }: { items: MusicaPasse[] }) {
   const selectPrevious = () => setIndex((value) => (value - 1 + items.length) % items.length);
   const selectNext = () => setIndex((value) => (value + 1) % items.length);
 
+  const advancePlaylist = () => {
+    continuePlaylistRef.current = true;
+    selectNext();
+  };
+
   useEffect(() => { setIndex(0); }, [items]);
+
+  useEffect(() => {
+    if (!continuePlaylistRef.current || !audioRef.current) return;
+    void audioRef.current.play().catch(() => {
+      continuePlaylistRef.current = false;
+    });
+  }, [current?.id]);
 
   return (
     <div className="musica-passes-playlist">
@@ -24,16 +38,19 @@ export function MusicaPassesPlayer({ items }: { items: MusicaPasse[] }) {
           <span className="musica-passes-count">{hasItems ? `${index + 1} de ${items.length}` : "Vazio"}</span>
         </div>
         <audio
+          ref={audioRef}
           key={current?.id ?? "empty"}
           controls
-          preload="metadata"
+          preload="auto"
           aria-label={current ? `Tocar ${current.titulo}` : "Player de passes vazio"}
-          onEnded={hasItems ? selectNext : undefined}
+          onPlay={() => { continuePlaylistRef.current = true; }}
+          onPause={(event) => { if (!event.currentTarget.ended) continuePlaylistRef.current = false; }}
+          onEnded={hasItems ? advancePlaylist : undefined}
           src={current?.audio_url}
         />
         <div className="musica-passes-controls" aria-label="Controles da playlist">
           <button type="button" className="musica-passes-control" onClick={selectPrevious} disabled={!hasItems} aria-label="Faixa anterior" title="Faixa anterior">← Anterior</button>
-          <button type="button" className="musica-passes-control musica-passes-control--primary" onClick={selectNext} disabled={!hasItems} aria-label="Próxima faixa" title="Próxima faixa">Próxima →</button>
+          <button type="button" className="musica-passes-control musica-passes-control--primary" onClick={advancePlaylist} disabled={!hasItems} aria-label="Próxima faixa" title="Próxima faixa">Próxima →</button>
         </div>
         {!hasItems ? <p className="musica-passes-empty-copy">Nenhum áudio cadastrado ainda.</p> : null}
       </div>
