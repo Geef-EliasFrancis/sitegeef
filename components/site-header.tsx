@@ -150,7 +150,7 @@ export function SiteHeader({
       >
         <Tabs.List asChild>
           <nav className="site-nav-primary" aria-label="Navegação principal">
-            <Link href="/" className="site-nav-home-btn" aria-label="Home">
+            <Link href="/" className={`site-nav-home-btn${pathname === "/" ? " is-active" : ""}`} aria-label="Home" aria-current={pathname === "/" ? "page" : undefined}>
               HOME
             </Link>
             {navGroups.map((group) => (
