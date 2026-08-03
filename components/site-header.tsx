@@ -169,7 +169,7 @@ export function SiteHeader({
                 </Tabs.Trigger>
               </div>
             ))}
-            <Link href="/contato" className="site-nav-contact-btn" aria-label="Contato">
+            <Link href="/contato" className={`site-nav-contact-btn${pathname === "/contato" || pathname.startsWith("/contato/") ? " is-active" : ""}`} aria-label="Contato" aria-current={pathname === "/contato" || pathname.startsWith("/contato/") ? "page" : undefined}>
               Contato
             </Link>
           </nav>
@@ -205,7 +205,7 @@ export function SiteHeader({
           <Link href="/" className="site-nav-dropdown-item" onClick={() => setMobileMenuOpen(false)}>
             Home
           </Link>
-          <Link href="/contato" className="site-nav-dropdown-item" onClick={() => setMobileMenuOpen(false)}>
+          <Link href="/contato" className={`site-nav-dropdown-item${pathname === "/contato" || pathname.startsWith("/contato/") ? " is-active" : ""}`} aria-current={pathname === "/contato" || pathname.startsWith("/contato/") ? "page" : undefined} onClick={() => setMobileMenuOpen(false)}>
             Contato
           </Link>
         </nav>

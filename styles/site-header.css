@@ -301,6 +301,14 @@
   transform: translateY(-1px);
 }
 
+.site-nav-contact-btn.is-active {
+  background: linear-gradient(180deg, #b40070, #79004f) !important;
+  border-color: #76003f !important;
+  color: #ffffff !important;
+  box-shadow: inset 0 1px rgba(255, 255, 255, 0.45), inset 0 -0.2rem rgba(73, 0, 42, 0.55), 0 -0.1rem 0.3rem rgba(96, 0, 64, 0.32) !important;
+  text-shadow: 0 1px 2px rgba(45, 0, 31, 0.72);
+}
+
 .site-language-switcher {
   width: 2.4rem;
   height: 2.4rem;
