@@ -5,6 +5,7 @@ import { AccessDenied } from '@/components/admin/access-denied';
 type AdminModuleGateProps = {
   children: React.ReactNode;
   permission?: PermissionFlag;
+  allowedPermissions?: PermissionFlag[];
   profiles?: string[];
   adminOnly?: boolean;
   redirectPath: string;
@@ -15,6 +16,7 @@ type AdminModuleGateProps = {
 export async function AdminModuleGate({
   children,
   permission,
+  allowedPermissions,
   profiles,
   adminOnly = false,
   redirectPath,
@@ -39,7 +41,7 @@ export async function AdminModuleGate({
     return children;
   }
 
-  if (permission && permissions[permission]) {
+  if ((permission && permissions[permission]) || allowedPermissions?.some((item) => permissions[item])) {
     return children;
   }
 

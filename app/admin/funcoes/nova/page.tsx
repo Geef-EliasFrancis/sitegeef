@@ -17,16 +17,16 @@ async function handleSubmit(formData: FormData) {
     });
 
     if (!funcao) {
-      redirect(buildFlashNoticeUrl('/admin/funcoes', { variant: 'error', message: 'Não foi possível criar a função.' }));
+      redirect(buildFlashNoticeUrl('/admin/pessoas/funcoes', { variant: 'error', message: 'Não foi possível criar a função.' }));
     }
 
-    redirect(buildFlashNoticeUrl(`/admin/funcoes/${funcao.id}`, { variant: 'success', message: 'Função criada.' }));
+    redirect(buildFlashNoticeUrl(`/admin/pessoas/funcoes/${funcao.id}`, { variant: 'success', message: 'Função criada.' }));
   } catch (error) {
     if (typeof error === 'object' && error !== null && 'digest' in error && String((error as { digest?: string }).digest || '').startsWith('NEXT_REDIRECT')) {
       throw error;
     }
     console.error('Erro ao criar função:', error);
-    redirect(buildFlashNoticeUrl('/admin/funcoes', { variant: 'error', message: 'Não foi possível criar a função.' }));
+    redirect(buildFlashNoticeUrl('/admin/pessoas/funcoes', { variant: 'error', message: 'Não foi possível criar a função.' }));
     return;
   }
 }
@@ -77,7 +77,7 @@ export default function NovaFuncaoPage() {
             <button type="submit" className="admin-btn admin-btn-primary">
               ✅ Criar Função
             </button>
-            <Link href="/admin/funcoes" className="admin-btn admin-btn-secondary">
+            <Link href="/admin/pessoas/funcoes" className="admin-btn admin-btn-secondary">
               ❌ Cancelar
             </Link>
           </div>

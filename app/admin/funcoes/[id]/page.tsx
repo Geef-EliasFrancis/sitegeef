@@ -17,13 +17,13 @@ async function handleUpdate(id: string, formData: FormData) {
       descricao: (formData.get('descricao') as string) || undefined,
     });
 
-    redirect(buildFlashNoticeUrl(`/admin/funcoes/${id}`, { variant: 'success', message: 'Função salva.' }));
+    redirect(buildFlashNoticeUrl(`/admin/pessoas/funcoes/${id}`, { variant: 'success', message: 'Função salva.' }));
   } catch (error) {
     if (typeof error === 'object' && error !== null && 'digest' in error && String((error as { digest?: string }).digest || '').startsWith('NEXT_REDIRECT')) {
       throw error;
     }
     console.error('Erro ao atualizar função:', error);
-    redirect(buildFlashNoticeUrl(`/admin/funcoes/${id}`, { variant: 'error', message: 'Não foi possível salvar a função.' }));
+    redirect(buildFlashNoticeUrl(`/admin/pessoas/funcoes/${id}`, { variant: 'error', message: 'Não foi possível salvar a função.' }));
     return;
   }
 }
@@ -33,13 +33,13 @@ async function handleToggleStatus(id: string, novoStatus: boolean) {
 
   try {
     await toggleFuncaoStatus(id, novoStatus);
-    redirect(buildFlashNoticeUrl(`/admin/funcoes/${id}`, { variant: 'success', message: 'Status atualizado.' }));
+    redirect(buildFlashNoticeUrl(`/admin/pessoas/funcoes/${id}`, { variant: 'success', message: 'Status atualizado.' }));
   } catch (error) {
     if (typeof error === 'object' && error !== null && 'digest' in error && String((error as { digest?: string }).digest || '').startsWith('NEXT_REDIRECT')) {
       throw error;
     }
     console.error('Erro ao atualizar status:', error);
-    redirect(buildFlashNoticeUrl(`/admin/funcoes/${id}`, { variant: 'error', message: 'Não foi possível atualizar o status.' }));
+    redirect(buildFlashNoticeUrl(`/admin/pessoas/funcoes/${id}`, { variant: 'error', message: 'Não foi possível atualizar o status.' }));
     return;
   }
 }
@@ -105,7 +105,7 @@ async function EditFuncaoContent({ id }: { id: string }) {
             <button type="submit" className="admin-btn admin-btn-primary">
               ✅ Salvar
             </button>
-            <Link href="/admin/funcoes" className="admin-btn admin-btn-secondary">
+            <Link href="/admin/pessoas/funcoes" className="admin-btn admin-btn-secondary">
               ❌ Cancelar
             </Link>
           </div>

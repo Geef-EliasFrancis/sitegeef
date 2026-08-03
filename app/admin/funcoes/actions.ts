@@ -6,7 +6,9 @@ import { invalidateAdminDashboardCache } from '@/lib/admin/cache';
 import { checkModuleAccess } from '@/lib/auth/permissions';
 
 async function requireFuncoesAccess() {
-  const allowed = await checkModuleAccess('pode_escalas', ['coord_passe']);
+  const allowed =
+    (await checkModuleAccess('pode_escalas', ['coord_passe'])) ||
+    (await checkModuleAccess('pode_pessoas', ['diretoria', 'secretaria']));
   if (!allowed) throw new Error('Acesso negado: cadastro de funções');
 }
 
@@ -59,6 +61,7 @@ export async function createFuncao(formData: {
   if (error) return null;
 
   revalidatePath('/admin/funcoes');
+  revalidatePath('/admin/pessoas/funcoes');
   revalidatePath('/admin/escalas');
   invalidateAdminDashboardCache();
   return data;
@@ -84,6 +87,7 @@ export async function updateFuncao(
   if (error) return { success: false };
 
   revalidatePath('/admin/funcoes');
+  revalidatePath('/admin/pessoas/funcoes');
   revalidatePath('/admin/escalas');
   invalidateAdminDashboardCache();
   return { success: true };
@@ -101,6 +105,7 @@ export async function toggleFuncaoStatus(id: string, ativo: boolean) {
   if (error) return { success: false };
 
   revalidatePath('/admin/funcoes');
+  revalidatePath('/admin/pessoas/funcoes');
   revalidatePath('/admin/escalas');
   invalidateAdminDashboardCache();
   return { success: true };

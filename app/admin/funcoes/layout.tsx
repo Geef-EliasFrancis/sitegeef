@@ -11,7 +11,7 @@ export default function FuncoesLayout({
 }) {
   return (
     <AdminModuleGate
-      permission="pode_escalas"
+      allowedPermissions={['pode_escalas', 'pode_pessoas']}
       profiles={['coord_passe']}
       redirectPath="/admin/funcoes"
       title="Funções"

@@ -30,7 +30,7 @@ async function FuncoesList() {
             <p className="area-subtitle">Catálogo operacional</p>
             <h1 className="area-hero-title">Funções</h1>
           </div>
-          <Link href="/admin/funcoes/nova" className="profile-form-btn profile-form-btn-primary">
+          <Link href="/admin/pessoas/funcoes/nova" className="profile-form-btn profile-form-btn-primary">
             Nova Função
           </Link>
         </div>
@@ -42,7 +42,7 @@ async function FuncoesList() {
           {funcaoList.length === 0 ? (
             <div className="area-empty">
               <p>Nenhuma função cadastrada.</p>
-              <Link href="/admin/funcoes/nova" className="profile-form-btn profile-form-btn-primary">Criar primeira função</Link>
+              <Link href="/admin/pessoas/funcoes/nova" className="profile-form-btn profile-form-btn-primary">Criar primeira função</Link>
             </div>
           ) : (
             <table className="admin-table">
@@ -67,7 +67,7 @@ async function FuncoesList() {
                       </form>
                     </td>
                     <td>
-                      <Link href={`/admin/funcoes/${funcao.id}`} className="profile-form-btn profile-form-btn-secondary">
+                      <Link href={`/admin/pessoas/funcoes/${funcao.id}`} className="profile-form-btn profile-form-btn-secondary">
                         Editar
                       </Link>
                     </td>
