@@ -52,7 +52,7 @@ export function ContentPageView({ page, locale, slug, showBrandKicker = true, co
 
       <section className="content-grid" aria-label={locale === "en" ? `Sections of ${page.title}` : `Seções de ${page.title}`}>
         {page.sections.map((section, sectionIndex) => (
-          <article key={section.heading} className="content-card">
+          <article key={section.heading} className={`content-card${sequenceDiagram && sectionIndex === 0 ? " content-card--sequence" : ""}`}>
             <h2>{section.heading}</h2>
             <p>{section.text}</p>
             {section.bullets ? (sequenceDiagram && sectionIndex === 0 ? (

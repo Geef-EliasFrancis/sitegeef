@@ -3652,28 +3652,36 @@ a.button.musica-icon-button {
 }
 
 .programacao-sequence {
+  display: grid;
+  gap: 0.45rem;
+  grid-template-columns: repeat(8, minmax(0, 1fr));
   list-style: none;
   margin: 1rem 0 0;
   padding: 0;
 }
 
+.content-card--sequence {
+  grid-column: 1 / -1;
+}
+
 .programacao-sequence li {
   align-items: center;
-  display: grid;
-  gap: 0.75rem;
-  grid-template-columns: 3.2rem minmax(0, 1fr);
-  min-height: 3.1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  min-width: 0;
   position: relative;
+  text-align: center;
 }
 
 .programacao-sequence li:not(:last-child)::before {
-  background: linear-gradient(180deg, rgba(138, 0, 90, 0.38), rgba(93, 174, 48, 0.4));
+  background: linear-gradient(90deg, rgba(138, 0, 90, 0.38), rgba(93, 174, 48, 0.4));
   content: "";
-  height: calc(100% - 1.25rem);
-  left: 1.55rem;
+  height: 2px;
+  left: calc(50% + 1.55rem);
   position: absolute;
-  top: 1.95rem;
-  width: 2px;
+  right: calc(-50% + 1.55rem);
+  top: 1.55rem;
 }
 
 .programacao-sequence-marker {
@@ -3716,24 +3724,56 @@ a.button.musica-icon-button {
 
 .programacao-sequence-label {
   color: var(--text, #263229);
+  font-size: 0.82rem;
   font-weight: 600;
+  line-height: 1.25;
+  max-width: 8rem;
+}
+
+@media (max-width: 900px) {
+  .programacao-sequence {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    row-gap: 1rem;
+  }
+
+  .programacao-sequence li:nth-child(4)::before {
+    display: none;
+  }
 }
 
 @media (max-width: 600px) {
+  .programacao-sequence {
+    display: block;
+  }
+
   .programacao-sequence li {
+    align-items: center;
+    display: grid;
     gap: 0.55rem;
     grid-template-columns: 2.8rem minmax(0, 1fr);
     min-height: 2.85rem;
+    text-align: left;
   }
 
   .programacao-sequence li:not(:last-child)::before {
+    background: linear-gradient(180deg, rgba(138, 0, 90, 0.38), rgba(93, 174, 48, 0.4));
+    height: calc(100% - 1.25rem);
     left: 1.35rem;
+    right: auto;
     top: 1.8rem;
+    width: 2px;
   }
 
   .programacao-sequence-label {
     font-size: 0.92rem;
+    max-width: none;
   }
+}
+
+/* Keep the sequence connectors behind the step markers. */
+.programacao-sequence-marker {
+  position: relative;
+  z-index: 1;
 }
 
 .reuniao-publica-avisos-hero {
