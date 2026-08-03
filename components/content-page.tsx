@@ -6,9 +6,10 @@ type ContentPageViewProps = {
   locale: Locale;
   slug: string;
   showBrandKicker?: boolean;
+  compactHero?: boolean;
 };
 
-export function ContentPageView({ page, locale, slug, showBrandKicker = true }: Readonly<ContentPageViewProps>) {
+export function ContentPageView({ page, locale, slug, showBrandKicker = true, compactHero = false }: Readonly<ContentPageViewProps>) {
   const isAgenda = slug === "agenda";
 
   return (
@@ -30,7 +31,7 @@ export function ContentPageView({ page, locale, slug, showBrandKicker = true }: 
             <h1>{page.title}</h1>
             <div className="content-copy-body">
               <p className="content-summary">{page.summary}</p>
-              <p className="content-intro">{page.intro}</p>
+              {!compactHero && <p className="content-intro">{page.intro}</p>}
             </div>
           </div>
         </div>
