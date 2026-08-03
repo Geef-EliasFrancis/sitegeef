@@ -90,8 +90,8 @@ export function SiteHeader({
       icon: "●",
       description: "Encontre a casa, conheça as formas de apoio e fale conosco.",
       links: [
-        { href: "/doacoes", label: "Doações" },
-        { href: "/contato", label: "Contato" },
+        { href: "/participe/doacoes", label: "Doações" },
+        { href: "/participe/voluntariado", label: "Voluntariado" },
       ],
     },
   ];

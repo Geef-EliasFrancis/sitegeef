@@ -54,6 +54,7 @@ const publicSiteHeaderSource = fs.readFileSync('components/site-header.tsx', 'ut
 const publicSiteHeaderCss = fs.readFileSync('styles/site-header.css', 'utf8');
 const publicLibrarySource = fs.readFileSync('lib/biblioteca/public-biblioteca.ts', 'utf8');
 const publicLibraryPageSource = fs.readFileSync('app/biblioteca/livros/page.tsx', 'utf8');
+const participeSource = fs.readFileSync('components/site-header.tsx', 'utf8');
 const meetingNoticesSource = fs.readFileSync('lib/reuniao-publica/avisos.ts', 'utf8');
 const meetingNoticesRepositorySource = fs.readFileSync('lib/reuniao-publica/avisos-repository.ts', 'utf8');
 const musicRepositorySource = fs.readFileSync('lib/musicas-repository.ts', 'utf8');
@@ -154,6 +155,7 @@ const responsiveContract = [
   ['biblioteca separa leitor e livros', publicSiteHeaderSource.includes('{ href: "/biblioteca/leitor", label: "Área do leitor" }') && publicSiteHeaderSource.includes('{ href: "/biblioteca/livros", label: "Livros" }') && !publicSiteHeaderSource.match(/key: "biblioteca"[\s\S]{0,500}label: "Estudos"/)],
   ['catálogo público de livros usa persistência do acervo', fs.existsSync('app/biblioteca/livros/page.tsx') && publicLibrarySource.includes('from("obras")') && publicLibrarySource.includes('eq("ativo", true)') && publicLibraryPageSource.includes('listPublicLibraryBooks') && fs.readFileSync('lib/admin/cache.ts', 'utf8').includes('revalidateTag("public-library-books")')],
   ['biblioteca admin possui telas de cadastro compatíveis', fs.existsSync('app/admin/biblioteca/page.tsx') && fs.existsSync('app/admin/biblioteca/nova-obra/page.tsx') && fs.existsSync('app/admin/biblioteca/[id]/page.tsx') && fs.existsSync('supabase/migrations/20260515_geef_erp.sql')],
+  ['participe possui submenu próprio', participeSource.includes('{ href: "/participe/doacoes", label: "Doações" }') && participeSource.includes('{ href: "/participe/voluntariado", label: "Voluntariado" }') && !participeSource.match(/key: "participe"[\s\S]{0,450}label: "Contato"/) && fs.existsSync('app/participe/doacoes/page.tsx') && fs.existsSync('app/participe/voluntariado/page.tsx')],
   ['aba principal permanece ativa nas rotas filhas', publicSiteHeaderSource.includes('const activeGroupKey = openGroup ?? routeGroup?.key ?? null') && publicSiteHeaderSource.includes('value={activeGroupKey ?? undefined}') && publicSiteHeaderSource.includes('activeGroupKey === group.key')],
   ['submenu de músicas possui retorno compacto', publicSiteHeaderSource.includes('{ href: "/reuniao-publica", label: "Voltar" }') && publicSiteHeaderSource.includes('if (isMusicPath && href === "/reuniao-publica") return false') && publicSiteHeaderSource.includes('label: "Músicas"') && !publicSiteHeaderSource.match(/const musicLinks = \[[\s\S]{0,220}musicas\/exibir/) && publicSiteHeaderCss.includes('.site-context-navigation--music .site-context-navigation-copy {')],
   ['playlist de passes possui persistência própria', musicPassesRepositorySource.includes('from("musica_passes")') && musicPassesSource.includes('listMusicaPasses') && musicPassesMigrationSource.includes('create table if not exists public.musica_passes')],

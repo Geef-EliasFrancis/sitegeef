@@ -199,8 +199,8 @@ export const contentPages: Record<string, ContentPage> = {
     summary: "Agenda inicial das atividades públicas.",
     intro:
       "A agenda abaixo é uma base simples para o site público. Ela pode depois ser mantida manualmente ou integrada ao fluxo administrativo.",
-    ctaLabel: "Falar com a casa",
-    ctaHref: publicHref("/contato"),
+    ctaLabel: "Conhecer formas de apoio",
+    ctaHref: publicHref("/participe/doacoes"),
     sections: [
       {
         heading: "Programação semanal",
@@ -341,8 +341,8 @@ export const contentPages: Record<string, ContentPage> = {
     sections: [
       {
         heading: "Como participar",
-        text: "Conheça as formas de apoio ou entre em contato com a equipe.",
-        bullets: ["Doações.", "Contato e acolhimento."],
+        text: "Conheça as formas de apoio e as oportunidades de colaboração com a casa.",
+        bullets: ["Doações.", "Voluntariado."],
       },
     ],
   },

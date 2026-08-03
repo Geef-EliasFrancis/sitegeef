@@ -129,6 +129,11 @@ const nextConfig: NextConfig = {
         permanent: true,
       },
       {
+        source: "/doacoes",
+        destination: "/participe/doacoes",
+        permanent: true,
+      },
+      {
         source: "/admin/reuniao-publica/musicas",
         destination: "/admin/reuniao-publica/musica",
         permanent: true,
