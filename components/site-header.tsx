@@ -107,7 +107,10 @@ export function SiteHeader({
   const activeGroup = navGroups.find((group) => group.key === openGroup) ?? routeGroup;
   const contextLinks = isMusicPath ? musicLinks : activeGroup?.links ?? [];
   const contextTitle = isMusicPath ? "Músicas" : activeGroup?.label;
-  const isContextLinkActive = (href: string) => pathname === href || pathname.startsWith(`${href}/`);
+  const isContextLinkActive = (href: string) => {
+    if (isMusicPath && href === "/musicas") return pathname === "/musicas";
+    return pathname === href || pathname.startsWith(`${href}/`);
+  };
 
   useEffect(() => {
     setOpenGroup(routeGroup?.key ?? null);
