@@ -1,7 +1,7 @@
 "use server";
 
 import { redirect } from "next/navigation";
-import { requirePermission } from "@/lib/auth/permissions";
+import { checkModuleAccess } from "@/lib/auth/permissions";
 import { invalidateReuniaoPublicaAvisosCache } from "@/lib/admin/cache";
 import { deletePersistedAviso, savePersistedAviso } from "@/lib/reuniao-publica/avisos-repository";
 
@@ -11,9 +11,7 @@ function readString(formData: FormData, key: string) {
 }
 
 export async function saveAvisoReuniaoAction(formData: FormData) {
-  try {
-    await requirePermission("pode_publicar", "/admin/reuniao-publica/avisos");
-  } catch (_error) {
+  if (!await checkModuleAccess("pode_publicar", ["diretoria", "secretaria", "comunicacao"])) {
     redirect("/admin/reuniao-publica/avisos?erro=sem-permissao");
   }
   const id = readString(formData, "id") || undefined;
@@ -43,9 +41,7 @@ export async function saveAvisoReuniaoAction(formData: FormData) {
 }
 
 export async function deleteAvisoReuniaoAction(formData: FormData) {
-  try {
-    await requirePermission("pode_publicar", "/admin/reuniao-publica/avisos");
-  } catch (_error) {
+  if (!await checkModuleAccess("pode_publicar", ["diretoria", "secretaria", "comunicacao"])) {
     redirect("/admin/reuniao-publica/avisos?erro=sem-permissao");
   }
   const id = readString(formData, "id");

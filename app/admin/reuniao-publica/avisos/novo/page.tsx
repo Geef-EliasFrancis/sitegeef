@@ -6,7 +6,7 @@ import { saveAvisoReuniaoAction } from "../actions";
 export const metadata = { title: "Novo aviso da reunião - Admin GEEF" };
 
 export default function NovoAvisoPage() {
-  return <AdminModuleGate permission="pode_publicar" redirectPath="/admin/reuniao-publica/avisos/novo" title="Novo aviso da reunião">
+  return <AdminModuleGate permission="pode_publicar" profiles={["diretoria", "secretaria", "comunicacao"]} redirectPath="/admin/reuniao-publica/avisos/novo" title="Novo aviso da reunião">
     <div className="area-page">
       <div className="admin-page-header">
         <div>

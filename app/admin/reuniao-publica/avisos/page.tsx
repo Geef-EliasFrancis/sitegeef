@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { IconEdit, IconPlus } from "@/components/icons";
-import { checkPermission } from "@/lib/auth/permissions";
+import { checkModuleAccess } from "@/lib/auth/permissions";
 import { listReuniaoPublicaAvisos } from "@/lib/reuniao-publica/avisos";
 
 export const metadata = {
@@ -23,7 +23,7 @@ function statusClass(status?: string | null) {
 export default async function AvisosPage() {
   const [avisos, canPublish] = await Promise.all([
     listReuniaoPublicaAvisos(),
-    checkPermission("pode_publicar"),
+    checkModuleAccess("pode_publicar", ["diretoria", "secretaria", "comunicacao"]),
   ]);
   return (
     <div className="area-page">

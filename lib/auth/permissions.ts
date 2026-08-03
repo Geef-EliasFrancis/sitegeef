@@ -73,3 +73,10 @@ export async function checkPermission(permission: PermissionFlag): Promise<boole
   const permissions = await getUserPermissions();
   return permissions ? permissions[permission] === true : false;
 }
+
+export async function checkModuleAccess(permission: PermissionFlag, profiles: string[] = []): Promise<boolean> {
+  const permissions = await getUserPermissions();
+  if (!permissions) return false;
+  if (permissions.perfil === 'administrador') return true;
+  return profiles.includes(permissions.perfil) || permissions[permission] === true;
+}
