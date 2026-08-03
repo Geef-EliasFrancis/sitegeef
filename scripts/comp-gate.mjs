@@ -41,6 +41,12 @@ const institutionContactsPageSource = fs.readFileSync('app/admin/instituicao/con
 const musicVersionsPageSource = fs.readFileSync('app/admin/reuniao-publica/musica/versoes/page.tsx', 'utf8');
 const publicMusicLiveButtonSource = fs.readFileSync('components/musicas/musica-catalog-live-button.tsx', 'utf8');
 const publicMusicasToolbarSource = fs.readFileSync('components/musicas/musicas-toolbar.tsx', 'utf8');
+const musicPassesSource = fs.readFileSync('lib/musica-passes.ts', 'utf8');
+const musicPassesRepositorySource = fs.readFileSync('lib/musica-passes-repository.ts', 'utf8');
+const musicPassesPublicSource = fs.readFileSync('app/musicas/passes/page.tsx', 'utf8');
+const musicPassesPlayerSource = fs.readFileSync('components/musicas/musica-passes-player.tsx', 'utf8');
+const musicPassesAdminSource = fs.readFileSync('app/admin/reuniao-publica/musica/passes/page.tsx', 'utf8');
+const musicPassesMigrationSource = fs.readFileSync('supabase/migrations/20260802010000_musica_passes.sql', 'utf8');
 const publicMusicCatalogCss = fs.readFileSync('styles/globals.css', 'utf8');
 const publicSiteHeaderSource = fs.readFileSync('components/site-header.tsx', 'utf8');
 const publicSiteHeaderCss = fs.readFileSync('styles/site-header.css', 'utf8');
@@ -133,6 +139,9 @@ const responsiveContract = [
   ['página de músicas reduz área vazia do contexto', publicSiteHeaderSource.includes('site-context-navigation--music') && publicSiteHeaderCss.includes('.site-context-navigation--music .site-context-navigation-copy p') && publicMusicCatalogCss.includes('public-page--compact .public-hero-shell') && publicMusicCatalogCss.includes('margin-top: 0')],
   ['submenu público diferencia item ativo', publicSiteHeaderSource.includes('site-context-navigation-link${isContextLinkActive') && publicSiteHeaderSource.includes('aria-current={isContextLinkActive') && publicSiteHeaderCss.includes('.site-context-navigation-link.is-active') && publicSiteHeaderCss.includes('.site-nav-dropdown-item.is-active')],
   ['submenu de músicas possui retorno compacto', publicSiteHeaderSource.includes('{ href: "/reuniao-publica", label: "Voltar" }') && publicSiteHeaderSource.includes('label: "Músicas"') && !publicSiteHeaderSource.match(/const musicLinks = \[[\s\S]{0,220}musicas\/exibir/) && publicSiteHeaderCss.includes('.site-context-navigation--music .site-context-navigation-copy {')],
+  ['playlist de passes possui persistência própria', musicPassesRepositorySource.includes('from("musica_passes")') && musicPassesSource.includes('listMusicaPasses') && musicPassesMigrationSource.includes('create table if not exists public.musica_passes')],
+  ['playlist de passes toca em loop', musicPassesPublicSource.includes('MusicaPassesPlayer') && musicPassesPlayerSource.includes('onEnded') && musicPassesPlayerSource.includes('% items.length')],
+  ['admin possui cadastro e exclusão de passes', musicPassesAdminSource.includes('addPasse') && musicPassesAdminSource.includes('deleteMusicaPasse') && musicPassesAdminSource.includes('musica-passes-admin-form')],
   ['agenda alimenta avisos da reunião sem duplicação', meetingNoticesSource.includes('schedule') && meetingNoticesSource.includes('listReuniaoPublicaAvisos') && meetingNoticesSource.includes('titulos') && meetingNoticesSource.includes('origem: "reuniao"')],
   ['submenu Música possui início catálogo autores e sessões', ['Início', 'Catálogo', 'Autores', 'Sessões'].every((label) => adminMusicNavigationSource.includes(`label: "${label}"`)) && adminHeaderSource.includes('musicContextMenuItems') && adminMusicNavigationSource.includes('/admin/reuniao-publica/musica/catalogo')],
   ['submenu contextual é restrito às áreas configuradas', adminContextNavigationSource.includes('"reuniao-publica": [') && adminHeaderSource.includes('contextMenuItems &&')],

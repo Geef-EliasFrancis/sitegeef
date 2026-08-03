@@ -99,6 +99,7 @@ export function SiteHeader({
   const musicLinks = [
     { href: "/reuniao-publica", label: "Voltar" },
     { href: "/musicas", label: "Músicas" },
+    { href: "/musicas/passes", label: "Passes" },
   ];
   const isMusicPath = pathname === "/musicas" || pathname.startsWith("/musicas/");
   const routeGroup = navGroups.find((group) => pathname === group.href)

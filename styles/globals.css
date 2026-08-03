@@ -1501,6 +1501,47 @@ body.reuniao-publica-display-route .site-shell-main {
   align-items: start;
 }
 
+.musica-passes-player {
+  display: grid;
+  gap: 0.5rem;
+  max-width: 42rem;
+  padding: 1rem;
+  border: 1px solid var(--line);
+  border-radius: 1rem;
+  background: var(--surface-tertiary);
+}
+
+.musica-passes-player audio {
+  width: 100%;
+}
+
+.musica-passes-current,
+.musica-passes-count {
+  margin: 0;
+}
+
+.musica-passes-current {
+  font-weight: 800;
+}
+
+.musica-passes-count {
+  color: var(--muted);
+  font-size: 0.8rem;
+}
+
+.musica-passes-admin-form {
+  display: grid;
+  grid-template-columns: minmax(10rem, 0.8fr) minmax(16rem, 1.5fr) 6rem auto;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+@media (max-width: 767px) {
+  .musica-passes-admin-form {
+    grid-template-columns: 1fr;
+  }
+}
+
 .musica-catalog-card {
   display: grid;
   gap: var(--spacing-sm);
