@@ -107,8 +107,12 @@ export function MusicaPassesPlayer({ items }: { items: MusicaPasse[] }) {
           <span className="musica-passes-count">{hasItems ? `${index + 1} de ${items.length}` : "Vazio"}</span>
         </div>
 
-        <div className={`musica-passes-speaker${isPlaying ? " is-playing" : ""}`} aria-label={isPlaying ? "Alto-falante reproduzindo" : "Alto-falante pausado"} role="img">
-          <span className="musica-passes-speaker-ring"><span className="musica-passes-speaker-cone"><span className="musica-passes-speaker-cap" /></span></span>
+        <div className={`musica-passes-spiritual${isPlaying ? " is-playing" : ""}`} aria-label={isPlaying ? "Livro espiritual reproduzindo" : "Livro espiritual pausado"} role="img">
+          <span className="musica-passes-spiritual-halo" />
+          <span className="musica-passes-spiritual-particle musica-passes-spiritual-particle--one" />
+          <span className="musica-passes-spiritual-particle musica-passes-spiritual-particle--two" />
+          <span className="musica-passes-spiritual-particle musica-passes-spiritual-particle--three" />
+          <span className="musica-passes-spiritual-book"><span /><span /></span>
         </div>
 
         <div className="musica-passes-progress-row">

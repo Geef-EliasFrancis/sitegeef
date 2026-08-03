@@ -1559,56 +1559,87 @@ body.reuniao-publica-display-route .site-shell-main {
   flex: 0 0 auto;
 }
 
-.musica-passes-speaker {
+.musica-passes-spiritual {
+  position: relative;
   display: grid;
   place-items: center;
   width: 100%;
   height: 4rem;
   overflow: hidden;
   border-radius: 0.6rem;
-  background: radial-gradient(circle at 50% 48%, #f8fbff 0%, #dbe5ef 38%, #c4d0dc 100%);
+  background: radial-gradient(circle at 50% 50%, #fffdf0 0%, #f5f2d9 42%, #e8ead8 100%);
 }
 
-.musica-passes-speaker-ring {
-  display: grid;
-  place-items: center;
-  width: 3.25rem;
-  height: 3.25rem;
-  border: 0.38rem solid #29303a;
+.musica-passes-spiritual-halo {
+  position: absolute;
+  width: 3.9rem;
+  height: 3.9rem;
   border-radius: 50%;
-  background: radial-gradient(circle at 42% 35%, #6287c7 0%, #1b315b 58%, #0e1727 100%);
-  box-shadow: 0 0.35rem 0.65rem rgba(14, 23, 39, 0.3), inset 0 0 0 0.14rem rgba(255, 255, 255, 0.15);
+  background: radial-gradient(circle, rgba(255, 238, 155, 0.74) 0%, rgba(255, 238, 155, 0.16) 48%, transparent 72%);
+  filter: blur(0.1rem);
   transform: scale(1);
-  transition: transform 180ms ease;
+  transition: transform 220ms ease, opacity 220ms ease;
 }
 
-.musica-passes-speaker-cone {
+.musica-passes-spiritual-book {
+  position: relative;
   display: grid;
-  place-items: center;
-  width: 1.55rem;
-  height: 1.55rem;
+  grid-template-columns: 1fr 1fr;
+  width: 4rem;
+  height: 2.45rem;
+  filter: drop-shadow(0 0.3rem 0.18rem rgba(76, 89, 67, 0.22));
+}
+
+.musica-passes-spiritual-book span {
+  background: linear-gradient(150deg, #fffdf4 0%, #e6e8d5 100%);
+  border: 1px solid #b8c4a9;
+}
+
+.musica-passes-spiritual-book span:first-child {
+  border-radius: 0.3rem 0 0 0.16rem;
+  transform: skewY(6deg);
+  transform-origin: right bottom;
+}
+
+.musica-passes-spiritual-book span:last-child {
+  border-radius: 0 0.3rem 0.16rem 0;
+  transform: skewY(-6deg);
+  transform-origin: left bottom;
+}
+
+.musica-passes-spiritual-particle {
+  position: absolute;
+  width: 0.28rem;
+  height: 0.28rem;
   border-radius: 50%;
-  background: radial-gradient(circle at 40% 35%, #5d6c82 0%, #202833 68%, #11161d 100%);
-  box-shadow: inset 0 0 0 0.1rem rgba(255, 255, 255, 0.12);
+  background: #c99f31;
+  opacity: 0.2;
 }
 
-.musica-passes-speaker-cap {
-  width: 0.62rem;
-  height: 0.62rem;
-  border-radius: 50%;
-  background: #11161d;
+.musica-passes-spiritual-particle--one { left: 42%; top: 24%; }
+.musica-passes-spiritual-particle--two { left: 55%; top: 15%; width: 0.2rem; height: 0.2rem; }
+.musica-passes-spiritual-particle--three { left: 63%; top: 34%; width: 0.16rem; height: 0.16rem; }
+
+.musica-passes-spiritual.is-playing .musica-passes-spiritual-halo {
+  animation: musica-passes-spiritual-glow 1.8s ease-in-out infinite;
 }
 
-.musica-passes-speaker.is-playing .musica-passes-speaker-ring {
-  animation: musica-passes-speaker-beat 720ms ease-in-out infinite;
+.musica-passes-spiritual.is-playing .musica-passes-spiritual-particle {
+  animation: musica-passes-spiritual-rise 1.8s ease-in-out infinite;
 }
 
-@keyframes musica-passes-speaker-beat {
+@keyframes musica-passes-spiritual-glow {
   0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.08); }
+  50% { transform: scale(1.14); opacity: 0.8; }
 }
 
-.musica-passes-speaker + .musica-passes-progress-row {
+@keyframes musica-passes-spiritual-rise {
+  0% { opacity: 0; transform: translateY(0) scale(0.8); }
+  35% { opacity: 0.8; }
+  100% { opacity: 0; transform: translateY(-0.9rem) scale(1.1); }
+}
+
+.musica-passes-spiritual + .musica-passes-progress-row {
   margin-top: -0.15rem;
 }
 
@@ -1842,7 +1873,7 @@ body.reuniao-publica-display-route .site-shell-main {
     min-width: 0;
   }
 
-  .musica-passes-speaker,
+  .musica-passes-spiritual,
   .musica-passes-progress-row {
     grid-column: 1 / -1;
   }
@@ -1868,7 +1899,8 @@ body.reuniao-publica-display-route .site-shell-main {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .musica-passes-speaker.is-playing .musica-passes-speaker-ring {
+  .musica-passes-spiritual.is-playing .musica-passes-spiritual-halo,
+  .musica-passes-spiritual.is-playing .musica-passes-spiritual-particle {
     animation: none;
   }
 }
