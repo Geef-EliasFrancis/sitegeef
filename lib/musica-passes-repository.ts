@@ -1,4 +1,5 @@
 import { createServiceRoleClient } from "@/lib/supabase/service-role";
+import { removeMusicaPasseAudio } from "@/lib/musica-passes-storage";
 
 export type MusicaPasseRecord = { id: string; titulo: string; audio_url: string; ordem: number; ativo: boolean };
 const fields = "id, titulo, audio_url, ordem, ativo";
@@ -18,6 +19,9 @@ export async function saveMusicaPasseRecord(input: { id?: string; titulo: string
 }
 
 export async function deleteMusicaPasseRecord(id: string) {
-  const { error } = await createServiceRoleClient().from("musica_passes").delete().eq("id", id);
+  const client = createServiceRoleClient();
+  const { data: item } = await client.from("musica_passes").select("audio_url").eq("id", id).maybeSingle();
+  const { error } = await client.from("musica_passes").delete().eq("id", id);
   if (error) throw error;
+  if (item?.audio_url) await removeMusicaPasseAudio(item.audio_url);
 }
