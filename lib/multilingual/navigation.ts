@@ -17,7 +17,7 @@ export function getInstitutionalNavItems(locale: Locale): NavItem[] {
     "/identidade-visual",
     "/ao-vivo",
     "/estudos",
-    "/musicas",
+    "/reuniao-publica/musicas",
     "/doacoes",
     "/lgpd",
     "/cookies",

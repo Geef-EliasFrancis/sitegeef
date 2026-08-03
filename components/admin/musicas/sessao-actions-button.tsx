@@ -68,7 +68,7 @@ export function SessaoActionsButton({ sessao: initialSessao, onUpdate, onDelete 
         <IconEdit size={16} />
       </Link>
       <Link
-        href="/musicas/controle"
+        href="/reuniao-publica/musicas/controle"
         className="admin-btn admin-btn-small"
         target="_blank"
         rel="noreferrer"
@@ -77,7 +77,7 @@ export function SessaoActionsButton({ sessao: initialSessao, onUpdate, onDelete 
         <IconExternalLink size={16} />
       </Link>
       <Link
-        href="/musicas/exibir"
+        href="/reuniao-publica/musicas/exibir"
         className="admin-btn admin-btn-small"
         target="_blank"
         rel="noreferrer"

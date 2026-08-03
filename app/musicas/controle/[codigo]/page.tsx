@@ -30,7 +30,7 @@ export default async function MusicaControlPage({ params }: PageProps) {
     <AdminModuleGate
       permission="pode_publicar"
       profiles={["diretoria", "comunicacao", "secretaria"]}
-      redirectPath={`/musicas/controle/${codigo}`}
+      redirectPath={`/reuniao-publica/musicas/controle/${codigo}`}
       title="Controle de sessão"
     >
       <Suspense fallback={<div style={{ padding: "2rem", textAlign: "center" }}>Carregando sessão...</div>}>

@@ -251,13 +251,13 @@ export function AdminSidebar({ usuarioSistema }: AdminSidebarProps) {
                 Dashboard
               </Link>
               <Link
-                href="/musicas/controle"
+                href="/reuniao-publica/musicas/controle"
                 className={`admin-nav-item ${isActive('/musicas/controle') ? 'active' : ''}`}
               >
                 Controle
               </Link>
               <Link
-                href="/musicas/exibir"
+                href="/reuniao-publica/musicas/exibir"
                 className={`admin-nav-item ${isActive('/musicas/exibir') ? 'active' : ''}`}
               >
                 Exibição pública
@@ -380,7 +380,7 @@ export function AdminSidebar({ usuarioSistema }: AdminSidebarProps) {
             <Link href="/escalas" target="_blank" rel="noopener noreferrer" className="admin-nav-item">
               👁️ Escalas Públicas →
             </Link>
-            <Link href="/leitor" target="_blank" rel="noopener noreferrer" className="admin-nav-item">
+            <Link href="/biblioteca/leitor" target="_blank" rel="noopener noreferrer" className="admin-nav-item">
               <span aria-label="Área do leitor e catálogo de músicas">📖</span> Área do Leitor →
             </Link>
             <Link href="/" target="_blank" rel="noopener noreferrer" className="admin-nav-item">

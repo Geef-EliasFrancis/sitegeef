@@ -237,7 +237,7 @@ export function MusicasCatalogTable({
                           <IconEdit size={15} />
                           <span>Editar</span>
                         </Link>
-                        <Link href={`/musicas/${musica.slug}`} className="admin-btn admin-btn-small music-catalog-row-action" target="_blank" rel="noreferrer" aria-label={`Ler ${musica.titulo}`} title={`Ler ${musica.titulo}`}>
+                        <Link href={`/reuniao-publica/musicas/${musica.slug}`} className="admin-btn admin-btn-small music-catalog-row-action" target="_blank" rel="noreferrer" aria-label={`Ler ${musica.titulo}`} title={`Ler ${musica.titulo}`}>
                           <IconExternalLink size={15} />
                           <span>Ler</span>
                         </Link>

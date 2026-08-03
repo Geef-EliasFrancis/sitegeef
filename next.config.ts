@@ -61,7 +61,7 @@ const contextualRouteRewrites = [
   { source: "/admin/geef/contas", destination: "/admin/instituicao/contas" },
   { source: "/admin/pessoas/pessoas", destination: "/admin/pessoas" },
   { source: "/admin/pessoas/funcoes", destination: "/admin/funcoes" },
-  { source: "/admin/reuniao-publica/leitura", destination: "/leitor" },
+  { source: "/admin/reuniao-publica/leitura", destination: "/reuniao-publica/leitura" },
   { source: "/admin/reuniao-publica/palestra", destination: "/admin/funcoes/temas" },
   { source: "/admin/reuniao-publica/prece", destination: "/admin/funcoes/temas?categoria=prece" },
   { source: "/admin/sistema/observabilidade", destination: "/admin/observability" },
@@ -108,6 +108,26 @@ const nextConfig: NextConfig = {
   },
   async redirects() {
     return [
+      {
+        source: "/leitor",
+        destination: "/biblioteca/leitor",
+        permanent: true,
+      },
+      {
+        source: "/programacao",
+        destination: "/reuniao-publica/programacao",
+        permanent: true,
+      },
+      {
+        source: "/musicas",
+        destination: "/reuniao-publica/musicas",
+        permanent: true,
+      },
+      {
+        source: "/musicas/:path*",
+        destination: "/reuniao-publica/musicas/:path*",
+        permanent: true,
+      },
       {
         source: "/admin/reuniao-publica/musicas",
         destination: "/admin/reuniao-publica/musica",

@@ -31,7 +31,7 @@ export function MusicaControlRemote({ codigo, initialSessao, musicas }: MusicaCo
     }
 
     popupRef.current = window.open(
-      "/musicas/exibir?popup=1",
+      "/reuniao-publica/musicas/exibir?popup=1",
       "geef-musica-exibicao",
       "popup=yes,width=1280,height=720"
     );

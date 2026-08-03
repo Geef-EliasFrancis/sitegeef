@@ -28,7 +28,7 @@ export function MusicasToolbar({ initialQuery }: MusicasToolbarProps) {
 
       <div className="musica-toolbar-actions">
         {searchOpen ? (
-          <form action="/musicas" method="get" className="musica-toolbar-search" role="search">
+          <form action="/reuniao-publica/musicas" method="get" className="musica-toolbar-search" role="search">
             <label className="sr-only" htmlFor="musicas-search">
               Buscar músicas
             </label>
@@ -66,7 +66,7 @@ export function MusicasToolbar({ initialQuery }: MusicasToolbarProps) {
         )}
 
         <Link
-          href="/musicas/exibir"
+          href="/reuniao-publica/musicas/exibir"
           className="button button-secondary musica-icon-button"
           aria-label="Abrir painel de exibição"
           title="Abrir painel de exibição"

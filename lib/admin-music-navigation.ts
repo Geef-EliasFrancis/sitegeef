@@ -5,6 +5,6 @@ export const musicContextMenuItems = [
   { label: "Autores", href: "/admin/reuniao-publica/musica/autores" },
   { label: "Sessões", href: "/admin/reuniao-publica/musica/sessoes" },
   { label: "Versões", href: "/admin/reuniao-publica/musica/versoes" },
-  { label: "Controle", href: "/musicas/controle" },
-  { label: "Exibição pública", href: "/musicas/exibir" },
+  { label: "Controle", href: "/reuniao-publica/musicas/controle" },
+  { label: "Exibição pública", href: "/reuniao-publica/musicas/exibir" },
 ] as const;

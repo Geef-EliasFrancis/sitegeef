@@ -63,10 +63,10 @@ export function SiteHeader({
       icon: "♫",
       description: "Acompanhe a programação, as músicas e as escalas da casa.",
       links: [
-        { href: "/programacao", label: "Programação" },
-        { href: "/musicas", label: "Músicas" },
+        { href: "/reuniao-publica/programacao", label: "Programação" },
+        { href: "/reuniao-publica/musicas", label: "Músicas" },
         { href: "/reuniao-publica/live", label: "Ao vivo" },
-        { href: "/leitor", label: "Leituras" },
+        { href: "/reuniao-publica/leitura", label: "Leituras" },
         { href: "/escalas", label: "Escalas" },
       ],
     },
@@ -78,8 +78,7 @@ export function SiteHeader({
       icon: "▦",
       description: "Materiais para leitura, estudo e acompanhamento da Doutrina Espírita.",
       links: [
-        { href: "/leitor", label: "Área do leitor" },
-        { href: "/musicas", label: "Catálogo de músicas" },
+        { href: "/biblioteca/leitor", label: "Área do leitor" },
         { href: "/estudos", label: "Estudos" },
       ],
     },
@@ -98,17 +97,17 @@ export function SiteHeader({
   ];
   const musicLinks = [
     { href: "/reuniao-publica", label: "Voltar" },
-    { href: "/musicas", label: "Músicas" },
-    { href: "/musicas/passes", label: "Passes" },
+    { href: "/reuniao-publica/musicas", label: "Músicas" },
+    { href: "/reuniao-publica/musicas/passes", label: "Passes" },
   ];
-  const isMusicPath = pathname === "/musicas" || pathname.startsWith("/musicas/");
+  const isMusicPath = pathname === "/reuniao-publica/musicas" || pathname.startsWith("/reuniao-publica/musicas/") || pathname === "/musicas" || pathname.startsWith("/musicas/");
   const routeGroup = navGroups.find((group) => pathname === group.href)
     ?? navGroups.find((group) => group.links.some((item) => pathname === item.href || pathname.startsWith(`${item.href}/`)));
   const activeGroup = navGroups.find((group) => group.key === openGroup) ?? routeGroup;
   const contextLinks = isMusicPath ? musicLinks : activeGroup?.links ?? [];
   const contextTitle = isMusicPath ? "Músicas" : activeGroup?.label;
   const isContextLinkActive = (href: string) => {
-    if (isMusicPath && href === "/musicas") return pathname === "/musicas";
+    if (isMusicPath && (href === "/reuniao-publica/musicas" || href === "/musicas")) return pathname === href;
     return pathname === href || pathname.startsWith(`${href}/`);
   };
 

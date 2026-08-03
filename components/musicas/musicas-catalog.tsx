@@ -58,7 +58,7 @@ export function MusicasCatalog({ musicas, activeMusicaId = null }: MusicasCatalo
 
         <div className="musica-toolbar-actions musica-toolbar-actions--catalog">
           <Link
-            href="/musicas/exibir"
+            href="/reuniao-publica/musicas/exibir"
             className="button button-primary musica-toolbar-live-btn"
             aria-label="Abrir exibição ao vivo"
             title="Abrir exibição ao vivo"
@@ -88,7 +88,7 @@ export function MusicasCatalog({ musicas, activeMusicaId = null }: MusicasCatalo
                     title={`${musica.autor} • ${musica.titulo}`}
                   >
                     <Link
-                      href={`/musicas/${musica.slug}`}
+                      href={`/reuniao-publica/musicas/${musica.slug}`}
                       className="musica-catalog-title-inline musica-catalog-title-link"
                       aria-label={`Abrir ${musica.titulo}`}
                       title={`Abrir ${musica.titulo}`}

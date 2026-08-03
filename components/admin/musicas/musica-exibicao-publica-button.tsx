@@ -42,7 +42,7 @@ export function MusicaExibicaoPublicaButton({ musicaId, isAtiva }: MusicaExibica
   if (isAtiva) {
     return (
       <Link
-        href="/musicas/exibir"
+        href="/reuniao-publica/musicas/exibir"
         className="inline-status inline-status-success musica-public-toggle-badge musica-public-toggle-link"
         aria-label="Abrir exibição pública"
         title="Abrir exibição pública"

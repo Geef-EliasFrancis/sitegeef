@@ -503,7 +503,7 @@ export function MusicaReader({
       >
         <div className="musica-display-command-bar" role="toolbar" aria-label="Comandos da exibição">
           <Link
-            href="/musicas"
+            href="/reuniao-publica/musicas"
             className="musica-display-command-button"
             aria-label="Voltar ao catálogo"
             title="Voltar ao catálogo"
@@ -642,7 +642,7 @@ export function MusicaReader({
           <div className="musica-reader-actions">
             {displayCode && !isDisplay ? <span className="musica-code-pill">Pareamento {displayCode}</span> : null}
             {showBackLink ? (
-              <Link href="/musicas" className="button button-secondary musica-icon-button" aria-label="Voltar ao catálogo" title="Voltar ao catálogo">
+              <Link href="/reuniao-publica/musicas" className="button button-secondary musica-icon-button" aria-label="Voltar ao catálogo" title="Voltar ao catálogo">
                 <IconArrowLeft size={18} />
               </Link>
             ) : null}

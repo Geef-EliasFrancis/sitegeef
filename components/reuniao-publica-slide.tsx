@@ -10,7 +10,7 @@ export function ReuniaoPublicaSlide({ slideId, avisos }: { slideId: string; avis
   }
 
   if (slideId === "musicas") {
-    return <div className="reuniao-publica-content"><span className="reuniao-publica-kicker">Reunião pública</span><h1>Músicas ao vivo</h1><p>Abra a playlist pública para acompanhar as músicas selecionadas.</p><Link href="/musicas/exibir" target="_blank" rel="noreferrer" className="reuniao-publica-primary-action"><IconMusic size={22} /> Abrir músicas ao vivo</Link></div>;
+    return <div className="reuniao-publica-content"><span className="reuniao-publica-kicker">Reunião pública</span><h1>Músicas ao vivo</h1><p>Abra a playlist pública para acompanhar as músicas selecionadas.</p><Link href="/reuniao-publica/musicas/exibir" target="_blank" rel="noreferrer" className="reuniao-publica-primary-action"><IconMusic size={22} /> Abrir músicas ao vivo</Link></div>;
   }
 
   if (slideId === "inicio") {

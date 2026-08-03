@@ -61,10 +61,10 @@ export function invalidateAdminAtendimentoCache() {
 
 export function invalidateMusicasCache() {
   revalidateTag(MUSICAS_CACHE_TAG);
-  revalidatePath("/musicas");
-  revalidatePath("/musicas/[slug]");
-  revalidatePath("/musicas/exibir");
-  revalidatePath("/musicas/controle");
+  revalidatePath("/reuniao-publica/musicas");
+  revalidatePath("/reuniao-publica/musicas/[slug]");
+  revalidatePath("/reuniao-publica/musicas/exibir");
+  revalidatePath("/reuniao-publica/musicas/controle");
   revalidatePath("/admin/reuniao-publica");
   revalidatePath("/admin/reuniao-publica/musica/inicio");
   revalidatePath("/admin/reuniao-publica/musica/catalogo");

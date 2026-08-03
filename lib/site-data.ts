@@ -73,7 +73,7 @@ export const navItems: NavItem[] = [
   { href: "/escalas", label: "Escalas", labelEn: "Shifts", group: "institucional" },
   { href: "/ao-vivo", label: "Ao vivo", labelEn: "Live", group: "institucional" },
   { href: "/estudos", label: "Estudos", labelEn: "Studies", group: "institucional" },
-  { href: "/musicas", label: "Músicas", labelEn: "Songs", group: "institucional" },
+  { href: "/reuniao-publica/musicas", label: "Músicas", labelEn: "Songs", group: "institucional" },
   { href: "/doacoes", label: "Doações", labelEn: "Donations", group: "institucional" },
   { href: "/lgpd", label: "Privacidade", labelEn: "Privacy", group: "institucional" },
   { href: "/cookies", label: "Cookies", labelEn: "Cookies", group: "institucional" },
@@ -290,7 +290,7 @@ export const contentPages: Record<string, ContentPage> = {
     summary: "Programação, música, leitura e acolhimento em uma mesma experiência.",
     intro: "A reunião pública organiza os momentos de estudo, reflexão e convivência da casa para quem chega presencialmente ou acompanha à distância.",
     ctaLabel: "Ver programação",
-    ctaHref: publicHref("/programacao"),
+    ctaHref: publicHref("/reuniao-publica/programacao"),
     sections: [
       {
         heading: "Acompanhe a reunião",
@@ -304,7 +304,7 @@ export const contentPages: Record<string, ContentPage> = {
     summary: "Um roteiro simples para acompanhar a reunião pública do GEEF.",
     intro: "A reunião pública acontece às quintas-feiras, das 19h às 20h, com momentos de acolhimento, estudo, reflexão e prece.",
     ctaLabel: "Ver músicas",
-    ctaHref: publicHref("/musicas"),
+    ctaHref: publicHref("/reuniao-publica/musicas"),
     sections: [
       {
         heading: "Roteiro da reunião",
@@ -323,7 +323,7 @@ export const contentPages: Record<string, ContentPage> = {
     summary: "Materiais para leitura, estudo e formação espírita.",
     intro: "A biblioteca reúne conteúdos que ajudam a casa a estudar com serenidade, continuidade e acesso simples.",
     ctaLabel: "Abrir área do leitor",
-    ctaHref: publicHref("/leitor"),
+    ctaHref: publicHref("/biblioteca/leitor"),
     sections: [
       {
         heading: "Conteúdos disponíveis",

@@ -9,7 +9,7 @@ export function MusicaDisplayRouteSync() {
   useEffect(() => {
     const root = document.documentElement;
     const body = document.body;
-    const isMusicDisplayRoute = pathname.startsWith("/musicas/exibir");
+    const isMusicDisplayRoute = pathname.startsWith("/reuniao-publica/musicas/exibir") || pathname.startsWith("/musicas/exibir");
     const isMeetingDisplayRoute = pathname === "/reuniao-publica/live";
 
     if (isMusicDisplayRoute) {
