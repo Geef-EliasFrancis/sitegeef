@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { MoonIcon, SunIcon } from "@/components/site-icons";
 import { clearUserData } from "@/hooks/useUserPersistence";
@@ -12,6 +13,7 @@ type AdminUserMenuProps = {
   locale: Locale;
   email?: string;
   fullName?: string;
+  avatarUrl?: string;
 };
 
 function getInitials(value?: string) {
@@ -24,8 +26,9 @@ function getInitials(value?: string) {
   return (initials || value.slice(0, 2)).toUpperCase();
 }
 
-export function AdminUserMenu({ locale, email, fullName }: AdminUserMenuProps) {
+export function AdminUserMenu({ locale, email, fullName, avatarUrl }: AdminUserMenuProps) {
   const [open, setOpen] = useState(false);
+  const [avatarLoadFailed, setAvatarLoadFailed] = useState(false);
   const [currentLocale, setCurrentLocale] = useState(locale);
   const menuRef = useRef<HTMLDivElement>(null);
   const { theme, toggleTheme } = useTheme();
@@ -37,6 +40,10 @@ export function AdminUserMenu({ locale, email, fullName }: AdminUserMenuProps) {
   useEffect(() => {
     setCurrentLocale(locale);
   }, [locale]);
+
+  useEffect(() => {
+    setAvatarLoadFailed(false);
+  }, [avatarUrl]);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -74,7 +81,11 @@ export function AdminUserMenu({ locale, email, fullName }: AdminUserMenuProps) {
         aria-expanded={open}
         aria-label="Menu do usuário"
       >
-        <span className="admin-user-menu-avatar">{initials}</span>
+        {avatarUrl && !avatarLoadFailed ? (
+          <Image src={avatarUrl} alt="Avatar" width={44} height={44} className="admin-user-menu-avatar admin-user-menu-avatar-image" unoptimized onError={() => setAvatarLoadFailed(true)} />
+        ) : (
+          <span className="admin-user-menu-avatar">{initials}</span>
+        )}
       </button>
 
       {open && (

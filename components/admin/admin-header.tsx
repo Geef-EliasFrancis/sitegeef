@@ -16,6 +16,7 @@ interface AdminHeaderProps {
   user: {
     email?: string;
     fullName?: string;
+    avatarUrl?: string;
   };
 }
 
@@ -46,7 +47,7 @@ export function AdminHeader({ locale, user }: AdminHeaderProps) {
         </div>
 
         <div className="admin-header-right">
-          <AdminUserMenu locale={locale} email={user.email} fullName={displayName} />
+          <AdminUserMenu locale={locale} email={user.email} fullName={displayName} avatarUrl={user.avatarUrl} />
         </div>
       </header>
 

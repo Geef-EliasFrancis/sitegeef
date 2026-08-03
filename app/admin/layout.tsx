@@ -22,6 +22,7 @@ type AdminAuthUser = {
   user_metadata?: {
     full_name?: string;
     name?: string;
+    avatar_url?: string;
   } | null;
 };
 
@@ -128,7 +129,7 @@ export default async function AdminLayout({
       </Suspense>
       <AdminHeader
         locale={locale}
-        user={{ email: user.email ?? undefined, fullName: displayName }}
+        user={{ email: user.email ?? undefined, fullName: displayName, avatarUrl: user.user_metadata?.avatar_url }}
       />
       <div className="admin-container">
         <main className="admin-main">
