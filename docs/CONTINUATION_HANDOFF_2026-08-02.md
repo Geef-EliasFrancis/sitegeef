@@ -10,6 +10,7 @@
 - `public.musica_passes` foi criada nesta retomada e está vazia.
   - `list_migrations` respondeu sem erro e ainda não contém a migração da playlist de passes.
 - Migração aplicada remotamente via `apply_migration` com o nome `musica_passes_playlist`.
+- Migração `musica_passes_ordem_unica` aplicada remotamente: ordens ativas normalizadas e índice único criado.
 - Não usar MCP Supabase genérico nem executar `db push` às cegas.
 
 ## Última entrega funcional
@@ -22,6 +23,7 @@ Foi criada a playlist de passes com persistência própria e rotas separadas:
 - Admin: `/admin/reuniao-publica/musica/passes`.
 - Migração local: `supabase/migrations/20260802010000_musica_passes.sql`.
 - Repositório e domínio: `lib/musica-passes-repository.ts` e `lib/musica-passes.ts`.
+- A ordem é automática no cadastro; a administração usa comandos subir/descer persistidos.
 - Player público em loop: `components/musicas/musica-passes-player.tsx`.
 - Navegação de músicas atualizada com o submenu `Passes`.
 
