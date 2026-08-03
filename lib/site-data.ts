@@ -309,7 +309,7 @@ export const contentPages: Record<string, ContentPage> = {
       {
         heading: "Roteiro da reunião",
         text: "Cada encontro percorre uma sequência preparada para acolher quem chega e favorecer a participação de todos.",
-        bullets: ["Música — harmonização do ambiente", "Avisos", "Leitura", "Palestra", "Prece", "Passe espiritual", "Lanche comunitário gratuito, sempre que possível."],
+        bullets: ["Música — harmonização do ambiente", "Avisos", "Leitura", "Prece inicial", "Palestra", "Prece final", "Passe espiritual", "Lanche comunitário gratuito, sempre que possível."],
       },
       {
         heading: "Quinta-feira",
