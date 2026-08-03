@@ -48,6 +48,7 @@ const musicPassesPlayerSource = fs.readFileSync('components/musicas/musica-passe
 const musicPassesAdminSource = fs.readFileSync('app/admin/reuniao-publica/musica/passes/page.tsx', 'utf8');
 const musicPassesStorageSource = fs.readFileSync('lib/musica-passes-storage.ts', 'utf8');
 const musicPassesMigrationSource = fs.readFileSync('supabase/migrations/20260802010000_musica_passes.sql', 'utf8');
+const musicPassesOrderMigrationSource = fs.readFileSync('supabase/migrations/20260802020000_musica_passes_ordem_unica.sql', 'utf8');
 const publicMusicCatalogCss = fs.readFileSync('styles/globals.css', 'utf8');
 const publicSiteHeaderSource = fs.readFileSync('components/site-header.tsx', 'utf8');
 const publicSiteHeaderCss = fs.readFileSync('styles/site-header.css', 'utf8');
@@ -146,6 +147,7 @@ const responsiveContract = [
   ['admin possui upload de mp3', musicPassesAdminSource.includes('name="audio"') && musicPassesAdminSource.includes('accept="audio/mpeg,.mp3"') && musicPassesStorageSource.includes('uploadMusicaPasseAudio')],
   ['upload de passes usa storage persistente', musicPassesStorageSource.includes('instituicao-assets') && musicPassesStorageSource.includes('.storage.from') && nextConfigSource.includes('bodySizeLimit: "50mb"')],
   ['exclusão remove o arquivo do storage', musicPassesRepositorySource.includes('removeMusicaPasseAudio') && musicPassesStorageSource.includes('.remove([decodeURIComponent(path)])')],
+  ['ordem de passes é automática e única', musicPassesAdminSource.includes('moveMusicaPasse') && musicPassesRepositorySource.includes('reindexMusicaPasses') && musicPassesOrderMigrationSource.includes('create unique index if not exists idx_musica_passes_ordem_ativa_unica')],
   ['agenda alimenta avisos da reunião sem duplicação', meetingNoticesSource.includes('schedule') && meetingNoticesSource.includes('listReuniaoPublicaAvisos') && meetingNoticesSource.includes('titulos') && meetingNoticesSource.includes('origem: "reuniao"')],
   ['submenu Música possui início catálogo autores e sessões', ['Início', 'Catálogo', 'Autores', 'Sessões'].every((label) => adminMusicNavigationSource.includes(`label: "${label}"`)) && adminHeaderSource.includes('musicContextMenuItems') && adminMusicNavigationSource.includes('/admin/reuniao-publica/musica/catalogo')],
   ['submenu contextual é restrito às áreas configuradas', adminContextNavigationSource.includes('"reuniao-publica": [') && adminHeaderSource.includes('contextMenuItems &&')],
