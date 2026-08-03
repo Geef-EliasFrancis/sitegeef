@@ -377,7 +377,7 @@ export function AdminSidebar({ usuarioSistema }: AdminSidebarProps) {
         {showDashboardArea && (
           <div className="admin-nav-section">
             <h3 className="admin-nav-title">Site</h3>
-            <Link href="/escalas" target="_blank" rel="noopener noreferrer" className="admin-nav-item">
+            <Link href="/reuniao-publica/escalas" target="_blank" rel="noopener noreferrer" className="admin-nav-item">
               👁️ Escalas Públicas →
             </Link>
             <Link href="/biblioteca/leitor" target="_blank" rel="noopener noreferrer" className="admin-nav-item">

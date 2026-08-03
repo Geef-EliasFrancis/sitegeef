@@ -199,7 +199,7 @@ export default async function LeitorPage() {
             ) : (
               <div className="area-empty">
                 <p>{copy.noLoans}</p>
-                <Link href="/escalas" className="text-primary">
+                <Link href="/reuniao-publica/escalas" className="text-primary">
                   {copy.visitLibrary} →
                 </Link>
               </div>

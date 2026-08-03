@@ -8,7 +8,7 @@ import { calculateRange } from '@/lib/admin/query-helpers';
 
 function invalidateEscalasCache() {
   revalidateTag('public-escalas');
-  revalidatePath('/escalas');
+  revalidatePath('/reuniao-publica/escalas');
   revalidatePath('/admin/escalas');
   invalidateUserAreaCache();
 }

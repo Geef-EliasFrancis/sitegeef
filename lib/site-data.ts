@@ -70,7 +70,7 @@ export const navItems: NavItem[] = [
   // Institutional group (in "Mais" dropdown, ordered by relevance)
   { href: "/institucional", label: "Credibilidade e Filiações", labelEn: "Credibility and affiliations", group: "institucional" },
   { href: "/identidade-visual", label: "Identidade visual", labelEn: "Visual identity", group: "institucional" },
-  { href: "/escalas", label: "Escalas", labelEn: "Shifts", group: "institucional" },
+  { href: "/reuniao-publica/escalas", label: "Escalas", labelEn: "Shifts", group: "institucional" },
   { href: "/ao-vivo", label: "Ao vivo", labelEn: "Live", group: "institucional" },
   { href: "/estudos", label: "Estudos", labelEn: "Studies", group: "institucional" },
   { href: "/reuniao-publica/musicas", label: "Músicas", labelEn: "Songs", group: "institucional" },

@@ -68,7 +68,7 @@ export function SiteHeader({
         { href: "/reuniao-publica/musicas", label: "Músicas" },
         { href: "/reuniao-publica/avisos", label: "Avisos" },
         { href: "/reuniao-publica/leitura", label: "Leituras" },
-        { href: "/escalas", label: "Escalas" },
+        { href: "/reuniao-publica/escalas", label: "Escalas" },
         { href: "/reuniao-publica/live", label: "Ao vivo" },
       ],
     },

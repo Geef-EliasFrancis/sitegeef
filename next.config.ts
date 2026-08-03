@@ -119,6 +119,11 @@ const nextConfig: NextConfig = {
         permanent: true,
       },
       {
+        source: "/escalas",
+        destination: "/reuniao-publica/escalas",
+        permanent: true,
+      },
+      {
         source: "/musicas",
         destination: "/reuniao-publica/musicas",
         permanent: true,
