@@ -3651,6 +3651,91 @@ a.button.musica-icon-button {
   gap: 0.45rem;
 }
 
+.programacao-sequence {
+  list-style: none;
+  margin: 1rem 0 0;
+  padding: 0;
+}
+
+.programacao-sequence li {
+  align-items: center;
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: 3.2rem minmax(0, 1fr);
+  min-height: 3.1rem;
+  position: relative;
+}
+
+.programacao-sequence li:not(:last-child)::before {
+  background: linear-gradient(180deg, rgba(138, 0, 90, 0.38), rgba(93, 174, 48, 0.4));
+  content: "";
+  height: calc(100% - 1.25rem);
+  left: 1.55rem;
+  position: absolute;
+  top: 1.95rem;
+  width: 2px;
+}
+
+.programacao-sequence-marker {
+  align-items: center;
+  display: flex;
+  gap: 0.25rem;
+  z-index: 1;
+}
+
+.programacao-sequence-number {
+  align-items: center;
+  background: var(--uva, #8a005a);
+  border: 2px solid rgba(255, 255, 255, 0.9);
+  border-radius: 999px;
+  color: #fff;
+  display: inline-flex;
+  font-size: 0.7rem;
+  font-weight: 700;
+  height: 1.7rem;
+  justify-content: center;
+  width: 1.7rem;
+}
+
+.programacao-sequence-icon {
+  align-items: center;
+  background: rgba(255, 255, 255, 0.86);
+  border: 1px solid rgba(138, 0, 90, 0.2);
+  border-radius: 0.55rem;
+  color: var(--uva, #8a005a);
+  display: inline-flex;
+  height: 1.7rem;
+  justify-content: center;
+  width: 1.7rem;
+}
+
+.programacao-sequence-icon svg {
+  height: 1rem;
+  width: 1rem;
+}
+
+.programacao-sequence-label {
+  color: var(--text, #263229);
+  font-weight: 600;
+}
+
+@media (max-width: 600px) {
+  .programacao-sequence li {
+    gap: 0.55rem;
+    grid-template-columns: 2.8rem minmax(0, 1fr);
+    min-height: 2.85rem;
+  }
+
+  .programacao-sequence li:not(:last-child)::before {
+    left: 1.35rem;
+    top: 1.8rem;
+  }
+
+  .programacao-sequence-label {
+    font-size: 0.92rem;
+  }
+}
+
 .reuniao-publica-avisos-hero {
   padding: 1rem 1.25rem;
 }
