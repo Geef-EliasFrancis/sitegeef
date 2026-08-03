@@ -1,7 +1,7 @@
 import { MusicaPassesPlayer } from "@/components/musicas/musica-passes-player";
 import { listMusicaPasses } from "@/lib/musica-passes";
 
-export const metadata = { title: "Passes - Músicas GEEF" };
+export const metadata = { title: "Músicas para passe espiritual - GEEF" };
 
 export default async function MusicaPassesPage() {
   const passes = await listMusicaPasses();
@@ -12,7 +12,7 @@ export default async function MusicaPassesPage() {
         <div className="musica-catalog-header">
           <div className="musica-toolbar">
             <div className="musica-toolbar-title">
-              <h1>Passes</h1>
+              <h1>Músicas para passe espiritual</h1>
             </div>
           </div>
           <MusicaPassesPlayer items={passes} />
