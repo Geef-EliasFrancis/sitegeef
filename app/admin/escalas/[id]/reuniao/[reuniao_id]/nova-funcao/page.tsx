@@ -20,6 +20,9 @@ async function handleSubmit(formData: FormData, escalaId: string, reuniaoId: str
 
     redirect(buildFlashNoticeUrl(`/admin/escalas/${escalaId}`, { variant: 'success', message: 'Função adicionada.' }));
   } catch (error) {
+    if (typeof error === 'object' && error !== null && 'digest' in error && String((error as { digest?: string }).digest || '').startsWith('NEXT_REDIRECT')) {
+      throw error;
+    }
     console.error('Erro ao adicionar função:', error);
     redirect(buildFlashNoticeUrl(`/admin/escalas/${escalaId}`, { variant: 'error', message: 'Não foi possível adicionar a função.' }));
     return;

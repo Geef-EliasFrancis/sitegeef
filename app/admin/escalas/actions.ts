@@ -5,6 +5,12 @@ import { createClient } from '@/lib/supabase/server';
 import { invalidateUserAreaCache } from '@/lib/areas/invalidate-user-area';
 import { invalidateAdminDashboardCache } from '@/lib/admin/cache';
 import { calculateRange } from '@/lib/admin/query-helpers';
+import { checkModuleAccess } from '@/lib/auth/permissions';
+
+async function requireEscalasAccess() {
+  const allowed = await checkModuleAccess('pode_escalas', ['coord_passe']);
+  if (!allowed) throw new Error('Acesso negado: escala');
+}
 
 function invalidateEscalasCache() {
   revalidateTag('public-escalas');
@@ -148,7 +154,16 @@ export async function updateEscalaStatus(id: string, status: string) {
 }
 
 export async function addFuncao(reuniaoId: string, funcaoId: string, pessoaId: string, substitutoId?: string) {
+  await requireEscalasAccess();
   const supabase = await createClient();
+
+  const [{ data: funcao }, { data: pessoa }, { data: vinculoExistente }] = await Promise.all([
+    supabase.from('funcoes').select('id, ativo').eq('id', funcaoId).maybeSingle(),
+    supabase.from('pessoas').select('id, status').eq('id', pessoaId).maybeSingle(),
+    supabase.from('escala_funcoes').select('id').eq('reuniao_id', reuniaoId).eq('funcao_id', funcaoId).maybeSingle(),
+  ]);
+
+  if (!funcao?.ativo || pessoa?.status !== 'ativo' || vinculoExistente) return null;
 
   const { data, error } = await supabase
     .from('escala_funcoes')
@@ -170,7 +185,11 @@ export async function addFuncao(reuniaoId: string, funcaoId: string, pessoaId: s
 }
 
 export async function updateFuncao(id: string, pessoaId: string, substitutoId?: string) {
+  await requireEscalasAccess();
   const supabase = await createClient();
+
+  const { data: pessoa } = await supabase.from('pessoas').select('id, status').eq('id', pessoaId).maybeSingle();
+  if (pessoa?.status !== 'ativo') return { success: false };
 
   const { error } = await supabase
     .from('escala_funcoes')
@@ -187,6 +206,7 @@ export async function updateFuncao(id: string, pessoaId: string, substitutoId?: 
 }
 
 export async function removeFuncao(id: string) {
+  await requireEscalasAccess();
   const supabase = await createClient();
 
   const { error } = await supabase

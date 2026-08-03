@@ -20,6 +20,9 @@ async function handleUpdate(formData: FormData, escalaId: string, funcaoId: stri
 
     redirect(buildFlashNoticeUrl(`/admin/escalas/${escalaId}`, { variant: 'success', message: 'Função salva.' }));
   } catch (error) {
+    if (typeof error === 'object' && error !== null && 'digest' in error && String((error as { digest?: string }).digest || '').startsWith('NEXT_REDIRECT')) {
+      throw error;
+    }
     console.error('Erro ao atualizar função:', error);
     redirect(buildFlashNoticeUrl(`/admin/escalas/${escalaId}`, { variant: 'error', message: 'Não foi possível salvar a função.' }));
     return;
@@ -33,6 +36,9 @@ async function handleRemove(escalaId: string, funcaoId: string) {
     await removeFuncao(funcaoId);
     redirect(buildFlashNoticeUrl(`/admin/escalas/${escalaId}`, { variant: 'success', message: 'Função removida.' }));
   } catch (error) {
+    if (typeof error === 'object' && error !== null && 'digest' in error && String((error as { digest?: string }).digest || '').startsWith('NEXT_REDIRECT')) {
+      throw error;
+    }
     console.error('Erro ao remover função:', error);
     redirect(buildFlashNoticeUrl(`/admin/escalas/${escalaId}`, { variant: 'error', message: 'Não foi possível remover a função.' }));
     return;
