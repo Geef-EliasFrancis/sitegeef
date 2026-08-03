@@ -1709,6 +1709,18 @@ body.reuniao-publica-display-route .site-shell-main {
   letter-spacing: 0.04em;
 }
 
+.musica-passes-order-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  white-space: nowrap;
+}
+
+.musica-passes-order-actions form {
+  display: inline-flex;
+  margin: 0;
+}
+
 @media (max-width: 767px) {
   .musica-passes-playlist {
     max-width: none;
