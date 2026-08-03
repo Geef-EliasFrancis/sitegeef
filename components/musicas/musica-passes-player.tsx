@@ -8,7 +8,15 @@ export function MusicaPassesPlayer({ items }: { items: MusicaPasse[] }) {
   const current = items[index];
 
   useEffect(() => { setIndex(0); }, [items]);
-  if (!current) return <p className="area-empty">Nenhum áudio disponível.</p>;
+  if (!current) {
+    return (
+      <div className="musica-passes-player musica-passes-player--empty">
+        <p className="musica-passes-current">Player de passes</p>
+        <audio controls preload="metadata" aria-label="Player de passes vazio" />
+        <p className="musica-passes-count">Nenhum áudio cadastrado ainda.</p>
+      </div>
+    );
+  }
 
   return (
     <div className="musica-passes-player">

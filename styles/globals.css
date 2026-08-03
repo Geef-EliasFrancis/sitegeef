@@ -1515,6 +1515,10 @@ body.reuniao-publica-display-route .site-shell-main {
   width: 100%;
 }
 
+.musica-passes-player--empty audio {
+  opacity: 0.65;
+}
+
 .musica-passes-current,
 .musica-passes-count {
   margin: 0;
