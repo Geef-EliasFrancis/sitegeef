@@ -97,7 +97,7 @@ export function SiteHeader({
     },
   ];
   const musicLinks = [
-    { href: "/reuniao-publica", label: "Reunião" },
+    { href: "/reuniao-publica", label: "Voltar" },
     { href: "/musicas", label: "Músicas" },
   ];
   const isMusicPath = pathname === "/musicas" || pathname.startsWith("/musicas/");
