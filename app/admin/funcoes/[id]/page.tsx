@@ -19,6 +19,9 @@ async function handleUpdate(id: string, formData: FormData) {
 
     redirect(buildFlashNoticeUrl(`/admin/funcoes/${id}`, { variant: 'success', message: 'Função salva.' }));
   } catch (error) {
+    if (typeof error === 'object' && error !== null && 'digest' in error && String((error as { digest?: string }).digest || '').startsWith('NEXT_REDIRECT')) {
+      throw error;
+    }
     console.error('Erro ao atualizar função:', error);
     redirect(buildFlashNoticeUrl(`/admin/funcoes/${id}`, { variant: 'error', message: 'Não foi possível salvar a função.' }));
     return;
@@ -32,6 +35,9 @@ async function handleToggleStatus(id: string, novoStatus: boolean) {
     await toggleFuncaoStatus(id, novoStatus);
     redirect(buildFlashNoticeUrl(`/admin/funcoes/${id}`, { variant: 'success', message: 'Status atualizado.' }));
   } catch (error) {
+    if (typeof error === 'object' && error !== null && 'digest' in error && String((error as { digest?: string }).digest || '').startsWith('NEXT_REDIRECT')) {
+      throw error;
+    }
     console.error('Erro ao atualizar status:', error);
     redirect(buildFlashNoticeUrl(`/admin/funcoes/${id}`, { variant: 'error', message: 'Não foi possível atualizar o status.' }));
     return;

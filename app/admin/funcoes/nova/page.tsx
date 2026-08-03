@@ -16,8 +16,15 @@ async function handleSubmit(formData: FormData) {
       descricao: (formData.get('descricao') as string) || undefined,
     });
 
+    if (!funcao) {
+      redirect(buildFlashNoticeUrl('/admin/funcoes', { variant: 'error', message: 'Não foi possível criar a função.' }));
+    }
+
     redirect(buildFlashNoticeUrl(`/admin/funcoes/${funcao.id}`, { variant: 'success', message: 'Função criada.' }));
   } catch (error) {
+    if (typeof error === 'object' && error !== null && 'digest' in error && String((error as { digest?: string }).digest || '').startsWith('NEXT_REDIRECT')) {
+      throw error;
+    }
     console.error('Erro ao criar função:', error);
     redirect(buildFlashNoticeUrl('/admin/funcoes', { variant: 'error', message: 'Não foi possível criar a função.' }));
     return;

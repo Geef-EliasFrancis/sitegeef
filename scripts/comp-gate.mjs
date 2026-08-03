@@ -20,6 +20,8 @@ const globalsCss = fs.readFileSync('styles/globals.css', 'utf8');
 const siteHeaderCss = fs.readFileSync('styles/site-header.css', 'utf8');
 const sidebarCss = fs.readFileSync('styles/admin-sidebar.css', 'utf8');
 const adminSidebarSource = fs.readFileSync('components/admin/admin-sidebar.tsx', 'utf8');
+const functionsPageSource = fs.readFileSync('app/admin/funcoes/page.tsx', 'utf8');
+const functionsActionsSource = fs.readFileSync('app/admin/funcoes/actions.ts', 'utf8');
 const musicCatalogSource = fs.readFileSync('components/admin/musicas/musicas-catalog-table.tsx', 'utf8');
 const avisosSource = fs.readFileSync('app/admin/reuniao-publica/avisos/page.tsx', 'utf8');
 const avisosActionsSource = fs.readFileSync('app/admin/reuniao-publica/avisos/actions.ts', 'utf8');
@@ -179,6 +181,7 @@ const responsiveContract = [
   ['submenu contextual é restrito às áreas configuradas', adminContextNavigationSource.includes('"reuniao-publica": [') && adminHeaderSource.includes('contextMenuItems &&')],
   ['submenu GEEF possui instituição e seis telas', ['Início', 'Instituição', 'Dados', 'Endereço', 'Agenda', 'Departamentos', 'Contas'].every((label) => adminContextNavigationSource.includes(`label: "${label}"`)) && adminContextNavigationSource.includes("geef: [")],
   ['submenu Tarefeiros possui início pessoas e funções', ['Início', 'Pessoas', 'Funções'].every((label) => adminContextNavigationSource.includes(`label: "${label}"`)) && adminContextNavigationSource.includes("pessoas: [") && fs.existsSync('app/admin/pessoas/inicio/page.tsx')],
+  ['funções possuem vínculo escalável por toggle', functionsPageSource.includes('Escalável') && functionsPageSource.includes('toggleFuncaoFromList') && functionsPageSource.includes('funcao.ativo ? \'Sim\' : \'Não\'') && functionsActionsSource.includes('getFuncoes(onlyActive = true)') && functionsActionsSource.includes('.update({ ativo })')],
   ['submenu Sistema possui cinco telas', ['Início', 'Observabilidade', 'Migrações', 'Idiomas', 'Fix Usuários'].every((label) => adminContextNavigationSource.includes(`label: "${label}"`)) && adminContextNavigationSource.includes("sistema: [")],
   ['home do painel não duplica o início no submenu', !adminHeaderSource.includes('painel: [')],
   ['estilos admin não escondem o cabeçalho público', !adminCss.includes('.site-shell > .site-header') && !adminCss.includes('.site-shell > .site-footer')],

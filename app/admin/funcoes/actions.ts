@@ -1,16 +1,22 @@
 'use server';
 
+import { revalidatePath } from 'next/cache';
 import { createClient } from '@/lib/supabase/server';
 import { invalidateAdminDashboardCache } from '@/lib/admin/cache';
+import { checkModuleAccess } from '@/lib/auth/permissions';
 
-export async function getFuncoes() {
+async function requireFuncoesAccess() {
+  const allowed = await checkModuleAccess('pode_escalas', ['coord_passe']);
+  if (!allowed) throw new Error('Acesso negado: cadastro de funções');
+}
+
+export async function getFuncoes(onlyActive = true) {
   const supabase = await createClient();
 
-  const { data, error } = await supabase
-    .from('funcoes')
-    .select('*')
-    .eq('ativo', true)
-    .order('nome');
+  let query = supabase.from('funcoes').select('*').order('nome');
+  if (onlyActive) query = query.eq('ativo', true);
+
+  const { data, error } = await query;
 
   if (error) return [];
 
@@ -28,7 +34,6 @@ export async function getFuncaoById(id: string) {
 
   if (error) return null;
 
-  invalidateAdminDashboardCache();
   return data;
 }
 
@@ -36,6 +41,7 @@ export async function createFuncao(formData: {
   nome: string;
   descricao?: string;
 }) {
+  await requireFuncoesAccess();
   const supabase = await createClient();
 
   const { data, error } = await supabase
@@ -52,6 +58,9 @@ export async function createFuncao(formData: {
 
   if (error) return null;
 
+  revalidatePath('/admin/funcoes');
+  revalidatePath('/admin/escalas');
+  invalidateAdminDashboardCache();
   return data;
 }
 
@@ -62,6 +71,7 @@ export async function updateFuncao(
     descricao?: string;
   }
 ) {
+  await requireFuncoesAccess();
   const supabase = await createClient();
 
   const { error } = await supabase
@@ -73,11 +83,14 @@ export async function updateFuncao(
 
   if (error) return { success: false };
 
+  revalidatePath('/admin/funcoes');
+  revalidatePath('/admin/escalas');
   invalidateAdminDashboardCache();
   return { success: true };
 }
 
 export async function toggleFuncaoStatus(id: string, ativo: boolean) {
+  await requireFuncoesAccess();
   const supabase = await createClient();
 
   const { error } = await supabase
@@ -87,6 +100,8 @@ export async function toggleFuncaoStatus(id: string, ativo: boolean) {
 
   if (error) return { success: false };
 
+  revalidatePath('/admin/funcoes');
+  revalidatePath('/admin/escalas');
   invalidateAdminDashboardCache();
   return { success: true };
 }
