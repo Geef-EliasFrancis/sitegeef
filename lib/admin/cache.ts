@@ -75,5 +75,6 @@ export function invalidateMusicasCache() {
 
 export function invalidateReuniaoPublicaAvisosCache() {
   revalidatePath("/admin/reuniao-publica/avisos");
+  revalidatePath("/reuniao-publica/avisos");
   revalidatePath("/reuniao-publica/live");
 }
