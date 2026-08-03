@@ -21,5 +21,5 @@ export default async function ProgramacaoPage() {
     return null;
   }
 
-  return <ContentPageView page={page} locale={locale} slug="programacao" />;
+  return <ContentPageView page={page} locale={locale} slug="programacao" showBrandKicker={false} />;
 }

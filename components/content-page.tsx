@@ -5,22 +5,25 @@ type ContentPageViewProps = {
   page: ContentPage;
   locale: Locale;
   slug: string;
+  showBrandKicker?: boolean;
 };
 
-export function ContentPageView({ page, locale, slug }: Readonly<ContentPageViewProps>) {
+export function ContentPageView({ page, locale, slug, showBrandKicker = true }: Readonly<ContentPageViewProps>) {
   const isAgenda = slug === "agenda";
 
   return (
     <main className={`content-page${isAgenda ? " content-page--compact" : ""}`}>
       <section className="content-hero">
-        <div className="content-hero-top">
-          <div className="content-kicker">
-            <p className="eyebrow">GEEF</p>
-            <span className="content-badge-text">
-              {locale === "en" ? "Grupo Espírita Elias Francis" : "Grupo Espírita Elias Francis"}
-            </span>
+        {showBrandKicker && (
+          <div className="content-hero-top">
+            <div className="content-kicker">
+              <p className="eyebrow">GEEF</p>
+              <span className="content-badge-text">
+                {locale === "en" ? "Grupo Espírita Elias Francis" : "Grupo Espírita Elias Francis"}
+              </span>
+            </div>
           </div>
-        </div>
+        )}
 
         <div className="content-hero-body">
           <div className="content-copy">

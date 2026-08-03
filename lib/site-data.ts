@@ -301,7 +301,7 @@ export const contentPages: Record<string, ContentPage> = {
   },
   programacao: {
     title: "Programação",
-    summary: "Um roteiro simples para acompanhar a reunião pública do GEEF.",
+    summary: "Um roteiro simples para acompanhar a reunião pública.",
     intro: "A reunião pública acontece às quintas-feiras, das 19h às 20h, com momentos de acolhimento, estudo, reflexão e prece.",
     ctaLabel: "Ver músicas",
     ctaHref: publicHref("/reuniao-publica/musicas"),
