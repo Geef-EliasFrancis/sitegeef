@@ -1519,6 +1519,128 @@ body.reuniao-publica-display-route .site-shell-main {
   opacity: 0.65;
 }
 
+.musica-passes-playlist {
+  display: grid;
+  gap: 0.75rem;
+  max-width: 42rem;
+}
+
+.musica-passes-player-heading,
+.musica-passes-list-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.musica-passes-eyebrow,
+.musica-passes-list-heading span {
+  color: var(--muted);
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.musica-passes-controls {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.musica-passes-control,
+.musica-passes-track {
+  border: 1px solid var(--line);
+  color: var(--text);
+  cursor: pointer;
+  font: inherit;
+}
+
+.musica-passes-control {
+  min-height: 2.5rem;
+  padding: 0.45rem 0.8rem;
+  border-radius: 0.7rem;
+  background: var(--surface-secondary);
+  font-size: 0.88rem;
+  font-weight: 700;
+}
+
+.musica-passes-control--primary {
+  color: var(--accent-contrast, #fff);
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+.musica-passes-control:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
+}
+
+.musica-passes-control:not(:disabled):hover,
+.musica-passes-control:not(:disabled):focus-visible,
+.musica-passes-track:hover,
+.musica-passes-track:focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--accent) 40%, transparent);
+  outline-offset: 2px;
+}
+
+.musica-passes-list {
+  display: grid;
+  gap: 0.4rem;
+  padding: 0.85rem;
+  border: 1px solid var(--line);
+  border-radius: 1rem;
+  background: var(--surface-secondary);
+}
+
+.musica-passes-list-heading h2 {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.musica-passes-track {
+  display: grid;
+  grid-template-columns: 2rem minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0.7rem;
+  width: 100%;
+  min-width: 0;
+  padding: 0.65rem 0.7rem;
+  border-radius: 0.7rem;
+  background: var(--surface-tertiary);
+  text-align: left;
+}
+
+.musica-passes-track--active {
+  color: var(--accent-contrast, #fff);
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+.musica-passes-track-number,
+.musica-passes-track-action {
+  font-size: 0.76rem;
+  font-weight: 800;
+}
+
+.musica-passes-track-number {
+  opacity: 0.7;
+}
+
+.musica-passes-track-title {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.musica-passes-empty-copy,
+.musica-passes-list-empty {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.88rem;
+}
+
 .musica-passes-current,
 .musica-passes-count {
   margin: 0;
@@ -1541,6 +1663,21 @@ body.reuniao-publica-display-route .site-shell-main {
 }
 
 @media (max-width: 767px) {
+  .musica-passes-playlist {
+    max-width: none;
+  }
+
+  .musica-passes-player,
+  .musica-passes-list {
+    padding: 0.75rem;
+  }
+
+  .musica-passes-track {
+    grid-template-columns: 1.8rem minmax(0, 1fr) auto;
+    gap: 0.5rem;
+    padding: 0.6rem;
+  }
+
   .musica-passes-admin-form {
     grid-template-columns: 1fr;
   }

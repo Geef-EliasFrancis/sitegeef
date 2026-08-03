@@ -6,30 +6,57 @@ import type { MusicaPasse } from "@/lib/musica-passes";
 export function MusicaPassesPlayer({ items }: { items: MusicaPasse[] }) {
   const [index, setIndex] = useState(0);
   const current = items[index];
+  const hasItems = items.length > 0;
+
+  const selectPrevious = () => setIndex((value) => (value - 1 + items.length) % items.length);
+  const selectNext = () => setIndex((value) => (value + 1) % items.length);
 
   useEffect(() => { setIndex(0); }, [items]);
-  if (!current) {
-    return (
-      <div className="musica-passes-player musica-passes-player--empty">
-        <p className="musica-passes-current">Player de passes</p>
-        <audio controls preload="metadata" aria-label="Player de passes vazio" />
-        <p className="musica-passes-count">Nenhum áudio cadastrado ainda.</p>
-      </div>
-    );
-  }
 
   return (
-    <div className="musica-passes-player">
-      <p className="musica-passes-current">{current.titulo}</p>
-      <audio
-        key={current.id}
-        controls
-        preload="metadata"
-        aria-label={`Tocar ${current.titulo}`}
-        onEnded={() => setIndex((value) => (value + 1) % items.length)}
-        src={current.audio_url}
-      />
-      {items.length > 1 ? <p className="musica-passes-count">Faixa {index + 1} de {items.length}</p> : null}
+    <div className="musica-passes-playlist">
+      <div className={`musica-passes-player${hasItems ? "" : " musica-passes-player--empty"}`}>
+        <div className="musica-passes-player-heading">
+          <div>
+            <span className="musica-passes-eyebrow">Player de passes</span>
+            <p className="musica-passes-current">{current?.titulo ?? "Nenhum áudio selecionado"}</p>
+          </div>
+          <span className="musica-passes-count">{hasItems ? `${index + 1} de ${items.length}` : "Vazio"}</span>
+        </div>
+        <audio
+          key={current?.id ?? "empty"}
+          controls
+          preload="metadata"
+          aria-label={current ? `Tocar ${current.titulo}` : "Player de passes vazio"}
+          onEnded={hasItems ? selectNext : undefined}
+          src={current?.audio_url}
+        />
+        <div className="musica-passes-controls" aria-label="Controles da playlist">
+          <button type="button" className="musica-passes-control" onClick={selectPrevious} disabled={!hasItems} aria-label="Faixa anterior" title="Faixa anterior">← Anterior</button>
+          <button type="button" className="musica-passes-control musica-passes-control--primary" onClick={selectNext} disabled={!hasItems} aria-label="Próxima faixa" title="Próxima faixa">Próxima →</button>
+        </div>
+        {!hasItems ? <p className="musica-passes-empty-copy">Nenhum áudio cadastrado ainda.</p> : null}
+      </div>
+
+      <div className="musica-passes-list" aria-label="Playlist ativa">
+        <div className="musica-passes-list-heading">
+          <h2>Playlist ativa</h2>
+          <span>{items.length} {items.length === 1 ? "áudio" : "áudios"}</span>
+        </div>
+        {hasItems ? items.map((item, itemIndex) => (
+          <button
+            type="button"
+            key={item.id}
+            className={`musica-passes-track${itemIndex === index ? " musica-passes-track--active" : ""}`}
+            onClick={() => setIndex(itemIndex)}
+            aria-current={itemIndex === index ? "true" : undefined}
+          >
+            <span className="musica-passes-track-number">{String(itemIndex + 1).padStart(2, "0")}</span>
+            <span className="musica-passes-track-title">{item.titulo}</span>
+            <span className="musica-passes-track-action">{itemIndex === index ? "Tocando" : "Ouvir"}</span>
+          </button>
+        )) : <p className="musica-passes-list-empty">A playlist aparecerá aqui quando houver áudios ativos.</p>}
+      </div>
     </div>
   );
 }
