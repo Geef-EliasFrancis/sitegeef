@@ -31,10 +31,7 @@ export function MusicaPassesPlayer({ items }: { items: MusicaPasse[] }) {
     <div className="musica-passes-playlist">
       <div className={`musica-passes-player${hasItems ? "" : " musica-passes-player--empty"}`}>
         <div className="musica-passes-player-heading">
-          <div>
-            <span className="musica-passes-eyebrow">Player de passes</span>
-            <p className="musica-passes-current">{current?.titulo ?? "Nenhum áudio selecionado"}</p>
-          </div>
+          <p className="musica-passes-current">{current?.titulo ?? "Nenhum áudio selecionado"}</p>
           <span className="musica-passes-count">{hasItems ? `${index + 1} de ${items.length}` : "Vazio"}</span>
         </div>
         <audio
@@ -49,8 +46,8 @@ export function MusicaPassesPlayer({ items }: { items: MusicaPasse[] }) {
           src={current?.audio_url}
         />
         <div className="musica-passes-controls" aria-label="Controles da playlist">
-          <button type="button" className="musica-passes-control" onClick={selectPrevious} disabled={!hasItems} aria-label="Faixa anterior" title="Faixa anterior">← Anterior</button>
-          <button type="button" className="musica-passes-control musica-passes-control--primary" onClick={advancePlaylist} disabled={!hasItems} aria-label="Próxima faixa" title="Próxima faixa">Próxima →</button>
+          <button type="button" className="musica-passes-control" onClick={selectPrevious} disabled={!hasItems} aria-label="Faixa anterior" title="Faixa anterior">←</button>
+          <button type="button" className="musica-passes-control musica-passes-control--primary" onClick={advancePlaylist} disabled={!hasItems} aria-label="Próxima faixa" title="Próxima faixa">→</button>
         </div>
         {!hasItems ? <p className="musica-passes-empty-copy">Nenhum áudio cadastrado ainda.</p> : null}
       </div>
