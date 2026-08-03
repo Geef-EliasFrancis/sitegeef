@@ -107,6 +107,7 @@ export function SiteHeader({
   const contextLinks = isMusicPath ? musicLinks : activeGroup?.links ?? [];
   const contextTitle = isMusicPath ? "Músicas" : activeGroup?.label;
   const isContextLinkActive = (href: string) => {
+    if (isMusicPath && href === "/reuniao-publica") return false;
     if (isMusicPath && (href === "/reuniao-publica/musicas" || href === "/musicas")) return pathname === href;
     return pathname === href || pathname.startsWith(`${href}/`);
   };
