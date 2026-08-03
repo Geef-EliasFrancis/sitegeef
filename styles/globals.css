@@ -3647,6 +3647,61 @@ a.button.musica-icon-button {
   gap: 1rem;
 }
 
+.reuniao-publica-avisos-page {
+  gap: 0.45rem;
+}
+
+.reuniao-publica-avisos-hero {
+  padding: 1rem 1.25rem;
+}
+
+.reuniao-publica-avisos-hero .content-hero-body {
+  padding: 0;
+}
+
+.reuniao-publica-avisos-hero .content-copy-body {
+  margin-top: 0.2rem;
+}
+
+.reuniao-publica-avisos-list {
+  display: grid;
+  gap: 0.45rem;
+  grid-template-columns: 1fr;
+}
+
+.reuniao-publica-aviso-item {
+  padding: 0.7rem 0.9rem;
+}
+
+.reuniao-publica-aviso-item .content-card-heading-row {
+  align-items: center;
+  display: flex;
+  gap: 0.75rem;
+  justify-content: space-between;
+}
+
+.reuniao-publica-aviso-item h2 {
+  font-size: clamp(1rem, 1.8vw, 1.2rem);
+  margin: 0;
+}
+
+.reuniao-publica-aviso-item p {
+  line-height: 1.35;
+  margin: 0.3rem 0 0;
+}
+
+@media (max-width: 600px) {
+  .reuniao-publica-avisos-hero {
+    padding: 0.8rem 0.9rem;
+  }
+
+  .reuniao-publica-aviso-item .content-card-heading-row {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+}
+
 .biblioteca-books-hero .content-hero-body {
   align-items: end;
   display: flex;

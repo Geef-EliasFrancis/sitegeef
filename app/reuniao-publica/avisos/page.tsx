@@ -10,8 +10,8 @@ export default async function ReuniaoPublicaAvisosPage() {
   const avisos = await listReuniaoPublicaAvisos(true);
 
   return (
-    <main className="content-page content-page--compact public-page public-page--animated">
-      <section className="content-hero">
+    <main className="content-page content-page--compact public-page public-page--animated reuniao-publica-avisos-page">
+      <section className="content-hero reuniao-publica-avisos-hero">
         <div className="content-hero-body">
           <div className="content-copy">
             <h1>Avisos</h1>
@@ -22,11 +22,11 @@ export default async function ReuniaoPublicaAvisosPage() {
         </div>
       </section>
 
-      <section className="content-grid" aria-label="Avisos da reunião pública">
+      <section className="content-grid reuniao-publica-avisos-list" aria-label="Avisos da reunião pública">
         {avisos.length === 0 ? (
-          <article className="content-card"><h2>Nenhum aviso</h2><p>Não há comunicados publicados no momento.</p></article>
+          <article className="content-card reuniao-publica-aviso-item"><h2>Nenhum aviso</h2><p>Não há comunicados publicados no momento.</p></article>
         ) : avisos.map((aviso) => (
-          <article key={aviso.id} className="content-card">
+          <article key={aviso.id} className="content-card reuniao-publica-aviso-item">
             <div className="content-card-heading-row">
               <h2>{aviso.titulo}</h2>
               {aviso.quando && <span className="content-badge-text">{aviso.quando}</span>}
