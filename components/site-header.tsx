@@ -63,6 +63,7 @@ export function SiteHeader({
       icon: "♫",
       description: "Acompanhe a programação, as músicas e as escalas da casa.",
       links: [
+        { href: "/reuniao-publica", label: "Início" },
         { href: "/reuniao-publica/programacao", label: "Programação" },
         { href: "/reuniao-publica/musicas", label: "Músicas" },
         { href: "/reuniao-publica/live", label: "Ao vivo" },
@@ -109,6 +110,7 @@ export function SiteHeader({
   const contextTitle = isMusicPath ? "Músicas" : activeGroup?.label;
   const isContextLinkActive = (href: string) => {
     if (isMusicPath && href === "/reuniao-publica") return false;
+    if (href === "/reuniao-publica") return pathname === href;
     if (isMusicPath && (href === "/reuniao-publica/musicas" || href === "/musicas")) return pathname === href;
     return pathname === href || pathname.startsWith(`${href}/`);
   };
