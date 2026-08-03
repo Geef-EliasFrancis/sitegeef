@@ -1697,6 +1697,18 @@ body.reuniao-publica-display-route .site-shell-main {
   font-weight: 800;
 }
 
+.musica-passes-file-type {
+  display: inline-flex;
+  padding: 0.2rem 0.45rem;
+  border: 1px solid var(--line);
+  border-radius: 0.45rem;
+  background: var(--surface-tertiary);
+  color: var(--muted);
+  font-size: 0.74rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+}
+
 @media (max-width: 767px) {
   .musica-passes-playlist {
     max-width: none;
