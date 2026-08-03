@@ -103,7 +103,8 @@ export function SiteHeader({
   const isMusicPath = pathname === "/reuniao-publica/musicas" || pathname.startsWith("/reuniao-publica/musicas/") || pathname === "/musicas" || pathname.startsWith("/musicas/");
   const routeGroup = navGroups.find((group) => pathname === group.href)
     ?? navGroups.find((group) => group.links.some((item) => pathname === item.href || pathname.startsWith(`${item.href}/`)));
-  const activeGroup = navGroups.find((group) => group.key === openGroup) ?? routeGroup;
+  const activeGroupKey = openGroup ?? routeGroup?.key ?? null;
+  const activeGroup = navGroups.find((group) => group.key === activeGroupKey) ?? routeGroup;
   const contextLinks = isMusicPath ? musicLinks : activeGroup?.links ?? [];
   const contextTitle = isMusicPath ? "Músicas" : activeGroup?.label;
   const isContextLinkActive = (href: string) => {
@@ -143,7 +144,7 @@ export function SiteHeader({
 
       <Tabs.Root
         className="site-nav-tabs"
-        value={openGroup ?? undefined}
+        value={activeGroupKey ?? undefined}
         onValueChange={setOpenGroup}
         orientation="horizontal"
       >
@@ -153,7 +154,7 @@ export function SiteHeader({
               HOME
             </Link>
             {navGroups.map((group) => (
-              <div key={group.key} className={`site-nav-group${openGroup === group.key ? " is-active" : ""}`}>
+              <div key={group.key} className={`site-nav-group${activeGroupKey === group.key ? " is-active" : ""}`}>
                 <Tabs.Trigger asChild value={group.key}>
                   <button
                     type="button"
