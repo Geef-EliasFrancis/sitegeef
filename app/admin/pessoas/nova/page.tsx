@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
-import { createPessoa, getPessoaById, removeVinculo, addVinculo, updatePessoa } from '../actions';
+import { createPessoa, getPessoaById, getPessoasAllowlist, removeVinculo, addVinculo, updatePessoa } from '../actions';
 import { type tipo_vinculo } from '@/lib/supabase/types';
 import { buildFlashNoticeUrl } from '@/lib/notificacoes/flash-notice';
 import { LgpdFormNotice } from '@/components/lgpd/lgpd-form-notice';
@@ -84,6 +84,7 @@ async function savePessoaStep(formData: FormData) {
   try {
     if (step === 'identificacao') {
       const identificacao = {
+        allowlist_id: textValue(formData, 'allowlist_id'),
         nome: textValue(formData, 'nome'),
         nome_social: textValue(formData, 'nome_social'),
         data_nascimento: textValue(formData, 'data_nascimento'),
@@ -102,6 +103,7 @@ async function savePessoaStep(formData: FormData) {
 
       if (!pessoaId) {
         const pessoa = await createPessoa({
+          allowlist_id: identificacao.allowlist_id,
           nome: identificacao.nome,
           nome_social: identificacao.nome_social,
           data_nascimento: identificacao.data_nascimento,
@@ -244,6 +246,7 @@ async function NovaPessoaContent({ searchParams }: { searchParams: { id?: string
   const requestedStep = isPessoaStep(searchParams.tab) ? searchParams.tab : 'identificacao';
   const activeStep = pessoaId ? requestedStep : 'identificacao';
   const pessoaData = pessoaId ? await getPessoaById(pessoaId) : { pessoa: null, vinculos: [] };
+  const allowlist = pessoaId ? [] : await getPessoasAllowlist(true);
   const pessoa = pessoaData.pessoa;
   const vinculosSet = new Set(pessoaData.vinculos.map((v: any) => v.vinculo));
 
@@ -321,6 +324,20 @@ async function NovaPessoaContent({ searchParams }: { searchParams: { id?: string
 
             {activeStep === 'identificacao' && (
               <div className="module-grid">
+                {!pessoaId && (
+                  <label className="profile-form-field" style={{ gridColumn: '1 / -1' }}>
+                    <span>Autorização da allowlist *</span>
+                    <select name="allowlist_id" required className="profile-form-input" defaultValue="">
+                      <option value="">Selecione uma pessoa autorizada</option>
+                      {allowlist.map((item) => (
+                        <option key={item.id} value={item.id}>
+                          {item.nome}{item.email ? ` — ${item.email}` : ''}
+                        </option>
+                      ))}
+                    </select>
+                    {allowlist.length === 0 ? <small>Cadastre uma autorização antes de criar uma pessoa.</small> : null}
+                  </label>
+                )}
                 <label className="profile-form-field" style={{ gridColumn: '1 / -1' }}>
                   <span>Nome completo *</span>
                   <input type="text" name="nome" required defaultValue={pessoa?.nome || ''} className="profile-form-input" />

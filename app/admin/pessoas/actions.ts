@@ -32,6 +32,15 @@ type PessoaUpdate = Partial<{
   autoriza_imagem_voz: boolean;
 }>;
 
+export type PessoaAllowlistItem = {
+  id: string;
+  nome: string;
+  email: string | null;
+  cpf: string | null;
+  observacoes: string | null;
+  ativo: boolean;
+};
+
 async function requirePessoasAccess() {
   const allowed = await checkModuleAccess('pode_pessoas', [...PESSOAS_PROFILES]);
   if (!allowed) throw new Error('Acesso negado: cadastro de pessoas');
@@ -128,6 +137,55 @@ export async function getPessoas(
   }
 }
 
+export async function getPessoasAllowlist(onlyActive = false) {
+  const supabase = await createClient();
+  let query = supabase
+    .from('pessoas_allowlist')
+    .select('id,nome,email,cpf,observacoes,ativo')
+    .order('nome');
+
+  if (onlyActive) query = query.eq('ativo', true);
+  const { data, error } = await query;
+  if (error) return [] as PessoaAllowlistItem[];
+  return (data ?? []) as PessoaAllowlistItem[];
+}
+
+export async function createPessoaAllowlist(formData: {
+  nome: string;
+  email?: string;
+  cpf?: string;
+  observacoes?: string;
+}) {
+  await requirePessoasAccess();
+  const supabase = await createClient();
+  const { data, error } = await supabase
+    .from('pessoas_allowlist')
+    .insert({
+      nome: formData.nome.trim(),
+      email: formData.email?.trim() || null,
+      cpf: formData.cpf?.trim() || null,
+      observacoes: formData.observacoes?.trim() || null,
+      ativo: true,
+    })
+    .select('id,nome,email,cpf,observacoes,ativo')
+    .single();
+
+  if (error) return null;
+  return data as PessoaAllowlistItem;
+}
+
+export async function togglePessoaAllowlistStatus(id: string, ativo: boolean) {
+  await requirePessoasAccess();
+  const supabase = await createClient();
+  const { error } = await supabase
+    .from('pessoas_allowlist')
+    .update({ ativo, atualizado_em: new Date().toISOString() })
+    .eq('id', id);
+
+  if (error) return { success: false };
+  return { success: true };
+}
+
 export async function getPessoaById(id: string) {
   const supabase = await createClient();
 
@@ -158,6 +216,7 @@ export async function getPessoaById(id: string) {
 }
 
 export async function createPessoa(formData: {
+  allowlist_id?: string;
   nome: string;
   nome_social?: string;
   email?: string;
@@ -182,17 +241,28 @@ export async function createPessoa(formData: {
   await requirePessoasAccess();
   const supabase = await createClient();
 
+  if (!formData.allowlist_id) return null;
+  const { data: autorizado, error: allowlistError } = await supabase
+    .from('pessoas_allowlist')
+    .select('id,nome,email,cpf')
+    .eq('id', formData.allowlist_id)
+    .eq('ativo', true)
+    .maybeSingle();
+
+  if (allowlistError || !autorizado) return null;
+
   const { data: pessoa, error: pessoaError } = await supabase
     .from('pessoas')
     .insert([
       {
-        nome: formData.nome,
+        nome: autorizado.nome,
+        allowlist_id: autorizado.id,
         nome_social: formData.nome_social,
-        email: formData.email,
+        email: formData.email || autorizado.email,
         telefone: formData.telefone,
         whatsapp: formData.whatsapp,
         data_nascimento: formData.data_nascimento,
-        cpf: formData.cpf,
+        cpf: formData.cpf || autorizado.cpf,
         rg: formData.rg,
         logradouro: formData.logradouro,
         numero: formData.numero,

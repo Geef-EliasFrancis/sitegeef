@@ -27,7 +27,7 @@ export const contextMenus: Partial<Record<AdminShellArea, readonly { label: stri
   ],
   pessoas: [
     { label: "Início", href: "/admin/pessoas/inicio" }, { label: "Pessoas", href: "/admin/pessoas" },
-    { label: "Funções", href: "/admin/pessoas/funcoes" }, { label: "Usuários", href: "/admin/usuarios" }, { label: "Temas", href: "/admin/funcoes/temas" },
+    { label: "Funções", href: "/admin/pessoas/funcoes" }, { label: "Allowlist", href: "/admin/pessoas/allowlist" }, { label: "Usuários", href: "/admin/usuarios" }, { label: "Temas", href: "/admin/funcoes/temas" },
   ],
   governanca: [
     { label: "Início", href: "/admin/governanca" }, { label: "Diretorias", href: "/admin/governanca/diretorias" },
