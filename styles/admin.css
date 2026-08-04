@@ -1557,15 +1557,6 @@
   margin-bottom: 1.25rem;
 }
 
-.allowlist-add-button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 2.75rem;
-  height: 2.75rem;
-  padding: 0;
-}
-
 .allowlist-create-form {
   margin-top: 0;
 }
@@ -3846,4 +3837,25 @@
   .admin-context-menu--nested {
     margin-left: 0.75rem;
   }
+}
+
+.admin-page-header--title-add {
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+}
+
+.admin-page-header--title-add .admin-page-title {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.admin-page-add-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  padding: 0;
 }

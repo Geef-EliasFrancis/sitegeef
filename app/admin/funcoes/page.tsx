@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { getFuncoes, toggleFuncaoStatus } from './actions';
 import { Suspense } from 'react';
+import { IconPlus } from '@/components/icons';
 
 export const metadata = {
   title: 'Funções e Temas - Admin GEEF',
@@ -24,18 +25,17 @@ async function FuncoesList() {
 
   return (
     <div className="area-page">
-      <section className="area-hero">
-        <div className="area-hero-top">
-          <div>
-            <p className="area-subtitle">Catálogo operacional</p>
-            <h1 className="area-hero-title">Funções</h1>
-          </div>
-          <Link href="/admin/pessoas/funcoes/nova" className="profile-form-btn profile-form-btn-primary">
-            Nova Função
-          </Link>
-        </div>
-        <p className="area-subtitle">Ative ou desative as funções disponíveis para as escalas.</p>
-      </section>
+      <div className="admin-page-header admin-page-header--title-add">
+        <h1 className="admin-page-title">Funções</h1>
+        <Link
+          href="/admin/pessoas/funcoes/nova"
+          className="admin-btn admin-btn-primary admin-page-add-button"
+          aria-label="Adicionar função"
+          title="Adicionar função"
+        >
+          <IconPlus size={20} />
+        </Link>
+      </div>
 
       <section className="area-section">
         <div className="table-surface">

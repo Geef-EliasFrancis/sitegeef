@@ -36,9 +36,9 @@ export default async function PessoasAllowlistPage() {
   return (
     <div className="area-page">
       <details className="allowlist-create-disclosure">
-        <summary className="admin-page-header allowlist-page-header">
+        <summary className="admin-page-header admin-page-header--title-add allowlist-page-header">
           <h1 className="admin-page-title">Controle de acesso</h1>
-          <span className="admin-btn admin-btn-primary allowlist-add-button" aria-label="Adicionar autorização" title="Adicionar autorização">
+          <span className="admin-btn admin-btn-primary admin-page-add-button" aria-label="Adicionar autorização" title="Adicionar autorização">
             <IconPlus size={20} />
           </span>
         </summary>
