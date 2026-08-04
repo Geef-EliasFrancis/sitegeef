@@ -23,16 +23,29 @@ async function toggleFuncaoFromList(id: string, ativo: boolean) {
 
 async function createFuncaoFromList(formData: FormData) {
   'use server';
-  const funcao = await createFuncao({
-    nome: String(formData.get('nome') ?? '').trim(),
-    descricao: String(formData.get('descricao') ?? '').trim() || undefined,
-  });
-
-  if (!funcao) {
-    redirect(buildFlashNoticeUrl('/admin/funcoes', { variant: 'error', message: 'Não foi possível salvar a função.' }));
+  const nome = String(formData.get('nome') ?? '').trim();
+  if (!nome) {
+    redirect(buildFlashNoticeUrl('/admin/funcoes', { variant: 'error', message: 'Informe o nome da função.' }));
   }
 
-  redirect(buildFlashNoticeUrl('/admin/funcoes', { variant: 'success', message: 'Função salva.' }));
+  try {
+    const funcao = await createFuncao({
+      nome,
+      descricao: String(formData.get('descricao') ?? '').trim() || undefined,
+    });
+
+    if (!funcao) {
+      redirect(buildFlashNoticeUrl('/admin/funcoes', { variant: 'error', message: 'Não foi possível salvar a função.' }));
+    }
+
+    redirect(buildFlashNoticeUrl('/admin/funcoes', { variant: 'success', message: 'Função salva.' }));
+  } catch (error) {
+    if (typeof error === 'object' && error !== null && 'digest' in error && String((error as { digest?: string }).digest || '').startsWith('NEXT_REDIRECT')) {
+      throw error;
+    }
+    console.error('Erro ao criar função:', error);
+    redirect(buildFlashNoticeUrl('/admin/funcoes', { variant: 'error', message: 'Não foi possível salvar a função.' }));
+  }
 }
 
 async function FuncoesList() {
