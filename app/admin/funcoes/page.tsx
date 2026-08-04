@@ -3,6 +3,7 @@ import { createFuncao, getFuncoes, toggleFuncaoStatus } from './actions';
 import { Suspense } from 'react';
 import { IconPlus } from '@/components/icons';
 import { redirect } from 'next/navigation';
+import { buildFlashNoticeUrl } from '@/lib/notificacoes/flash-notice';
 
 export const metadata = {
   title: 'Funções e Temas - Admin GEEF',
@@ -27,9 +28,11 @@ async function createFuncaoFromList(formData: FormData) {
     descricao: String(formData.get('descricao') ?? '').trim() || undefined,
   });
 
-  if (funcao) {
-    redirect('/admin/pessoas/funcoes');
+  if (!funcao) {
+    redirect(buildFlashNoticeUrl('/admin/funcoes', { variant: 'error', message: 'Não foi possível salvar a função.' }));
   }
+
+  redirect(buildFlashNoticeUrl('/admin/funcoes', { variant: 'success', message: 'Função salva.' }));
 }
 
 async function FuncoesList() {
