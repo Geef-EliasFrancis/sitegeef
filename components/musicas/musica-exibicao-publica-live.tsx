@@ -51,7 +51,8 @@ export function MusicaExibicaoPublicaLive({
       }
     }
 
-    const intervalId = window.setInterval(refresh, 60_000);
+    void refresh();
+    const intervalId = window.setInterval(refresh, 2_000);
     return () => {
       cancelled = true;
       window.clearInterval(intervalId);
