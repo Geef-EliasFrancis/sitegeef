@@ -1538,6 +1538,37 @@
   box-shadow: 0 16px 32px rgba(138, 0, 90, 0.22);
 }
 
+.allowlist-create-disclosure > summary {
+  display: grid;
+  list-style: none;
+  cursor: pointer;
+}
+
+.allowlist-create-disclosure > summary::-webkit-details-marker {
+  display: none;
+}
+
+.allowlist-create-disclosure[open] > summary {
+  margin-bottom: 1.25rem;
+}
+
+.allowlist-add-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  padding: 0;
+}
+
+.allowlist-create-form {
+  margin-top: 0;
+}
+
+.allowlist-create-disclosure[open] ~ .allowlist-list-section {
+  display: none;
+}
+
 .admin-btn-secondary {
   background: var(--btn-secondary-bg);
   color: var(--btn-secondary-text);
