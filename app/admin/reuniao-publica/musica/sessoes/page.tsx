@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Suspense } from "react";
 import { AdminModuleGate } from "@/components/admin/admin-module-gate";
-import { IconArrowLeft, IconPlus } from "@/components/icons";
+import { AdminPageTitleAdd } from '@/components/admin/admin-page-title-add';
 import { EncerrarMusicasSessoesButton } from "@/components/admin/encerrar-musicas-sessoes-button";
 import { SessoesList } from "@/components/admin/musicas/sessoes-list";
 import { encerrarTodasMusicaSessoesAction } from "../actions";
@@ -18,15 +18,7 @@ async function SessoesContent() {
 
   return (
     <div className="area-page">
-      <div className="admin-page-header">
-        <div>
-          <span className="admin-dashboard-kicker">Músicas</span>
-          <h1 className="admin-page-title">Sessões e controle</h1>
-        </div>
-        <Link href="/admin/reuniao-publica/musica/catalogo" className="admin-btn admin-btn-secondary" title="Voltar">
-          <IconArrowLeft size={18} />
-        </Link>
-      </div>
+      <AdminPageTitleAdd title="Sessões e controle" href="/admin/reuniao-publica/musica/sessoes/novo" label="Adicionar sessão" />
 
       <section className="area-section">
         <div className="stat-grid">
@@ -73,12 +65,7 @@ async function SessoesContent() {
       </section>
 
       <section className="area-section">
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1rem" }}>
-          <h2 style={{ margin: 0 }}>Sessões ativas</h2>
-          <Link href="/admin/reuniao-publica/musica/sessoes/novo" className="admin-btn admin-btn-primary" title="Nova sessão">
-            <IconPlus size={18} />
-          </Link>
-        </div>
+        <h2 style={{ margin: '0 0 1rem' }}>Sessões ativas</h2>
 
         <div className="admin-card table-surface">
           <div className="area-section-title">

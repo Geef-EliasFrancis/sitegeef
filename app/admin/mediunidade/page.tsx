@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { getGrupos } from './actions';
 import { Suspense } from 'react';
+import { AdminPageTitleAdd } from '@/components/admin/admin-page-title-add';
 
 export const metadata = {
   title: 'Mediunidade - Admin GEEF',
@@ -20,18 +21,7 @@ async function MediunidadeContent() {
 
   return (
     <div className="area-page">
-      <section className="area-hero">
-        <div className="area-hero-top">
-          <div>
-            <p className="area-subtitle">Módulo restrito</p>
-            <h1 className="area-hero-title">Mediunidade</h1>
-          </div>
-          <Link href="/admin/mediunidade/novo-grupo" className="profile-form-btn profile-form-btn-primary">
-            Novo Grupo
-          </Link>
-        </div>
-        <p className="area-subtitle">Gestão de grupos mediúnicos com controle de acesso dedicado.</p>
-      </section>
+      <AdminPageTitleAdd title="Mediunidade" href="/admin/mediunidade/novo-grupo" label="Adicionar grupo" />
 
       <section className="area-section">
         <div className="area-panel-item">

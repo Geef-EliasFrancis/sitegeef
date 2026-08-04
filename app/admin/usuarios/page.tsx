@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { Suspense } from 'react';
 import { getUsuarios } from './actions';
+import { AdminPageTitleAdd } from '@/components/admin/admin-page-title-add';
 
 export const metadata = {
   title: 'Usuários - Admin GEEF',
@@ -65,16 +66,7 @@ async function UsuariosList({ searchParams }: { searchParams: UsuariosSearchPara
 
   return (
     <div className="area-page">
-      <div className="admin-page-header">
-        <div>
-          <span className="admin-dashboard-kicker">Usuários</span>
-          <h1 className="admin-page-title">Usuários e Permissões</h1>
-          <p className="admin-page-subtitle">Pessoas com acesso ao sistema</p>
-        </div>
-        <Link href="/admin/usuarios/novo" className="admin-btn admin-btn-primary">
-          ➕ Novo Usuário
-        </Link>
-      </div>
+      <AdminPageTitleAdd title="Usuários e Permissões" href="/admin/usuarios/novo" />
 
       <div className="admin-card table-surface">
         {erro ? <div className="area-empty">{erro}</div> : null}

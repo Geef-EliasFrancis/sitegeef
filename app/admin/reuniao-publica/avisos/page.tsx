@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { IconEdit, IconPlus } from "@/components/icons";
+import { IconEdit } from "@/components/icons";
+import { AdminPageTitleAdd } from '@/components/admin/admin-page-title-add';
 import { checkModuleAccess } from "@/lib/auth/permissions";
 import { listReuniaoPublicaAvisos } from "@/lib/reuniao-publica/avisos";
 
@@ -27,21 +28,13 @@ export default async function AvisosPage() {
   ]);
   return (
     <div className="area-page">
-      <section className="area-hero">
-        <div className="area-hero-top">
-          <div>
-            <h1 className="area-hero-title">Avisos da reunião</h1>
-          </div>
-          {canPublish && <Link
-              href="/admin/reuniao-publica/avisos/novo"
-              className="admin-btn admin-btn-primary admin-icon-action"
-              aria-label="Adicionar aviso"
-              title="Adicionar aviso"
-            >
-              <IconPlus size={20} />
-            </Link>}
+      {canPublish ? (
+        <AdminPageTitleAdd title="Avisos da reunião" href="/admin/reuniao-publica/avisos/novo" label="Adicionar aviso" />
+      ) : (
+        <div className="admin-page-header admin-page-header--title-add">
+          <h1 className="admin-page-title">Avisos da reunião</h1>
         </div>
-      </section>
+      )}
 
       <section className="area-section">
         <div className="avisos-catalog-heading">

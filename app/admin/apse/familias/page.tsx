@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { getFamilias } from '../actions';
 import { Suspense } from 'react';
+import { AdminPageTitleAdd } from '@/components/admin/admin-page-title-add';
 
 export const metadata = {
   title: 'Famílias Assistidas - Admin GEEF',
@@ -22,15 +23,7 @@ async function FamiliasContent() {
 
   return (
     <div>
-      <div className="admin-page-header">
-        <div>
-          <h1 className="admin-page-title">Famílias Assistidas</h1>
-          <p className="admin-page-subtitle">Registro e acompanhamento de famílias</p>
-        </div>
-        <Link href="/admin/apse/familias/nova" className="admin-btn admin-btn-primary">
-          ➕ Nova Família
-        </Link>
-      </div>
+      <AdminPageTitleAdd title="Famílias Assistidas" href="/admin/apse/familias/nova" />
 
       <div className="admin-card">
         {familias.length > 0 ? (

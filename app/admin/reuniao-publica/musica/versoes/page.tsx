@@ -1,7 +1,8 @@
 import Link from "next/link";
 import { Suspense } from "react";
 import { AdminModuleGate } from "@/components/admin/admin-module-gate";
-import { IconArrowLeft, IconPlus, IconEdit, IconTrash } from "@/components/icons";
+import { IconEdit, IconTrash } from "@/components/icons";
+import { AdminPageTitleAdd } from '@/components/admin/admin-page-title-add';
 import { listMusicaVersoes, deleteMusicaVersao } from "@/lib/musicas";
 import { invalidateMusicasCache } from "@/lib/admin/cache";
 import { revalidatePath } from "next/cache";
@@ -15,23 +16,10 @@ async function VersoesContent() {
 
   return (
     <div className="area-page">
-      <div className="admin-page-header">
-        <div>
-          <span className="admin-dashboard-kicker">Músicas</span>
-          <h1 className="admin-page-title">Versões</h1>
-        </div>
-        <Link href="/admin/reuniao-publica/musica/catalogo" className="admin-btn admin-btn-secondary" title="Voltar">
-          <IconArrowLeft size={18} />
-        </Link>
-      </div>
+      <AdminPageTitleAdd title="Versões" href="/admin/reuniao-publica/musica/versoes/novo" label="Adicionar versão" />
 
       <section className="area-section">
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1rem" }}>
-          <h2 style={{ margin: 0 }}>Versões cadastradas</h2>
-          <Link href="/admin/reuniao-publica/musica/versoes/novo" className="admin-btn admin-btn-primary" title="Nova versão">
-            <IconPlus size={18} />
-          </Link>
-        </div>
+        <h2 style={{ margin: '0 0 1rem' }}>Versões cadastradas</h2>
 
         <div className="admin-card table-surface">
           {versoes.length === 0 ? (

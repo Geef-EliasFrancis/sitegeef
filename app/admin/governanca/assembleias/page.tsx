@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { getAssembleias } from '../actions';
 import { Suspense } from 'react';
+import { AdminPageTitleAdd } from '@/components/admin/admin-page-title-add';
 
 export const metadata = {
   title: 'Assembleias - Admin GEEF',
@@ -35,15 +36,7 @@ async function AssembleiasContent() {
 
   return (
     <div>
-      <div className="admin-page-header">
-        <div>
-          <h1 className="admin-page-title">Assembleias</h1>
-          <p className="admin-page-subtitle">Registro de assembleias, AGOs, AGEs e reuniões</p>
-        </div>
-        <Link href="/admin/governanca/assembleias/nova" className="admin-btn admin-btn-primary">
-          ➕ Nova Assembleia
-        </Link>
-      </div>
+      <AdminPageTitleAdd title="Assembleias" href="/admin/governanca/assembleias/nova" label="Adicionar assembleia" />
 
       <div className="admin-card">
         {assembleiaList.length > 0 ? (

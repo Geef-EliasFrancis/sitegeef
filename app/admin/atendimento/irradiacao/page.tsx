@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { getIrradiacoes } from '../actions';
 import { redirect } from 'next/navigation';
 import { Suspense } from 'react';
+import { AdminPageTitleAdd } from '@/components/admin/admin-page-title-add';
 import { buildFlashNoticeUrl } from '@/lib/notificacoes/flash-notice';
 
 export const metadata = {
@@ -36,15 +37,7 @@ async function IrradiacaoContent() {
 
   return (
     <div>
-      <div className="admin-page-header">
-        <div>
-          <h1 className="admin-page-title">Irradiação</h1>
-          <p className="admin-page-subtitle">Solicitações de irradiação de preces</p>
-        </div>
-        <Link href="/admin/atendimento/irradiacao/nova" className="admin-btn admin-btn-primary">
-          ➕ Nova Solicitação
-        </Link>
-      </div>
+      <AdminPageTitleAdd title="Irradiação" href="/admin/atendimento/irradiacao/nova" label="Adicionar solicitação" />
 
       <div className="admin-card">
         {irradiacaoList.length > 0 ? (

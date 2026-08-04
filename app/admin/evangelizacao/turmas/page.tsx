@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { getTurmas } from '../actions';
 import { Suspense } from 'react';
+import { AdminPageTitleAdd } from '@/components/admin/admin-page-title-add';
 
 export const metadata = {
   title: 'Turmas - Admin GEEF',
@@ -22,18 +23,7 @@ async function TurmasContent() {
 
   return (
     <div className="area-page">
-      <section className="area-hero">
-        <div className="area-hero-top">
-          <div>
-            <p className="area-subtitle">Evangelização</p>
-            <h1 className="area-hero-title">Turmas de Evangelização</h1>
-          </div>
-          <Link href="/admin/evangelizacao/turmas/nova" className="profile-form-btn profile-form-btn-primary">
-            Nova Turma
-          </Link>
-        </div>
-        <p className="area-subtitle">Gestão de turmas infantis.</p>
-      </section>
+      <AdminPageTitleAdd title="Turmas de Evangelização" href="/admin/evangelizacao/turmas/nova" label="Adicionar turma" />
 
       <section className="area-section">
         <div className="table-surface">

@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { getEmprestimos, getHistoricoEmprestimos } from './actions';
 import { Suspense } from 'react';
+import { AdminPageTitleAdd } from '@/components/admin/admin-page-title-add';
 
 export const metadata = {
   title: 'Empréstimos - Admin GEEF',
@@ -37,20 +38,13 @@ async function EmprestimosList({ searchParams }: { searchParams: EmprestimosSear
 
   return (
     <div className="area-page">
-      <section className="area-hero">
-        <div className="area-hero-top">
-          <div>
-            <p className="area-subtitle">Circulação</p>
-            <h1 className="area-hero-title">Empréstimos</h1>
-          </div>
-          {view === 'ativos' && (
-            <Link href="/admin/biblioteca/emprestimos/novo" className="profile-form-btn profile-form-btn-primary">
-              Novo Empréstimo
-            </Link>
-          )}
+      {view === 'ativos' ? (
+        <AdminPageTitleAdd title="Empréstimos" href="/admin/biblioteca/emprestimos/novo" label="Adicionar empréstimo" />
+      ) : (
+        <div className="admin-page-header admin-page-header--title-add">
+          <h1 className="admin-page-title">Empréstimos</h1>
         </div>
-        <p className="area-subtitle">Gerenciamento de empréstimos e devoluções.</p>
-      </section>
+      )}
 
       <section className="area-section">
         <div className="area-panel-grid">

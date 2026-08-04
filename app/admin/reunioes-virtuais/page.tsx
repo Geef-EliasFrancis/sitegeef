@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { getReunioes } from './actions';
 import { Suspense } from 'react';
+import { AdminPageTitleAdd } from '@/components/admin/admin-page-title-add';
 
 export const metadata = {
   title: 'Reuniões Virtuais - Admin GEEF',
@@ -23,18 +24,7 @@ async function ReunioesvirtualaisContent() {
 
   return (
     <div className="area-page">
-      <section className="area-hero">
-        <div className="area-hero-top">
-          <div>
-            <p className="area-subtitle">Encontros online</p>
-            <h1 className="area-hero-title">Reuniões Virtuais</h1>
-          </div>
-          <Link href="/admin/reunioes-virtuais/nova" className="profile-form-btn profile-form-btn-primary">
-            Nova Reunião
-          </Link>
-        </div>
-        <p className="area-subtitle">Gestão de links, senhas, anfitriões e status.</p>
-      </section>
+      <AdminPageTitleAdd title="Reuniões Virtuais" href="/admin/reunioes-virtuais/nova" label="Adicionar reunião" />
 
       <section className="stat-grid">
         <article className="stat-card">

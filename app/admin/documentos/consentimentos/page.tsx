@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { getConsentimentosLGPD } from '../actions';
 import { Suspense } from 'react';
+import { AdminPageTitleAdd } from '@/components/admin/admin-page-title-add';
 
 export const metadata = {
   title: 'Consentimentos LGPD - Admin GEEF',
@@ -37,15 +38,7 @@ async function ConsentimentosList({ searchParams }: { searchParams: Consentiment
 
   return (
     <div>
-      <div className="admin-page-header">
-        <div>
-          <h1 className="admin-page-title">Consentimentos LGPD</h1>
-          <p className="admin-page-subtitle">Rastreamento discreto de consentimentos e base legal.</p>
-        </div>
-        <Link href="/admin/documentos/consentimentos/novo" className="admin-btn admin-btn-primary">
-          ➕ Novo Consentimento
-        </Link>
-      </div>
+      <AdminPageTitleAdd title="Consentimentos LGPD" href="/admin/documentos/consentimentos/novo" label="Adicionar consentimento" />
 
       <div className="admin-card panel-accent-card">
         <p className="panel-note">

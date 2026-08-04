@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { getCursos } from '../actions';
 import { Suspense } from 'react';
+import { AdminPageTitleAdd } from '@/components/admin/admin-page-title-add';
 
 export const metadata = {
   title: 'Cursos - Admin GEEF',
@@ -19,15 +20,7 @@ async function CursosContent() {
 
   return (
     <div>
-      <div className="admin-page-header">
-        <div>
-          <h1 className="admin-page-title">Cursos de Estudo</h1>
-          <p className="admin-page-subtitle">IEE, ESDE, EOB, EADE e outros</p>
-        </div>
-        <Link href="/admin/estudos/cursos/novo" className="admin-btn admin-btn-primary">
-          ➕ Novo Curso
-        </Link>
-      </div>
+      <AdminPageTitleAdd title="Cursos de Estudo" href="/admin/estudos/cursos/novo" label="Adicionar curso" />
 
       <div className="admin-card">
         {cursoList.length > 0 ? (

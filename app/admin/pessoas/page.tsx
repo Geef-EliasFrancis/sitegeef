@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { getPessoas } from "./actions";
 import { Suspense } from "react";
+import { AdminPageTitleAdd } from '@/components/admin/admin-page-title-add';
 
 export const metadata = {
   title: "Pessoas - Admin GEEF",
@@ -15,15 +16,7 @@ async function PessoasList({ searchParams }: { searchParams: { page?: string; se
 
   return (
     <div className="area-page">
-      <div className="admin-page-header">
-        <div>
-          <span className="admin-dashboard-kicker">Cadastro</span>
-          <h1 className="admin-page-title">Pessoas</h1>
-        </div>
-        <Link href="/admin/pessoas/nova" className="admin-btn admin-btn-primary">
-          ➕ Nova pessoa
-        </Link>
-      </div>
+      <AdminPageTitleAdd title="Pessoas" href="/admin/pessoas/nova" label="Adicionar pessoa" />
 
       <section className="area-section">
         <div className="admin-card">

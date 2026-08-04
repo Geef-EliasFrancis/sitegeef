@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { getCampanhas } from '../actions';
 import { Suspense } from 'react';
+import { AdminPageTitleAdd } from '@/components/admin/admin-page-title-add';
 
 export const metadata = {
   title: 'Campanhas APSE - Admin GEEF',
@@ -21,15 +22,7 @@ async function CampanhasContent() {
 
   return (
     <div>
-      <div className="admin-page-header">
-        <div>
-          <h1 className="admin-page-title">Campanhas APSE</h1>
-          <p className="admin-page-subtitle">Gestão de campanhas de assistência social</p>
-        </div>
-        <Link href="/admin/apse/campanhas/nova" className="admin-btn admin-btn-primary">
-          ➕ Nova Campanha
-        </Link>
-      </div>
+      <AdminPageTitleAdd title="Campanhas APSE" href="/admin/apse/campanhas/nova" />
 
       <div className="admin-card">
         {campanhas.length > 0 ? (

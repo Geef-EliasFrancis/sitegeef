@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { getGrupos } from './actions';
 import { Suspense } from 'react';
+import { AdminPageTitleAdd } from '@/components/admin/admin-page-title-add';
 
 export const metadata = {
   title: 'Juventude - Admin GEEF',
@@ -21,18 +22,7 @@ async function JuventudeContent() {
 
   return (
     <div className="area-page">
-      <section className="area-hero">
-        <div className="area-hero-top">
-          <div>
-            <p className="area-subtitle">Módulo de grupos</p>
-            <h1 className="area-hero-title">Juventude</h1>
-          </div>
-          <Link href="/admin/juventude/novo" className="profile-form-btn profile-form-btn-primary">
-            Novo Grupo
-          </Link>
-        </div>
-        <p className="area-subtitle">Gestão de grupos e encontros de jovens.</p>
-      </section>
+      <AdminPageTitleAdd title="Juventude" href="/admin/juventude/novo" label="Adicionar grupo" />
 
       <section className="stat-grid">
         <article className="stat-card">

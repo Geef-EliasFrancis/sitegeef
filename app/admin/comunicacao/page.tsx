@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { getPublicacoes } from "./actions";
 import { Suspense } from "react";
+import { AdminPageTitleAdd } from '@/components/admin/admin-page-title-add';
 
 export const metadata = {
   title: "Comunicação - Admin GEEF",
@@ -37,18 +38,7 @@ async function ComunicacaoContent() {
 
   return (
     <div className="area-page">
-      <section className="area-hero">
-        <div className="area-hero-top">
-          <div>
-            <p className="area-subtitle">Comunicação</p>
-            <h1 className="area-hero-title">Comunicação</h1>
-          </div>
-          <Link href="/admin/comunicacao/nova-publicacao" className="profile-form-btn profile-form-btn-primary">
-            Nova Publicação
-          </Link>
-        </div>
-        <p className="area-subtitle">Gestão de publicações e conteúdo.</p>
-      </section>
+      <AdminPageTitleAdd title="Comunicação" href="/admin/comunicacao/nova-publicacao" label="Adicionar publicação" />
 
       <section className="area-section">
         <div className="stat-grid">

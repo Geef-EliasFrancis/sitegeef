@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { getProdutos } from './actions';
 import { Suspense } from 'react';
+import { AdminPageTitleAdd } from '@/components/admin/admin-page-title-add';
 
 export const metadata = {
   title: 'Livraria - Admin GEEF',
@@ -32,18 +33,7 @@ async function LivrariaList({ searchParams }: { searchParams: LivrariaSearchPara
 
   return (
     <div className="area-page">
-      <section className="area-hero">
-        <div className="area-hero-top">
-          <div>
-            <p className="area-subtitle">Acervo e estoque</p>
-            <h1 className="area-hero-title">Livraria</h1>
-          </div>
-          <Link href="/admin/livraria/novo-produto" className="profile-form-btn profile-form-btn-primary">
-            Novo Produto
-          </Link>
-        </div>
-        <p className="area-subtitle">Gerenciamento de vendas, estoque e catálogo.</p>
-      </section>
+      <AdminPageTitleAdd title="Livraria" href="/admin/livraria/novo-produto" label="Adicionar produto" />
 
       <section className="area-section">
         <div className="table-surface">

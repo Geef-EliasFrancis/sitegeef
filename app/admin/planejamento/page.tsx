@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { getMetas } from './actions';
 import { Suspense } from 'react';
+import { AdminPageTitleAdd } from '@/components/admin/admin-page-title-add';
 
 export const metadata = {
   title: 'Planejamento - Admin GEEF',
@@ -23,18 +24,7 @@ async function PlanejamentoContent() {
 
   return (
     <div className="area-page">
-      <section className="area-hero">
-        <div className="area-hero-top">
-          <div>
-            <p className="area-subtitle">Gestão estratégica</p>
-            <h1 className="area-hero-title">Planejamento</h1>
-          </div>
-          <Link href="/admin/planejamento/nova-meta" className="profile-form-btn profile-form-btn-primary">
-            Nova Meta
-          </Link>
-        </div>
-        <p className="area-subtitle">Gestão de metas, objetivos e ações.</p>
-      </section>
+      <AdminPageTitleAdd title="Planejamento" href="/admin/planejamento/nova-meta" label="Adicionar meta" />
 
       <section className="stat-grid">
         <article className="stat-card">

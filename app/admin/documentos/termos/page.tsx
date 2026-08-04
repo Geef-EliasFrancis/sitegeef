@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { getTermosAssinados } from '../actions';
 import { Suspense } from 'react';
+import { AdminPageTitleAdd } from '@/components/admin/admin-page-title-add';
 
 export const metadata = {
   title: 'Termos Assinados - Admin GEEF',
@@ -38,15 +39,7 @@ async function TermosList({ searchParams }: { searchParams: TermosSearchParams }
   return (
     <div>
       {/* Header */}
-      <div className="admin-page-header">
-        <div>
-          <h1 className="admin-page-title">Termos Assinados</h1>
-          <p className="admin-page-subtitle">Registro discreto de termos, vigência e revogação.</p>
-        </div>
-        <Link href="/admin/documentos/termos/novo" className="admin-btn admin-btn-primary">
-          ➕ Novo Termo
-        </Link>
-      </div>
+      <AdminPageTitleAdd title="Termos Assinados" href="/admin/documentos/termos/novo" label="Adicionar termo" />
 
       <div className="admin-card panel-accent-card">
         <p className="panel-note">

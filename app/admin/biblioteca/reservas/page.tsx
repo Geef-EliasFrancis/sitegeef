@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { getReservas } from './actions';
 import { Suspense } from 'react';
+import { AdminPageTitleAdd } from '@/components/admin/admin-page-title-add';
 
 export const metadata = {
   title: 'Reservas - Admin GEEF',
@@ -28,15 +29,7 @@ async function ReservasList({ searchParams }: { searchParams: ReservasSearchPara
   return (
     <div>
       {/* Header */}
-      <div className="admin-page-header">
-        <div>
-          <h1 className="admin-page-title">Reservas</h1>
-          <p className="admin-page-subtitle">Gerenciamento de fila de espera</p>
-        </div>
-        <Link href="/admin/biblioteca/reservas/nova" className="admin-btn admin-btn-primary">
-          ➕ Nova Reserva
-        </Link>
-      </div>
+      <AdminPageTitleAdd title="Reservas" href="/admin/biblioteca/reservas/nova" label="Adicionar reserva" />
 
       {/* Table */}
       <div className="admin-card">

@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { getCentrosCusto, toggleCentroCustoStatus } from '../actions';
 import { redirect } from 'next/navigation';
 import { buildFlashNoticeUrl } from '@/lib/notificacoes/flash-notice';
+import { AdminPageTitleAdd } from '@/components/admin/admin-page-title-add';
 
 export const metadata = {
   title: 'Centros de Custo - Admin GEEF',
@@ -19,16 +20,7 @@ async function CentrosCustoPage() {
 
   return (
     <div>
-      {/* Header */}
-      <div className="admin-page-header">
-        <div>
-          <h1 className="admin-page-title">Centros de Custo</h1>
-          <p className="admin-page-subtitle">Departamentos e áreas de atuação</p>
-        </div>
-        <Link href="/admin/financeiro/centros-custo/novo" className="admin-btn admin-btn-primary">
-          ➕ Novo Centro
-        </Link>
-      </div>
+      <AdminPageTitleAdd title="Centros de Custo" href="/admin/financeiro/centros-custo/novo" label="Adicionar centro de custo" />
 
       {/* Lista */}
       <div className="admin-card">

@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { getBens } from './actions';
 import { Suspense } from 'react';
+import { AdminPageTitleAdd } from '@/components/admin/admin-page-title-add';
 
 export const metadata = {
   title: 'Patrimônio - Admin GEEF',
@@ -23,18 +24,7 @@ async function PatrimonioContent() {
 
   return (
     <div className="area-page">
-      <section className="area-hero">
-        <div className="area-hero-top">
-          <div>
-            <p className="area-subtitle">Controle de ativos</p>
-            <h1 className="area-hero-title">Patrimônio</h1>
-          </div>
-          <Link href="/admin/patrimonio/novo-bem" className="profile-form-btn profile-form-btn-primary">
-            Novo Bem
-          </Link>
-        </div>
-        <p className="area-subtitle">Gestão de bens, responsáveis e conservação.</p>
-      </section>
+      <AdminPageTitleAdd title="Patrimônio" href="/admin/patrimonio/novo-bem" label="Adicionar bem" />
 
       <section className="stat-grid">
         <article className="stat-card">

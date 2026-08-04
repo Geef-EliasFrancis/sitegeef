@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { getMovimentosFinanceiros } from '../actions';
 import { Suspense } from 'react';
+import { AdminPageTitleAdd } from '@/components/admin/admin-page-title-add';
 
 export const metadata = {
   title: 'Lançamentos - Admin GEEF',
@@ -33,16 +34,7 @@ async function LancamentosContent({ searchParams }: { searchParams: FinanceSearc
 
   return (
     <div>
-      {/* Header */}
-      <div className="admin-page-header">
-        <div>
-          <h1 className="admin-page-title">Lançamentos</h1>
-          <p className="admin-page-subtitle">{mesTexto}</p>
-        </div>
-        <Link href="/admin/financeiro/lancamentos/novo" className="admin-btn admin-btn-primary">
-          ➕ Novo Lançamento
-        </Link>
-      </div>
+      <AdminPageTitleAdd title="Lançamentos" href="/admin/financeiro/lancamentos/novo" label="Adicionar lançamento" />
 
       {/* Filtros */}
       <div className="admin-card panel-accent-card">

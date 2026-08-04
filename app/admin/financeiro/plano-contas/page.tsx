@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { getPlanoContas, toggleContaStatus } from '../actions';
 import { redirect } from 'next/navigation';
 import { buildFlashNoticeUrl } from '@/lib/notificacoes/flash-notice';
+import { AdminPageTitleAdd } from '@/components/admin/admin-page-title-add';
 
 export const metadata = {
   title: 'Plano de Contas - Admin GEEF',
@@ -34,16 +35,7 @@ async function PlanoContasPage() {
 
   return (
     <div>
-      {/* Header */}
-      <div className="admin-page-header">
-        <div>
-          <h1 className="admin-page-title">Plano de Contas</h1>
-          <p className="admin-page-subtitle">Estrutura contábil da instituição</p>
-        </div>
-        <Link href="/admin/financeiro/plano-contas/nova" className="admin-btn admin-btn-primary">
-          ➕ Nova Conta
-        </Link>
-      </div>
+      <AdminPageTitleAdd title="Plano de Contas" href="/admin/financeiro/plano-contas/nova" label="Adicionar conta" />
 
       {/* Contas por Tipo */}
       <div style={{ display: 'grid', gap: '2rem' }}>

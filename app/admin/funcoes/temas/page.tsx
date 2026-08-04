@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { getTemasDourinarios } from '../actions';
 import { Suspense } from 'react';
+import { AdminPageTitleAdd } from '@/components/admin/admin-page-title-add';
 
 export const metadata = {
   title: 'Temas Doutrinários - Admin GEEF',
@@ -11,16 +12,7 @@ async function TemasList() {
 
   return (
     <div>
-      {/* Header */}
-      <div className="admin-page-header">
-        <div>
-          <h1 className="admin-page-title">Temas Doutrinários</h1>
-          <p className="admin-page-subtitle">Palestra, evangelização, estudo e outros temas</p>
-        </div>
-        <Link href="/admin/funcoes/temas/novo" className="admin-btn admin-btn-primary">
-          ➕ Novo Tema
-        </Link>
-      </div>
+      <AdminPageTitleAdd title="Temas Doutrinários" href="/admin/funcoes/temas/novo" />
 
       {/* Tabs Navigation */}
       <div style={{ display: 'flex', gap: '1rem', marginBottom: '2rem', borderBottom: '1px solid var(--admin-border)', paddingBottom: '1rem' }}>

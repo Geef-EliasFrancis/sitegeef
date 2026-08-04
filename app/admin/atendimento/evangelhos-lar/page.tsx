@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { getEvangelhasNoLar } from '../actions';
 import { Suspense } from 'react';
+import { AdminPageTitleAdd } from '@/components/admin/admin-page-title-add';
 
 export const metadata = {
   title: 'Evangelho no Lar - Admin GEEF',
@@ -39,15 +40,7 @@ async function EvangelhasContent() {
   return (
     <div>
       {/* Header */}
-      <div className="admin-page-header">
-        <div>
-          <h1 className="admin-page-title">Evangelho no Lar</h1>
-          <p className="admin-page-subtitle">Atividades de evangelização familiar</p>
-        </div>
-        <Link href="/admin/atendimento/evangelhos-lar/novo" className="admin-btn admin-btn-primary">
-          ➕ Novo Evangelho
-        </Link>
-      </div>
+      <AdminPageTitleAdd title="Evangelho no Lar" href="/admin/atendimento/evangelhos-lar/novo" label="Adicionar evangelho no lar" />
 
       {/* Tabela */}
       <div className="admin-card">

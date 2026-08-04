@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { getObras } from "./actions";
 import { Suspense } from "react";
+import { AdminPageTitleAdd } from '@/components/admin/admin-page-title-add';
 
 export const metadata = {
   title: "Biblioteca - Admin GEEF",
@@ -30,18 +31,7 @@ async function BibliotecaList({ searchParams }: { searchParams: BibliotecaSearch
 
   return (
     <div className="area-page">
-      <section className="area-hero">
-        <div className="area-hero-top">
-          <div>
-            <p className="area-subtitle">Acervo</p>
-            <h1 className="area-hero-title">Biblioteca</h1>
-          </div>
-          <Link href="/admin/biblioteca/nova-obra" className="profile-form-btn profile-form-btn-primary">
-            Nova Obra
-          </Link>
-        </div>
-        <p className="area-subtitle">Gerenciamento de obras, exemplares e catálogo.</p>
-      </section>
+      <AdminPageTitleAdd title="Biblioteca" href="/admin/biblioteca/nova-obra" label="Adicionar obra" />
 
       <section className="area-section">
         <div className="table-surface library-filter-surface">

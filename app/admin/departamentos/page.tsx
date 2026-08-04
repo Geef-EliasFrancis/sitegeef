@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { Suspense } from 'react';
 import { getDepartamentos } from './actions';
+import { AdminPageTitleAdd } from '@/components/admin/admin-page-title-add';
 
 export const metadata = {
   title: 'Departamentos - Admin GEEF',
@@ -26,16 +27,7 @@ async function DepartamentosList({ searchParams }: { searchParams: Departamentos
 
   return (
     <div className="area-page">
-      <div className="admin-page-header">
-        <div>
-          <span className="admin-dashboard-kicker">Estrutura</span>
-          <h1 className="admin-page-title">Departamentos</h1>
-          <p className="admin-page-subtitle">Organizações internas do GEEF</p>
-        </div>
-        <Link href="/admin/departamentos/novo" className="admin-btn admin-btn-primary">
-          ➕ Novo Departamento
-        </Link>
-      </div>
+      <AdminPageTitleAdd title="Departamentos" href="/admin/departamentos/novo" />
 
       <section className="area-section">
         <div className="admin-card panel-accent-card">

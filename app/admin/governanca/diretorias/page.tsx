@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { getDiretorias } from '../actions';
 import { Suspense } from 'react';
+import { AdminPageTitleAdd } from '@/components/admin/admin-page-title-add';
 
 export const metadata = {
   title: 'Diretorias - Admin GEEF',
@@ -20,15 +21,7 @@ async function DiretoriasContent() {
 
   return (
     <div>
-      <div className="admin-page-header">
-        <div>
-          <h1 className="admin-page-title">Diretorias</h1>
-          <p className="admin-page-subtitle">Gestão de gestões e mandatos</p>
-        </div>
-        <Link href="/admin/governanca/diretorias/nova" className="admin-btn admin-btn-primary">
-          ➕ Nova Diretoria
-        </Link>
-      </div>
+      <AdminPageTitleAdd title="Diretorias" href="/admin/governanca/diretorias/nova" label="Adicionar diretoria" />
 
       <div className="admin-card">
         {diretoriaList.length > 0 ? (

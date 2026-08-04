@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { getAtendimentosFraterno } from '../actions';
 import { Suspense } from 'react';
+import { AdminPageTitleAdd } from '@/components/admin/admin-page-title-add';
 
 export const metadata = {
   title: 'Atendimento Fraterno - Admin GEEF',
@@ -34,22 +35,10 @@ async function FraternoContent({ searchParams }: { searchParams: FraternoSearchP
 
   const atendimentos = await getAtendimentosFraterno(mes, ano);
   const atendimentoList = atendimentos as FraternoItem[];
-  const mesTexto = new Date(ano, mes - 1).toLocaleDateString('pt-BR', { month: 'long', year: 'numeric' });
 
   return (
     <div className="area-page">
-      <section className="area-hero">
-        <div className="area-hero-top">
-          <div>
-            <p className="area-subtitle">Atendimento fraterno</p>
-            <h1 className="area-hero-title">Fraterno</h1>
-          </div>
-          <Link href="/admin/atendimento/fraterno/novo" className="profile-form-btn profile-form-btn-primary">
-            Novo Atendimento
-          </Link>
-        </div>
-        <p className="area-subtitle">{mesTexto}</p>
-      </section>
+      <AdminPageTitleAdd title="Fraterno" href="/admin/atendimento/fraterno/novo" label="Adicionar atendimento" />
 
       <section className="area-section">
         <div className="table-surface">

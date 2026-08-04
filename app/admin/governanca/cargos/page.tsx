@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { getCargos } from '../actions';
 import { Suspense } from 'react';
+import { AdminPageTitleAdd } from '@/components/admin/admin-page-title-add';
 
 export const metadata = {
   title: 'Cargos - Admin GEEF',
@@ -19,15 +20,7 @@ async function CargosContent() {
 
   return (
     <div>
-      <div className="admin-page-header">
-        <div>
-          <h1 className="admin-page-title">Cargos</h1>
-          <p className="admin-page-subtitle">Gestão de posições/funções na diretoria</p>
-        </div>
-        <Link href="/admin/governanca/cargos/novo" className="admin-btn admin-btn-primary">
-          ➕ Novo Cargo
-        </Link>
-      </div>
+      <AdminPageTitleAdd title="Cargos" href="/admin/governanca/cargos/novo" label="Adicionar cargo" />
 
       <div className="admin-card">
         {cargoList.length > 0 ? (

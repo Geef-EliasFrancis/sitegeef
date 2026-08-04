@@ -1,7 +1,8 @@
 import Link from "next/link";
 import { Suspense } from "react";
 import { AdminModuleGate } from "@/components/admin/admin-module-gate";
-import { IconArrowLeft, IconPlus, IconEdit, IconTrash, IconSearch } from "@/components/icons";
+import { IconEdit, IconTrash, IconSearch } from "@/components/icons";
+import { AdminPageTitleAdd } from '@/components/admin/admin-page-title-add';
 import { deleteMusicaAutorAction } from "./actions";
 import { listMusicaAutores } from "@/lib/musicas";
 
@@ -21,15 +22,7 @@ async function AutoresContent({ searchParams }: PageProps) {
 
   return (
     <div className="area-page">
-      <div className="admin-page-header">
-        <div>
-          <span className="admin-dashboard-kicker">Músicas</span>
-          <h1 className="admin-page-title">Autores</h1>
-        </div>
-        <Link href="/admin/reuniao-publica/musica/catalogo" className="admin-btn admin-btn-secondary" title="Voltar">
-          <IconArrowLeft size={18} />
-        </Link>
-      </div>
+      <AdminPageTitleAdd title="Autores" href="/admin/reuniao-publica/musica/autores/novo" label="Adicionar autor" />
 
       {params.excluido === "1" && (
         <div style={{ padding: "1rem", backgroundColor: "rgba(34, 197, 94, 0.1)", borderRadius: "0.5rem", marginBottom: "1rem" }}>
@@ -52,9 +45,6 @@ async function AutoresContent({ searchParams }: PageProps) {
               <IconSearch size={18} />
             </button>
           </form>
-          <Link href="/admin/reuniao-publica/musica/autores/novo" className="admin-btn admin-btn-primary" title="Novo autor">
-            <IconPlus size={18} />
-          </Link>
         </div>
 
         <div className="admin-card table-surface">

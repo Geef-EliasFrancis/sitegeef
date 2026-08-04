@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { getServicosVoluntarios } from '../actions';
 import { Suspense } from 'react';
+import { AdminPageTitleAdd } from '@/components/admin/admin-page-title-add';
 
 export const metadata = {
   title: 'Serviços Voluntários - Admin GEEF',
@@ -37,15 +38,7 @@ async function ServicosList({ searchParams }: { searchParams: VoluntariadoSearch
 
   return (
     <div>
-      <div className="admin-page-header">
-        <div>
-          <h1 className="admin-page-title">Serviços Voluntários</h1>
-          <p className="admin-page-subtitle">Registro discreto de voluntariado, vínculo e vigência.</p>
-        </div>
-        <Link href="/admin/documentos/voluntariado/novo" className="admin-btn admin-btn-primary">
-          ➕ Novo Serviço
-        </Link>
-      </div>
+      <AdminPageTitleAdd title="Serviços Voluntários" href="/admin/documentos/voluntariado/novo" label="Adicionar serviço voluntário" />
 
       <div className="admin-card panel-accent-card">
         <p className="panel-note">
