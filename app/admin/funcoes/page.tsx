@@ -1,9 +1,7 @@
 import Link from 'next/link';
-import { createFuncao, getFuncoes, toggleFuncaoStatus } from './actions';
+import { createFuncaoFromList, getFuncoes, toggleFuncaoStatusFromList } from './actions';
 import { Suspense } from 'react';
 import { IconPlus } from '@/components/icons';
-import { redirect } from 'next/navigation';
-import { buildFlashNoticeUrl } from '@/lib/notificacoes/flash-notice';
 
 export const metadata = {
   title: 'Funções e Temas - Admin GEEF',
@@ -15,38 +13,6 @@ type FuncaoItem = {
   descricao?: string | null;
   ativo: boolean;
 };
-
-async function toggleFuncaoFromList(id: string, ativo: boolean) {
-  'use server';
-  await toggleFuncaoStatus(id, ativo);
-}
-
-async function createFuncaoFromList(formData: FormData) {
-  'use server';
-  const nome = String(formData.get('nome') ?? '').trim();
-  if (!nome) {
-    redirect(buildFlashNoticeUrl('/admin/funcoes', { variant: 'error', message: 'Informe o nome da função.' }));
-  }
-
-  try {
-    const funcao = await createFuncao({
-      nome,
-      descricao: String(formData.get('descricao') ?? '').trim() || undefined,
-    });
-
-    if (!funcao) {
-      redirect(buildFlashNoticeUrl('/admin/funcoes', { variant: 'error', message: 'Não foi possível salvar a função.' }));
-    }
-
-    redirect(buildFlashNoticeUrl('/admin/funcoes', { variant: 'success', message: 'Função salva.' }));
-  } catch (error) {
-    if (typeof error === 'object' && error !== null && 'digest' in error && String((error as { digest?: string }).digest || '').startsWith('NEXT_REDIRECT')) {
-      throw error;
-    }
-    console.error('Erro ao criar função:', error);
-    redirect(buildFlashNoticeUrl('/admin/funcoes', { variant: 'error', message: 'Não foi possível salvar a função.' }));
-  }
-}
 
 async function FuncoesList() {
   const funcoes = await getFuncoes(false);
@@ -98,7 +64,9 @@ async function FuncoesList() {
                     <td><strong>{funcao.nome}</strong></td>
                     <td className="text-sm-muted">{funcao.descricao || '—'}</td>
                     <td>
-                      <form action={() => toggleFuncaoFromList(funcao.id, !funcao.ativo)}>
+                      <form action={toggleFuncaoStatusFromList}>
+                        <input type="hidden" name="id" value={funcao.id} />
+                        <input type="hidden" name="ativo" value={String(!funcao.ativo)} />
                         <button type="submit" className={`inline-status ${funcao.ativo ? 'inline-status-success' : 'inline-status-neutral'}`}>
                           {funcao.ativo ? 'Sim' : 'Não'}
                         </button>

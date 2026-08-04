@@ -4,6 +4,8 @@ import { revalidatePath } from 'next/cache';
 import { createServiceRoleClient } from '@/lib/supabase/service-role';
 import { invalidateAdminDashboardCache } from '@/lib/admin/cache';
 import { checkModuleAccess } from '@/lib/auth/permissions';
+import { redirect } from 'next/navigation';
+import { buildFlashNoticeUrl } from '@/lib/notificacoes/flash-notice';
 
 async function requireFuncoesAccess() {
   const allowed =
@@ -109,6 +111,36 @@ export async function toggleFuncaoStatus(id: string, ativo: boolean) {
   revalidatePath('/admin/escalas');
   invalidateAdminDashboardCache();
   return { success: true };
+}
+
+export async function createFuncaoFromList(formData: FormData) {
+  const nome = String(formData.get('nome') ?? '').trim();
+  if (!nome) {
+    redirect(buildFlashNoticeUrl('/admin/funcoes', { variant: 'error', message: 'Informe o nome da função.' }));
+  }
+
+  try {
+    const funcao = await createFuncao({
+      nome,
+      descricao: String(formData.get('descricao') ?? '').trim() || undefined,
+    });
+
+    if (!funcao) {
+      redirect(buildFlashNoticeUrl('/admin/funcoes', { variant: 'error', message: 'Não foi possível salvar a função.' }));
+    }
+
+    redirect(buildFlashNoticeUrl('/admin/funcoes', { variant: 'success', message: 'Função salva.' }));
+  } catch (error) {
+    if (typeof error === 'object' && error !== null && 'digest' in error && String((error as { digest?: string }).digest || '').startsWith('NEXT_REDIRECT')) {
+      throw error;
+    }
+    console.error('Erro ao criar função:', error);
+    redirect(buildFlashNoticeUrl('/admin/funcoes', { variant: 'error', message: 'Não foi possível salvar a função.' }));
+  }
+}
+
+export async function toggleFuncaoStatusFromList(formData: FormData) {
+  await toggleFuncaoStatus(String(formData.get('id') ?? ''), formData.get('ativo') === 'true');
 }
 
 export async function getTemasDourinarios() {
