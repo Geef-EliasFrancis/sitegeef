@@ -1,7 +1,7 @@
 'use server';
 
 import { revalidatePath } from 'next/cache';
-import { createClient } from '@/lib/supabase/server';
+import { createServiceRoleClient } from '@/lib/supabase/service-role';
 import { invalidateAdminDashboardCache } from '@/lib/admin/cache';
 import { checkModuleAccess } from '@/lib/auth/permissions';
 
@@ -13,7 +13,7 @@ async function requireFuncoesAccess() {
 }
 
 export async function getFuncoes(onlyActive = true) {
-  const supabase = await createClient();
+  const supabase = createServiceRoleClient();
 
   let query = supabase.from('funcoes').select('*').order('nome');
   if (onlyActive) query = query.eq('ativo', true);
@@ -26,7 +26,7 @@ export async function getFuncoes(onlyActive = true) {
 }
 
 export async function getFuncaoById(id: string) {
-  const supabase = await createClient();
+  const supabase = createServiceRoleClient();
 
   const { data, error } = await supabase
     .from('funcoes')
@@ -44,7 +44,7 @@ export async function createFuncao(formData: {
   descricao?: string;
 }) {
   await requireFuncoesAccess();
-  const supabase = await createClient();
+  const supabase = createServiceRoleClient();
 
   const { data, error } = await supabase
     .from('funcoes')
@@ -75,7 +75,7 @@ export async function updateFuncao(
   }
 ) {
   await requireFuncoesAccess();
-  const supabase = await createClient();
+  const supabase = createServiceRoleClient();
 
   const { error } = await supabase
     .from('funcoes')
@@ -95,7 +95,7 @@ export async function updateFuncao(
 
 export async function toggleFuncaoStatus(id: string, ativo: boolean) {
   await requireFuncoesAccess();
-  const supabase = await createClient();
+  const supabase = createServiceRoleClient();
 
   const { error } = await supabase
     .from('funcoes')
@@ -112,7 +112,7 @@ export async function toggleFuncaoStatus(id: string, ativo: boolean) {
 }
 
 export async function getTemasDourinarios() {
-  const supabase = await createClient();
+  const supabase = createServiceRoleClient();
 
   const { data, error } = await supabase
     .from('temas_doutrinarios')
@@ -126,7 +126,7 @@ export async function getTemasDourinarios() {
 }
 
 export async function getTemaDoutrinarioById(id: string) {
-  const supabase = await createClient();
+  const supabase = createServiceRoleClient();
 
   const { data, error } = await supabase
     .from('temas_doutrinarios')
@@ -144,7 +144,7 @@ export async function createTemaDoutrinario(formData: {
   titulo: string;
   categoria: string;
 }) {
-  const supabase = await createClient();
+  const supabase = createServiceRoleClient();
 
   const { data, error } = await supabase
     .from('temas_doutrinarios')
@@ -170,7 +170,7 @@ export async function updateTemaDoutrinario(
     categoria?: string;
   }
 ) {
-  const supabase = await createClient();
+  const supabase = createServiceRoleClient();
 
   const { error } = await supabase
     .from('temas_doutrinarios')
@@ -186,7 +186,7 @@ export async function updateTemaDoutrinario(
 }
 
 export async function toggleTemaDoutrinarioStatus(id: string, ativo: boolean) {
-  const supabase = await createClient();
+  const supabase = createServiceRoleClient();
 
   const { error } = await supabase
     .from('temas_doutrinarios')
