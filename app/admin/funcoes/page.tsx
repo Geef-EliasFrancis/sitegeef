@@ -1,7 +1,6 @@
 import Link from 'next/link';
 import { getFuncoes, toggleFuncaoStatus } from './actions';
 import { Suspense } from 'react';
-import { AdminPageTitleAdd } from '@/components/admin/admin-page-title-add';
 
 export const metadata = {
   title: 'Funções e Temas - Admin GEEF',
@@ -25,7 +24,9 @@ async function FuncoesList() {
 
   return (
     <div className="area-page">
-      <AdminPageTitleAdd title="Funções" href="/admin/pessoas/funcoes/nova" />
+      <div className="admin-page-header">
+        <h1 className="admin-page-title">Funções</h1>
+      </div>
 
       <section className="area-section">
         <div className="table-surface">
