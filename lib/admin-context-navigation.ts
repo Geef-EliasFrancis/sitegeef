@@ -7,6 +7,12 @@ export function isAdminContextItemActive(item: ContextItem, pathname: string, se
     return item.label === "Allowlist";
   }
 
+  const isFuncoesPath = pathname === "/admin/funcoes" || pathname.startsWith("/admin/funcoes/") || pathname === "/admin/pessoas/funcoes" || pathname.startsWith("/admin/pessoas/funcoes/");
+  if (isFuncoesPath) {
+    const isTemasPath = pathname === "/admin/funcoes/temas" || pathname.startsWith("/admin/funcoes/temas/");
+    return item.label === (isTemasPath ? "Temas" : "Funções");
+  }
+
   const itemPath = item.href.split("?")[0];
   const isPathActive = item.label === "Início" ? pathname === itemPath : pathname === itemPath || pathname.startsWith(`${itemPath}/`);
   if (!isPathActive) return false;
