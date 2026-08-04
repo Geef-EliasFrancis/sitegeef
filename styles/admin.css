@@ -3859,3 +3859,30 @@
   height: 2.75rem;
   padding: 0;
 }
+
+.funcoes-create-disclosure > summary {
+  display: grid;
+  list-style: none;
+  cursor: pointer;
+}
+
+.funcoes-create-disclosure > summary::-webkit-details-marker {
+  display: none;
+}
+
+.funcoes-create-disclosure > .funcoes-page-header {
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+}
+
+.funcoes-create-disclosure[open] > summary {
+  margin-bottom: 1.25rem;
+}
+
+.funcoes-create-disclosure[open] ~ .funcoes-list-section {
+  display: none;
+}
+
+.funcoes-create-form {
+  margin-top: 0;
+}
