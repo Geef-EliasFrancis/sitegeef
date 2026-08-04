@@ -34,7 +34,7 @@ type PessoaUpdate = Partial<{
 
 export type PessoaAllowlistItem = {
   id: string;
-  nome: string;
+  nome: string | null;
   email: string | null;
   cpf: string | null;
   observacoes: string | null;
@@ -138,7 +138,8 @@ export async function getPessoas(
 }
 
 export async function getPessoasAllowlist(onlyActive = false) {
-  const supabase = await createClient();
+  await requirePessoasAccess();
+  const supabase = createServiceRoleClient();
   let query = supabase
     .from('pessoas_allowlist')
     .select('id,nome,email,cpf,observacoes,ativo')
@@ -146,7 +147,7 @@ export async function getPessoasAllowlist(onlyActive = false) {
 
   if (onlyActive) query = query.eq('ativo', true);
   const { data, error } = await query;
-  if (error) return [] as PessoaAllowlistItem[];
+  if (error) throw new Error('Não foi possível carregar a allowlist.');
   return (data ?? []) as PessoaAllowlistItem[];
 }
 
@@ -157,7 +158,7 @@ export async function createPessoaAllowlist(formData: {
   observacoes?: string;
 }) {
   await requirePessoasAccess();
-  const supabase = await createClient();
+  const supabase = createServiceRoleClient();
   const { data, error } = await supabase
     .from('pessoas_allowlist')
     .insert({
@@ -170,19 +171,19 @@ export async function createPessoaAllowlist(formData: {
     .select('id,nome,email,cpf,observacoes,ativo')
     .single();
 
-  if (error) return null;
+  if (error) throw new Error('Não foi possível salvar a autorização.');
   return data as PessoaAllowlistItem;
 }
 
 export async function togglePessoaAllowlistStatus(id: string, ativo: boolean) {
   await requirePessoasAccess();
-  const supabase = await createClient();
+  const supabase = createServiceRoleClient();
   const { error } = await supabase
     .from('pessoas_allowlist')
     .update({ ativo, atualizado_em: new Date().toISOString() })
     .eq('id', id);
 
-  if (error) return { success: false };
+  if (error) throw new Error('Não foi possível atualizar a autorização.');
   return { success: true };
 }
 
@@ -242,7 +243,7 @@ export async function createPessoa(formData: {
   const supabase = await createClient();
 
   if (!formData.allowlist_id) return null;
-  const { data: autorizado, error: allowlistError } = await supabase
+  const { data: autorizado, error: allowlistError } = await createServiceRoleClient()
     .from('pessoas_allowlist')
     .select('id,nome,email,cpf')
     .eq('id', formData.allowlist_id)
