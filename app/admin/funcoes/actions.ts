@@ -7,6 +7,11 @@ import { checkModuleAccess } from '@/lib/auth/permissions';
 import { redirect } from 'next/navigation';
 import { buildFlashNoticeUrl } from '@/lib/notificacoes/flash-notice';
 
+function redirectAfterFuncaoForm(variant: 'success' | 'error', message: string): never {
+  const url = buildFlashNoticeUrl('/admin/funcoes', { variant, message });
+  redirect(`${url}&cadastro=${Date.now()}`);
+}
+
 async function requireFuncoesAccess() {
   const allowed =
     (await checkModuleAccess('pode_escalas', ['coord_passe'])) ||
@@ -116,7 +121,7 @@ export async function toggleFuncaoStatus(id: string, ativo: boolean) {
 export async function createFuncaoFromList(formData: FormData) {
   const nome = String(formData.get('nome') ?? '').trim();
   if (!nome) {
-    redirect(buildFlashNoticeUrl('/admin/funcoes', { variant: 'error', message: 'Informe o nome da função.' }));
+    redirectAfterFuncaoForm('error', 'Informe o nome da função.');
   }
 
   try {
@@ -126,16 +131,16 @@ export async function createFuncaoFromList(formData: FormData) {
     });
 
     if (!funcao) {
-      redirect(buildFlashNoticeUrl('/admin/funcoes', { variant: 'error', message: 'Não foi possível salvar a função.' }));
+      redirectAfterFuncaoForm('error', 'Não foi possível salvar a função.');
     }
 
-    redirect(buildFlashNoticeUrl('/admin/funcoes', { variant: 'success', message: 'Função salva.' }));
+    redirectAfterFuncaoForm('success', 'Função salva.');
   } catch (error) {
     if (typeof error === 'object' && error !== null && 'digest' in error && String((error as { digest?: string }).digest || '').startsWith('NEXT_REDIRECT')) {
       throw error;
     }
     console.error('Erro ao criar função:', error);
-    redirect(buildFlashNoticeUrl('/admin/funcoes', { variant: 'error', message: 'Não foi possível salvar a função.' }));
+    redirectAfterFuncaoForm('error', 'Não foi possível salvar a função.');
   }
 }
 

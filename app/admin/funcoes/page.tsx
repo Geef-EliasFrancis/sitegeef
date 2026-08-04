@@ -14,13 +14,13 @@ type FuncaoItem = {
   ativo: boolean;
 };
 
-async function FuncoesList() {
+async function FuncoesList({ closeKey }: { closeKey: string }) {
   const funcoes = await getFuncoes(false);
   const funcaoList = funcoes as FuncaoItem[];
 
   return (
     <div className="area-page">
-      <details className="funcoes-create-disclosure">
+      <details key={closeKey} className="funcoes-create-disclosure">
         <summary className="admin-page-header admin-page-header--title-add funcoes-page-header">
           <h1 className="admin-page-title">Funções</h1>
           <span className="admin-btn admin-btn-primary admin-page-add-button" aria-label="Adicionar função" title="Adicionar função">
@@ -88,10 +88,12 @@ async function FuncoesList() {
   );
 }
 
-export default function FuncoesPage() {
+export default async function FuncoesPage({ searchParams }: { searchParams: Promise<{ cadastro?: string }> }) {
+  const params = await searchParams;
+
   return (
     <Suspense fallback={<div className="suspense-center">Carregando...</div>}>
-      <FuncoesList />
+      <FuncoesList closeKey={params.cadastro || 'novo'} />
     </Suspense>
   );
 }
