@@ -28,6 +28,7 @@ Use este checklist antes de considerar um módulo admin pronto.
 
 ## UX e layout
 
+- [ ] Views de listagem com criação usam o padrão documentado em `docs/ADMIN_TITULO_ADICAO.md`
 - [ ] Desktop não fica travado em largura fixa
 - [ ] Mobile mantém formulário navegável
 - [ ] Botões de ação ficam visíveis sem scroll excessivo
