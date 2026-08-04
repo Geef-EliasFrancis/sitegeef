@@ -13,6 +13,7 @@
 - [Padrão de tema, contraste e identidade](./PADRAO_TEMA_CONTRASTE_IDENTIDADE.md)
 - [Catálogo visual de telas e componentes](./UI-CATALOG.md)
 - [Arquitetura SOLID do frontend](./SOLID-ARCHITECTURE.md)
+- [Integração Jitsi Meet](./JITSI_INTEGRATION.md)
 
 ## Por assunto
 
@@ -46,3 +47,4 @@
 
 - [Notifications](./NOTIFICATIONS.md)
 - [Base ERP](./baseerp.md)
+- [Integração Jitsi Meet](./JITSI_INTEGRATION.md)
