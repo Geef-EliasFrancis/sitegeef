@@ -30,10 +30,7 @@ async function FuncoesList() {
       <section className="area-section">
         <div className="table-surface">
           {funcaoList.length === 0 ? (
-            <div className="area-empty">
-              <p>Nenhuma função cadastrada.</p>
-              <Link href="/admin/pessoas/funcoes/nova" className="profile-form-btn profile-form-btn-primary">Criar primeira função</Link>
-            </div>
+            <div className="area-empty" aria-hidden="true" />
           ) : (
             <table className="admin-table">
               <thead>
