@@ -3,6 +3,10 @@ import type { AdminShellArea } from "@/lib/admin-shell-navigation";
 type ContextItem = { label: string; href: string };
 
 export function isAdminContextItemActive(item: ContextItem, pathname: string, searchParams: { get(name: string): string | null }) {
+  if (pathname === "/admin/pessoas/allowlist" || pathname.startsWith("/admin/pessoas/allowlist/")) {
+    return item.label === "Allowlist";
+  }
+
   const itemPath = item.href.split("?")[0];
   const isPathActive = item.label === "Início" ? pathname === itemPath : pathname === itemPath || pathname.startsWith(`${itemPath}/`);
   if (!isPathActive) return false;
