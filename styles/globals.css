@@ -1555,8 +1555,31 @@ body.reuniao-publica-display-route .site-shell-main {
 
 .musica-passes-controls {
   display: flex;
+  align-items: center;
   gap: 0.5rem;
+  flex-wrap: wrap;
   flex: 0 0 auto;
+}
+
+.musica-passes-volume {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  min-height: 2.5rem;
+  margin-left: 0.2rem;
+  color: var(--muted);
+  font-size: 0.75rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.musica-passes-volume input[type="range"] {
+  width: 6.5rem;
+  accent-color: var(--secondary);
+}
+
+.musica-passes-volume-value {
+  min-width: 2.5rem;
+  text-align: right;
 }
 
 .musica-passes-spiritual {

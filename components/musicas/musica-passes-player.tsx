@@ -21,6 +21,7 @@ export function MusicaPassesPlayer({ items }: { items: MusicaPasse[] }) {
   const [duration, setDuration] = useState(0);
   const [shuffle, setShuffle] = useState(false);
   const [repeatMode, setRepeatMode] = useState<RepeatMode>("all");
+  const [volume, setVolume] = useState(0.8);
   const current = items[index];
   const hasItems = items.length > 0;
 
@@ -97,6 +98,12 @@ export function MusicaPassesPlayer({ items }: { items: MusicaPasse[] }) {
     }
   }, [current?.id]);
 
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.volume = volume;
+    }
+  }, [volume]);
+
   const repeatLabel = repeatMode === "all" ? "Repetir todas as músicas" : repeatMode === "one" ? "Repetir esta música" : "Repetição desligada";
 
   return (
@@ -153,6 +160,20 @@ export function MusicaPassesPlayer({ items }: { items: MusicaPasse[] }) {
           <button type="button" className="musica-passes-control musica-passes-control--play" onClick={togglePlay} disabled={!hasItems} aria-label={isPlaying ? "Parar" : "Reproduzir"} title={isPlaying ? "Parar" : "Reproduzir"}>{isPlaying ? "■" : "▶"}</button>
           <button type="button" className="musica-passes-control" onClick={playNext} disabled={!hasItems} aria-label="Próxima faixa" title="Próxima faixa">▶</button>
           <button type="button" className={`musica-passes-control${repeatMode !== "off" ? " is-active" : ""}`} onClick={toggleRepeat} disabled={!hasItems} aria-label={repeatLabel} title={repeatLabel}>{repeatMode === "one" ? "↻¹" : "↻"}</button>
+          <label className="musica-passes-volume" title={`Volume ${Math.round(volume * 100)}%`}>
+            <span aria-hidden="true">{volume === 0 ? "🔇" : "🔊"}</span>
+            <input
+              type="range"
+              min="0"
+              max="1"
+              step="0.01"
+              value={volume}
+              onChange={(event) => setVolume(Number(event.target.value))}
+              disabled={!hasItems}
+              aria-label={`Volume ${Math.round(volume * 100)}%`}
+            />
+            <span className="musica-passes-volume-value">{Math.round(volume * 100)}%</span>
+          </label>
         </div>
         {!hasItems ? <p className="musica-passes-empty-copy">Nenhum áudio cadastrado ainda.</p> : null}
       </div>
