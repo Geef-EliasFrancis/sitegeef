@@ -21,8 +21,13 @@ async function createAllowlistEntry(formData: FormData) {
   redirect('/admin/pessoas/allowlist');
 }
 
-async function toggleEntry(id: string, ativo: boolean) {
+async function toggleEntry(formData: FormData) {
   'use server';
+  const id = String(formData.get('id') ?? '').trim();
+  const ativo = formData.get('ativo') === 'true';
+  if (!id) {
+    throw new Error('Autorização inválida.');
+  }
   await togglePessoaAllowlistStatus(id, ativo);
 }
 
@@ -51,7 +56,7 @@ export default async function PessoasAllowlistPage() {
       </details>
       <section className="area-section allowlist-list-section"><div className="admin-card table-surface">
         <table className="admin-table"><thead><tr><th>Nome</th><th>Email</th><th>CPF</th><th>Status</th><th>Ação</th></tr></thead><tbody>
-          {entries.map((item) => <tr key={item.id}><td><strong>{item.nome}</strong></td><td>{item.email || '—'}</td><td>{item.cpf || '—'}</td><td>{item.ativo ? 'Ativa' : 'Inativa'}</td><td><form action={() => toggleEntry(item.id, !item.ativo)}><button type="submit" className="admin-btn admin-btn-small">{item.ativo ? 'Desativar' : 'Ativar'}</button></form></td></tr>)}
+          {entries.map((item) => <tr key={item.id}><td><strong>{item.nome || '—'}</strong></td><td>{item.email || '—'}</td><td>{item.cpf || '—'}</td><td>{item.ativo ? 'Ativa' : 'Inativa'}</td><td><form action={toggleEntry}><input type="hidden" name="id" value={item.id} /><input type="hidden" name="ativo" value={String(!item.ativo)} /><button type="submit" className="admin-btn admin-btn-small">{item.ativo ? 'Desativar' : 'Ativar'}</button></form></td></tr>)}
         </tbody></table>
       </div></section>
     </div>
