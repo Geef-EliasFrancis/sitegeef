@@ -1544,6 +1544,11 @@
   cursor: pointer;
 }
 
+.allowlist-create-disclosure > .allowlist-page-header {
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+}
+
 .allowlist-create-disclosure > summary::-webkit-details-marker {
   display: none;
 }
