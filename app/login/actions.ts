@@ -9,6 +9,7 @@ import { invalidateUserAreaCache } from "@/lib/areas/invalidate-user-area";
 import { recordLgpdEvents } from "@/lib/lgpd/persistence";
 import { LGPD_VERSIONS } from "@/lib/lgpd/constants";
 import { recordActionFailureEvent, recordSupabaseFailureEvent } from "@/lib/observability";
+import { isEmailAllowlisted, normalizeAllowlistEmail } from "@/lib/auth/allowlist";
 
 async function getRequestHeadersOrigin() {
   const requestHeaders = await headers();
@@ -17,7 +18,11 @@ async function getRequestHeadersOrigin() {
 
 export async function signInWithEmail(email: string, password: string, nextUrl = "/minha-area") {
   const supabase = await createClient();
-  const normalizedEmail = email.trim().toLowerCase();
+  const normalizedEmail = normalizeAllowlistEmail(email);
+
+  if (!(await isEmailAllowlisted(normalizedEmail))) {
+    return { error: "Este email não está autorizado para acessar o GEEF." };
+  }
 
   const { error } = await supabase.auth.signInWithPassword({
     email: normalizedEmail,
@@ -52,11 +57,15 @@ export async function signUpWithEmail(
   }
 ) {
   const supabase = await createClient();
-  const normalizedEmail = email.trim().toLowerCase();
+  const normalizedEmail = normalizeAllowlistEmail(email);
   const normalizedName = nomeCompleto.trim().slice(0, 120);
 
   if (!consentimentos?.termosUso || !consentimentos?.politicaPrivacidade) {
     return { error: "É necessário aceitar os Termos de Uso e a Política de Privacidade." };
+  }
+
+  if (!(await isEmailAllowlisted(normalizedEmail))) {
+    return { error: "Este email não está autorizado para criar uma conta no GEEF." };
   }
 
   const { data, error } = await supabase.auth.signUp({

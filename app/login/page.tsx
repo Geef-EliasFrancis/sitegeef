@@ -18,6 +18,7 @@ type LoginPageProps = {
   searchParams?: Promise<{
     next?: string;
     popup?: string;
+    error?: string;
   }>;
 };
 
@@ -27,6 +28,9 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
   const resolvedSearchParams = await searchParams;
   const isPopup = resolvedSearchParams?.popup === "1";
   const nextUrl = resolvedSearchParams?.next || "/minha-area";
+  const initialError = resolvedSearchParams?.error === "not_allowed"
+    ? (locale === "en" ? "This email is not authorized to access GEEF." : "Este email não está autorizado para acessar o GEEF.")
+    : undefined;
 
   return (
     <main className={`login-page ${isPopup ? "login-page-popup" : ""}`}>
@@ -43,7 +47,7 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
           </Link>
         </div>
 
-        <LoginForm locale={locale} nextUrl={nextUrl} />
+        <LoginForm locale={locale} nextUrl={nextUrl} initialError={initialError} />
 
         <div className="login-footer">
           <p>{copy.login.footer}</p>

@@ -7,14 +7,17 @@ export const metadata = { title: 'Allowlist de pessoas - Admin GEEF' };
 async function createAllowlistEntry(formData: FormData) {
   'use server';
   const nome = String(formData.get('nome') ?? '').trim();
-  if (nome) {
-    await createPessoaAllowlist({
-      nome,
-      email: String(formData.get('email') ?? ''),
-      cpf: String(formData.get('cpf') ?? ''),
-      observacoes: String(formData.get('observacoes') ?? ''),
-    });
+  const email = String(formData.get('email') ?? '').trim().toLowerCase();
+  if (!email) {
+    throw new Error('Email é obrigatório para criar uma autorização.');
   }
+
+  await createPessoaAllowlist({
+    nome,
+    email,
+    cpf: String(formData.get('cpf') ?? ''),
+    observacoes: String(formData.get('observacoes') ?? ''),
+  });
   redirect('/admin/pessoas/allowlist');
 }
 
@@ -37,8 +40,8 @@ export default async function PessoasAllowlistPage() {
         <section className="area-section">
           <div className="admin-card allowlist-create-card">
             <form action={createAllowlistEntry} className="module-grid allowlist-create-form">
-              <label className="profile-form-field"><span>Nome autorizado *</span><input name="nome" required className="profile-form-input" /></label>
-              <label className="profile-form-field"><span>Email</span><input name="email" type="email" className="profile-form-input" /></label>
+              <label className="profile-form-field"><span>Nome autorizado</span><input name="nome" className="profile-form-input" /></label>
+              <label className="profile-form-field"><span>Email *</span><input name="email" type="email" required className="profile-form-input" /></label>
               <label className="profile-form-field"><span>CPF</span><input name="cpf" className="profile-form-input" /></label>
               <label className="profile-form-field"><span>Observações</span><input name="observacoes" className="profile-form-input" /></label>
               <div><button type="submit" className="admin-btn admin-btn-primary">Salvar autorização</button></div>

@@ -151,8 +151,8 @@ export async function getPessoasAllowlist(onlyActive = false) {
 }
 
 export async function createPessoaAllowlist(formData: {
-  nome: string;
-  email?: string;
+  nome?: string;
+  email: string;
   cpf?: string;
   observacoes?: string;
 }) {
@@ -161,8 +161,8 @@ export async function createPessoaAllowlist(formData: {
   const { data, error } = await supabase
     .from('pessoas_allowlist')
     .insert({
-      nome: formData.nome.trim(),
-      email: formData.email?.trim() || null,
+      nome: formData.nome?.trim() || null,
+      email: formData.email.trim().toLowerCase(),
       cpf: formData.cpf?.trim() || null,
       observacoes: formData.observacoes?.trim() || null,
       ativo: true,

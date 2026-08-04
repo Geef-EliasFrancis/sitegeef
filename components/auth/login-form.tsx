@@ -13,9 +13,10 @@ import type { Locale } from "@/lib/multilingual/client";
 type LoginFormProps = {
   nextUrl?: string;
   locale?: Locale;
+  initialError?: string;
 };
 
-export function LoginForm({ nextUrl = "/minha-area", locale = "pt" }: LoginFormProps) {
+export function LoginForm({ nextUrl = "/minha-area", locale = "pt", initialError }: LoginFormProps) {
   const searchParams = useSearchParams();
   const resolvedNextUrl = searchParams?.get("next") || nextUrl;
 
@@ -27,7 +28,7 @@ export function LoginForm({ nextUrl = "/minha-area", locale = "pt" }: LoginFormP
   const [politicaPrivacidade, setPoliticaPrivacidade] = useState(false);
   const [marketingEmail, setMarketingEmail] = useState(false);
   const [marketingWhatsApp, setMarketingWhatsApp] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(initialError ?? null);
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
