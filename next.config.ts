@@ -98,6 +98,7 @@ const nextConfig: NextConfig = {
   serverExternalPackages: ["@supabase/supabase-js", "@supabase/ssr"],
   experimental: {
     devtoolSegmentExplorer: false,
+    middlewareClientMaxBodySize: "50mb",
     serverActions: {
       bodySizeLimit: "50mb",
     },

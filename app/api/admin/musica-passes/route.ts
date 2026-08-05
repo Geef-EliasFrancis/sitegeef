@@ -20,7 +20,16 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "Acesso negado." }, { status: 403 });
   }
 
-  const formData = await request.formData();
+  let formData: FormData;
+  try {
+    formData = await request.formData();
+  } catch (error) {
+    console.error("Falha ao ler upload de passe:", error);
+    return NextResponse.json(
+      { error: "O áudio excede o limite de 50 MB ou o envio foi interrompido." },
+      { status: 413 },
+    );
+  }
   const titulo = String(formData.get("titulo") || "").trim();
   const audio = formData.get("audio");
 
