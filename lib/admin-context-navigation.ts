@@ -1,8 +1,8 @@
 import type { AdminShellArea } from "@/lib/admin-shell-navigation";
 
-type ContextItem = { label: string; href: string };
+export type AdminContextItem = { label: string; href: string; activePath?: string };
 
-export function isAdminContextItemActive(item: ContextItem, pathname: string, searchParams: { get(name: string): string | null }) {
+export function isAdminContextItemActive(item: AdminContextItem, pathname: string, searchParams: { get(name: string): string | null }) {
   if (pathname === "/admin/pessoas/allowlist" || pathname.startsWith("/admin/pessoas/allowlist/")) {
     return item.label === "Allowlist";
   }
@@ -13,19 +13,21 @@ export function isAdminContextItemActive(item: ContextItem, pathname: string, se
     return item.label === (isTemasPath ? "Temas" : "Funções");
   }
 
-  const itemPath = item.href.split("?")[0];
-  const isPathActive = item.label === "Início" ? pathname === itemPath : pathname === itemPath || pathname.startsWith(`${itemPath}/`);
+  const itemPath = item.activePath ?? item.href.split("?")[0];
+  const isPathActive = item.label === "Início" && !item.activePath
+    ? pathname === itemPath
+    : pathname === itemPath || pathname.startsWith(`${itemPath}/`);
   if (!isPathActive) return false;
   if (item.label === "Prece") return searchParams.get("categoria") === "prece";
   if (item.label === "Palestra") return !searchParams.get("categoria");
   return true;
 }
 
-export const contextMenus: Partial<Record<AdminShellArea, readonly { label: string; href: string }[]>> = {
+export const contextMenus: Partial<Record<AdminShellArea, readonly AdminContextItem[]>> = {
   perfil: [{ label: "Início", href: "/admin/perfil" }, { label: "Minha área", href: "/minha-area" }],
   "reuniao-publica": [
     { label: "Início", href: "/admin/reuniao-publica" }, { label: "Avisos", href: "/admin/reuniao-publica/avisos" },
-    { label: "Reunião", href: "/admin/reuniao-publica/reuniao" }, { label: "Música", href: "/admin/reuniao-publica/musica/inicio" },
+    { label: "Reunião", href: "/admin/reuniao-publica/reuniao" }, { label: "Música", href: "/admin/reuniao-publica/musica/inicio", activePath: "/admin/reuniao-publica/musica" },
     { label: "Leitura", href: "/admin/reuniao-publica/leitura" }, { label: "Palestra", href: "/admin/reuniao-publica/palestra" }, { label: "Prece", href: "/admin/reuniao-publica/prece" },
   ],
   geef: [

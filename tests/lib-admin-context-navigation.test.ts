@@ -13,4 +13,17 @@ describe('isAdminContextItemActive', () => {
     expect(isAdminContextItemActive({ label: 'Pessoas', href: '/admin/pessoas' }, '/admin/funcoes', searchParams)).toBe(false);
     expect(isAdminContextItemActive({ label: 'Funções', href: '/admin/pessoas/funcoes' }, '/admin/funcoes', searchParams)).toBe(true);
   });
+
+  it('mantém música ativa nas páginas filhas do módulo', () => {
+    expect(isAdminContextItemActive(
+      { label: 'Música', href: '/admin/reuniao-publica/musica/inicio', activePath: '/admin/reuniao-publica/musica' },
+      '/admin/reuniao-publica/musica/passes',
+      searchParams,
+    )).toBe(true);
+    expect(isAdminContextItemActive(
+      { label: 'Reunião', href: '/admin/reuniao-publica/reuniao' },
+      '/admin/reuniao-publica/musica/passes',
+      searchParams,
+    )).toBe(false);
+  });
 });
