@@ -43,6 +43,19 @@ export function MusicaPassesPlayer({ items }: { items: MusicaPasse[] }) {
     nextIndexRef.current = null;
   };
 
+  const pauseAllAudio = () => {
+    clearTransition();
+    audioRefs.forEach((ref, slot) => {
+      const audio = ref.current;
+      if (!audio) return;
+      audio.pause();
+      audio.volume = 1;
+      if (slot !== activeSlotRef.current) audio.currentTime = 0;
+    });
+    continuePlaylistRef.current = false;
+    setIsPlaying(false);
+  };
+
   const chooseNextIndex = () => {
     if (items.length < 2 || !shuffle) return (index + 1) % items.length;
     let next = index;
@@ -51,13 +64,7 @@ export function MusicaPassesPlayer({ items }: { items: MusicaPasse[] }) {
   };
 
   const changeTrack = (nextIndex: number, autoplay = false) => {
-    clearTransition();
-    audioRefs.forEach((ref) => {
-      if (ref.current) {
-        ref.current.pause();
-        ref.current.volume = 1;
-      }
-    });
+    pauseAllAudio();
     const nextSlot = activeSlotRef.current === 0 ? 1 : 0;
     activeSlotRef.current = nextSlot;
     setActiveSlot(nextSlot);
@@ -86,6 +93,11 @@ export function MusicaPassesPlayer({ items }: { items: MusicaPasse[] }) {
 
   const togglePlay = () => {
     if (!audioRef.current || !current) return;
+    const playingAudio = audioRefs.find((ref) => ref.current && !ref.current.paused && !ref.current.ended)?.current;
+    if (playingAudio) {
+      pauseAllAudio();
+      return;
+    }
     if (audioRef.current.paused) {
       continuePlaylistRef.current = true;
       void audioRef.current.play();
