@@ -11,13 +11,14 @@ export function MusicaPassesUploadForm() {
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    const form = event.currentTarget;
     setPending(true);
     setError("");
 
     try {
       const response = await fetch("/api/admin/musica-passes", {
         method: "POST",
-        body: new FormData(event.currentTarget),
+        body: new FormData(form),
       });
       const result = (await response.json().catch(() => ({}))) as { error?: string };
 
@@ -26,7 +27,7 @@ export function MusicaPassesUploadForm() {
         return;
       }
 
-      event.currentTarget.reset();
+      form.reset();
       router.refresh();
     } catch {
       setError("Não foi possível conectar ao servidor.");
