@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import type { MusicaPasse } from "@/lib/musica-passes";
 
 type RepeatMode = "off" | "one" | "all";
@@ -13,9 +13,17 @@ function formatTime(value: number) {
 }
 
 export function MusicaPassesPlayer({ items }: { items: MusicaPasse[] }) {
-  const audioRef = useRef<HTMLAudioElement>(null);
+  const primaryAudioRef = useRef<HTMLAudioElement>(null);
+  const secondaryAudioRef = useRef<HTMLAudioElement>(null);
+  const audioRefs = useMemo(() => [primaryAudioRef, secondaryAudioRef] as const, []);
+  const activeSlotRef = useRef<0 | 1>(0);
+  const transitionRef = useRef(false);
+  const transitionTimerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const nextIndexRef = useRef<number | null>(null);
   const continuePlaylistRef = useRef(false);
   const [index, setIndex] = useState(0);
+  const [activeSlot, setActiveSlot] = useState<0 | 1>(0);
+  const [slotTracks, setSlotTracks] = useState<[number | null, number | null]>([0, null]);
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
@@ -24,6 +32,16 @@ export function MusicaPassesPlayer({ items }: { items: MusicaPasse[] }) {
   const [volume, setVolume] = useState(0.8);
   const current = items[index];
   const hasItems = items.length > 0;
+  const audioRef = audioRefs[activeSlot];
+
+  const clearTransition = () => {
+    if (transitionTimerRef.current) {
+      clearInterval(transitionTimerRef.current);
+      transitionTimerRef.current = null;
+    }
+    transitionRef.current = false;
+    nextIndexRef.current = null;
+  };
 
   const chooseNextIndex = () => {
     if (items.length < 2 || !shuffle) return (index + 1) % items.length;
@@ -33,9 +51,26 @@ export function MusicaPassesPlayer({ items }: { items: MusicaPasse[] }) {
   };
 
   const changeTrack = (nextIndex: number, autoplay = false) => {
+    clearTransition();
+    audioRefs.forEach((ref) => {
+      if (ref.current) {
+        ref.current.pause();
+        ref.current.volume = 1;
+      }
+    });
+    const nextSlot = activeSlotRef.current === 0 ? 1 : 0;
+    activeSlotRef.current = nextSlot;
+    setActiveSlot(nextSlot);
+    setSlotTracks((tracks) => {
+      const nextTracks: [number | null, number | null] = [...tracks];
+      nextTracks[nextSlot] = nextIndex;
+      nextTracks[nextSlot === 0 ? 1 : 0] = null;
+      return nextTracks;
+    });
     continuePlaylistRef.current = autoplay;
     setIndex(nextIndex);
     setCurrentTime(0);
+    setDuration(0);
   };
 
   const playNext = () => changeTrack(chooseNextIndex(), true);
@@ -64,6 +99,8 @@ export function MusicaPassesPlayer({ items }: { items: MusicaPasse[] }) {
   };
 
   const handleEnded = () => {
+    if (transitionRef.current) return;
+
     if (repeatMode === "one") {
       if (audioRef.current) {
         audioRef.current.currentTime = 0;
@@ -82,27 +119,97 @@ export function MusicaPassesPlayer({ items }: { items: MusicaPasse[] }) {
   };
 
   useEffect(() => {
+    audioRefs.forEach((ref) => ref.current?.pause());
+    clearTransition();
+    activeSlotRef.current = 0;
     setIndex(0);
+    setActiveSlot(0);
+    setSlotTracks([0, null]);
     setIsPlaying(false);
     continuePlaylistRef.current = false;
-  }, [items]);
+  }, [audioRefs, items]);
 
   useEffect(() => {
-    if (!audioRef.current || !current) return;
-    audioRef.current.load();
+    const audio = audioRefs[activeSlot].current;
+    if (!audio || !current) return;
+    audio.volume = 1;
+    audio.load();
     if (continuePlaylistRef.current) {
-      void audioRef.current.play().catch(() => {
+      void audio.play().catch(() => {
         continuePlaylistRef.current = false;
         setIsPlaying(false);
       });
     }
-  }, [current?.id]);
+  }, [activeSlot, audioRef, audioRefs, current, current?.id]);
+
+  useEffect(() => () => clearTransition(), [audioRef]);
+
+  const startTransition = (nextSlot: 0 | 1) => {
+    if (transitionRef.current || nextIndexRef.current === null) return;
+    const outgoing = audioRefs[activeSlotRef.current].current;
+    const incoming = audioRefs[nextSlot].current;
+    const nextIndex = nextIndexRef.current;
+    if (!outgoing || !incoming || nextSlot === activeSlotRef.current) return;
+
+    transitionRef.current = true;
+    incoming.volume = 0;
+    void incoming.play().catch(() => {
+      clearTransition();
+      playNext();
+    });
+
+    const startedAt = Date.now();
+    const fadeDuration = 1200;
+    transitionTimerRef.current = setInterval(() => {
+      const progress = Math.min(1, (Date.now() - startedAt) / fadeDuration);
+      outgoing.volume = 1 - progress;
+      incoming.volume = progress;
+
+      if (progress < 1) return;
+      if (transitionTimerRef.current) clearInterval(transitionTimerRef.current);
+      transitionTimerRef.current = null;
+      outgoing.pause();
+      outgoing.currentTime = 0;
+      activeSlotRef.current = nextSlot;
+      setActiveSlot(nextSlot);
+      setIndex(nextIndex);
+      setCurrentTime(incoming.currentTime);
+      setDuration(Number.isFinite(incoming.duration) ? incoming.duration : 0);
+      transitionRef.current = false;
+      nextIndexRef.current = null;
+    }, 50);
+  };
+
+  const handleTimeUpdate = (slot: 0 | 1, event: React.SyntheticEvent<HTMLAudioElement>) => {
+    if (slot !== activeSlotRef.current) return;
+    const audio = event.currentTarget;
+    setCurrentTime(audio.currentTime);
+
+    if (repeatMode === "one" || transitionRef.current || !isPlaying || !Number.isFinite(audio.duration)) return;
+    const remaining = audio.duration - audio.currentTime;
+    if (remaining > 3 || nextIndexRef.current !== null) return;
+
+    const nextIndex = chooseNextIndex();
+    if (repeatMode === "off" && index === items.length - 1) return;
+    const nextSlot = slot === 0 ? 1 : 0;
+    nextIndexRef.current = nextIndex;
+    setSlotTracks((tracks) => {
+      const nextTracks: [number | null, number | null] = [...tracks];
+      nextTracks[nextSlot] = nextIndex;
+      return nextTracks;
+    });
+
+    const incoming = audioRefs[nextSlot].current;
+    if (incoming?.readyState && incoming.readyState >= HTMLMediaElement.HAVE_FUTURE_DATA) {
+      startTransition(nextSlot);
+    }
+  };
 
   useEffect(() => {
     if (audioRef.current) {
       audioRef.current.volume = volume;
     }
-  }, [volume]);
+  }, [audioRef, volume]);
 
   const repeatLabel = repeatMode === "all" ? "Repetir todas as músicas" : repeatMode === "one" ? "Repetir esta música" : "Repetição desligada";
 
@@ -141,18 +248,29 @@ export function MusicaPassesPlayer({ items }: { items: MusicaPasse[] }) {
           <span>{formatTime(duration)}</span>
         </div>
 
-        <audio
-          ref={audioRef}
-          className="musica-passes-audio"
-          preload="auto"
-          aria-hidden="true"
-          src={current?.audio_url}
-          onLoadedMetadata={(event) => setDuration(event.currentTarget.duration)}
-          onTimeUpdate={(event) => setCurrentTime(event.currentTarget.currentTime)}
-          onPlay={() => { continuePlaylistRef.current = true; setIsPlaying(true); }}
-          onPause={(event) => { if (!event.currentTarget.ended) continuePlaylistRef.current = false; setIsPlaying(false); }}
-          onEnded={hasItems ? handleEnded : undefined}
-        />
+        {audioRefs.map((ref, slot) => {
+          const slotIndex = slotTracks[slot];
+          return (
+            <audio
+              key={slot}
+              ref={ref}
+              className="musica-passes-audio"
+              preload="auto"
+              aria-hidden="true"
+              src={slotIndex === null ? undefined : items[slotIndex]?.audio_url}
+              onLoadedMetadata={(event) => {
+                if (slot === activeSlotRef.current) setDuration(event.currentTarget.duration);
+              }}
+              onCanPlay={() => {
+                if (transitionRef.current && slot !== activeSlotRef.current) startTransition(slot as 0 | 1);
+              }}
+              onTimeUpdate={(event) => handleTimeUpdate(slot as 0 | 1, event)}
+              onPlay={() => { if (slot === activeSlotRef.current) { continuePlaylistRef.current = true; setIsPlaying(true); } }}
+              onPause={(event) => { if (slot === activeSlotRef.current && !transitionRef.current && !event.currentTarget.ended) continuePlaylistRef.current = false; if (slot === activeSlotRef.current && !transitionRef.current) setIsPlaying(false); }}
+              onEnded={hasItems && slot === activeSlotRef.current ? handleEnded : undefined}
+            />
+          );
+        })}
 
         <div className="musica-passes-controls" aria-label="Controles da playlist">
           <button type="button" className={`musica-passes-control${shuffle ? " is-active" : ""}`} onClick={() => setShuffle((value) => !value)} disabled={!hasItems} aria-label="Aleatório" title="Aleatório">⤨</button>
