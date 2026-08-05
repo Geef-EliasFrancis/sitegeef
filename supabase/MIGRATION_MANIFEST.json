@@ -1,0 +1,95 @@
+{
+  "schema_version": 1,
+  "project_ref": "nycgpokqlmrfzegjlrwa",
+  "local_directory": "supabase/migrations",
+  "policy": {
+    "gate_command": "npm run migration:gate",
+    "apply_command": "npm run apply-migration -- supabase/migrations/<arquivo>.sql",
+    "require_remote_history_alignment": true,
+    "block_duplicate_versions": true,
+    "block_unmapped_remote_checkpoints": true
+  },
+  "local_files": [
+    { "file": "20260510_create_ops_events.sql", "state": "legacy_bundle" },
+    { "file": "20260515_auth_profiles.sql", "state": "legacy_bundle" },
+    { "file": "20260515_geef_erp.sql", "state": "legacy_bundle" },
+    { "file": "20260515_rls_sensitive_modules.sql", "state": "legacy_bundle" },
+    { "file": "20260516_fix_profiles_and_storage.sql", "state": "legacy_bundle" },
+    { "file": "20260517_pessoas_usuarios_policies.sql", "state": "legacy_bundle" },
+    { "file": "20260518_admin_user_jwt_fallback.sql", "state": "legacy_bundle" },
+    { "file": "20260518_debug_rls_usuarios.sql", "state": "legacy_bundle" },
+    { "file": "20260518_lgpd_modulo.sql", "state": "legacy_bundle" },
+    { "file": "20260518_lgpd_retention_policy.sql", "state": "legacy_bundle" },
+    { "file": "20260518_lgpd_solicitacoes_titular.sql", "state": "legacy_bundle" },
+    { "file": "20260523_instituicao_modelagem_total.sql", "state": "legacy_bundle" },
+    { "file": "20260524_instituicao_cleanup_legado.sql", "state": "legacy_bundle" },
+    { "file": "20260525_instituicao_porte_cnpj_oficial.sql", "state": "legacy_bundle" },
+    { "file": "20260526_musica_versoes.sql", "state": "legacy_bundle" },
+    { "file": "20260526011410_musicas_institucionais.sql", "state": "legacy_bundle" },
+    { "file": "20260527_musica_autores_normalizacao.sql", "state": "legacy_bundle" },
+    { "file": "20260527_musica_media.sql", "state": "legacy_bundle" },
+    { "file": "20260527030702_musica_creditos_unificados.sql", "state": "legacy_bundle" },
+    { "file": "20260531_musica_exibicao_publica_realtime.sql", "state": "legacy_bundle" },
+    { "file": "20260801010000_seed_ouco_deus.sql", "state": "legacy_bundle" },
+    { "file": "20260801020000_calendario_publico.sql", "state": "legacy_bundle" },
+    { "file": "20260802010000_musica_passes.sql", "state": "legacy_bundle" },
+    { "file": "20260802010000_reuniao_publica_avisos.sql", "state": "legacy_bundle" },
+    { "file": "20260802020000_musica_passes_ordem_unica.sql", "state": "legacy_bundle" },
+    { "file": "20260803010000_pessoas_allowlist.sql", "state": "legacy_bundle" },
+    { "file": "20260803020000_pessoas_allowlist_email_required.sql", "state": "legacy_bundle" },
+    { "file": "20260803030000_seed_pessoas_allowlist_admins.sql", "state": "legacy_bundle" },
+    { "file": "20260803040000_seed_funcoes_basicas.sql", "state": "legacy_bundle" },
+    { "file": "20260805010000_tarefeiros_disponibilidade.sql", "state": "pending" }
+  ],
+  "remote_checkpoints": [
+    { "version": "20260527024607", "state": "unmapped_remote" },
+    { "version": "20260527024618", "state": "unmapped_remote" },
+    { "version": "20260527031129", "state": "unmapped_remote" },
+    { "version": "20260527031336", "state": "unmapped_remote" },
+    { "version": "20260801142100", "state": "unmapped_remote" },
+    { "version": "20260802033054", "state": "unmapped_remote" },
+    { "version": "20260803001952", "state": "unmapped_remote" },
+    { "version": "20260803005230", "state": "unmapped_remote" },
+    { "version": "20260803032928", "state": "unmapped_remote" },
+    { "version": "20260804011252", "state": "unmapped_remote" },
+    { "version": "20260804011253", "state": "unmapped_remote" }
+  ],
+  "known_duplicate_versions": [
+    {
+      "version": "20260515",
+      "files": [
+        "20260515_auth_profiles.sql",
+        "20260515_geef_erp.sql",
+        "20260515_rls_sensitive_modules.sql"
+      ],
+      "action": "preservar como bundle histórico e substituir por aliases únicos antes de novas aplicações"
+    },
+    {
+      "version": "20260518",
+      "files": [
+        "20260518_admin_user_jwt_fallback.sql",
+        "20260518_debug_rls_usuarios.sql",
+        "20260518_lgpd_modulo.sql",
+        "20260518_lgpd_retention_policy.sql",
+        "20260518_lgpd_solicitacoes_titular.sql"
+      ],
+      "action": "preservar como bundle histórico e substituir por aliases únicos antes de novas aplicações"
+    },
+    {
+      "version": "20260527",
+      "files": [
+        "20260527_musica_autores_normalizacao.sql",
+        "20260527_musica_media.sql"
+      ],
+      "action": "preservar como bundle histórico e substituir por aliases únicos antes de novas aplicações"
+    },
+    {
+      "version": "20260802010000",
+      "files": [
+        "20260802010000_musica_passes.sql",
+        "20260802010000_reuniao_publica_avisos.sql"
+      ],
+      "action": "renomear um arquivo para um timestamp único após reconciliar o histórico remoto"
+    }
+  ]
+}

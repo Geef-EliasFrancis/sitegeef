@@ -36,6 +36,7 @@
     "start": "node .next/standalone/server.js",
     "start:standalone": "node .next/standalone/server.js",
     "apply-migration": "node scripts/apply-migration.js",
+    "migration:gate": "node scripts/migration-gate.mjs",
     "apply-rls-sensitive-modules": "node scripts/apply-migration.js supabase/migrations/20260515_rls_sensitive_modules.sql",
     "check-migration": "node scripts/verify-migration.js",
     "check-rls-sensitive-modules": "node scripts/verify-rls-sensitive-modules.js",

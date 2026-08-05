@@ -2,6 +2,7 @@
 
 const fs = require('fs');
 const path = require('path');
+const { execFileSync } = require('child_process');
 const { getDatabaseUrl, withDatabase } = require('./supabase-db');
 
 const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://nycgpokqlmrfzegjlrwa.supabase.co';
@@ -14,6 +15,18 @@ const migrationPath = path.isAbsolute(migrationArg || '')
 async function main() {
   if (!fs.existsSync(migrationPath)) {
     console.error(`❌ Migration file not found: ${migrationPath}`);
+    process.exit(1);
+  }
+
+  console.log('🔐 Executando gate de migrations antes da escrita...');
+  try {
+    execFileSync(process.execPath, [path.join(__dirname, 'migration-gate.mjs')], {
+      cwd: path.join(__dirname, '..'),
+      stdio: 'inherit',
+      env: process.env,
+    });
+  } catch {
+    console.error('❌ Aplicação bloqueada pelo gate de migrations. Nenhuma escrita foi executada.');
     process.exit(1);
   }
 
