@@ -5,6 +5,9 @@ import type { MusicaPasse } from "@/lib/musica-passes";
 
 type RepeatMode = "off" | "one" | "all";
 
+const TRANSITION_LEAD_SECONDS = 6;
+const TRANSITION_FADE_MS = 2000;
+
 function formatTime(value: number) {
   if (!Number.isFinite(value) || value < 0) return "0:00";
   const minutes = Math.floor(value / 60);
@@ -58,9 +61,10 @@ export function MusicaPassesPlayer({ items }: { items: MusicaPasse[] }) {
   };
 
   const chooseNextIndex = () => {
-    if (items.length < 2 || !shuffle) return (index + 1) % items.length;
-    let next = index;
-    while (next === index) next = Math.floor(Math.random() * items.length);
+    const baseIndex = nextIndexRef.current ?? index;
+    if (items.length < 2 || !shuffle) return (baseIndex + 1) % items.length;
+    let next = baseIndex;
+    while (next === baseIndex) next = Math.floor(Math.random() * items.length);
     return next;
   };
 
@@ -220,7 +224,7 @@ export function MusicaPassesPlayer({ items }: { items: MusicaPasse[] }) {
     });
 
     const startedAt = Date.now();
-    const fadeDuration = 1200;
+    const fadeDuration = TRANSITION_FADE_MS;
     transitionTimerRef.current = setInterval(() => {
       const progress = Math.min(1, (Date.now() - startedAt) / fadeDuration);
       outgoing.volume = 1 - progress;
@@ -248,7 +252,7 @@ export function MusicaPassesPlayer({ items }: { items: MusicaPasse[] }) {
 
     if (repeatMode === "one" || transitionRef.current || !isPlaying || !Number.isFinite(audio.duration)) return;
     const remaining = audio.duration - audio.currentTime;
-    if (remaining > 3 || nextIndexRef.current !== null) return;
+    if (remaining > TRANSITION_LEAD_SECONDS || nextIndexRef.current !== null) return;
 
     if (repeatMode === "off" && index === items.length - 1) return;
     const nextIndex = preparedNextIndexRef.current ?? chooseNextIndex();
