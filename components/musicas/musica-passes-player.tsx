@@ -24,6 +24,7 @@ export function MusicaPassesPlayer({ items }: { items: MusicaPasse[] }) {
   const transitionTimerRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const nextIndexRef = useRef<number | null>(null);
   const preparedNextIndexRef = useRef<number | null>(null);
+  const skipActiveLoadRef = useRef(false);
   const continuePlaylistRef = useRef(false);
   const [index, setIndex] = useState(0);
   const [activeSlot, setActiveSlot] = useState<0 | 1>(0);
@@ -139,6 +140,7 @@ export function MusicaPassesPlayer({ items }: { items: MusicaPasse[] }) {
     audioRefs.forEach((ref) => ref.current?.pause());
     clearTransition();
     activeSlotRef.current = 0;
+    skipActiveLoadRef.current = false;
     setIndex(0);
     setActiveSlot(0);
     setSlotTracks([0, null]);
@@ -149,6 +151,10 @@ export function MusicaPassesPlayer({ items }: { items: MusicaPasse[] }) {
   useEffect(() => {
     const audio = audioRefs[activeSlot].current;
     if (!audio || !current) return;
+    if (skipActiveLoadRef.current) {
+      skipActiveLoadRef.current = false;
+      return;
+    }
     audio.volume = 1;
     audio.load();
     if (continuePlaylistRef.current) {
@@ -235,6 +241,7 @@ export function MusicaPassesPlayer({ items }: { items: MusicaPasse[] }) {
       transitionTimerRef.current = null;
       outgoing.pause();
       outgoing.currentTime = 0;
+      skipActiveLoadRef.current = true;
       activeSlotRef.current = nextSlot;
       setActiveSlot(nextSlot);
       setIndex(nextIndex);
