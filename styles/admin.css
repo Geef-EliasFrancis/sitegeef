@@ -3637,6 +3637,52 @@
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.55), inset 0 -2px 0 rgba(70, 82, 68, 0.16), 0 2px 0 rgba(70, 82, 68, 0.18);
 }
 
+.musica-passes-upload-action {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.musica-passes-upload-toast {
+  position: absolute;
+  z-index: 5;
+  left: calc(100% + 0.75rem);
+  top: 50%;
+  width: max-content;
+  max-width: min(21rem, 36vw);
+  padding: 0.55rem 0.75rem;
+  border: 1px solid #aec5a4;
+  border-radius: 0.55rem;
+  background: #f7fcf1;
+  color: #304431;
+  box-shadow: 0 0.45rem 1rem rgba(49, 76, 48, 0.18);
+  font-size: 0.82rem;
+  line-height: 1.25;
+  pointer-events: none;
+  transform: translateY(-50%);
+  animation: musica-passes-toast-in 160ms ease-out;
+}
+
+@keyframes musica-passes-toast-in {
+  from { opacity: 0; transform: translate(-0.25rem, -50%); }
+  to { opacity: 1; transform: translate(0, -50%); }
+}
+
+@media (max-width: 767px) {
+  .musica-passes-upload-toast {
+    top: calc(100% + 0.5rem);
+    right: 0;
+    left: auto;
+    max-width: min(18rem, calc(100vw - 2rem));
+    transform: none;
+  }
+
+  @keyframes musica-passes-toast-in {
+    from { opacity: 0; transform: translateY(-0.25rem); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+}
+
 .admin-form-group input,
 .admin-form-group select,
 .admin-form-group textarea,
