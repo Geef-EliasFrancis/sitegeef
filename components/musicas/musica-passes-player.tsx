@@ -292,7 +292,7 @@ export function MusicaPassesPlayer({ items }: { items: MusicaPasse[] }) {
                 if (slot === activeSlotRef.current) setDuration(event.currentTarget.duration);
               }}
               onCanPlay={() => {
-                if (transitionRef.current && slot !== activeSlotRef.current) startTransition(slot as 0 | 1);
+                if (nextIndexRef.current !== null && slot !== activeSlotRef.current) startTransition(slot as 0 | 1);
               }}
               onTimeUpdate={(event) => handleTimeUpdate(slot as 0 | 1, event)}
               onPlay={() => { if (slot === activeSlotRef.current) { continuePlaylistRef.current = true; setIsPlaying(true); } }}
