@@ -154,7 +154,25 @@ export function MusicaPassesPlayer({ items }: { items: MusicaPasse[] }) {
     }
   }, [activeSlot, audioRef, audioRefs, current, current?.id]);
 
-  useEffect(() => () => clearTransition(), [audioRef]);
+  useEffect(() => {
+    const stopPlayback = () => {
+      clearTransition();
+      continuePlaylistRef.current = false;
+      audioRefs.forEach((ref) => {
+        const audio = ref.current;
+        if (!audio) return;
+        audio.pause();
+        audio.volume = 1;
+        audio.currentTime = 0;
+      });
+    };
+
+    window.addEventListener("pagehide", stopPlayback);
+    return () => {
+      window.removeEventListener("pagehide", stopPlayback);
+      stopPlayback();
+    };
+  }, [audioRefs]);
 
   const startTransition = (nextSlot: 0 | 1) => {
     if (transitionRef.current || nextIndexRef.current === null) return;
