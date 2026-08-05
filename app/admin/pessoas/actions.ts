@@ -41,6 +41,16 @@ export type PessoaAllowlistItem = {
   ativo: boolean;
 };
 
+export type TarefeiroDisponibilidade = {
+  id?: string;
+  pessoa_id?: string;
+  dia_semana: number;
+  disponivel: boolean;
+  inicio: string | null;
+  fim: string | null;
+  observacao: string | null;
+};
+
 async function requirePessoasAccess() {
   const allowed = await checkModuleAccess('pode_pessoas', [...PESSOAS_PROFILES]);
   if (!allowed) throw new Error('Acesso negado: cadastro de pessoas');
@@ -137,6 +147,88 @@ export async function getPessoas(
   }
 }
 
+export type TarefeiroReportItem = {
+  id: string;
+  nome: string;
+  email: string | null;
+  telefone: string | null;
+  diasDisponiveis: number;
+  diasInformados: number;
+  escalas: number;
+  escalasPublicadas: number;
+  funcoes: string[];
+  ultimaEscala: string | null;
+};
+
+export async function getTarefeiroReport(search = '') {
+  await requirePessoasAccess();
+  const supabase = createServiceRoleClient();
+  const { data: pessoas, error: pessoasError } = await supabase
+    .from('pessoas')
+    .select('id,nome,email,telefone,status')
+    .eq('status', 'ativo')
+    .order('nome');
+
+  if (pessoasError || !pessoas || pessoas.length === 0) return [] as TarefeiroReportItem[];
+
+  const pessoaIds = pessoas.map((pessoa) => pessoa.id);
+  const [{ data: vinculos }, { data: disponibilidades }, { data: escalas }] = await Promise.all([
+    supabase.from('pessoa_vinculos').select('pessoa_id').eq('vinculo', 'tarefeiro').in('pessoa_id', pessoaIds),
+    supabase.from('tarefeiro_disponibilidades').select('pessoa_id,dia_semana,disponivel').in('pessoa_id', pessoaIds),
+    supabase.from('escala_funcoes').select('pessoa_id,funcao_id,reuniao_id').in('pessoa_id', pessoaIds),
+  ]);
+
+  const tarefeiroIds = new Set((vinculos || []).map((item) => item.pessoa_id));
+  const tarefeiros = pessoas.filter((pessoa) => tarefeiroIds.has(pessoa.id));
+  if (tarefeiros.length === 0) return [] as TarefeiroReportItem[];
+
+  const escalaRows = escalas || [];
+  const funcaoIds = [...new Set(escalaRows.map((item) => item.funcao_id).filter(Boolean))];
+  const reuniaoIds = [...new Set(escalaRows.map((item) => item.reuniao_id).filter(Boolean))];
+  const [{ data: funcoes }, { data: reunioes }] = await Promise.all([
+    funcaoIds.length > 0 ? supabase.from('funcoes').select('id,nome').in('id', funcaoIds) : Promise.resolve({ data: [] }),
+    reuniaoIds.length > 0 ? supabase.from('reunioes').select('id,data,escala_id').in('id', reuniaoIds) : Promise.resolve({ data: [] }),
+  ]);
+
+  const funcaoNames = new Map((funcoes || []).map((funcao) => [funcao.id, funcao.nome]));
+  const reuniaoById = new Map((reunioes || []).map((reuniao) => [reuniao.id, reuniao]));
+  const escalaIds = [...new Set((reunioes || []).map((reuniao) => reuniao.escala_id).filter(Boolean))];
+  const { data: escalasMensais } = escalaIds.length > 0
+    ? await supabase.from('escalas_mensais').select('id,status').in('id', escalaIds)
+    : { data: [] };
+  const escalaStatus = new Map((escalasMensais || []).map((escala) => [escala.id, escala.status]));
+  const disponibilidadeByPessoa = new Map<string, { informados: number; disponiveis: number }>();
+  for (const item of disponibilidades || []) {
+    const current = disponibilidadeByPessoa.get(item.pessoa_id) || { informados: 0, disponiveis: 0 };
+    current.informados += 1;
+    if (item.disponivel) current.disponiveis += 1;
+    disponibilidadeByPessoa.set(item.pessoa_id, current);
+  }
+
+  const report = tarefeiros.map((pessoa) => {
+    const pessoaEscalas = escalaRows.filter((item) => item.pessoa_id === pessoa.id);
+    const nomesFuncoes = [...new Set(pessoaEscalas.map((item) => funcaoNames.get(item.funcao_id)).filter((nome): nome is string => Boolean(nome)))].sort();
+    const datas = pessoaEscalas.map((item) => reuniaoById.get(item.reuniao_id)?.data).filter((data): data is string => Boolean(data)).sort();
+    return {
+      id: pessoa.id,
+      nome: pessoa.nome,
+      email: pessoa.email,
+      telefone: pessoa.telefone,
+      diasDisponiveis: disponibilidadeByPessoa.get(pessoa.id)?.disponiveis || 0,
+      diasInformados: disponibilidadeByPessoa.get(pessoa.id)?.informados || 0,
+      escalas: pessoaEscalas.length,
+      escalasPublicadas: pessoaEscalas.filter((item) => escalaStatus.get(reuniaoById.get(item.reuniao_id)?.escala_id) === 'publicada').length,
+      funcoes: nomesFuncoes,
+      ultimaEscala: datas.at(-1) || null,
+    } satisfies TarefeiroReportItem;
+  });
+
+  const normalizedSearch = search.trim().toLowerCase();
+  return normalizedSearch
+    ? report.filter((item) => `${item.nome} ${item.email || ''} ${item.funcoes.join(' ')}`.toLowerCase().includes(normalizedSearch))
+    : report;
+}
+
 export async function getPessoasAllowlist(onlyActive = false) {
   await requirePessoasAccess();
   const supabase = createServiceRoleClient();
@@ -198,7 +290,7 @@ export async function getPessoaById(id: string) {
       .maybeSingle();
 
     if (pessoaError) {
-      return { pessoa: null, vinculos: [] };
+      return { pessoa: null, vinculos: [], disponibilidades: [] };
     }
 
     const { data: vinculos, error: vinculosError } = await supabase
@@ -206,14 +298,59 @@ export async function getPessoaById(id: string) {
       .select('*')
       .eq('pessoa_id', id);
 
+    const { data: disponibilidades, error: disponibilidadesError } = await supabase
+      .from('tarefeiro_disponibilidades')
+      .select('id,pessoa_id,dia_semana,disponivel,inicio,fim,observacao')
+      .eq('pessoa_id', id)
+      .order('dia_semana');
+
     if (vinculosError) {
-      return { pessoa: pessoa ?? null, vinculos: [] };
+      return { pessoa: pessoa ?? null, vinculos: [], disponibilidades: [] };
     }
 
-    return { pessoa: pessoa ?? null, vinculos: vinculos ?? [] };
+    return {
+      pessoa: pessoa ?? null,
+      vinculos: vinculos ?? [],
+      disponibilidades: disponibilidadesError ? [] : (disponibilidades ?? []),
+    };
   } catch {
-    return { pessoa: null, vinculos: [] };
+    return { pessoa: null, vinculos: [], disponibilidades: [] };
   }
+}
+
+export async function saveTarefeiroDisponibilidades(
+  pessoaId: string,
+  disponibilidades: Array<Omit<TarefeiroDisponibilidade, 'id' | 'pessoa_id'>>,
+) {
+  await requirePessoasAccess();
+  const supabase = await createClient();
+  const normalized = disponibilidades
+    .filter((item) => Number.isInteger(item.dia_semana) && item.dia_semana >= 0 && item.dia_semana <= 6)
+    .map((item) => ({
+      pessoa_id: pessoaId,
+      dia_semana: item.dia_semana,
+      disponivel: item.disponivel,
+      inicio: item.inicio || null,
+      fim: item.fim || null,
+      observacao: item.observacao?.trim() || null,
+      atualizado_em: new Date().toISOString(),
+    }));
+
+  const dias = normalized.map((item) => item.dia_semana);
+  const deleteQuery = supabase.from('tarefeiro_disponibilidades').delete().eq('pessoa_id', pessoaId);
+  const { error: deleteError } = dias.length > 0 ? await deleteQuery.not('dia_semana', 'in', `(${dias.join(',')})`) : await deleteQuery;
+  if (deleteError) return { success: false };
+
+  if (normalized.length > 0) {
+    const { error } = await supabase
+      .from('tarefeiro_disponibilidades')
+      .upsert(normalized, { onConflict: 'pessoa_id,dia_semana' });
+    if (error) return { success: false };
+  }
+
+  invalidateAdminDashboardCache();
+  invalidateUserAreaCache();
+  return { success: true };
 }
 
 export async function createPessoa(formData: {

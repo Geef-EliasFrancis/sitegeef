@@ -1,6 +1,6 @@
 import { redirect } from 'next/navigation';
 import Link from 'next/link';
-import { getPessoaById, updatePessoa, addVinculo, removeVinculo, togglePessoaStatus } from '../actions';
+import { getPessoaById, updatePessoa, addVinculo, removeVinculo, togglePessoaStatus, saveTarefeiroDisponibilidades } from '../actions';
 import { Suspense } from 'react';
 import { buildFlashNoticeUrl } from '@/lib/notificacoes/flash-notice';
 import { LgpdFormNotice } from '@/components/lgpd/lgpd-form-notice';
@@ -26,6 +26,31 @@ const TIPOS_VINCULO = [
   'membro_departamento',
   'visitante',
 ];
+
+const DAYS_OF_WEEK = [
+  { value: 0, label: 'Domingo' },
+  { value: 1, label: 'Segunda-feira' },
+  { value: 2, label: 'Terça-feira' },
+  { value: 3, label: 'Quarta-feira' },
+  { value: 4, label: 'Quinta-feira' },
+  { value: 5, label: 'Sexta-feira' },
+  { value: 6, label: 'Sábado' },
+] as const;
+
+function textValue(formData: FormData, name: string) {
+  const value = formData.get(name);
+  return typeof value === 'string' && value.trim() ? value.trim() : null;
+}
+
+function availabilityValues(formData: FormData) {
+  return DAYS_OF_WEEK.map(({ value }) => ({
+    dia_semana: value,
+    disponivel: formData.get(`disponibilidade_${value}_ativo`) === 'on',
+    inicio: textValue(formData, `disponibilidade_${value}_inicio`),
+    fim: textValue(formData, `disponibilidade_${value}_fim`),
+    observacao: textValue(formData, `disponibilidade_${value}_observacao`),
+  })).filter((item) => item.disponivel || item.inicio || item.fim || item.observacao);
+}
 
 async function handleUpdatePessoa(pessoaId: string, formData: FormData) {
   'use server';
@@ -77,6 +102,11 @@ async function handleUpdatePessoa(pessoaId: string, formData: FormData) {
       }
     }
 
+    const disponibilidadeResult = await saveTarefeiroDisponibilidades(pessoaId, availabilityValues(formData));
+    if (!disponibilidadeResult.success) {
+      throw new Error('Não foi possível salvar a disponibilidade.');
+    }
+
     redirect(
       buildFlashNoticeUrl('/admin/pessoas', {
         variant: 'success',
@@ -98,7 +128,7 @@ async function handleUpdatePessoa(pessoaId: string, formData: FormData) {
 }
 
 async function EditPessoaContent({ id }: { id: string }) {
-  const { pessoa, vinculos } = await getPessoaById(id);
+  const { pessoa, vinculos, disponibilidades } = await getPessoaById(id);
 
   if (!pessoa) {
     return (
@@ -126,6 +156,7 @@ async function EditPessoaContent({ id }: { id: string }) {
   }
 
   const vinculosSet = new Set(vinculos.map((v: any) => v.vinculo));
+  const disponibilidadesByDay = new Map(disponibilidades.map((item: any) => [item.dia_semana, item]));
 
   return (
     <form action={(formData) => handleUpdatePessoa(id, formData)}>
@@ -288,6 +319,34 @@ async function EditPessoaContent({ id }: { id: string }) {
                 <span>Autoriza imagem/voz</span>
               </label>
             </div>
+          </div>
+        </section>
+
+        <section className="area-section">
+          <div className="area-section-title">
+            <h2>Disponibilidade</h2>
+            <p>Informe os dias e horários habituais para escala.</p>
+          </div>
+          <div className="table-surface" style={{ overflowX: 'auto' }}>
+            <table className="admin-table">
+              <thead>
+                <tr><th>Dia</th><th>Disponível</th><th>Início</th><th>Fim</th><th>Observação</th></tr>
+              </thead>
+              <tbody>
+                {DAYS_OF_WEEK.map((day) => {
+                  const item = disponibilidadesByDay.get(day.value);
+                  return (
+                    <tr key={day.value}>
+                      <td><strong>{day.label}</strong></td>
+                      <td><input type="checkbox" name={`disponibilidade_${day.value}_ativo`} defaultChecked={item?.disponivel ?? false} /></td>
+                      <td><input type="time" name={`disponibilidade_${day.value}_inicio`} defaultValue={item?.inicio?.slice(0, 5) || ''} className="profile-form-input" /></td>
+                      <td><input type="time" name={`disponibilidade_${day.value}_fim`} defaultValue={item?.fim?.slice(0, 5) || ''} className="profile-form-input" /></td>
+                      <td><input type="text" name={`disponibilidade_${day.value}_observacao`} defaultValue={item?.observacao || ''} className="profile-form-input" placeholder="Opcional" /></td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
           </div>
         </section>
 

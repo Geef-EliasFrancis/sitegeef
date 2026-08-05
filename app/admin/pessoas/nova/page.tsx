@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
-import { createPessoa, getPessoaById, getPessoasAllowlist, removeVinculo, addVinculo, updatePessoa } from '../actions';
+import { createPessoa, getPessoaById, getPessoasAllowlist, removeVinculo, addVinculo, updatePessoa, saveTarefeiroDisponibilidades } from '../actions';
 import { type tipo_vinculo } from '@/lib/supabase/types';
 import { buildFlashNoticeUrl } from '@/lib/notificacoes/flash-notice';
 import { LgpdFormNotice } from '@/components/lgpd/lgpd-form-notice';
@@ -33,6 +33,17 @@ const PERSONA_STEPS = [
   { key: 'endereco', label: 'Endereço' },
   { key: 'vinculos', label: 'Vínculos' },
   { key: 'configuracoes', label: 'Configurações' },
+  { key: 'disponibilidade', label: 'Disponibilidade' },
+] as const;
+
+const DAYS_OF_WEEK = [
+  { value: 0, label: 'Domingo' },
+  { value: 1, label: 'Segunda-feira' },
+  { value: 2, label: 'Terça-feira' },
+  { value: 3, label: 'Quarta-feira' },
+  { value: 4, label: 'Quinta-feira' },
+  { value: 5, label: 'Sexta-feira' },
+  { value: 6, label: 'Sábado' },
 ] as const;
 
 type PessoaStep = (typeof PERSONA_STEPS)[number]['key'];
@@ -73,6 +84,16 @@ function textValue(formData: FormData, name: string) {
 
 function booleanValue(formData: FormData, name: string) {
   return formData.get(name) === 'on';
+}
+
+function availabilityValues(formData: FormData) {
+  return DAYS_OF_WEEK.map(({ value }) => ({
+    dia_semana: value,
+    disponivel: booleanValue(formData, `disponibilidade_${value}_ativo`),
+    inicio: textValue(formData, `disponibilidade_${value}_inicio`) || null,
+    fim: textValue(formData, `disponibilidade_${value}_fim`) || null,
+    observacao: textValue(formData, `disponibilidade_${value}_observacao`) || null,
+  })).filter((item) => item.disponivel || item.inicio || item.fim || item.observacao);
 }
 
 async function savePessoaStep(formData: FormData) {
@@ -219,6 +240,17 @@ async function savePessoaStep(formData: FormData) {
         autoriza_imagem_voz: booleanValue(formData, 'autoriza_imagem_voz'),
       });
 
+      const nextStep = getNextStep(step);
+      redirect(
+        buildFlashNoticeUrl(nextStep ? buildHref(pessoaId, nextStep) : '/admin/pessoas', {
+          variant: 'success',
+          message: 'Etapa salva.',
+        }),
+      );
+    }
+
+    if (step === 'disponibilidade') {
+      await saveTarefeiroDisponibilidades(pessoaId, availabilityValues(formData));
       redirect(
         buildFlashNoticeUrl('/admin/pessoas', {
           variant: 'success',
@@ -245,10 +277,11 @@ async function NovaPessoaContent({ searchParams }: { searchParams: { id?: string
   const pessoaId = typeof searchParams.id === 'string' ? searchParams.id.trim() : '';
   const requestedStep = isPessoaStep(searchParams.tab) ? searchParams.tab : 'identificacao';
   const activeStep = pessoaId ? requestedStep : 'identificacao';
-  const pessoaData = pessoaId ? await getPessoaById(pessoaId) : { pessoa: null, vinculos: [] };
+  const pessoaData = pessoaId ? await getPessoaById(pessoaId) : { pessoa: null, vinculos: [], disponibilidades: [] };
   const allowlist = pessoaId ? [] : await getPessoasAllowlist(true);
   const pessoa = pessoaData.pessoa;
   const vinculosSet = new Set(pessoaData.vinculos.map((v: any) => v.vinculo));
+  const disponibilidadesByDay = new Map(pessoaData.disponibilidades.map((item: any) => [item.dia_semana, item]));
 
   if (pessoaId && !pessoa) {
     return (
@@ -446,6 +479,35 @@ async function NovaPessoaContent({ searchParams }: { searchParams: { id?: string
                   <input type="checkbox" name="autoriza_imagem_voz" defaultChecked={pessoa?.autoriza_imagem_voz ?? false} />
                   <span>Autoriza imagem/voz</span>
                 </label>
+              </div>
+            )}
+
+            {activeStep === 'disponibilidade' && (
+              <div>
+                <p className="panel-note" style={{ marginTop: 0 }}>
+                  Informe os dias e horários habituais em que o tarefeiro pode ser escalado. Sem registro, a disponibilidade fica como não informada.
+                </p>
+                <div style={{ overflowX: 'auto' }}>
+                  <table className="admin-table">
+                    <thead>
+                      <tr><th>Dia</th><th>Disponível</th><th>Início</th><th>Fim</th><th>Observação</th></tr>
+                    </thead>
+                    <tbody>
+                      {DAYS_OF_WEEK.map((day) => {
+                        const item = disponibilidadesByDay.get(day.value);
+                        return (
+                          <tr key={day.value}>
+                            <td><strong>{day.label}</strong></td>
+                            <td><input type="checkbox" name={`disponibilidade_${day.value}_ativo`} defaultChecked={item?.disponivel ?? false} /></td>
+                            <td><input type="time" name={`disponibilidade_${day.value}_inicio`} defaultValue={item?.inicio?.slice(0, 5) || ''} className="profile-form-input" /></td>
+                            <td><input type="time" name={`disponibilidade_${day.value}_fim`} defaultValue={item?.fim?.slice(0, 5) || ''} className="profile-form-input" /></td>
+                            <td><input type="text" name={`disponibilidade_${day.value}_observacao`} defaultValue={item?.observacao || ''} className="profile-form-input" placeholder="Opcional" /></td>
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                  </table>
+                </div>
               </div>
             )}
           </form>
