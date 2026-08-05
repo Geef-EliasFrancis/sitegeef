@@ -87,13 +87,12 @@ export function MusicaPassesUploadForm() {
           required
         />
       </label>
-      <span className="musica-passes-upload-action">
+      <span className="musica-passes-upload-action" onMouseEnter={() => showToast(getButtonHint())}>
         <button
           type="submit"
           className="admin-btn admin-btn-primary"
           title="Adicionar áudio"
           disabled={!canSubmit}
-          onMouseEnter={() => showToast(getButtonHint())}
           onFocus={() => showToast(getButtonHint())}
         >
           <IconPlus size={18} />
