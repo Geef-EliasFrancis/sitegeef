@@ -1,9 +1,7 @@
 # Supabase Configuration for GEEF Project
 
-[env.production]
-api_url = "https://nycgpokqlmrfzegjlrwa.supabase.co"
-db_url = "postgresql://postgres:@db.nycgpokqlmrfzegjlrwa.supabase.co:5432/postgres"
-project_id = "nycgpokqlmrfzegjlrwa"
+# Project metadata is documented in docs/MCP_SUPABASE_GEEF.md.
+# Supabase CLI does not support a custom [env.production] section here.
 
 [api]
 enabled = true
@@ -14,5 +12,4 @@ major_version = 15
 
 [studio]
 enabled = true
-
 
