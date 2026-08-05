@@ -20,6 +20,7 @@ export function MusicaPassesPlayer({ items }: { items: MusicaPasse[] }) {
   const transitionRef = useRef(false);
   const transitionTimerRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const nextIndexRef = useRef<number | null>(null);
+  const preparedNextIndexRef = useRef<number | null>(null);
   const continuePlaylistRef = useRef(false);
   const [index, setIndex] = useState(0);
   const [activeSlot, setActiveSlot] = useState<0 | 1>(0);
@@ -155,6 +156,36 @@ export function MusicaPassesPlayer({ items }: { items: MusicaPasse[] }) {
   }, [activeSlot, audioRef, audioRefs, current, current?.id]);
 
   useEffect(() => {
+    const preloadSlot = activeSlotRef.current === 0 ? 1 : 0;
+    const shouldPreload = hasItems && items.length > 1 && repeatMode !== "one" && !(repeatMode === "off" && index === items.length - 1);
+
+    if (!shouldPreload) {
+      preparedNextIndexRef.current = null;
+      setSlotTracks((tracks) => {
+        if (tracks[preloadSlot] === null) return tracks;
+        const nextTracks: [number | null, number | null] = [...tracks];
+        nextTracks[preloadSlot] = null;
+        return nextTracks;
+      });
+      return;
+    }
+
+    let nextIndex = (index + 1) % items.length;
+    if (shuffle) {
+      do {
+        nextIndex = Math.floor(Math.random() * items.length);
+      } while (nextIndex === index);
+    }
+    preparedNextIndexRef.current = nextIndex;
+    setSlotTracks((tracks) => {
+      if (tracks[preloadSlot] === nextIndex) return tracks;
+      const nextTracks: [number | null, number | null] = [...tracks];
+      nextTracks[preloadSlot] = nextIndex;
+      return nextTracks;
+    });
+  }, [activeSlot, hasItems, index, items.length, repeatMode, shuffle]);
+
+  useEffect(() => {
     const stopPlayback = () => {
       clearTransition();
       continuePlaylistRef.current = false;
@@ -219,8 +250,8 @@ export function MusicaPassesPlayer({ items }: { items: MusicaPasse[] }) {
     const remaining = audio.duration - audio.currentTime;
     if (remaining > 3 || nextIndexRef.current !== null) return;
 
-    const nextIndex = chooseNextIndex();
     if (repeatMode === "off" && index === items.length - 1) return;
+    const nextIndex = preparedNextIndexRef.current ?? chooseNextIndex();
     const nextSlot = slot === 0 ? 1 : 0;
     nextIndexRef.current = nextIndex;
     setSlotTracks((tracks) => {
