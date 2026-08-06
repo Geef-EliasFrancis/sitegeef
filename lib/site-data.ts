@@ -245,6 +245,31 @@ export const contentPages: Record<string, ContentPage> = {
       },
     ],
   },
+  "evangelho-no-lar": {
+    title: "Evangelho no Lar",
+    summary: "Uma prática familiar de estudo, oração e convivência fraterna.",
+    intro:
+      "Escolha um dia e horário possíveis para a família e reserve um momento simples para estudar o Evangelho, conversar sobre seus ensinamentos e cultivar a paz no lar.",
+    ctaLabel: "Voltar para atividades",
+    ctaHref: publicHref("/atividades"),
+    sections: [
+      {
+        heading: "Sugestão de encontro",
+        text: "A orientação espírita sugere uma reunião regular, com participação da família e duração adequada à realidade do lar.",
+        bullets: [
+          "Prece inicial simples e espontânea.",
+          "Leitura de O Evangelho segundo o Espiritismo.",
+          "Comentários breves sobre a aplicação do ensino moral no cotidiano.",
+          "Vibrações pela fraternidade, pela paz e pelo equilíbrio.",
+          "Prece final de agradecimento.",
+        ],
+      },
+      {
+        heading: "Apoio da casa",
+        text: "Quem desejar iniciar essa prática pode procurar o GEEF para receber esclarecimentos e orientação inicial, respeitando a autonomia e a rotina de cada família.",
+      },
+    ],
+  },
   estudos: {
     title: "Estudos",
     summary: "Leituras e encontros de formação contínua.",

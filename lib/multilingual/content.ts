@@ -122,6 +122,31 @@ const englishContentPages: LocalizedContent = {
       },
     ],
   },
+  "evangelho-no-lar": {
+    title: "Gospel at home",
+    summary: "A family practice of study, prayer and fraternal fellowship.",
+    intro:
+      "Choose a day and time that work for the family and reserve a simple moment to study the Gospel, talk about its teachings and cultivate peace at home.",
+    ctaLabel: "Back to activities",
+    ctaHref: publicHref("/atividades"),
+    sections: [
+      {
+        heading: "Suggested gathering",
+        text: "Spiritist guidance suggests a regular gathering, with family participation and a duration suited to each home's reality.",
+        bullets: [
+          "A simple, spontaneous opening prayer.",
+          "Reading from The Gospel According to Spiritism.",
+          "Brief comments on applying the moral teaching to daily life.",
+          "Fraternal thoughts for peace and balance.",
+          "An ending prayer of gratitude.",
+        ],
+      },
+      {
+        heading: "Support from the house",
+        text: "Those who want to begin may contact GEEF for initial clarification and guidance, while respecting each family's autonomy and routine.",
+      },
+    ],
+  },
   evangelizacao: {
     title: "Evangelization",
     summary: "Formation and fellowship space for children and youth.",

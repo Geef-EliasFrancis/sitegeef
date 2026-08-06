@@ -53,6 +53,7 @@ export function SiteHeader({
       description: "Atividades, acolhimento, estudos e formação para a comunidade.",
       links: primaryLinks.filter((item) => ["/atividades", "/evangelizacao", "/atendimento-fraterno"].includes(item.href)).concat([
         { href: "/estudos", label: "Estudos" },
+        { href: "/evangelho-no-lar", label: "Evangelho no Lar" },
       ]),
     },
     {
