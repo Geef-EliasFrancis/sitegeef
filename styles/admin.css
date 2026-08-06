@@ -1594,6 +1594,15 @@
   justify-content: center;
 }
 
+.pessoa-form-header .admin-actions {
+  width: auto;
+  flex-wrap: nowrap;
+}
+
+.pessoa-form-header .admin-icon-action {
+  flex: 0 0 2.9rem;
+}
+
 .avisos-catalog-heading {
   display: flex;
   align-items: baseline;
@@ -3943,4 +3952,26 @@
 
 .funcoes-create-form {
   margin-top: 0;
+}
+
+@media (max-width: 767px) {
+  .pessoa-form-header {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
+  .pessoa-form-header > div:first-child {
+    min-width: 0;
+  }
+
+  .pessoa-form-header .admin-actions {
+    width: auto;
+    gap: 0.45rem;
+  }
+
+  .pessoa-form-header .admin-actions .admin-btn {
+    width: 2.75rem;
+    min-width: 2.75rem;
+    min-height: 2.75rem;
+    flex: 0 0 2.75rem;
+  }
 }

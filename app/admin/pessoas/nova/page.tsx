@@ -4,6 +4,7 @@ import { createPessoa, getPessoaById, getPessoasAllowlist, removeVinculo, addVin
 import { type tipo_vinculo } from '@/lib/supabase/types';
 import { buildFlashNoticeUrl } from '@/lib/notificacoes/flash-notice';
 import { LgpdFormNotice } from '@/components/lgpd/lgpd-form-notice';
+import { IconSave, IconX } from '@/components/icons';
 
 export const metadata = {
   title: 'Nova pessoa - Admin GEEF',
@@ -330,16 +331,27 @@ async function NovaPessoaContent({ searchParams }: { searchParams: { id?: string
 
   return (
     <div className="area-page">
-      <div className="admin-page-header">
+      <div className="admin-page-header pessoa-form-header">
         <div>
           <h1 className="admin-page-title">Nova pessoa</h1>
         </div>
         <div className="admin-actions">
-          <button type="submit" form="pessoa-step-form" className="admin-btn admin-btn-primary">
-            Salvar
+          <button
+            type="submit"
+            form="pessoa-step-form"
+            className="admin-btn admin-btn-primary admin-icon-action"
+            aria-label="Salvar etapa"
+            title="Salvar etapa"
+          >
+            <IconSave size={19} />
           </button>
-          <Link href="/admin/pessoas" className="admin-btn admin-btn-secondary">
-            Cancelar
+          <Link
+            href="/admin/pessoas"
+            className="admin-btn admin-btn-secondary admin-icon-action"
+            aria-label="Cancelar e voltar para pessoas"
+            title="Cancelar e voltar para pessoas"
+          >
+            <IconX size={19} />
           </Link>
         </div>
       </div>
