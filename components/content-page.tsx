@@ -1,5 +1,6 @@
 import { type ContentPage } from "@/lib/site-data";
 import { type Locale } from "@/lib/multilingual";
+import Link from "next/link";
 import { IconMusic } from "@/components/icons";
 import { BookIcon, GroupIcon, HeartIcon, MailIcon } from "@/components/site-icons";
 import { EvangelhoLarGuide } from "@/components/evangelho-lar-guide";
@@ -30,7 +31,10 @@ export function ContentPageView({ page, locale, slug, compactHero = false, seque
       <section className="content-hero">
         <div className="content-hero-body">
           <div className="content-copy">
-            <h1>{page.title}</h1>
+            <div className="content-copy-heading">
+              <h1>{page.title}</h1>
+              {slug === "evangelho-no-lar" && <Link className="content-hero-action" href="/evangelho-no-lar/guia">{locale === "en" ? "Let's do it together" : "Vamos fazer juntos"} <span aria-hidden="true">→</span></Link>}
+            </div>
             <div className="content-copy-body">
               <p className="content-summary">{page.summary}</p>
               {!compactHero && <p className="content-intro">{page.intro}</p>}

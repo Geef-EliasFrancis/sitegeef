@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import Link from "next/link";
 import type { Locale } from "@/lib/multilingual";
 
 type PhaseKey = "before" | "during" | "after";
@@ -118,7 +119,7 @@ const phases: Record<Locale, Record<PhaseKey, Phase>> = {
   },
 };
 
-function GuideIllustration({ kind }: { kind: GuideStep["visual"] }) {
+export function GuideIllustration({ kind }: { kind: GuideStep["visual"] }) {
   return (
     <svg className={`evangelho-guide-illustration is-${kind}`} viewBox="0 0 360 220" role="img" aria-label="Ilustração da etapa">
       <circle className="evangelho-guide-sun" cx="285" cy="48" r="30" />
@@ -267,5 +268,78 @@ export function EvangelhoLarGuide({ locale }: Readonly<{ locale: Locale }>) {
         <a href="https://www.febnet.org.br/aij/wp-content/uploads/2023/03/3-_-Orientacao-ao-Centro-Espirita.pdf" target="_blank" rel="noreferrer">{english ? "FEB reference" : "Referência FEB"}</a>
       </div>
     </section>
+  );
+}
+
+function formatGuideTime(totalSeconds: number) {
+  const minutes = Math.floor(totalSeconds / 60).toString().padStart(2, "0");
+  const seconds = (totalSeconds % 60).toString().padStart(2, "0");
+  return `${minutes}:${seconds}`;
+}
+
+export function EvangelhoLarSession({ locale }: Readonly<{ locale: Locale }>) {
+  const english = locale === "en";
+  const copy = phases[locale];
+  const guidedSteps = (Object.keys(copy) as PhaseKey[]).flatMap((phaseKey) => copy[phaseKey].steps.map((step) => ({ ...step, phaseKey })));
+  const [stepIndex, setStepIndex] = useState(0);
+  const [elapsedSeconds, setElapsedSeconds] = useState(0);
+  const [running, setRunning] = useState(true);
+  const current = guidedSteps[stepIndex];
+
+  useEffect(() => {
+    if (!running) return undefined;
+    const timer = window.setInterval(() => setElapsedSeconds((currentSeconds) => currentSeconds + 1), 1000);
+    return () => window.clearInterval(timer);
+  }, [running]);
+
+  function moveStep(direction: number) {
+    setStepIndex((currentIndex) => (currentIndex + direction + guidedSteps.length) % guidedSteps.length);
+  }
+
+  return (
+    <main className="evangelho-session">
+      <section className="evangelho-session-header">
+        <div className="evangelho-session-heading">
+          <Link href="/evangelho-no-lar" className="evangelho-session-back">← {english ? "Back to overview" : "Voltar para a visão geral"}</Link>
+          <p className="eyebrow">{english ? "A guided family moment" : "Um momento guiado em família"}</p>
+          <h1>{english ? "Let's do it together" : "Vamos fazer juntos"}</h1>
+          <p>{english ? "Follow one slide at a time. The clock is only a reference: there is no alarm and no saved session." : "Siga um slide por vez. O contador é apenas uma referência: não há alarme nem registro da sessão."}</p>
+        </div>
+        <div className="evangelho-session-timer" aria-label={english ? "Reference timer" : "Contador de referência"}>
+          <span>{english ? "Reference time" : "Tempo de referência"}</span>
+          <strong>{formatGuideTime(elapsedSeconds)}</strong>
+          <small>{english ? "suggested: about 30 minutes" : "sugerido: cerca de 30 minutos"}</small>
+          <div className="evangelho-session-timer-actions">
+            <button type="button" onClick={() => setRunning((currentRunning) => !currentRunning)}>{running ? (english ? "Pause" : "Pausar") : (english ? "Resume" : "Continuar")}</button>
+            <button type="button" onClick={() => { setElapsedSeconds(0); setRunning(true); }}>{english ? "Restart" : "Reiniciar"}</button>
+          </div>
+        </div>
+      </section>
+
+      <section className="evangelho-session-progress" aria-label={english ? "Guided sequence progress" : "Progresso da sequência guiada"}>
+        <div className="evangelho-session-progress-top">
+          <span>{copy[current.phaseKey].label}</span>
+          <strong>{stepIndex + 1} / {guidedSteps.length}</strong>
+        </div>
+        <div className="evangelho-session-progress-track" aria-hidden="true"><span style={{ width: `${((stepIndex + 1) / guidedSteps.length) * 100}%` }} /></div>
+      </section>
+
+      <section className="evangelho-session-slide" aria-live="polite">
+        <div className="evangelho-session-art"><GuideIllustration kind={current.visual} /></div>
+        <div className="evangelho-session-slide-copy">
+          <p className="evangelho-guide-phase">{copy[current.phaseKey].eyebrow}</p>
+          <p className="evangelho-session-step-label">{english ? `Step ${stepIndex + 1}` : `Etapa ${stepIndex + 1}`}</p>
+          <h2>{current.title}</h2>
+          <p>{current.text}</p>
+          <div className="evangelho-session-tip"><strong>{english ? "Take your time" : "Faça com calma"}</strong><span>{english ? "When your family is ready, move to the next slide." : "Quando a família estiver pronta, avance para o próximo slide."}</span></div>
+        </div>
+      </section>
+
+      <nav className="evangelho-session-controls" aria-label={english ? "Guided slide controls" : "Controles do slide guiado"}>
+        <button type="button" className="evangelho-guide-arrow" onClick={() => moveStep(-1)} aria-label={english ? "Previous step" : "Etapa anterior"}>←</button>
+        <div className="evangelho-session-step-list" aria-hidden="true">{guidedSteps.map((item, index) => <span key={`${item.title}-${index}`} className={index === stepIndex ? "is-active" : index < stepIndex ? "is-done" : ""} />)}</div>
+        <button type="button" className="evangelho-guide-arrow" onClick={() => moveStep(1)} aria-label={english ? "Next step" : "Próxima etapa"}>→</button>
+      </nav>
+    </main>
   );
 }
