@@ -38,10 +38,13 @@ codex mcp login supabase-geef
 - Antes de qualquer leitura/escrita remota, confirmar que o MCP correto está `enabled` e autenticado por OAuth
 
 **Autoreflex local:**
-- O servidor local de skills não sobe sozinho quando o projeto é aberto.
-- Para usar o Autoreflex, iniciar manualmente com `npm run autoreflex:serve`.
+- Ao ser solicitado o início do localhost do GEEF, verificar primeiro se o
+  Autoreflex responde em `http://127.0.0.1:8090/health`.
+- Se não estiver ativo, iniciar automaticamente com `npm run autoreflex:serve`,
+  aguardar a resposta `{"status":"ok"}` e só então iniciar o GEEF.
 - O Ollama não é iniciado automaticamente por padrão; para permitir isso de forma explícita, usar `AUTOREFLEX_START_OLLAMA=1`.
-- Se o `curl` para `http://127.0.0.1:8090` falhar, parar e informar o usuário em vez de assumir que o índice existe.
+- Se o Autoreflex não ficar disponível após a tentativa automática, parar e
+  informar o usuário em vez de assumir que o índice existe.
 
 ---
 
@@ -55,7 +58,7 @@ codex mcp login supabase-geef
    - Query semântica em `POST /agent/skills/search`
    - Exemplo: "padrão de módulo admin" → retorna skill sobre estrutura CRUD
    - Ler skill completa em `POST /agent/skills/get` se relevante
-   - **Se curl para http://127.0.0.1:8090 falhar → PARAR, informar usuário**
+   - **Se a tentativa automática de inicialização falhar → PARAR, informar usuário**
 
 **3. Explorar o código do projeto**
    - Usar Glob/Grep para encontrar padrões

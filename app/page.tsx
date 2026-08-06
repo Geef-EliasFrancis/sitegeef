@@ -64,14 +64,7 @@ export default async function Home({ searchParams }: HomePageProps) {
         </div>
       </section>
 
-      <section className="section" aria-labelledby="quick-links-title">
-        <div className="section-heading">
-          <div>
-            <p className="eyebrow">{locale === "en" ? "Quick access" : "Acesso rápido"}</p>
-            <h2 id="quick-links-title">{copy.home.quickLinksTitle}</h2>
-          </div>
-        </div>
-
+      <section className="section">
         <div className="feature-grid">
           {copy.home.quickLinks.map((card) => {
             const Icon = iconMap[card.icon];
