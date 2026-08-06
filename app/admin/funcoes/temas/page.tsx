@@ -14,16 +14,6 @@ async function TemasList() {
     <div>
       <AdminPageTitleAdd title="Temas Doutrinários" href="/admin/funcoes/temas/novo" />
 
-      {/* Tabs Navigation */}
-      <div style={{ display: 'flex', gap: '1rem', marginBottom: '2rem', borderBottom: '1px solid var(--admin-border)', paddingBottom: '1rem' }}>
-        <Link href="/admin/funcoes" style={{ paddingBottom: '0.5rem', color: 'var(--muted)', textDecoration: 'none' }}>
-          ⚙️ Funções
-        </Link>
-        <Link href="/admin/funcoes/temas" style={{ paddingBottom: '0.5rem', borderBottom: '2px solid var(--primary)', color: 'var(--primary)', fontWeight: 600, textDecoration: 'none' }}>
-          📚 Temas Doutrinários
-        </Link>
-      </div>
-
       {/* Table */}
       <div className="admin-card" style={{ overflowX: 'auto' }}>
         {temas.length === 0 ? (
