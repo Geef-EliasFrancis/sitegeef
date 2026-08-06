@@ -144,13 +144,9 @@ export function EvangelhoLarGuide({ locale }: Readonly<{ locale: Locale }>) {
   const [phaseKey, setPhaseKey] = useState<PhaseKey>("before");
   const [stepIndex, setStepIndex] = useState(0);
   const [readingIndex, setReadingIndex] = useState(0);
-  const [guidedOpen, setGuidedOpen] = useState(false);
-  const [guidedIndex, setGuidedIndex] = useState(0);
   const phase = copy[phaseKey];
   const step = phase.steps[stepIndex];
   const reading = readingSuggestions[locale][readingIndex];
-  const guidedSteps = (Object.keys(copy) as PhaseKey[]).flatMap((key) => copy[key].steps.map((guidedStep) => ({ ...guidedStep, phaseKey: key })));
-  const guidedStep = guidedSteps[guidedIndex];
 
   function changePhase(nextPhase: PhaseKey) {
     setPhaseKey(nextPhase);
@@ -195,21 +191,6 @@ export function EvangelhoLarGuide({ locale }: Readonly<{ locale: Locale }>) {
         </button>
       </article>
 
-      <div className="evangelho-guide-map" aria-label={english ? `Steps in ${phase.label}` : `Etapas de ${phase.label}`}>
-        <div className="evangelho-guide-map-heading">
-          <span>{english ? "Current route" : "Rota atual"}</span>
-          <small>{phase.steps.length} {english ? "steps" : "etapas"}</small>
-        </div>
-        <div className="evangelho-guide-map-items">
-          {phase.steps.map((item, index) => (
-            <button key={item.title} type="button" className={stepIndex === index ? "is-active" : ""} onClick={() => setStepIndex(index)} aria-current={stepIndex === index ? "step" : undefined}>
-              <span>{index + 1}</span>
-              <strong>{item.title.replace(/^\d+\.\s*/, "")}</strong>
-            </button>
-          ))}
-        </div>
-      </div>
-
       <div className="evangelho-guide-stage">
         <div className="evangelho-guide-stage-copy">
           <p className="evangelho-guide-phase">{phase.eyebrow}</p>
@@ -220,9 +201,6 @@ export function EvangelhoLarGuide({ locale }: Readonly<{ locale: Locale }>) {
             <span aria-live="polite">{stepIndex + 1} / {phase.steps.length}</span>
             <button type="button" className="evangelho-guide-arrow" onClick={() => moveStep(1)} aria-label={english ? "Next step" : "Próxima etapa"}>→</button>
           </div>
-          <button type="button" className="evangelho-guide-present-button" onClick={() => setGuidedOpen((current) => !current)} aria-expanded={guidedOpen}>
-            {guidedOpen ? (english ? "Close guided mode" : "Fechar modo guiado") : (english ? "Open guided mode" : "Abrir modo guiado")}
-          </button>
         </div>
 
         <article className="evangelho-guide-slide" aria-live="polite">
@@ -234,33 +212,6 @@ export function EvangelhoLarGuide({ locale }: Readonly<{ locale: Locale }>) {
           </div>
         </article>
       </div>
-
-      {guidedOpen && (
-        <section className="evangelho-guide-presentation" aria-label={english ? "Guided presentation" : "Apresentação guiada"}>
-          <div className="evangelho-guide-presentation-heading">
-            <div>
-              <p className="eyebrow">{english ? "Follow together" : "Acompanhe em família"}</p>
-              <h3>{english ? "Guided meeting" : "Encontro guiado"}</h3>
-            </div>
-            <span>{guidedIndex + 1} / {guidedSteps.length}</span>
-          </div>
-          <div className="evangelho-guide-progress" aria-hidden="true"><span style={{ width: `${((guidedIndex + 1) / guidedSteps.length) * 100}%` }} /></div>
-          <div className="evangelho-guide-presentation-slide">
-            <div className="evangelho-guide-presentation-art"><GuideIllustration kind={guidedStep.visual} /></div>
-            <div>
-              <p className="evangelho-guide-phase">{copy[guidedStep.phaseKey].label}</p>
-              <h4>{guidedStep.title}</h4>
-              <p>{guidedStep.text}</p>
-            </div>
-          </div>
-          <div className="evangelho-guide-presentation-actions">
-            <button type="button" className="evangelho-guide-arrow" onClick={() => setGuidedIndex((current) => (current - 1 + guidedSteps.length) % guidedSteps.length)} aria-label={english ? "Previous guided slide" : "Slide guiado anterior"}>←</button>
-            <button type="button" className="evangelho-guide-presentation-next" onClick={() => setGuidedIndex((current) => (current + 1) % guidedSteps.length)}>
-              {guidedIndex === guidedSteps.length - 1 ? (english ? "Restart" : "Recomeçar") : (english ? "Next slide" : "Próximo slide")} →
-            </button>
-          </div>
-        </section>
-      )}
 
       <div className="evangelho-guide-note">
         <strong>{english ? "Keep it welcoming" : "Mantenha o acolhimento"}</strong>
