@@ -132,14 +132,8 @@ export function EvangelhoLarGuide({ locale }: Readonly<{ locale: Locale }>) {
   const copy = phases[locale];
   const [phaseKey, setPhaseKey] = useState<PhaseKey>("before");
   const [stepIndex, setStepIndex] = useState(0);
-  const [readingIndex, setReadingIndex] = useState(0);
   const phase = copy[phaseKey];
   const step = phase.steps[stepIndex];
-  const reading: EvangelhoReference = evangelhoReferences[readingIndex];
-
-  useEffect(() => {
-    setReadingIndex(randomReferenceIndex());
-  }, []);
 
   function changePhase(nextPhase: PhaseKey) {
     setPhaseKey(nextPhase);
@@ -172,20 +166,6 @@ export function EvangelhoLarGuide({ locale }: Readonly<{ locale: Locale }>) {
           </button>
         ))}
       </div>
-
-      <article className="evangelho-guide-reading">
-        <div>
-          <p className="eyebrow">{english ? "Reading suggestion" : "Sugestão de leitura"}</p>
-          <h3>{reading.reference}: {reading.title}</h3>
-          <p>{reading.purpose}</p>
-        </div>
-        <button type="button" onClick={() => setReadingIndex((currentIndex) => randomReferenceIndex(currentIndex))}>
-          {english ? "Another suggestion" : "Outra sugestão"}
-        </button>
-        <small className="evangelho-guide-reading-count">
-          {english ? `${EVANGELHO_REFERENCE_COUNT} numbered references` : `${EVANGELHO_REFERENCE_COUNT} referências numeradas`}
-        </small>
-      </article>
 
       <div className="evangelho-guide-stage">
         <div className="evangelho-guide-stage-copy">
@@ -233,7 +213,9 @@ export function EvangelhoLarSession({ locale }: Readonly<{ locale: Locale }>) {
   const [elapsedSeconds, setElapsedSeconds] = useState(0);
   const [studyStarted, setStudyStarted] = useState(false);
   const [running, setRunning] = useState(false);
+  const [readingIndex, setReadingIndex] = useState(() => randomReferenceIndex());
   const current = guidedSteps[stepIndex];
+  const reading: EvangelhoReference = evangelhoReferences[readingIndex];
 
   useEffect(() => {
     if (!running) return undefined;
@@ -294,6 +276,20 @@ export function EvangelhoLarSession({ locale }: Readonly<{ locale: Locale }>) {
         </div>
         <div className="evangelho-session-progress-track" aria-hidden="true"><span style={{ width: `${((stepIndex + 1) / guidedSteps.length) * 100}%` }} /></div>
       </section>
+
+      <article className="evangelho-guide-reading">
+        <div>
+          <p className="eyebrow">{english ? "Reading suggestion" : "Sugestão de leitura"}</p>
+          <h3>{reading.reference}: {reading.title}</h3>
+          <p>{reading.purpose}</p>
+        </div>
+        <button type="button" onClick={() => setReadingIndex((currentIndex) => randomReferenceIndex(currentIndex))}>
+          {english ? "Another suggestion" : "Outra sugestão"}
+        </button>
+        <small className="evangelho-guide-reading-count">
+          {english ? `${EVANGELHO_REFERENCE_COUNT} numbered references` : `${EVANGELHO_REFERENCE_COUNT} referências numeradas`}
+        </small>
+      </article>
 
       <section className="evangelho-session-slide" aria-live="polite">
         <div className="evangelho-session-art"><GuideIllustration kind={current.visual} /></div>
