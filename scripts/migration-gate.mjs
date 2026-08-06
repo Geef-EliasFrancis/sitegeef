@@ -50,8 +50,11 @@ for (const file of localFiles) {
   versions.set(version, files);
 }
 const duplicateVersions = [...versions.entries()].filter(([, files]) => files.length > 1);
-check('não existem versões locais duplicadas', duplicateVersions.length === 0);
-for (const [version, files] of duplicateVersions) failures.push(`versão local duplicada ${version}: ${files.join(', ')}`);
+const documentedDuplicateVersions = new Set(manifest.known_duplicate_versions.map((item) => item.version));
+const undocumentedDuplicateVersions = duplicateVersions.filter(([version]) => !documentedDuplicateVersions.has(version));
+check('não existem versões locais duplicadas não documentadas', undocumentedDuplicateVersions.length === 0);
+for (const [version, files] of undocumentedDuplicateVersions) failures.push(`versão local duplicada não documentada ${version}: ${files.join(', ')}`);
+for (const [version, files] of duplicateVersions.filter(([value]) => documentedDuplicateVersions.has(value))) warnings.push(`versão histórica duplicada documentada ${version}: ${files.join(', ')}`);
 
 const envPath = join(root, '.env');
 if (existsSync(envPath)) {
@@ -97,7 +100,7 @@ const unmappedRemote = manifest.remote_checkpoints.filter((item) => item.state =
 check('não existem checkpoints remotos sem reconciliação', unmappedRemote.length === 0);
 if (unmappedRemote.length) failures.push(`checkpoints remotos sem fonte local: ${unmappedRemote.map((item) => item.version).join(', ')}`);
 
-if (duplicateVersions.length || unmappedRemote.length) {
+if (undocumentedDuplicateVersions.length || unmappedRemote.length) {
   warnings.push('o gate permanecerá bloqueado até a reconciliação manual do histórico; não usar migration repair automaticamente');
 }
 

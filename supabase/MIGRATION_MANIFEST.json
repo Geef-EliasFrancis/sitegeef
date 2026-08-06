@@ -39,20 +39,23 @@
     { "file": "20260803020000_pessoas_allowlist_email_required.sql", "state": "legacy_bundle" },
     { "file": "20260803030000_seed_pessoas_allowlist_admins.sql", "state": "legacy_bundle" },
     { "file": "20260803040000_seed_funcoes_basicas.sql", "state": "legacy_bundle" },
-    { "file": "20260805010000_tarefeiros_disponibilidade.sql", "state": "pending" }
+    { "file": "20260805010000_tarefeiros_disponibilidade.sql", "state": "applied_remote", "remote_version": "20260806001407" },
+    { "file": "20260805020000_reconcile_pessoa_vinculos.sql", "state": "applied_remote", "remote_version": "20260806001500" }
   ],
   "remote_checkpoints": [
-    { "version": "20260527024607", "state": "unmapped_remote" },
-    { "version": "20260527024618", "state": "unmapped_remote" },
-    { "version": "20260527031129", "state": "unmapped_remote" },
-    { "version": "20260527031336", "state": "unmapped_remote" },
-    { "version": "20260801142100", "state": "unmapped_remote" },
-    { "version": "20260802033054", "state": "unmapped_remote" },
-    { "version": "20260803001952", "state": "unmapped_remote" },
-    { "version": "20260803005230", "state": "unmapped_remote" },
-    { "version": "20260803032928", "state": "unmapped_remote" },
-    { "version": "20260804011252", "state": "unmapped_remote" },
-    { "version": "20260804011253", "state": "unmapped_remote" }
+    { "version": "20260527024607", "name": "20260526_musica_versoes", "local_file": "20260526_musica_versoes.sql", "state": "mapped_remote" },
+    { "version": "20260527024618", "name": "20260527_musica_media", "local_file": "20260527_musica_media.sql", "state": "mapped_remote" },
+    { "version": "20260527031129", "name": "20260527030702_musica_creditos_unificados", "local_file": "20260527030702_musica_creditos_unificados.sql", "state": "mapped_remote" },
+    { "version": "20260527031336", "name": "cleanup_musica_creditos_testes", "state": "remote_only_documented", "source_reference": "docs/SUPABASE_MIGRATION_SOURCE_OF_TRUTH.md" },
+    { "version": "20260801142100", "name": "20260801020000_calendario_publico", "local_file": "20260801020000_calendario_publico.sql", "state": "mapped_remote" },
+    { "version": "20260802033054", "name": "20260802010000_reuniao_publica_avisos", "local_file": "20260802010000_reuniao_publica_avisos.sql", "state": "mapped_remote" },
+    { "version": "20260803001952", "name": "musica_passes_playlist", "local_file": "20260802010000_musica_passes.sql", "state": "mapped_remote" },
+    { "version": "20260803005230", "name": "musica_passes_ordem_unica", "local_file": "20260802020000_musica_passes_ordem_unica.sql", "state": "mapped_remote" },
+    { "version": "20260803032928", "name": "pessoas_allowlist", "local_file": "20260803010000_pessoas_allowlist.sql", "state": "mapped_remote" },
+    { "version": "20260804011252", "name": "20260803020000_pessoas_allowlist_email_required", "local_file": "20260803020000_pessoas_allowlist_email_required.sql", "state": "mapped_remote" },
+    { "version": "20260804011253", "name": "20260803030000_seed_pessoas_allowlist_admins", "local_file": "20260803030000_seed_pessoas_allowlist_admins.sql", "state": "mapped_remote" },
+    { "version": "20260806001407", "name": "20260805010000_tarefeiros_disponibilidade", "local_file": "20260805010000_tarefeiros_disponibilidade.sql", "state": "mapped_remote" },
+    { "version": "20260806001500", "name": "20260805020000_reconcile_pessoa_vinculos", "local_file": "20260805020000_reconcile_pessoa_vinculos.sql", "state": "mapped_remote" }
   ],
   "known_duplicate_versions": [
     {

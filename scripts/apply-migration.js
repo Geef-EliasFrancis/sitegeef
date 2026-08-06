@@ -7,6 +7,8 @@ const { getDatabaseUrl, withDatabase } = require('./supabase-db');
 
 const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://nycgpokqlmrfzegjlrwa.supabase.co';
 const SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
+const ACCESS_TOKEN = process.env.GEEF_SUPABASE_Access_Token;
+const PROJECT_REF = 'nycgpokqlmrfzegjlrwa';
 const migrationArg = process.argv[2];
 const migrationPath = path.isAbsolute(migrationArg || '')
   ? migrationArg
@@ -15,6 +17,19 @@ const migrationPath = path.isAbsolute(migrationArg || '')
 async function main() {
   if (!fs.existsSync(migrationPath)) {
     console.error(`❌ Migration file not found: ${migrationPath}`);
+    process.exit(1);
+  }
+
+  const root = path.join(__dirname, '..');
+  const manifest = JSON.parse(fs.readFileSync(path.join(root, 'supabase', 'MIGRATION_MANIFEST.json'), 'utf8'));
+  const relativePath = path.relative(root, migrationPath).replaceAll('\\', '/');
+  const pending = manifest.local_files.filter((item) => item.state === 'pending').map((item) => item.file).sort();
+  if (!pending.includes(path.basename(migrationPath))) {
+    console.error(`❌ Migration não está marcada como pending no manifesto: ${relativePath}`);
+    process.exit(1);
+  }
+  if (pending[0] !== path.basename(migrationPath)) {
+    console.error(`❌ Ordem bloqueada. A próxima migration pendente é: ${pending[0]}`);
     process.exit(1);
   }
 
@@ -42,7 +57,22 @@ async function main() {
   try {
     const databaseUrl = getDatabaseUrl();
 
-    if (databaseUrl) {
+    if (ACCESS_TOKEN) {
+      console.log('   Executando via Management API de migrations...');
+      const response = await fetch(`https://api.supabase.com/v1/projects/${PROJECT_REF}/database/migrations`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${ACCESS_TOKEN}`,
+        },
+        body: JSON.stringify({
+          name: path.basename(migrationPath, '.sql'),
+          query: sql,
+        }),
+      });
+      const data = await response.text();
+      if (!response.ok) throw new Error(`Management API HTTP ${response.status}: ${data}`);
+    } else if (databaseUrl) {
       console.log('   Executing via direct Postgres connection...');
       await withDatabase(databaseUrl, async (db) => {
         await db.unsafe(sql);
