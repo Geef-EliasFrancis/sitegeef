@@ -247,7 +247,7 @@ export const contentPages: Record<string, ContentPage> = {
   },
   "evangelho-no-lar": {
     title: "Evangelho no Lar",
-    summary: "Uma prática familiar de estudo, oração e convivência fraterna.",
+    summary: "",
     intro:
       "Escolha um dia e horário possíveis para a família e reserve um momento simples para estudar o Evangelho, conversar sobre seus ensinamentos e cultivar a paz no lar.",
     ctaLabel: "Voltar para atividades",

@@ -124,7 +124,7 @@ const englishContentPages: LocalizedContent = {
   },
   "evangelho-no-lar": {
     title: "Gospel at home",
-    summary: "A family practice of study, prayer and fraternal fellowship.",
+    summary: "",
     intro:
       "Choose a day and time that work for the family and reserve a simple moment to study the Gospel, talk about its teachings and cultivate peace at home.",
     ctaLabel: "Back to activities",

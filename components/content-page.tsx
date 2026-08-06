@@ -36,7 +36,7 @@ export function ContentPageView({ page, locale, slug, compactHero = false, seque
               {slug === "evangelho-no-lar" && <Link className="content-hero-action" href="/evangelho-no-lar/guia">{locale === "en" ? "Let's do it together" : "Vamos fazer juntos"} <span aria-hidden="true">→</span></Link>}
             </div>
             <div className="content-copy-body">
-              <p className="content-summary">{page.summary}</p>
+              {page.summary && <p className="content-summary">{page.summary}</p>}
               {!compactHero && <p className="content-intro">{page.intro}</p>}
             </div>
           </div>
