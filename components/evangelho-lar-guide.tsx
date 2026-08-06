@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import type { Locale } from "@/lib/multilingual";
+import { evangelhoReferences, EVANGELHO_REFERENCE_COUNT, EVANGELHO_REFERENCE_SOURCE, type EvangelhoReference } from "@/lib/evangelho-references";
 
 type PhaseKey = "before" | "during" | "after";
 
@@ -19,26 +20,14 @@ type Phase = {
   steps: GuideStep[];
 };
 
-type ReadingSuggestion = {
-  reference: string;
-  title: string;
-  purpose: string;
-};
-
-const readingSuggestions: Record<Locale, ReadingSuggestion[]> = {
-  pt: [
-    { reference: "Prefácio", title: "A proposta do Evangelho", purpose: "Comece pela apresentação da obra e conversem sobre estudar, sentir e praticar o ensino de Jesus." },
-    { reference: "Capítulo I", title: "Não vim destruir a lei", purpose: "Reflitam sobre a continuidade da lei divina e escolham uma aplicação moral para a semana." },
-    { reference: "Capítulo II", title: "Meu reino não é deste mundo", purpose: "Conversem sobre esperança, desapego e o modo de enfrentar as dificuldades com serenidade." },
-    { reference: "Capítulo III", title: "Há muitas moradas na casa de meu Pai", purpose: "Reflitam sobre progresso, diversidade de situações e responsabilidade pelas próprias escolhas." },
-  ],
-  en: [
-    { reference: "Preface", title: "The Gospel proposal", purpose: "Begin with the book's presentation and discuss studying, feeling and practicing Jesus' teaching." },
-    { reference: "Chapter I", title: "I came not to destroy the law", purpose: "Reflect on the continuity of divine law and choose one moral application for the week." },
-    { reference: "Chapter II", title: "My kingdom is not of this world", purpose: "Talk about hope, detachment and facing difficulties with serenity." },
-    { reference: "Chapter III", title: "In my Father's house are many mansions", purpose: "Reflect on progress, different situations and responsibility for personal choices." },
-  ],
-};
+function randomReferenceIndex(currentIndex?: number) {
+  if (evangelhoReferences.length < 2) return 0;
+  let nextIndex = Math.floor(Math.random() * evangelhoReferences.length);
+  while (nextIndex === currentIndex) {
+    nextIndex = Math.floor(Math.random() * evangelhoReferences.length);
+  }
+  return nextIndex;
+}
 
 const phases: Record<Locale, Record<PhaseKey, Phase>> = {
   pt: {
@@ -146,7 +135,11 @@ export function EvangelhoLarGuide({ locale }: Readonly<{ locale: Locale }>) {
   const [readingIndex, setReadingIndex] = useState(0);
   const phase = copy[phaseKey];
   const step = phase.steps[stepIndex];
-  const reading = readingSuggestions[locale][readingIndex];
+  const reading: EvangelhoReference = evangelhoReferences[readingIndex];
+
+  useEffect(() => {
+    setReadingIndex(randomReferenceIndex());
+  }, []);
 
   function changePhase(nextPhase: PhaseKey) {
     setPhaseKey(nextPhase);
@@ -186,9 +179,12 @@ export function EvangelhoLarGuide({ locale }: Readonly<{ locale: Locale }>) {
           <h3>{reading.reference}: {reading.title}</h3>
           <p>{reading.purpose}</p>
         </div>
-        <button type="button" onClick={() => setReadingIndex((current) => (current + 1) % readingSuggestions[locale].length)}>
+        <button type="button" onClick={() => setReadingIndex((currentIndex) => randomReferenceIndex(currentIndex))}>
           {english ? "Another suggestion" : "Outra sugestão"}
         </button>
+        <small className="evangelho-guide-reading-count">
+          {english ? `${EVANGELHO_REFERENCE_COUNT} numbered references` : `${EVANGELHO_REFERENCE_COUNT} referências numeradas`}
+        </small>
       </article>
 
       <div className="evangelho-guide-stage">
@@ -216,7 +212,7 @@ export function EvangelhoLarGuide({ locale }: Readonly<{ locale: Locale }>) {
       <div className="evangelho-guide-note">
         <strong>{english ? "Keep it welcoming" : "Mantenha o acolhimento"}</strong>
         <span>{english ? "There is no need to make the gathering long or complicated. Consistency and sincerity matter most." : "Não é preciso tornar o encontro longo ou complicado. A constância e a sinceridade são o mais importante."}</span>
-        <a href="https://www.febnet.org.br/aij/wp-content/uploads/2023/03/3-_-Orientacao-ao-Centro-Espirita.pdf" target="_blank" rel="noreferrer">{english ? "FEB reference" : "Referência FEB"}</a>
+        <a href={EVANGELHO_REFERENCE_SOURCE} target="_blank" rel="noreferrer">{english ? "FEB reference" : "Referência FEB"}</a>
       </div>
     </section>
   );
