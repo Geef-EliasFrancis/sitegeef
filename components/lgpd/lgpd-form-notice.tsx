@@ -25,6 +25,7 @@ export function LgpdFormNotice({
       policyLabel={copy.formNotice.policyLabel}
       contactHref="/lgpd"
       contactLabel={copy.formNotice.contactLabel}
+      openLinksInNewTab
       className={`lgpd-form-notice ${className}`.trim()}
     />
   );
