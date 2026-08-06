@@ -265,7 +265,6 @@ export function EvangelhoLarSession({ locale }: Readonly<{ locale: Locale }>) {
       <section className="evangelho-session-header">
         <div className="evangelho-session-heading">
           <Link href="/evangelho-no-lar" className="evangelho-session-back">← {english ? "Back to overview" : "Voltar para a visão geral"}</Link>
-          <p className="eyebrow">{english ? "A guided family moment" : "Um momento guiado em família"}</p>
           <h1>{english ? "Let's do it together" : "Vamos fazer juntos"}</h1>
           <p>{english ? "Follow one slide at a time. The clock is only a reference: there is no alarm and no saved session." : "Siga um slide por vez. O contador é apenas uma referência: não há alarme nem registro da sessão."}</p>
         </div>
