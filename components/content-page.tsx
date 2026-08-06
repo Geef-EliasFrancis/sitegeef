@@ -2,6 +2,7 @@ import { type ContentPage } from "@/lib/site-data";
 import { type Locale } from "@/lib/multilingual";
 import { IconMusic } from "@/components/icons";
 import { BookIcon, GroupIcon, HeartIcon, MailIcon } from "@/components/site-icons";
+import { EvangelhoLarGuide } from "@/components/evangelho-lar-guide";
 
 type ContentPageViewProps = {
   page: ContentPage;
@@ -38,7 +39,7 @@ export function ContentPageView({ page, locale, slug, compactHero = false, seque
         </div>
       </section>
 
-      <section className="content-grid" aria-label={locale === "en" ? `Sections of ${page.title}` : `Seções de ${page.title}`}>
+      {slug === "evangelho-no-lar" ? <EvangelhoLarGuide locale={locale} /> : <section className="content-grid" aria-label={locale === "en" ? `Sections of ${page.title}` : `Seções de ${page.title}`}>
         {page.sections.map((section, sectionIndex) => (
           <article key={section.heading} className={`content-card${sequenceDiagram && sectionIndex === 0 ? " content-card--sequence" : ""}`}>
             <h2>{section.heading}</h2>
@@ -64,7 +65,7 @@ export function ContentPageView({ page, locale, slug, compactHero = false, seque
             )) : null}
           </article>
         ))}
-      </section>
+      </section>}
     </main>
   );
 }
