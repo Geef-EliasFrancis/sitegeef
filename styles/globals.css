@@ -5782,10 +5782,45 @@ a.button.musica-icon-button {
 
 .evangelho-session-progress-top {
   display: flex;
+  align-items: center;
   justify-content: space-between;
   color: #8a005a;
   font-size: 0.8rem;
   font-weight: 800;
+}
+
+.evangelho-session-progress-controls {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+}
+
+.evangelho-session-progress-controls strong {
+  min-width: 3.5rem;
+  color: var(--text);
+  font-size: 0.95rem;
+  text-align: center;
+}
+
+.evangelho-session-progress-controls button {
+  display: grid;
+  place-items: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border: 1px solid rgba(138, 0, 90, 0.42);
+  border-radius: 0.7rem;
+  background: #8a005a;
+  color: #fff;
+  font-size: 1.15rem;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 4px 0 rgba(91, 0, 59, 0.2);
+}
+
+.evangelho-session-progress-controls button:hover,
+.evangelho-session-progress-controls button:focus-visible {
+  background: #68a54a;
+  border-color: #386d26;
 }
 
 .evangelho-session-progress-track {
@@ -5915,29 +5950,6 @@ a.button.musica-icon-button {
   color: var(--muted);
   font-size: 0.72rem;
 }
-
-.evangelho-session-controls {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.8rem;
-}
-
-.evangelho-session-step-list {
-  display: flex;
-  flex: 1;
-  gap: 0.25rem;
-}
-
-.evangelho-session-step-list span {
-  flex: 1;
-  height: 0.35rem;
-  border-radius: 999px;
-  background: rgba(138, 0, 90, 0.14);
-}
-
-.evangelho-session-step-list span.is-done { background: rgba(104, 165, 74, 0.7); }
-.evangelho-session-step-list span.is-active { background: #8a005a; }
 
 @media (max-width: 760px) {
   .evangelho-guide-intro,

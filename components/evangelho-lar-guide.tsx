@@ -272,7 +272,11 @@ export function EvangelhoLarSession({ locale }: Readonly<{ locale: Locale }>) {
       <section className="evangelho-session-progress" aria-label={english ? "Guided sequence progress" : "Progresso da sequência guiada"}>
         <div className="evangelho-session-progress-top">
           <span>{copy[current.phaseKey].label}</span>
-          <strong>{stepIndex + 1} / {guidedSteps.length}</strong>
+          <div className="evangelho-session-progress-controls">
+            <button type="button" onClick={() => moveStep(-1)} aria-label={english ? "Previous step" : "Etapa anterior"}>←</button>
+            <strong aria-live="polite">{stepIndex + 1} / {guidedSteps.length}</strong>
+            <button type="button" onClick={() => moveStep(1)} aria-label={english ? "Next step" : "Próxima etapa"}>→</button>
+          </div>
         </div>
         <div className="evangelho-session-progress-track" aria-hidden="true"><span style={{ width: `${((stepIndex + 1) / guidedSteps.length) * 100}%` }} /></div>
       </section>
@@ -299,11 +303,6 @@ export function EvangelhoLarSession({ locale }: Readonly<{ locale: Locale }>) {
         </div>
       </section>
 
-      <nav className="evangelho-session-controls" aria-label={english ? "Guided slide controls" : "Controles do slide guiado"}>
-        <button type="button" className="evangelho-guide-arrow" onClick={() => moveStep(-1)} aria-label={english ? "Previous step" : "Etapa anterior"}>←</button>
-        <div className="evangelho-session-step-list" aria-hidden="true">{guidedSteps.map((item, index) => <span key={`${item.title}-${index}`} className={index === stepIndex ? "is-active" : index < stepIndex ? "is-done" : ""} />)}</div>
-        <button type="button" className="evangelho-guide-arrow" onClick={() => moveStep(1)} aria-label={english ? "Next step" : "Próxima etapa"}>→</button>
-      </nav>
     </main>
   );
 }
