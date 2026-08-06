@@ -3975,3 +3975,11 @@
     flex: 0 0 2.75rem;
   }
 }
+
+.pessoa-form-header {
+  grid-template-columns: minmax(0, 1fr) auto;
+}
+
+.pessoa-form-header > div:first-child {
+  min-width: 0;
+}
