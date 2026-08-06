@@ -165,9 +165,13 @@ export function EvangelhoLarGuide({ locale }: Readonly<{ locale: Locale }>) {
       <div className="evangelho-guide-intro">
         <div>
           <p className="eyebrow">{english ? "A simple family rhythm" : "Um ritmo familiar simples"}</p>
-          <h2>{english ? "Three moments for the gathering" : "Três momentos para o encontro"}</h2>
+          <h2>{english ? "Gospel at home, step by step" : "Evangelho no Lar, passo a passo"}</h2>
         </div>
-        <p>{english ? "Move through the guide at your own pace. The practice should bring peace, study and fellowship to the home." : "Navegue pelo guia no ritmo da família. A prática deve trazer paz, estudo e convivência para o lar."}</p>
+        <div className="evangelho-guide-facts" aria-label={english ? "Guide summary" : "Resumo do guia"}>
+          <span><strong>≈ 30</strong><small>{english ? "minutes" : "minutos"}</small></span>
+          <span><strong>15</strong><small>{english ? "steps" : "etapas"}</small></span>
+          <span><strong>1</strong><small>{english ? "family rhythm" : "ritmo familiar"}</small></span>
+        </div>
       </div>
 
       <div className="evangelho-guide-toggle" role="tablist" aria-label={english ? "Gospel at home moments" : "Momentos do Evangelho no Lar"}>
@@ -189,6 +193,21 @@ export function EvangelhoLarGuide({ locale }: Readonly<{ locale: Locale }>) {
           {english ? "Another suggestion" : "Outra sugestão"}
         </button>
       </article>
+
+      <div className="evangelho-guide-map" aria-label={english ? `Steps in ${phase.label}` : `Etapas de ${phase.label}`}>
+        <div className="evangelho-guide-map-heading">
+          <span>{english ? "Current route" : "Rota atual"}</span>
+          <small>{phase.steps.length} {english ? "steps" : "etapas"}</small>
+        </div>
+        <div className="evangelho-guide-map-items">
+          {phase.steps.map((item, index) => (
+            <button key={item.title} type="button" className={stepIndex === index ? "is-active" : ""} onClick={() => setStepIndex(index)} aria-current={stepIndex === index ? "step" : undefined}>
+              <span>{index + 1}</span>
+              <strong>{item.title.replace(/^\d+\.\s*/, "")}</strong>
+            </button>
+          ))}
+        </div>
+      </div>
 
       <div className="evangelho-guide-stage">
         <div className="evangelho-guide-stage-copy">
@@ -241,14 +260,6 @@ export function EvangelhoLarGuide({ locale }: Readonly<{ locale: Locale }>) {
           </div>
         </section>
       )}
-
-      <div className="evangelho-guide-dots" role="tablist" aria-label={english ? "Steps in this moment" : "Etapas deste momento"}>
-        {phase.steps.map((item, index) => (
-          <button key={item.title} type="button" role="tab" aria-selected={stepIndex === index} className={stepIndex === index ? "is-active" : ""} onClick={() => setStepIndex(index)}>
-            <span className="sr-only">{item.title}</span>
-          </button>
-        ))}
-      </div>
 
       <div className="evangelho-guide-note">
         <strong>{english ? "Keep it welcoming" : "Mantenha o acolhimento"}</strong>

@@ -5363,10 +5363,30 @@ a.button.musica-icon-button {
   font-size: clamp(1.25rem, 2.3vw, 1.75rem);
 }
 
-.evangelho-guide-intro > p {
-  max-width: 31rem;
+.evangelho-guide-facts {
+  display: flex;
+  gap: 0.45rem;
+}
+
+.evangelho-guide-facts span {
+  display: grid;
+  min-width: 4.5rem;
+  padding: 0.45rem 0.6rem;
+  border: 1px solid rgba(138, 0, 90, 0.14);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.62);
+  text-align: center;
+}
+
+.evangelho-guide-facts strong {
+  color: #8a005a;
+  font-size: 1.05rem;
+}
+
+.evangelho-guide-facts small {
   color: var(--muted);
-  line-height: 1.5;
+  font-size: 0.66rem;
+  line-height: 1.1;
 }
 
 .evangelho-guide-reading {
@@ -5416,6 +5436,91 @@ a.button.musica-icon-button {
 .evangelho-guide-presentation-next:hover,
 .evangelho-guide-presentation-next:focus-visible {
   background: #386d26;
+  color: #fff;
+}
+
+.evangelho-guide-map {
+  display: grid;
+  gap: 0.55rem;
+  padding: 0.8rem;
+  border: 1px solid rgba(138, 0, 90, 0.14);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.58);
+}
+
+.evangelho-guide-map-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #8a005a;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.evangelho-guide-map-heading small {
+  color: var(--muted);
+  font-size: 0.7rem;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.evangelho-guide-map-items {
+  display: flex;
+  gap: 0.45rem;
+  overflow-x: auto;
+  padding-bottom: 0.15rem;
+  scrollbar-width: thin;
+}
+
+.evangelho-guide-map-items button {
+  display: flex;
+  align-items: center;
+  flex: 0 0 auto;
+  gap: 0.4rem;
+  min-height: 2.35rem;
+  max-width: 13rem;
+  padding: 0.4rem 0.65rem 0.4rem 0.4rem;
+  border: 1px solid rgba(138, 0, 90, 0.15);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.72);
+  color: var(--muted);
+  font: inherit;
+  font-size: 0.75rem;
+  text-align: left;
+  cursor: pointer;
+}
+
+.evangelho-guide-map-items button > span {
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+  width: 1.55rem;
+  height: 1.55rem;
+  border-radius: 50%;
+  background: rgba(138, 0, 90, 0.1);
+  color: #8a005a;
+  font-size: 0.7rem;
+  font-weight: 800;
+}
+
+.evangelho-guide-map-items button strong {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.evangelho-guide-map-items button:hover,
+.evangelho-guide-map-items button:focus-visible,
+.evangelho-guide-map-items button.is-active {
+  border-color: #8a005a;
+  background: rgba(138, 0, 90, 0.08);
+  color: #8a005a;
+}
+
+.evangelho-guide-map-items button.is-active > span {
+  background: #8a005a;
   color: #fff;
 }
 
@@ -5609,24 +5714,6 @@ a.button.musica-icon-button {
   line-height: 1.6;
 }
 
-.evangelho-guide-dots {
-  display: flex;
-  justify-content: center;
-  gap: 0.45rem;
-}
-
-.evangelho-guide-dots button {
-  width: 0.65rem;
-  height: 0.65rem;
-  padding: 0;
-  border: 1px solid #8a005a;
-  border-radius: 50%;
-  background: transparent;
-  cursor: pointer;
-}
-
-.evangelho-guide-dots button.is-active { background: #8a005a; }
-
 .evangelho-guide-note {
   display: flex;
   gap: 0.6rem;
@@ -5735,6 +5822,8 @@ a.button.musica-icon-button {
   }
 
   .evangelho-guide-intro { gap: 0.5rem; }
+  .evangelho-guide-facts { justify-content: stretch; }
+  .evangelho-guide-facts span { flex: 1; min-width: 0; }
   .evangelho-guide-reading,
   .evangelho-guide-presentation-slide { grid-template-columns: 1fr; }
   .evangelho-guide-reading { align-items: stretch; flex-direction: column; }
