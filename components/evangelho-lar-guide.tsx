@@ -228,9 +228,11 @@ export function EvangelhoLarSession({ locale }: Readonly<{ locale: Locale }>) {
   const english = locale === "en";
   const copy = phases[locale];
   const guidedSteps = (Object.keys(copy) as PhaseKey[]).flatMap((phaseKey) => copy[phaseKey].steps.map((step) => ({ ...step, phaseKey })));
+  const studyStartIndex = copy.before.steps.length;
   const [stepIndex, setStepIndex] = useState(0);
   const [elapsedSeconds, setElapsedSeconds] = useState(0);
-  const [running, setRunning] = useState(true);
+  const [studyStarted, setStudyStarted] = useState(false);
+  const [running, setRunning] = useState(false);
   const current = guidedSteps[stepIndex];
 
   useEffect(() => {
@@ -240,7 +242,22 @@ export function EvangelhoLarSession({ locale }: Readonly<{ locale: Locale }>) {
   }, [running]);
 
   function moveStep(direction: number) {
-    setStepIndex((currentIndex) => (currentIndex + direction + guidedSteps.length) % guidedSteps.length);
+    setStepIndex((currentIndex) => {
+      const nextIndex = (currentIndex + direction + guidedSteps.length) % guidedSteps.length;
+      if (guidedSteps[nextIndex].phaseKey === "during" && !studyStarted) {
+        setStudyStarted(true);
+        setElapsedSeconds(0);
+        setRunning(true);
+      }
+      return nextIndex;
+    });
+  }
+
+  function startStudy() {
+    setStepIndex(studyStartIndex);
+    setElapsedSeconds(0);
+    setStudyStarted(true);
+    setRunning(true);
   }
 
   return (
@@ -255,10 +272,18 @@ export function EvangelhoLarSession({ locale }: Readonly<{ locale: Locale }>) {
         <div className="evangelho-session-timer" aria-label={english ? "Reference timer" : "Contador de referência"}>
           <span>{english ? "Reference time" : "Tempo de referência"}</span>
           <strong>{formatGuideTime(elapsedSeconds)}</strong>
-          <small>{english ? "suggested: about 30 minutes" : "sugerido: cerca de 30 minutos"}</small>
+          <small>{studyStarted
+            ? (english ? "study time · suggested: about 30 minutes" : "tempo de estudo · sugerido: cerca de 30 minutos")
+            : (english ? "preparation is not counted" : "a preparação não é contabilizada")}</small>
           <div className="evangelho-session-timer-actions">
-            <button type="button" onClick={() => setRunning((currentRunning) => !currentRunning)}>{running ? (english ? "Pause" : "Pausar") : (english ? "Resume" : "Continuar")}</button>
-            <button type="button" onClick={() => { setElapsedSeconds(0); setRunning(true); }}>{english ? "Restart" : "Reiniciar"}</button>
+            {!studyStarted ? (
+              <button type="button" onClick={startStudy}>{english ? "Everything is ready · start study" : "Já preparei tudo · começar estudo"}</button>
+            ) : (
+              <>
+                <button type="button" onClick={() => setRunning((currentRunning) => !currentRunning)}>{running ? (english ? "Pause" : "Pausar") : (english ? "Resume" : "Continuar")}</button>
+                <button type="button" onClick={() => { setElapsedSeconds(0); setRunning(true); }}>{english ? "Restart" : "Reiniciar"}</button>
+              </>
+            )}
           </div>
         </div>
       </section>
