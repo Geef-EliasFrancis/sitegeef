@@ -5262,31 +5262,6 @@ a.button.musica-icon-button {
   animation: page-hero-rise 520ms ease both;
 }
 
-.content-hero-top {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  gap: var(--spacing-md);
-  margin-bottom: 0.4rem;
-  padding-bottom: 0.3rem;
-  border-bottom: 1px solid rgba(14, 36, 8, 0.08);
-}
-
-.content-kicker {
-  display: grid;
-  gap: 0.15rem;
-  align-items: start;
-}
-
-.content-kicker .eyebrow {
-  margin-bottom: 0;
-}
-
-.content-badge-text {
-  font-size: 0.9rem;
-  color: var(--text);
-}
-
 .content-hero-body {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
@@ -6850,7 +6825,6 @@ a.button.musica-icon-button {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .content-hero-top,
   .content-hero-body {
     grid-template-columns: 1fr;
   }
@@ -6917,11 +6891,6 @@ a.button.musica-icon-button {
   .button {
     width: 100%;
     min-width: 0;
-  }
-
-  .content-hero-top {
-    flex-direction: column;
-    align-items: flex-start;
   }
 
   .content-hero-body {
@@ -8369,7 +8338,6 @@ a.button.musica-icon-button {
   color: var(--muted);
 }
 
-:root.dark .content-hero-top,
 :root.dark .site-footer,
 :root.dark .site-footer-content {
   border-color: var(--line);

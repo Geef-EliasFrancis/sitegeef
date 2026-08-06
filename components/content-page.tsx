@@ -7,7 +7,6 @@ type ContentPageViewProps = {
   page: ContentPage;
   locale: Locale;
   slug: string;
-  showBrandKicker?: boolean;
   compactHero?: boolean;
   sequenceDiagram?: boolean;
 };
@@ -22,23 +21,12 @@ function ProgramacaoStepIcon({ label }: { label: string }) {
   return <GroupIcon />;
 }
 
-export function ContentPageView({ page, locale, slug, showBrandKicker = true, compactHero = false, sequenceDiagram = false }: Readonly<ContentPageViewProps>) {
+export function ContentPageView({ page, locale, slug, compactHero = false, sequenceDiagram = false }: Readonly<ContentPageViewProps>) {
   const isAgenda = slug === "agenda";
 
   return (
     <main className={`content-page${isAgenda ? " content-page--compact" : ""}`}>
       <section className="content-hero">
-        {showBrandKicker && (
-          <div className="content-hero-top">
-            <div className="content-kicker">
-              <p className="eyebrow">GEEF</p>
-              <span className="content-badge-text">
-                {locale === "en" ? "Grupo Espírita Elias Francis" : "Grupo Espírita Elias Francis"}
-              </span>
-            </div>
-          </div>
-        )}
-
         <div className="content-hero-body">
           <div className="content-copy">
             <h1>{page.title}</h1>
