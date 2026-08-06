@@ -5861,6 +5861,61 @@ a.button.musica-icon-button {
 
 .evangelho-session-tip strong { color: #386d26; }
 
+.evangelho-session-reading {
+  margin-top: 1.2rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(138, 0, 90, 0.16);
+}
+
+.evangelho-session-reading h3,
+.evangelho-session-reading p {
+  margin: 0;
+}
+
+.evangelho-session-reading h3 {
+  margin-top: 0.25rem;
+  font-size: 1rem;
+}
+
+.evangelho-session-reading > p:not(.eyebrow) {
+  margin-top: 0.35rem;
+  color: var(--muted);
+  font-size: 0.9rem;
+  line-height: 1.45;
+}
+
+.evangelho-session-reading-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  margin-top: 0.7rem;
+}
+
+.evangelho-session-reading-actions button {
+  min-height: 2.2rem;
+  padding: 0.4rem 0.7rem;
+  border: 1px solid rgba(104, 165, 74, 0.45);
+  border-radius: 999px;
+  background: rgba(240, 250, 234, 0.7);
+  color: #386d26;
+  font: inherit;
+  font-size: 0.78rem;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.evangelho-session-reading-actions button:hover,
+.evangelho-session-reading-actions button:focus-visible {
+  background: #386d26;
+  color: #fff;
+}
+
+.evangelho-session-reading-actions small {
+  color: var(--muted);
+  font-size: 0.72rem;
+}
+
 .evangelho-session-controls {
   display: flex;
   align-items: center;

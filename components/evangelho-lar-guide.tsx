@@ -277,20 +277,6 @@ export function EvangelhoLarSession({ locale }: Readonly<{ locale: Locale }>) {
         <div className="evangelho-session-progress-track" aria-hidden="true"><span style={{ width: `${((stepIndex + 1) / guidedSteps.length) * 100}%` }} /></div>
       </section>
 
-      <article className="evangelho-guide-reading">
-        <div>
-          <p className="eyebrow">{english ? "Reading suggestion" : "Sugestão de leitura"}</p>
-          <h3>{reading.reference}: {reading.title}</h3>
-          <p>{reading.purpose}</p>
-        </div>
-        <button type="button" onClick={() => setReadingIndex((currentIndex) => randomReferenceIndex(currentIndex))}>
-          {english ? "Another suggestion" : "Outra sugestão"}
-        </button>
-        <small className="evangelho-guide-reading-count">
-          {english ? `${EVANGELHO_REFERENCE_COUNT} numbered references` : `${EVANGELHO_REFERENCE_COUNT} referências numeradas`}
-        </small>
-      </article>
-
       <section className="evangelho-session-slide" aria-live="polite">
         <div className="evangelho-session-art"><GuideIllustration kind={current.visual} /></div>
         <div className="evangelho-session-slide-copy">
@@ -299,6 +285,17 @@ export function EvangelhoLarSession({ locale }: Readonly<{ locale: Locale }>) {
           <h2>{current.title}</h2>
           <p>{current.text}</p>
           <div className="evangelho-session-tip"><strong>{english ? "Take your time" : "Faça com calma"}</strong><span>{english ? "When your family is ready, move to the next slide." : "Quando a família estiver pronta, avance para o próximo slide."}</span></div>
+          <div className="evangelho-session-reading">
+            <p className="eyebrow">{english ? "Reading suggestion" : "Sugestão de leitura"}</p>
+            <h3>{reading.reference}: {reading.title}</h3>
+            <p>{reading.purpose}</p>
+            <div className="evangelho-session-reading-actions">
+              <button type="button" onClick={() => setReadingIndex((currentIndex) => randomReferenceIndex(currentIndex))}>
+                {english ? "Another suggestion" : "Outra sugestão"}
+              </button>
+              <small>{english ? `${EVANGELHO_REFERENCE_COUNT} numbered references` : `${EVANGELHO_REFERENCE_COUNT} referências numeradas`}</small>
+            </div>
+          </div>
         </div>
       </section>
 
