@@ -226,10 +226,6 @@ export function SiteHeader({
 
       {activeGroup && pathname !== "/" && !mobileMenuOpen && (
         <section className={`site-context-navigation${isMusicPath ? " site-context-navigation--music" : ""}`} aria-label={`Opções de ${contextTitle}`}>
-          <div className="site-context-navigation-copy">
-            <strong>{contextTitle}</strong>
-            <p>{isMusicPath ? "Catálogo e exibição pública das músicas." : activeGroup.description}</p>
-          </div>
           <nav className="site-context-navigation-links">
             {contextLinks.map((item) => (
               <Link key={`context-${activeGroup.key}-${item.href}`} href={item.href} className={`site-context-navigation-link${isContextLinkActive(item.href) ? " is-active" : ""}`} aria-current={isContextLinkActive(item.href) ? "page" : undefined} target={"openInNewTab" in item && item.openInNewTab ? "_blank" : undefined} rel={"openInNewTab" in item && item.openInNewTab ? "noopener noreferrer" : undefined} onClick={() => setOpenGroup(null)}>

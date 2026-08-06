@@ -1073,6 +1073,10 @@
   }
 }
 
+.site-context-navigation {
+  grid-template-columns: minmax(0, 1fr);
+}
+
 /* Acabamento final das abas: fatias uniformes sem clip-path sobre bordas. */
 @media (min-width: 768px) {
   .site-nav-primary {
