@@ -7,6 +7,10 @@ export function isAdminContextItemActive(item: AdminContextItem, pathname: strin
     return item.label === "Allowlist";
   }
 
+  if (pathname === "/admin/pessoas/relatorio" || pathname.startsWith("/admin/pessoas/relatorio/")) {
+    return item.label === "Relatório";
+  }
+
   const isFuncoesPath = pathname === "/admin/funcoes" || pathname.startsWith("/admin/funcoes/") || pathname === "/admin/pessoas/funcoes" || pathname.startsWith("/admin/pessoas/funcoes/");
   if (isFuncoesPath) {
     const isTemasPath = pathname === "/admin/funcoes/temas" || pathname.startsWith("/admin/funcoes/temas/");
@@ -39,7 +43,7 @@ export const contextMenus: Partial<Record<AdminShellArea, readonly AdminContextI
   ],
   pessoas: [
     { label: "Início", href: "/admin/pessoas/inicio" }, { label: "Pessoas", href: "/admin/pessoas" },
-    { label: "Funções", href: "/admin/pessoas/funcoes" }, { label: "Allowlist", href: "/admin/pessoas/allowlist" }, { label: "Usuários", href: "/admin/usuarios" }, { label: "Temas", href: "/admin/funcoes/temas" },
+    { label: "Funções", href: "/admin/pessoas/funcoes" }, { label: "Allowlist", href: "/admin/pessoas/allowlist" }, { label: "Usuários", href: "/admin/usuarios" }, { label: "Temas", href: "/admin/funcoes/temas" }, { label: "Relatório", href: "/admin/pessoas/relatorio" },
   ],
   governanca: [
     { label: "Início", href: "/admin/governanca" }, { label: "Diretorias", href: "/admin/governanca/diretorias" },

@@ -19,7 +19,6 @@ async function PessoasList({ searchParams }: { searchParams: { page?: string; se
       <div className="admin-page-header admin-page-header--title-add">
         <h1 className="admin-page-title">Pessoas</h1>
         <div className="admin-actions">
-          <Link href="/admin/pessoas/relatorio" className="admin-btn admin-btn-secondary">Relatório</Link>
           <Link href="/admin/pessoas/nova" className="admin-btn admin-btn-primary admin-page-add-button" aria-label="Adicionar pessoa" title="Adicionar pessoa">
             <IconPlus size={20} />
           </Link>
