@@ -84,6 +84,12 @@ A correção de `pessoa_vinculos` foi aplicada e registrada como
 `public.tipo_vinculo` com os 15 valores esperados e as quatro policies RLS de
 leitura, inserção, atualização e exclusão.
 
+A autorização idempotente para a conta de testes visuais
+`teste@geef.local` foi aplicada e registrada como `20260806003821`, a partir
+de `20260805030000_seed_visual_admin_allowlist.sql`. A migration cria ou
+reativa somente a entrada da allowlist; não cria uma conta Auth, senha ou
+perfil administrativo.
+
 Também existem quatro grupos de arquivos locais com versões duplicadas
 históricas:
 

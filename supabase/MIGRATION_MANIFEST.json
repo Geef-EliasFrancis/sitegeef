@@ -40,7 +40,8 @@
     { "file": "20260803030000_seed_pessoas_allowlist_admins.sql", "state": "legacy_bundle" },
     { "file": "20260803040000_seed_funcoes_basicas.sql", "state": "legacy_bundle" },
     { "file": "20260805010000_tarefeiros_disponibilidade.sql", "state": "applied_remote", "remote_version": "20260806001407" },
-    { "file": "20260805020000_reconcile_pessoa_vinculos.sql", "state": "applied_remote", "remote_version": "20260806001500" }
+    { "file": "20260805020000_reconcile_pessoa_vinculos.sql", "state": "applied_remote", "remote_version": "20260806001500" },
+    { "file": "20260805030000_seed_visual_admin_allowlist.sql", "state": "applied_remote", "remote_version": "20260806003821" }
   ],
   "remote_checkpoints": [
     { "version": "20260527024607", "name": "20260526_musica_versoes", "local_file": "20260526_musica_versoes.sql", "state": "mapped_remote" },
@@ -55,7 +56,8 @@
     { "version": "20260804011252", "name": "20260803020000_pessoas_allowlist_email_required", "local_file": "20260803020000_pessoas_allowlist_email_required.sql", "state": "mapped_remote" },
     { "version": "20260804011253", "name": "20260803030000_seed_pessoas_allowlist_admins", "local_file": "20260803030000_seed_pessoas_allowlist_admins.sql", "state": "mapped_remote" },
     { "version": "20260806001407", "name": "20260805010000_tarefeiros_disponibilidade", "local_file": "20260805010000_tarefeiros_disponibilidade.sql", "state": "mapped_remote" },
-    { "version": "20260806001500", "name": "20260805020000_reconcile_pessoa_vinculos", "local_file": "20260805020000_reconcile_pessoa_vinculos.sql", "state": "mapped_remote" }
+    { "version": "20260806001500", "name": "20260805020000_reconcile_pessoa_vinculos", "local_file": "20260805020000_reconcile_pessoa_vinculos.sql", "state": "mapped_remote" },
+    { "version": "20260806003821", "name": "20260805030000_seed_visual_admin_allowlist", "local_file": "20260805030000_seed_visual_admin_allowlist.sql", "state": "mapped_remote" }
   ],
   "known_duplicate_versions": [
     {

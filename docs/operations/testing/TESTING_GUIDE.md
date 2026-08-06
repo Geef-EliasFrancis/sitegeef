@@ -99,6 +99,13 @@ window.location.href = '/admin';
 
 ## 4️⃣ Testar Módulos Admin
 
+### Conta administrativa para testes visuais controlados
+
+Use somente o procedimento documentado em
+[`VISUAL_ADMIN_TESTING.md`](./VISUAL_ADMIN_TESTING.md). O e-mail reservado é
+`teste@geef.local`; a allowlist não cria senha nem concede o perfil
+`administrador` automaticamente.
+
 ### Dashboard
 ```
 http://localhost:3500/admin
