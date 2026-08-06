@@ -18,68 +18,101 @@ type Phase = {
   steps: GuideStep[];
 };
 
+type ReadingSuggestion = {
+  reference: string;
+  title: string;
+  purpose: string;
+};
+
+const readingSuggestions: Record<Locale, ReadingSuggestion[]> = {
+  pt: [
+    { reference: "Prefácio", title: "A proposta do Evangelho", purpose: "Comece pela apresentação da obra e conversem sobre estudar, sentir e praticar o ensino de Jesus." },
+    { reference: "Capítulo I", title: "Não vim destruir a lei", purpose: "Reflitam sobre a continuidade da lei divina e escolham uma aplicação moral para a semana." },
+    { reference: "Capítulo II", title: "Meu reino não é deste mundo", purpose: "Conversem sobre esperança, desapego e o modo de enfrentar as dificuldades com serenidade." },
+    { reference: "Capítulo III", title: "Há muitas moradas na casa de meu Pai", purpose: "Reflitam sobre progresso, diversidade de situações e responsabilidade pelas próprias escolhas." },
+  ],
+  en: [
+    { reference: "Preface", title: "The Gospel proposal", purpose: "Begin with the book's presentation and discuss studying, feeling and practicing Jesus' teaching." },
+    { reference: "Chapter I", title: "I came not to destroy the law", purpose: "Reflect on the continuity of divine law and choose one moral application for the week." },
+    { reference: "Chapter II", title: "My kingdom is not of this world", purpose: "Talk about hope, detachment and facing difficulties with serenity." },
+    { reference: "Chapter III", title: "In my Father's house are many mansions", purpose: "Reflect on progress, different situations and responsibility for personal choices." },
+  ],
+};
+
 const phases: Record<Locale, Record<PhaseKey, Phase>> = {
   pt: {
     before: {
       label: "Antes",
-      eyebrow: "Preparar",
-      description: "Combine um momento possível e prepare o ambiente com simplicidade e serenidade.",
+      eyebrow: "Preparação",
+      description: "Converse com quem mora no lar, combine um momento semanal e prepare uma reunião acolhedora de aproximadamente 30 minutos.",
       steps: [
-        { title: "Combine o dia", text: "Escolham um dia e horário que possam ser mantidos pela família, sem transformar a prática em obrigação.", visual: "calendar" },
-        { title: "Prepare o espaço", text: "Organizem um lugar tranquilo, com água disponível e o livro que será utilizado no encontro.", visual: "home" },
-        { title: "Convide com carinho", text: "Reúnam quem estiver em casa e acolham a participação de cada pessoa dentro de sua possibilidade.", visual: "water" },
+        { title: "Converse com a família", text: "Explique que será um momento de união, estudo e reflexão sobre os ensinamentos de Jesus, com respeito e harmonia.", visual: "home" },
+        { title: "Escolha dia e horário", text: "Definam na semana um dia e horário em que todos possam estar presentes. A duração média sugerida é de cerca de 30 minutos.", visual: "calendar" },
+        { title: "Acolha crianças e visitantes", text: "Crianças podem participar. Visitantes ocasionais também podem ser convidados; aos não espíritas, explique antes a finalidade do encontro.", visual: "heart" },
+        { title: "Separe a leitura", text: "Utilize O evangelho segundo o espiritismo como obra básica. Também podem ser escolhidas obras evangélicas de apoio.", visual: "book" },
+        { title: "Prepare água, se desejar", text: "Pode-se disponibilizar água para ser magnetizada ou fluidificada, explicando aos participantes como ela será utilizada.", visual: "water" },
       ],
     },
     during: {
       label: "Durante",
-      eyebrow: "Viver o encontro",
-      description: "Siga uma sequência breve, com prece, leitura, conversa fraterna e vibrações.",
+      eyebrow: "Roteiro FEB",
+      description: "Siga a sequência sugerida com simplicidade: cada etapa prepara a próxima e todos podem participar.",
       steps: [
-        { title: "Comece com uma prece", text: "Façam uma prece simples e espontânea, pedindo amparo, equilíbrio e disposição para aprender.", visual: "prayer" },
-        { title: "Leia e converse", text: "Leiam um trecho de O Evangelho segundo o Espiritismo e conversem sobre como vivê-lo no cotidiano.", visual: "book" },
-        { title: "Faça as vibrações", text: "Encerrem a reflexão com pensamentos de paz, saúde e fraternidade, respeitando o momento de cada família.", visual: "heart" },
+        { title: "1. Preparação", text: "Faça uma leitura breve de uma mensagem evangélica, sem comentários, apenas para harmonizar o ambiente.", visual: "light" },
+        { title: "2. Prece inicial", text: "Inicie com uma prece simples e espontânea, buscando sintonia com a Espiritualidade e harmonização íntima.", visual: "prayer" },
+        { title: "3. Leitura", text: "Leia um ou dois itens de O evangelho segundo o espiritismo, começando pelo prefácio, conforme a escolha do grupo.", visual: "book" },
+        { title: "4. Comentários", text: "Conversem brevemente, com a participação dos presentes, destacando o ensino moral e sua aplicação nas situações do dia a dia.", visual: "heart" },
+        { title: "5. Vibrações", text: "Mentalizem fraternidade, paz e equilíbrio para a Humanidade, os povos, os governantes, os lares e todos os que precisam de auxílio.", visual: "light" },
+        { title: "6. Pedidos", text: "Incluam nas preces amigos, parentes e pessoas necessitadas, sem exposição indevida nem fórmulas obrigatórias.", visual: "water" },
+        { title: "7. Encerramento", text: "Finalize com uma prece simples, sincera e espontânea, agradecendo a Deus, a Jesus e aos amigos espirituais.", visual: "path" },
       ],
     },
     after: {
       label: "Depois",
-      eyebrow: "Levar para a vida",
-      description: "Finalize com gratidão e deixe que o ensinamento continue no cuidado cotidiano.",
+      eyebrow: "Vivência",
+      description: "O encontro termina, mas o estudo deve ser levado para a vivência moral, com fé e perseverança.",
       steps: [
-        { title: "Agradeça e encerre", text: "Façam uma prece final de agradecimento e encerrem o encontro no horário combinado.", visual: "light" },
-        { title: "Escolha uma atitude", text: "Guardem uma ideia prática para exercitar durante a semana, com leveza e perseverança.", visual: "plant" },
-        { title: "Retome o compromisso", text: "Ao final, confirmem o próximo momento e ajustem a rotina quando for necessário.", visual: "path" },
+        { title: "Leve o ensino para a vida", text: "Escolham uma atitude possível para praticar durante a semana, sem transformar a reflexão em cobrança entre familiares.", visual: "plant" },
+        { title: "Mantenha a perseverança", text: "Retomem o Evangelho no Lar no dia combinado. Se a rotina mudar, reorganizem o horário com serenidade.", visual: "calendar" },
+        { title: "Lembrete importante", text: "Este momento não é uma reunião mediúnica. Intuições devem permanecer como comentário geral, dito de modo simples e oportuno.", visual: "home" },
       ],
     },
   },
   en: {
     before: {
       label: "Before",
-      eyebrow: "Prepare",
-      description: "Choose a realistic moment and prepare the space with simplicity and calm.",
+      eyebrow: "Preparation",
+      description: "Talk with the household, choose a weekly moment and prepare a welcoming gathering of about 30 minutes.",
       steps: [
-        { title: "Choose the day", text: "Pick a day and time the family can keep without turning the practice into an obligation.", visual: "calendar" },
-        { title: "Prepare the space", text: "Set up a quiet place, with water and the book that will be used during the gathering.", visual: "home" },
-        { title: "Invite with care", text: "Welcome everyone at home and respect each person's way and availability to participate.", visual: "water" },
+        { title: "Talk with the household", text: "Explain that this is a moment of unity, study and reflection on Jesus' teachings, with respect and harmony.", visual: "home" },
+        { title: "Choose the day and time", text: "Choose a weekly day and time when everyone can be present. The suggested average duration is about 30 minutes.", visual: "calendar" },
+        { title: "Welcome children and guests", text: "Children may participate. Occasional guests may be invited; explain the purpose first to guests who are not Spiritists.", visual: "heart" },
+        { title: "Choose the reading", text: "Use The Gospel According to Spiritism as the basic work. Other evangelical works may also support the study.", visual: "book" },
+        { title: "Prepare water, if desired", text: "Water may be made available for magnetization or fluidification, with its use explained to the participants.", visual: "water" },
       ],
     },
     during: {
       label: "During",
-      eyebrow: "Share the gathering",
-      description: "Follow a brief sequence with prayer, reading, fraternal conversation and good thoughts.",
+      eyebrow: "FEB sequence",
+      description: "Follow the suggested sequence simply: each step prepares the next and everyone may participate.",
       steps: [
-        { title: "Begin with prayer", text: "Offer a simple, spontaneous prayer for support, balance and openness to learn.", visual: "prayer" },
-        { title: "Read and talk", text: "Read a passage from The Gospel According to Spiritism and discuss how to live it each day.", visual: "book" },
-        { title: "Share good thoughts", text: "Close the reflection with thoughts of peace, health and fraternity, respecting each family.", visual: "heart" },
+        { title: "1. Preparation", text: "Read a brief evangelical message without comments, simply to harmonize the environment.", visual: "light" },
+        { title: "2. Opening prayer", text: "Begin with a simple, spontaneous prayer, seeking spiritual attunement and inner harmony.", visual: "prayer" },
+        { title: "3. Reading", text: "Read one or two items from The Gospel According to Spiritism, beginning with the preface, as chosen by the group.", visual: "book" },
+        { title: "4. Comments", text: "Discuss briefly, with the participation of those present, highlighting the moral teaching and its daily application.", visual: "heart" },
+        { title: "5. Good thoughts", text: "Think of fraternity, peace and balance for humanity, peoples, leaders, homes and everyone needing help.", visual: "light" },
+        { title: "6. Requests", text: "Include friends, relatives and people in need in prayer, without exposure or mandatory formulas.", visual: "water" },
+        { title: "7. Closing", text: "Close with a simple, sincere and spontaneous prayer, giving thanks to God, Jesus and spiritual friends.", visual: "path" },
       ],
     },
     after: {
       label: "After",
-      eyebrow: "Carry it into life",
-      description: "Close with gratitude and let the teaching continue through daily care.",
+      eyebrow: "Living the teaching",
+      description: "The gathering ends, but study should become moral practice through faith and perseverance.",
       steps: [
-        { title: "Give thanks", text: "Offer a closing prayer of gratitude and finish at the agreed time.", visual: "light" },
-        { title: "Choose one attitude", text: "Keep one practical idea to exercise during the week, with lightness and perseverance.", visual: "plant" },
-        { title: "Keep the rhythm", text: "Confirm the next gathering and adjust the routine whenever the family needs it.", visual: "path" },
+        { title: "Carry the teaching into life", text: "Choose one possible attitude to practice during the week, without turning reflection into pressure between relatives.", visual: "plant" },
+        { title: "Keep persevering", text: "Return to the Gospel at home on the agreed day. If the routine changes, reorganize calmly.", visual: "calendar" },
+        { title: "An important reminder", text: "This is not a mediumistic meeting. Intuitions should remain general comments, expressed simply at the right time.", visual: "home" },
       ],
     },
   },
@@ -109,8 +142,14 @@ export function EvangelhoLarGuide({ locale }: Readonly<{ locale: Locale }>) {
   const copy = phases[locale];
   const [phaseKey, setPhaseKey] = useState<PhaseKey>("before");
   const [stepIndex, setStepIndex] = useState(0);
+  const [readingIndex, setReadingIndex] = useState(0);
+  const [guidedOpen, setGuidedOpen] = useState(false);
+  const [guidedIndex, setGuidedIndex] = useState(0);
   const phase = copy[phaseKey];
   const step = phase.steps[stepIndex];
+  const reading = readingSuggestions[locale][readingIndex];
+  const guidedSteps = (Object.keys(copy) as PhaseKey[]).flatMap((key) => copy[key].steps.map((guidedStep) => ({ ...guidedStep, phaseKey: key })));
+  const guidedStep = guidedSteps[guidedIndex];
 
   function changePhase(nextPhase: PhaseKey) {
     setPhaseKey(nextPhase);
@@ -140,6 +179,17 @@ export function EvangelhoLarGuide({ locale }: Readonly<{ locale: Locale }>) {
         ))}
       </div>
 
+      <article className="evangelho-guide-reading">
+        <div>
+          <p className="eyebrow">{english ? "Reading suggestion" : "Sugestão de leitura"}</p>
+          <h3>{reading.reference}: {reading.title}</h3>
+          <p>{reading.purpose}</p>
+        </div>
+        <button type="button" onClick={() => setReadingIndex((current) => (current + 1) % readingSuggestions[locale].length)}>
+          {english ? "Another suggestion" : "Outra sugestão"}
+        </button>
+      </article>
+
       <div className="evangelho-guide-stage">
         <div className="evangelho-guide-stage-copy">
           <p className="evangelho-guide-phase">{phase.eyebrow}</p>
@@ -150,6 +200,9 @@ export function EvangelhoLarGuide({ locale }: Readonly<{ locale: Locale }>) {
             <span aria-live="polite">{stepIndex + 1} / {phase.steps.length}</span>
             <button type="button" className="evangelho-guide-arrow" onClick={() => moveStep(1)} aria-label={english ? "Next step" : "Próxima etapa"}>→</button>
           </div>
+          <button type="button" className="evangelho-guide-present-button" onClick={() => setGuidedOpen((current) => !current)} aria-expanded={guidedOpen}>
+            {guidedOpen ? (english ? "Close guided mode" : "Fechar modo guiado") : (english ? "Open guided mode" : "Abrir modo guiado")}
+          </button>
         </div>
 
         <article className="evangelho-guide-slide" aria-live="polite">
@@ -162,6 +215,33 @@ export function EvangelhoLarGuide({ locale }: Readonly<{ locale: Locale }>) {
         </article>
       </div>
 
+      {guidedOpen && (
+        <section className="evangelho-guide-presentation" aria-label={english ? "Guided presentation" : "Apresentação guiada"}>
+          <div className="evangelho-guide-presentation-heading">
+            <div>
+              <p className="eyebrow">{english ? "Follow together" : "Acompanhe em família"}</p>
+              <h3>{english ? "Guided meeting" : "Encontro guiado"}</h3>
+            </div>
+            <span>{guidedIndex + 1} / {guidedSteps.length}</span>
+          </div>
+          <div className="evangelho-guide-progress" aria-hidden="true"><span style={{ width: `${((guidedIndex + 1) / guidedSteps.length) * 100}%` }} /></div>
+          <div className="evangelho-guide-presentation-slide">
+            <div className="evangelho-guide-presentation-art"><GuideIllustration kind={guidedStep.visual} /></div>
+            <div>
+              <p className="evangelho-guide-phase">{copy[guidedStep.phaseKey].label}</p>
+              <h4>{guidedStep.title}</h4>
+              <p>{guidedStep.text}</p>
+            </div>
+          </div>
+          <div className="evangelho-guide-presentation-actions">
+            <button type="button" className="evangelho-guide-arrow" onClick={() => setGuidedIndex((current) => (current - 1 + guidedSteps.length) % guidedSteps.length)} aria-label={english ? "Previous guided slide" : "Slide guiado anterior"}>←</button>
+            <button type="button" className="evangelho-guide-presentation-next" onClick={() => setGuidedIndex((current) => (current + 1) % guidedSteps.length)}>
+              {guidedIndex === guidedSteps.length - 1 ? (english ? "Restart" : "Recomeçar") : (english ? "Next slide" : "Próximo slide")} →
+            </button>
+          </div>
+        </section>
+      )}
+
       <div className="evangelho-guide-dots" role="tablist" aria-label={english ? "Steps in this moment" : "Etapas deste momento"}>
         {phase.steps.map((item, index) => (
           <button key={item.title} type="button" role="tab" aria-selected={stepIndex === index} className={stepIndex === index ? "is-active" : ""} onClick={() => setStepIndex(index)}>
@@ -173,6 +253,7 @@ export function EvangelhoLarGuide({ locale }: Readonly<{ locale: Locale }>) {
       <div className="evangelho-guide-note">
         <strong>{english ? "Keep it welcoming" : "Mantenha o acolhimento"}</strong>
         <span>{english ? "There is no need to make the gathering long or complicated. Consistency and sincerity matter most." : "Não é preciso tornar o encontro longo ou complicado. A constância e a sinceridade são o mais importante."}</span>
+        <a href="https://www.febnet.org.br/aij/wp-content/uploads/2023/03/3-_-Orientacao-ao-Centro-Espirita.pdf" target="_blank" rel="noreferrer">{english ? "FEB reference" : "Referência FEB"}</a>
       </div>
     </section>
   );

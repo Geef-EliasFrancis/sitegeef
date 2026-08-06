@@ -5369,6 +5369,56 @@ a.button.musica-icon-button {
   line-height: 1.5;
 }
 
+.evangelho-guide-reading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.9rem 1rem;
+  border: 1px solid rgba(104, 165, 74, 0.28);
+  border-left: 0.35rem solid #68a54a;
+  border-radius: 18px;
+  background: rgba(240, 250, 234, 0.82);
+}
+
+.evangelho-guide-reading h3 {
+  margin: 0.2rem 0 0;
+  font-size: 1.05rem;
+}
+
+.evangelho-guide-reading p:last-child {
+  max-width: 48rem;
+  margin: 0.3rem 0 0;
+  color: var(--muted);
+  line-height: 1.45;
+}
+
+.evangelho-guide-reading button,
+.evangelho-guide-present-button,
+.evangelho-guide-presentation-next {
+  flex: 0 0 auto;
+  min-height: 2.45rem;
+  padding: 0.55rem 0.8rem;
+  border: 1px solid rgba(104, 165, 74, 0.45);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.72);
+  color: #386d26;
+  font: inherit;
+  font-size: 0.82rem;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.evangelho-guide-reading button:hover,
+.evangelho-guide-reading button:focus-visible,
+.evangelho-guide-present-button:hover,
+.evangelho-guide-present-button:focus-visible,
+.evangelho-guide-presentation-next:hover,
+.evangelho-guide-presentation-next:focus-visible {
+  background: #386d26;
+  color: #fff;
+}
+
 .evangelho-guide-toggle {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -5478,6 +5528,14 @@ a.button.musica-icon-button {
   color: #fff;
 }
 
+.evangelho-guide-present-button {
+  align-self: flex-start;
+  margin-top: 1rem;
+  border-color: rgba(138, 0, 90, 0.28);
+  background: rgba(138, 0, 90, 0.07);
+  color: #8a005a;
+}
+
 .evangelho-guide-slide {
   display: grid;
   grid-template-columns: minmax(11rem, 0.8fr) minmax(0, 1.2fr);
@@ -5579,6 +5637,96 @@ a.button.musica-icon-button {
 
 .evangelho-guide-note strong { color: var(--text); white-space: nowrap; }
 
+.evangelho-guide-note a {
+  flex: 0 0 auto;
+  color: #8a005a;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.evangelho-guide-presentation {
+  display: grid;
+  gap: 0.85rem;
+  padding: 1rem;
+  border: 1px solid rgba(138, 0, 90, 0.2);
+  border-radius: 22px;
+  background: linear-gradient(145deg, #fff9ff, #eee2f7);
+  box-shadow: 0 14px 30px rgba(124, 63, 163, 0.12);
+  animation: page-copy-rise 220ms ease both;
+}
+
+.evangelho-guide-presentation-heading,
+.evangelho-guide-presentation-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.evangelho-guide-presentation-heading h3 {
+  margin: 0.2rem 0 0;
+  font-size: 1.3rem;
+}
+
+.evangelho-guide-presentation-heading > span {
+  color: #8a005a;
+  font-size: 0.82rem;
+  font-weight: 800;
+}
+
+.evangelho-guide-progress {
+  height: 0.35rem;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(138, 0, 90, 0.12);
+}
+
+.evangelho-guide-progress span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: #8a005a;
+  transition: width 180ms ease;
+}
+
+.evangelho-guide-presentation-slide {
+  display: grid;
+  grid-template-columns: minmax(12rem, 0.65fr) minmax(0, 1.35fr);
+  align-items: center;
+  gap: 1rem;
+  min-height: 13rem;
+  padding: 0.7rem;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.62);
+}
+
+.evangelho-guide-presentation-art {
+  display: grid;
+  place-items: center;
+  min-height: 11rem;
+  border-radius: 14px;
+  background: linear-gradient(155deg, rgba(246, 224, 250, 0.98), rgba(219, 243, 209, 0.88));
+}
+
+.evangelho-guide-presentation-art .evangelho-guide-illustration { max-width: 15rem; }
+
+.evangelho-guide-presentation-slide h4 {
+  margin: 0.2rem 0 0;
+  font-size: clamp(1.2rem, 2.5vw, 1.75rem);
+}
+
+.evangelho-guide-presentation-slide > div:last-child > p:last-child {
+  margin: 0.55rem 0 0;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.evangelho-guide-presentation-next {
+  border-color: rgba(138, 0, 90, 0.28);
+  background: #8a005a;
+  color: #fff;
+}
+
 @media (max-width: 760px) {
   .evangelho-guide-intro,
   .evangelho-guide-stage {
@@ -5587,11 +5735,16 @@ a.button.musica-icon-button {
   }
 
   .evangelho-guide-intro { gap: 0.5rem; }
+  .evangelho-guide-reading,
+  .evangelho-guide-presentation-slide { grid-template-columns: 1fr; }
+  .evangelho-guide-reading { align-items: stretch; flex-direction: column; }
   .evangelho-guide-stage-copy { padding: 0.3rem; }
   .evangelho-guide-controls { margin-top: 0.85rem; }
   .evangelho-guide-slide { grid-template-columns: 1fr; }
   .evangelho-guide-art { min-height: 10rem; }
   .evangelho-guide-illustration { max-width: 15rem; }
+  .evangelho-guide-presentation-slide { display: grid; }
+  .evangelho-guide-presentation-art { min-height: 9rem; }
 }
 
 @media (max-width: 480px) {
