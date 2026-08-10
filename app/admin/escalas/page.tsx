@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { getEscalas } from './actions';
 import { Suspense } from 'react';
 import { AdminPageTitleAdd } from '@/components/admin/admin-page-title-add';
+import { EscalaStatusBadge } from '@/components/admin/escalas/escala-status-badge';
 
 export const metadata = {
   title: 'Escalas Mensais - Admin GEEF',
@@ -21,19 +22,6 @@ function getMonthName(mes: number): string {
     'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro',
   ];
   return months[mes - 1];
-}
-
-function getStatusColor(status: string) {
-  switch (status) {
-    case 'rascunho':
-      return { bg: 'rgba(107, 114, 128, 0.1)', color: '#6b7280' };
-    case 'revisada':
-      return { bg: 'rgba(251, 146, 60, 0.1)', color: '#f97316' };
-    case 'publicada':
-      return { bg: 'rgba(34, 197, 94, 0.1)', color: '#22c55e' };
-    default:
-      return { bg: 'rgba(107, 114, 128, 0.1)', color: '#6b7280' };
-  }
 }
 
 async function EscalasList({ searchParams }: { searchParams: { page?: string } }) {
@@ -69,15 +57,12 @@ async function EscalasList({ searchParams }: { searchParams: { page?: string } }
               </thead>
               <tbody>
                 {escalaList.map((escala) => {
-                  const statusColor = getStatusColor(escala.status || 'default');
                   return (
                     <tr key={escala.id}>
                       <td><strong>{getMonthName(escala.mes)}</strong></td>
                       <td>{escala.ano}</td>
                       <td>
-                        <span className="inline-status" style={{ backgroundColor: statusColor.bg, color: statusColor.color }}>
-                          {escala.status}
-                        </span>
+                        <EscalaStatusBadge status={escala.status} />
                       </td>
                       <td className="text-sm-muted">
                         {new Date(escala.criado_em).toLocaleDateString('pt-BR')}
