@@ -49,7 +49,7 @@ export function EscalaAuditPanels({
     <>
       {conflitos.length > 0 && (
         <section className="area-section">
-          <div className="area-panel-item" style={{ borderColor: 'rgba(234, 179, 8, 0.45)' }}>
+          <div className="area-panel-item escala-conflito-panel">
             <div className="area-section-title">
               <h2>Alertas de conflito</h2>
               <p>A mesma pessoa aparece em mais de um compromisso na mesma data.</p>
