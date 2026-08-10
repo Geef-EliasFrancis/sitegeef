@@ -23,7 +23,17 @@ jobs:
           fi
 
           response_file="$(mktemp)"
-          http_code="$(curl -sS -o "$response_file" -w "%{http_code}" -X POST "$FUNCTION_URL" "${headers[@]}")"
+          http_code="$(curl \
+            --silent --show-error \
+            --request POST \
+            --output "$response_file" \
+            --write-out "%{http_code}" \
+            --connect-timeout 15 \
+            --max-time 120 \
+            --retry 5 \
+            --retry-all-errors \
+            --retry-delay 2 \
+            "$FUNCTION_URL" "${headers[@]}")"
 
           echo "HTTP status: $http_code"
           cat "$response_file"
