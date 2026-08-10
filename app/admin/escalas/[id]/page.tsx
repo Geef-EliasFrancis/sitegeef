@@ -1,6 +1,6 @@
 import { redirect } from 'next/navigation';
 import Link from 'next/link';
-import { generateEscalaSugestao, getEscalaById, getEscalaConflitos, getEscalaFuncoesHistorico, sortearAplicadoresPasse, updateEscalaStatus, updatePasseQuantidade } from '../actions';
+import { generateEscalaSugestao, getEscalaById, getEscalaConflitos, getEscalaFuncoesHistorico, getEscalaPasseHistorico, sortearAplicadoresPasse, updateEscalaStatus, updatePasseQuantidade } from '../actions';
 import { Suspense } from 'react';
 import { buildFlashNoticeUrl } from '@/lib/notificacoes/flash-notice';
 
@@ -77,6 +77,7 @@ async function EditEscalaContent({ id }: { id: string }) {
   const escala = await getEscalaById(id);
   const conflitos = await getEscalaConflitos(id);
   const historico = await getEscalaFuncoesHistorico(id);
+  const historicoPasse = await getEscalaPasseHistorico(id);
 
   const totalFuncoes = escala.reunioes.reduce((acc: number, r: any) => acc + (r.escala_funcoes?.length || 0), 0);
   const totalPasse = escala.reunioes.reduce((acc: number, r: any) => acc + (r.escala_passe?.length || 0), 0);
@@ -157,6 +158,27 @@ async function EditEscalaContent({ id }: { id: string }) {
                   <strong>{item.escala_funcao?.funcoes?.nome || 'Função'}</strong>
                   <span>{new Date(item.criado_em).toLocaleString('pt-BR')}</span>
                   <small>{item.pessoa_anterior?.nome || '—'} → {item.pessoa_nova?.nome || '—'}; substituto: {item.substituto_anterior?.nome || '—'} → {item.substituto_novo?.nome || '—'}</small>
+                  {item.motivo ? <small>Motivo: {item.motivo}</small> : null}
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {historicoPasse.length > 0 && (
+        <section className="area-section">
+          <div className="area-panel-item">
+            <div className="area-section-title">
+              <h2>Histórico dos aplicadores de passe</h2>
+              <p>Alterações manuais de pessoa ou posição preservadas para revisão.</p>
+            </div>
+            <div className="area-panel-grid">
+              {historicoPasse.map((item: any) => (
+                <div key={item.id} className="area-panel-item">
+                  <strong>Aplicador de passe</strong>
+                  <span>{new Date(item.criado_em).toLocaleString('pt-BR')}</span>
+                  <small>{item.pessoa_anterior?.nome || '—'} → {item.pessoa_nova?.nome || '—'}; posição: {item.posicao_anterior || '—'} → {item.posicao_nova || '—'}</small>
                   {item.motivo ? <small>Motivo: {item.motivo}</small> : null}
                 </div>
               ))}

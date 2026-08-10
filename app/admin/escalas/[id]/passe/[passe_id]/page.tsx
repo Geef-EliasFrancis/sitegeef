@@ -15,7 +15,8 @@ async function handleUpdate(formData: FormData, escalaId: string, passeId: strin
     await updatePasseEscalon(
       passeId,
       formData.get('pessoa_id') as string,
-      parseInt(formData.get('posicao') as string)
+      parseInt(formData.get('posicao') as string),
+      (formData.get('motivo') as string) || undefined
     );
 
     redirect(buildFlashNoticeUrl(`/admin/escalas/${escalaId}`, { variant: 'success', message: 'Passe salvo.' }));
@@ -111,6 +112,11 @@ async function EditPasseContent({
               min="1"
               required
             />
+          </div>
+
+          <div className="admin-form-group">
+            <label>Motivo da alteração</label>
+            <textarea name="motivo" rows={3} placeholder="Opcional; ficará registrado no histórico." />
           </div>
 
           <div style={{ display: 'flex', gap: '1rem', marginTop: '2rem' }}>

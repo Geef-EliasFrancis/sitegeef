@@ -572,13 +572,13 @@ export async function addPasseEscalon(reuniaoId: string, pessoaId: string, posic
   return data;
 }
 
-export async function updatePasseEscalon(id: string, pessoaId: string, posicao: number) {
+export async function updatePasseEscalon(id: string, pessoaId: string, posicao: number, motivo?: string) {
   await requireEscalasAccess();
   const supabase = await createClient();
 
   const { data: passeAtual } = await supabase
     .from('escala_passe')
-    .select('reuniao_id,reunioes(data)')
+    .select('reuniao_id,pessoa_id,posicao,reunioes(data)')
     .eq('id', id)
     .maybeSingle();
   if (!passeAtual?.reuniao_id) return { success: false };
@@ -622,11 +622,26 @@ export async function updatePasseEscalon(id: string, pessoaId: string, posicao: 
 
   if (error) return { success: false };
 
+  if (passeAtual.pessoa_id !== pessoaId || passeAtual.posicao !== posicao) {
+    const { data: authData } = await supabase.auth.getUser();
+    const { error: historicoError } = await supabase.from('escala_passe_historico').insert({
+      escala_passe_id: id,
+      pessoa_anterior_id: passeAtual.pessoa_id,
+      pessoa_nova_id: pessoaId,
+      posicao_anterior: passeAtual.posicao,
+      posicao_nova: posicao,
+      motivo: motivo?.trim() || null,
+      alterado_por: authData.user?.id || null,
+    });
+    if (historicoError) return { success: false };
+  }
+
   invalidateEscalasCache();
   return { success: true };
 }
 
 export async function removePasseEscalon(id: string) {
+  await requireEscalasAccess();
   const supabase = await createClient();
 
   const { error } = await supabase
@@ -638,6 +653,17 @@ export async function removePasseEscalon(id: string) {
 
   invalidateEscalasCache();
   return { success: true };
+}
+
+export async function getEscalaPasseHistorico(escalaId: string) {
+  await requireEscalasAccess();
+  const supabase = await createClient();
+  const { data, error } = await supabase
+    .from('escala_passe_historico')
+    .select('id,posicao_anterior,posicao_nova,criado_em,pessoa_anterior:pessoas!pessoa_anterior_id(nome),pessoa_nova:pessoas!pessoa_nova_id(nome),escala_passe:escala_passe!inner(reunioes!inner(data,escala_id))')
+    .eq('escala_passe.reunioes.escala_id', escalaId)
+    .order('criado_em', { ascending: false });
+  return error ? [] : data || [];
 }
 
 export async function getPessoasDisponiveis() {
