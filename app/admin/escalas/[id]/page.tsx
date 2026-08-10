@@ -1,6 +1,6 @@
 import { redirect } from 'next/navigation';
 import Link from 'next/link';
-import { getEscalaById, updateEscalaStatus } from '../actions';
+import { generateEscalaSugestao, getEscalaById, updateEscalaStatus } from '../actions';
 import { Suspense } from 'react';
 import { buildFlashNoticeUrl } from '@/lib/notificacoes/flash-notice';
 
@@ -29,6 +29,24 @@ async function handlePublish(id: string) {
   }
 }
 
+async function handleGenerate(id: string) {
+  'use server';
+
+  try {
+    const result = await generateEscalaSugestao(id);
+    if (!result.success) {
+      redirect(buildFlashNoticeUrl(`/admin/escalas/${id}`, { variant: 'error', message: 'Não foi possível gerar a sugestão.' }));
+    }
+    const message = result.pending > 0
+      ? `Sugestão criada: ${result.inserted} funções preenchidas e ${result.pending} pendências.`
+      : `Sugestão criada: ${result.inserted} funções preenchidas.`;
+    redirect(buildFlashNoticeUrl(`/admin/escalas/${id}`, { variant: 'success', message }));
+  } catch (error) {
+    console.error('Erro ao gerar sugestão:', error);
+    redirect(buildFlashNoticeUrl(`/admin/escalas/${id}`, { variant: 'error', message: 'Não foi possível gerar a sugestão.' }));
+  }
+}
+
 async function EditEscalaContent({ id }: { id: string }) {
   const escala = await getEscalaById(id);
 
@@ -51,8 +69,15 @@ async function EditEscalaContent({ id }: { id: string }) {
           </div>
         </div>
         <p className="area-subtitle">Resumo e composição das funções do mês.</p>
-        <div className="area-panel-grid">
-          {escala.status !== 'publicada' && (
+          <div className="area-panel-grid">
+            {escala.status !== 'publicada' && (
+              <form action={() => handleGenerate(id)}>
+                <button type="submit" className="profile-form-btn profile-form-btn-secondary">
+                  Gerar sugestão automática
+                </button>
+              </form>
+            )}
+            {escala.status !== 'publicada' && (
             <form action={() => handlePublish(id)}>
               <button type="submit" className="profile-form-btn profile-form-btn-primary">Publicar</button>
             </form>

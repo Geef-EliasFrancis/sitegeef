@@ -153,6 +153,99 @@ export async function updateEscalaStatus(id: string, status: string) {
   return { success: true };
 }
 
+export async function generateEscalaSugestao(id: string) {
+  await requireEscalasAccess();
+  const supabase = await createClient();
+
+  const [{ data: reunioes, error: reunioesError }, { data: funcoes, error: funcoesError }, { data: pessoas, error: pessoasError }] = await Promise.all([
+    supabase
+      .from('reunioes')
+      .select('id,data,escala_funcoes(id,funcao_id,pessoa_id),escala_passe(pessoa_id)')
+      .eq('escala_id', id)
+      .order('data'),
+    supabase
+      .from('funcoes')
+      .select('id,nome,escalavel')
+      .eq('ativo', true)
+      .eq('escalavel', true)
+      .order('nome'),
+    supabase
+      .from('pessoas')
+      .select('id,nome,status')
+      .eq('status', 'ativo')
+      .order('nome'),
+  ]);
+
+  if (reunioesError || funcoesError || pessoasError || !reunioes || !funcoes || !pessoas) {
+    return { success: false, inserted: 0, pending: 0 };
+  }
+
+  const pessoaIds = pessoas.map((pessoa) => pessoa.id);
+  if (pessoaIds.length === 0) return { success: true, inserted: 0, pending: funcoes.length * reunioes.length };
+
+  const [{ data: vinculos }, { data: capacidades }, { data: disponibilidades }] = await Promise.all([
+    supabase.from('pessoa_vinculos').select('pessoa_id').eq('vinculo', 'tarefeiro').in('pessoa_id', pessoaIds),
+    supabase.from('tarefeiro_funcoes').select('pessoa_id,funcao_id,habilitado').eq('habilitado', true).in('pessoa_id', pessoaIds),
+    supabase.from('tarefeiro_disponibilidades').select('pessoa_id,dia_semana,disponivel').in('pessoa_id', pessoaIds),
+  ]);
+
+  if (!vinculos || !capacidades || !disponibilidades) return { success: false, inserted: 0, pending: 0 };
+
+  const tarefeiroIds = new Set(vinculos.map((vinculo) => vinculo.pessoa_id));
+  const capacidadeKey = new Set(capacidades.map((item) => `${item.pessoa_id}:${item.funcao_id}`));
+  const disponibilidadeByKey = new Map(disponibilidades.map((item) => [`${item.pessoa_id}:${item.dia_semana}`, item.disponivel]));
+  const participacoes = new Map<string, number>();
+  const insercoes: Array<{ reuniao_id: string; funcao_id: string; pessoa_id: string }> = [];
+  let pending = 0;
+
+  for (const reuniao of reunioes) {
+    const ocupadas = new Set<string>();
+    for (const item of reuniao.escala_funcoes || []) {
+      if (item.pessoa_id) {
+        ocupadas.add(item.pessoa_id);
+        participacoes.set(item.pessoa_id, (participacoes.get(item.pessoa_id) || 0) + 1);
+      }
+    }
+    for (const item of reuniao.escala_passe || []) {
+      if (item.pessoa_id) ocupadas.add(item.pessoa_id);
+    }
+
+    const data = new Date(`${reuniao.data}T00:00:00`);
+    const diaSemana = data.getDay();
+    const funcoesExistentes = new Set((reuniao.escala_funcoes || []).map((item) => item.funcao_id));
+
+    for (const funcao of funcoes) {
+      if (funcao.nome.toLowerCase() === 'aplicador de passe' || funcoesExistentes.has(funcao.id)) continue;
+
+      const candidatos = pessoas
+        .filter((pessoa) => tarefeiroIds.has(pessoa.id))
+        .filter((pessoa) => capacidadeKey.has(`${pessoa.id}:${funcao.id}`))
+        .filter((pessoa) => !ocupadas.has(pessoa.id))
+        .filter((pessoa) => disponibilidadeByKey.get(`${pessoa.id}:${diaSemana}`) !== false)
+        .sort((a, b) => (participacoes.get(a.id) || 0) - (participacoes.get(b.id) || 0) || a.nome.localeCompare(b.nome, 'pt-BR'));
+
+      if (candidatos.length === 0) {
+        pending += 1;
+        continue;
+      }
+
+      const candidato = candidatos[0];
+      insercoes.push({ reuniao_id: reuniao.id, funcao_id: funcao.id, pessoa_id: candidato.id });
+      ocupadas.add(candidato.id);
+      participacoes.set(candidato.id, (participacoes.get(candidato.id) || 0) + 1);
+    }
+  }
+
+  if (insercoes.length > 0) {
+    const { error } = await supabase.from('escala_funcoes').insert(insercoes);
+    if (error) return { success: false, inserted: 0, pending };
+  }
+
+  invalidateEscalasCache();
+  invalidateAdminDashboardCache();
+  return { success: true, inserted: insercoes.length, pending };
+}
+
 export async function addFuncao(reuniaoId: string, funcaoId: string, pessoaId: string, substitutoId?: string) {
   await requireEscalasAccess();
   const supabase = await createClient();
