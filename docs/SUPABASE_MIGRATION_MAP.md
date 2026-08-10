@@ -22,6 +22,8 @@ Este documento alinha os nomes dos arquivos locais de migration com os checkpoin
 | `supabase/migrations/20260809030000_passe_quantidade_sorteio.sql` | `20260810015246` |
 | `supabase/migrations/20260809040000_palestrantes_externos.sql` | pendente de aplicação |
 | `supabase/migrations/20260809050000_status_palestras.sql` | pendente de aplicação |
+| `supabase/migrations/20260809060000_historico_substituicoes.sql` | pendente de aplicação |
+| `supabase/migrations/20260809070000_historico_aplicadores_passe.sql` | pendente de aplicação |
 
 ## Observações
 
