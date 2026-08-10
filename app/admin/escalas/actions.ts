@@ -157,15 +157,22 @@ export async function addFuncao(reuniaoId: string, funcaoId: string, pessoaId: s
   await requireEscalasAccess();
   const supabase = await createClient();
 
-  const [{ data: funcao }, { data: pessoa }, { data: vinculoPessoa }, { data: reuniao }, { data: vinculoExistente }] = await Promise.all([
+  const [{ data: funcao }, { data: pessoa }, { data: vinculoPessoa }, { data: reuniao }, { data: vinculoExistente }, { data: capacidade }] = await Promise.all([
     supabase.from('funcoes').select('id, ativo').eq('id', funcaoId).maybeSingle(),
     supabase.from('pessoas').select('id, status').eq('id', pessoaId).maybeSingle(),
     supabase.from('pessoa_vinculos').select('id').eq('pessoa_id', pessoaId).eq('vinculo', 'tarefeiro').maybeSingle(),
     supabase.from('reunioes').select('data').eq('id', reuniaoId).maybeSingle(),
     supabase.from('escala_funcoes').select('id').eq('reuniao_id', reuniaoId).eq('funcao_id', funcaoId).maybeSingle(),
+    supabase.from('tarefeiro_funcoes').select('id').eq('pessoa_id', pessoaId).eq('funcao_id', funcaoId).eq('habilitado', true).maybeSingle(),
   ]);
 
-  if (!funcao?.ativo || pessoa?.status !== 'ativo' || !vinculoPessoa || !reuniao?.data || vinculoExistente) return null;
+  if (!funcao?.ativo || pessoa?.status !== 'ativo' || !vinculoPessoa || !reuniao?.data || vinculoExistente || !capacidade) return null;
+
+  const [{ data: outraFuncao }, { data: passeExistente }] = await Promise.all([
+    supabase.from('escala_funcoes').select('id').eq('reuniao_id', reuniaoId).eq('pessoa_id', pessoaId).maybeSingle(),
+    supabase.from('escala_passe').select('id').eq('reuniao_id', reuniaoId).eq('pessoa_id', pessoaId).maybeSingle(),
+  ]);
+  if (outraFuncao || passeExistente) return null;
 
   const diaSemana = new Date(`${reuniao.data}T00:00:00`).getDay();
   const { data: disponibilidade } = await supabase
@@ -206,9 +213,26 @@ export async function updateFuncao(id: string, pessoaId: string, substitutoId?: 
 
   const { data: escalaFuncao } = await supabase
     .from('escala_funcoes')
-    .select('reunioes(data)')
+    .select('funcao_id,reuniao_id,reunioes(data)')
     .eq('id', id)
     .maybeSingle();
+  if (!escalaFuncao?.funcao_id || !escalaFuncao.reuniao_id) return { success: false };
+
+  const { data: capacidade } = await supabase
+    .from('tarefeiro_funcoes')
+    .select('id')
+    .eq('pessoa_id', pessoaId)
+    .eq('funcao_id', escalaFuncao.funcao_id)
+    .eq('habilitado', true)
+    .maybeSingle();
+  if (!capacidade) return { success: false };
+
+  const [{ data: outraFuncao }, { data: passeExistente }] = await Promise.all([
+    supabase.from('escala_funcoes').select('id').eq('reuniao_id', escalaFuncao.reuniao_id).eq('pessoa_id', pessoaId).neq('id', id).maybeSingle(),
+    supabase.from('escala_passe').select('id').eq('reuniao_id', escalaFuncao.reuniao_id).eq('pessoa_id', pessoaId).maybeSingle(),
+  ]);
+  if (outraFuncao || passeExistente) return { success: false };
+
   const reuniaoData = (escalaFuncao?.reunioes as { data?: string } | null)?.data;
   if (reuniaoData) {
     const { data: disponibilidade } = await supabase
@@ -250,7 +274,31 @@ export async function removeFuncao(id: string) {
 }
 
 export async function addPasseEscalon(reuniaoId: string, pessoaId: string, posicao: number) {
+  await requireEscalasAccess();
   const supabase = await createClient();
+
+  const [{ data: pessoa }, { data: vinculo }, { data: reuniao }, { data: funcaoPasse }] = await Promise.all([
+    supabase.from('pessoas').select('id,status').eq('id', pessoaId).maybeSingle(),
+    supabase.from('pessoa_vinculos').select('id').eq('pessoa_id', pessoaId).eq('vinculo', 'tarefeiro').maybeSingle(),
+    supabase.from('reunioes').select('data').eq('id', reuniaoId).maybeSingle(),
+    supabase.from('funcoes').select('id').eq('nome', 'Aplicador de passe').eq('ativo', true).maybeSingle(),
+  ]);
+  if (!pessoa || pessoa.status !== 'ativo' || !vinculo || !reuniao?.data || !funcaoPasse) return null;
+
+  const [{ data: capacidade }, { data: funcaoConflitante }, { data: passeExistente }] = await Promise.all([
+    supabase.from('tarefeiro_funcoes').select('id').eq('pessoa_id', pessoaId).eq('funcao_id', funcaoPasse.id).eq('habilitado', true).maybeSingle(),
+    supabase.from('escala_funcoes').select('id').eq('reuniao_id', reuniaoId).eq('pessoa_id', pessoaId).maybeSingle(),
+    supabase.from('escala_passe').select('id').eq('reuniao_id', reuniaoId).eq('pessoa_id', pessoaId).maybeSingle(),
+  ]);
+  if (!capacidade || funcaoConflitante || passeExistente) return null;
+
+  const { data: disponibilidade } = await supabase
+    .from('tarefeiro_disponibilidades')
+    .select('disponivel')
+    .eq('pessoa_id', pessoaId)
+    .eq('dia_semana', new Date(`${reuniao.data}T00:00:00`).getDay())
+    .maybeSingle();
+  if (disponibilidade && !disponibilidade.disponivel) return null;
 
   const { data, error } = await supabase
     .from('escala_passe')
@@ -271,7 +319,44 @@ export async function addPasseEscalon(reuniaoId: string, pessoaId: string, posic
 }
 
 export async function updatePasseEscalon(id: string, pessoaId: string, posicao: number) {
+  await requireEscalasAccess();
   const supabase = await createClient();
+
+  const { data: passeAtual } = await supabase
+    .from('escala_passe')
+    .select('reuniao_id,reunioes(data)')
+    .eq('id', id)
+    .maybeSingle();
+  if (!passeAtual?.reuniao_id) return { success: false };
+
+  const [{ data: pessoa }, { data: vinculo }, { data: funcaoPasse }, { data: funcaoConflitante }, { data: outroPasse }] = await Promise.all([
+    supabase.from('pessoas').select('id,status').eq('id', pessoaId).maybeSingle(),
+    supabase.from('pessoa_vinculos').select('id').eq('pessoa_id', pessoaId).eq('vinculo', 'tarefeiro').maybeSingle(),
+    supabase.from('funcoes').select('id').eq('nome', 'Aplicador de passe').eq('ativo', true).maybeSingle(),
+    supabase.from('escala_funcoes').select('id').eq('reuniao_id', passeAtual.reuniao_id).eq('pessoa_id', pessoaId).maybeSingle(),
+    supabase.from('escala_passe').select('id').eq('reuniao_id', passeAtual.reuniao_id).eq('pessoa_id', pessoaId).neq('id', id).maybeSingle(),
+  ]);
+  if (!pessoa || pessoa.status !== 'ativo' || !vinculo || !funcaoPasse || funcaoConflitante || outroPasse) return { success: false };
+
+  const { data: capacidade } = await supabase
+    .from('tarefeiro_funcoes')
+    .select('id')
+    .eq('pessoa_id', pessoaId)
+    .eq('funcao_id', funcaoPasse.id)
+    .eq('habilitado', true)
+    .maybeSingle();
+  if (!capacidade) return { success: false };
+
+  const reuniaoData = (passeAtual.reunioes as { data?: string } | null)?.data;
+  if (reuniaoData) {
+    const { data: disponibilidade } = await supabase
+      .from('tarefeiro_disponibilidades')
+      .select('disponivel')
+      .eq('pessoa_id', pessoaId)
+      .eq('dia_semana', new Date(`${reuniaoData}T00:00:00`).getDay())
+      .maybeSingle();
+    if (disponibilidade && !disponibilidade.disponivel) return { success: false };
+  }
 
   const { error } = await supabase
     .from('escala_passe')
