@@ -45,6 +45,7 @@
     { "file": "20260809010000_tarefeiro_funcoes.sql", "state": "applied_remote", "remote_version": "20260810015051" },
     { "file": "20260809020000_funcoes_escalaveis.sql", "state": "applied_remote", "remote_version": "20260810015155" },
     { "file": "20260809030000_passe_quantidade_sorteio.sql", "state": "applied_remote", "remote_version": "20260810015246" }
+    ,{ "file": "20260809040000_palestrantes_externos.sql", "state": "pending" }
   ],
   "remote_checkpoints": [
     { "version": "20260527024607", "name": "20260526_musica_versoes", "local_file": "20260526_musica_versoes.sql", "state": "mapped_remote" },

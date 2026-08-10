@@ -20,6 +20,7 @@ Este documento alinha os nomes dos arquivos locais de migration com os checkpoin
 | `supabase/migrations/20260809010000_tarefeiro_funcoes.sql` | `20260810015051` |
 | `supabase/migrations/20260809020000_funcoes_escalaveis.sql` | `20260810015155` |
 | `supabase/migrations/20260809030000_passe_quantidade_sorteio.sql` | `20260810015246` |
+| `supabase/migrations/20260809040000_palestrantes_externos.sql` | pendente de aplicação |
 
 ## Observações
 

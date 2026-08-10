@@ -309,10 +309,10 @@ export default async function EscalasPage() {
                             background: "rgba(247, 239, 252, 0.98)",
                           }}
                         >
-                          <strong>{ep.expositores?.nome ?? (locale === "en" ? "Speaker" : "Expositor")}</strong>
+                          <strong>{ep.palestrantes?.nome ?? ep.expositores?.nome ?? (locale === "en" ? "Speaker" : "Expositor")}</strong>
                           <span>{ep.temas_doutrinarios?.titulo ?? ep.tema_livre ?? (locale === "en" ? "Topic" : "Tema")}</span>
                           <span style={{ color: "var(--muted)", fontSize: "0.86rem" }}>
-                            {ep.cidade_origem ?? ep.tipo_palestra ?? ""}
+                            {ep.palestrantes?.cidade ?? ep.cidade_origem ?? ep.tipo_palestra ?? ""}
                           </span>
                         </div>
                       ))}

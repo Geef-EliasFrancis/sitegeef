@@ -36,11 +36,13 @@ export type PublicEscalaRecord = {
     escala_palestras?: Array<{
       id?: string | number;
       expositor_id?: string | number | null;
+      palestrante_id?: string | number | null;
       tema_id?: string | number | null;
       tema_livre?: string | null;
       cidade_origem?: string | null;
       tipo_palestra?: string | null;
       expositores?: { nome?: string | null } | null;
+      palestrantes?: { nome?: string | null; cidade?: string | null; instituicao?: string | null } | null;
       temas_doutrinarios?: { titulo?: string | null } | null;
     }>;
   }>;

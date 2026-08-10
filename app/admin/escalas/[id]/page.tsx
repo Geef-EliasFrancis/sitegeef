@@ -184,7 +184,7 @@ async function EditEscalaContent({ id }: { id: string }) {
                           <div className="tag-list">
                             <span className="tag">#{ep.posicao}</span>
                           </div>
-                          <p><strong>Pessoa:</strong> {ep.pessoas?.nome}</p>
+                        <p><strong>Pessoa:</strong> {ep.pessoas?.nome}</p>
                           <Link href={`/admin/escalas/${id}/passe/${ep.id}`} className="profile-form-btn profile-form-btn-secondary">
                             Editar
                           </Link>
@@ -197,6 +197,27 @@ async function EditEscalaContent({ id }: { id: string }) {
                 <Link href={`/admin/escalas/${id}/reuniao/${reuniao.id}/novo-passe`} className="profile-form-btn profile-form-btn-secondary">
                   Adicionar Passe
                 </Link>
+
+                <div className="area-section-title">
+                  <h3>Palestra</h3>
+                  <p>Registre expositor interno ou palestrante externo.</p>
+                </div>
+                {reuniao.escala_palestras && reuniao.escala_palestras.length > 0 ? (
+                  <div className="area-panel-grid">
+                    {reuniao.escala_palestras.map((palestra: any) => (
+                      <div key={palestra.id} className="area-panel-item">
+                        <div className="tag-list"><span className="tag">Palestrante</span></div>
+                        <p><strong>Expositor:</strong> {palestra.palestrantes?.nome || palestra.expositores?.nome || '—'}</p>
+                        <p><strong>Tema:</strong> {palestra.temas_doutrinarios?.titulo || palestra.tema_livre || '—'}</p>
+                        <p><strong>Origem:</strong> {palestra.palestrantes?.cidade || palestra.cidade_origem || '—'}</p>
+                      </div>
+                    ))}
+                  </div>
+                ) : <div className="area-empty">Nenhuma palestra registrada.</div>}
+                <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
+                  <Link href={`/admin/escalas/${id}/reuniao/${reuniao.id}/nova-palestra`} className="profile-form-btn profile-form-btn-secondary">Registrar palestra</Link>
+                  <Link href="/admin/palestrantes" className="profile-form-btn profile-form-btn-secondary">Gerenciar palestrantes</Link>
+                </div>
               </article>
             ))}
           </div>

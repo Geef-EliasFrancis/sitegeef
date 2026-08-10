@@ -55,7 +55,7 @@ export const contextMenus: Partial<Record<AdminShellArea, readonly AdminContextI
     { label: "Voluntariado", href: "/admin/documentos/voluntariado" }, { label: "Auditoria", href: "/admin/documentos/auditoria" }, { label: "LGPD", href: "/admin/lgpd" },
   ],
   operacao: [
-    { label: "Início", href: "/admin/operacao" }, { label: "Escalas", href: "/admin/operacao/escalas" }, { label: "Atendimento", href: "/admin/operacao/atendimento" },
+    { label: "Início", href: "/admin/operacao" }, { label: "Escalas", href: "/admin/operacao/escalas" }, { label: "Palestrantes", href: "/admin/palestrantes" }, { label: "Atendimento", href: "/admin/operacao/atendimento" },
     { label: "Recepção", href: "/admin/atendimento/recepcao" }, { label: "Fraterno", href: "/admin/atendimento/fraterno" }, { label: "Evangelho no lar", href: "/admin/atendimento/evangelhos-lar" },
     { label: "Irradiação", href: "/admin/atendimento/irradiacao" }, { label: "Biblioteca", href: "/admin/operacao/biblioteca" }, { label: "Empréstimos", href: "/admin/biblioteca/emprestimos" },
     { label: "Livraria", href: "/admin/operacao/livraria" }, { label: "Comunicação", href: "/admin/operacao/comunicacao" }, { label: "Estudos", href: "/admin/operacao/estudos" },

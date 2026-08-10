@@ -202,18 +202,18 @@ Criar um cadastro simplificado de palestrantes externos com:
 - observações;
 - status ativo ou inativo.
 
-Quando o expositor já for uma pessoa do GEEF, a palestra poderá apontar para
-`pessoas`. Quando for externo, apontará para o cadastro simplificado de
-`palestrantes`.
+Quando o expositor já for uma pessoa do GEEF, o cadastro simplificado poderá
+ser vinculado a `pessoas`. Quando for externo, o registro usará diretamente
+`palestrantes`, sem criar uma pessoa operacional.
 
 O registro da palestra deverá conter:
 
 - data;
 - expositor;
-- cidade;
+- cidade e instituição;
 - tema;
-- observações;
-- status: prevista, confirmada, realizada ou cancelada.
+- tipo de palestra;
+- observações no cadastro do palestrante.
 
 ## Modelo de domínio resumido
 
@@ -229,7 +229,7 @@ escalas_mensais
         └── escala_passe
 
 pessoas ───────────────┐
-                       ├── palestras
+                       ├── palestrantes ── escala_palestras
 palestrantes externos ─┘
 ```
 
@@ -245,7 +245,10 @@ palestrantes externos ─┘
 - O sorteio evita conflitos com outras escalas.
 - A coordenação consegue revisar e alterar a sugestão.
 - Substituições e exceções mantêm histórico.
-- Palestrantes externos podem ser usados em palestras sem cadastro completo.
+- Palestrantes externos podem ser cadastrados e usados em palestras sem
+  cadastro completo de pessoa.
+- Uma palestra pode reutilizar o mesmo cadastro de palestrante em várias
+  reuniões.
 - Somente escalas confirmadas e publicadas aparecem em áreas públicas.
 
 ## Ordem de commits e validação
@@ -274,10 +277,16 @@ Antes de avançar para a etapa seguinte, validar:
 
 ## Situação e próximos passos
 
-O próximo bloco de implementação é a Etapa 2: revisar o catálogo de funções e
-preparar a matriz Sim/Não no cadastro de tarefeiros. Depois disso, a
-disponibilidade deve ser integrada à ficha antes de iniciar o gerador
-automático.
+Até aqui foram implementados e validados localmente o catálogo escalável, a
+matriz Sim/Não de funções, os bloqueios de disponibilidade, a sugestão
+automática, o sorteio de aplicadores de passe e o cadastro/registro de
+palestrantes. As migrations dessas etapas de tarefeiros, funções e passe já
+estão aplicadas no Supabase GEEF. A migration de palestrantes está criada como
+pendente e deve ser aplicada após o gate de migrações.
+
+O próximo bloco é fechar a edição/remoção de registros de palestra, registrar
+conflitos e histórico de substituições e validar o fluxo autenticado no
+navegador.
 
 As migrations de vínculos e disponibilidade devem ser comparadas com o
 histórico do Supabase GEEF e aplicadas somente após validação do ambiente
