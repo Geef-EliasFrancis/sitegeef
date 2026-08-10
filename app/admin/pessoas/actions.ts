@@ -51,6 +51,24 @@ export type TarefeiroDisponibilidade = {
   observacao: string | null;
 };
 
+export type TarefeiroFuncao = {
+  id?: string;
+  pessoa_id?: string;
+  funcao_id: string;
+  habilitado: boolean;
+  prioridade: number;
+  desde: string | null;
+  ate: string | null;
+  observacao: string | null;
+};
+
+export type FuncaoCatalogo = {
+  id: string;
+  nome: string;
+  descricao: string | null;
+  ativo: boolean;
+};
+
 async function requirePessoasAccess() {
   const allowed = await checkModuleAccess('pode_pessoas', [...PESSOAS_PROFILES]);
   if (!allowed) throw new Error('Acesso negado: cadastro de pessoas');
@@ -229,6 +247,18 @@ export async function getTarefeiroReport(search = '') {
     : report;
 }
 
+export async function getFuncoesParaTarefeiro() {
+  const supabase = createServiceRoleClient();
+  const { data, error } = await supabase
+    .from('funcoes')
+    .select('id,nome,descricao,ativo')
+    .eq('ativo', true)
+    .order('nome');
+
+  if (error) return [] as FuncaoCatalogo[];
+  return (data ?? []) as FuncaoCatalogo[];
+}
+
 export async function getPessoasAllowlist(onlyActive = false) {
   await requirePessoasAccess();
   const supabase = createServiceRoleClient();
@@ -290,7 +320,7 @@ export async function getPessoaById(id: string) {
       .maybeSingle();
 
     if (pessoaError) {
-      return { pessoa: null, vinculos: [], disponibilidades: [] };
+      return { pessoa: null, vinculos: [], disponibilidades: [], funcoes: [] };
     }
 
     const { data: vinculos, error: vinculosError } = await supabase
@@ -304,18 +334,57 @@ export async function getPessoaById(id: string) {
       .eq('pessoa_id', id)
       .order('dia_semana');
 
+    const { data: funcoes, error: funcoesError } = await supabase
+      .from('tarefeiro_funcoes')
+      .select('id,pessoa_id,funcao_id,habilitado,prioridade,desde,ate,observacao')
+      .eq('pessoa_id', id)
+      .order('funcao_id');
+
     if (vinculosError) {
-      return { pessoa: pessoa ?? null, vinculos: [], disponibilidades: [] };
+      return { pessoa: pessoa ?? null, vinculos: [], disponibilidades: [], funcoes: [] };
     }
 
     return {
       pessoa: pessoa ?? null,
       vinculos: vinculos ?? [],
       disponibilidades: disponibilidadesError ? [] : (disponibilidades ?? []),
+      funcoes: funcoesError ? [] : ((funcoes ?? []) as TarefeiroFuncao[]),
     };
   } catch {
-    return { pessoa: null, vinculos: [], disponibilidades: [] };
+    return { pessoa: null, vinculos: [], disponibilidades: [], funcoes: [] };
   }
+}
+
+export async function saveTarefeiroFuncoes(
+  pessoaId: string,
+  funcoes: Array<Omit<TarefeiroFuncao, 'id' | 'pessoa_id'>>,
+) {
+  await requirePessoasAccess();
+  const supabase = await createClient();
+  const normalized = funcoes
+    .filter((item) => item.funcao_id)
+    .map((item) => ({
+      pessoa_id: pessoaId,
+      funcao_id: item.funcao_id,
+      habilitado: item.habilitado,
+      prioridade: Number.isFinite(item.prioridade) ? item.prioridade : 0,
+      desde: item.desde || null,
+      ate: item.ate || null,
+      observacao: item.observacao?.trim() || null,
+      atualizado_em: new Date().toISOString(),
+    }));
+
+  if (normalized.length === 0) return { success: true };
+
+  const { error } = await supabase
+    .from('tarefeiro_funcoes')
+    .upsert(normalized, { onConflict: 'pessoa_id,funcao_id' });
+
+  if (error) return { success: false };
+
+  invalidateAdminDashboardCache();
+  invalidateUserAreaCache();
+  return { success: true };
 }
 
 export async function saveTarefeiroDisponibilidades(

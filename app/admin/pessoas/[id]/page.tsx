@@ -1,6 +1,15 @@
 import { redirect } from 'next/navigation';
 import Link from 'next/link';
-import { getPessoaById, updatePessoa, addVinculo, removeVinculo, togglePessoaStatus, saveTarefeiroDisponibilidades } from '../actions';
+import {
+  getFuncoesParaTarefeiro,
+  getPessoaById,
+  saveTarefeiroFuncoes,
+  updatePessoa,
+  addVinculo,
+  removeVinculo,
+  togglePessoaStatus,
+  saveTarefeiroDisponibilidades,
+} from '../actions';
 import { Suspense } from 'react';
 import { buildFlashNoticeUrl } from '@/lib/notificacoes/flash-notice';
 import { LgpdFormNotice } from '@/components/lgpd/lgpd-form-notice';
@@ -102,6 +111,24 @@ async function handleUpdatePessoa(pessoaId: string, formData: FormData) {
       }
     }
 
+    if (formData.get('vinculo_tarefeiro') === 'on') {
+      const funcoes = await getFuncoesParaTarefeiro();
+      const funcoesResult = await saveTarefeiroFuncoes(
+        pessoaId,
+        funcoes.map((funcao) => ({
+          funcao_id: funcao.id,
+          habilitado: formData.get(`funcao_${funcao.id}`) === 'on',
+          prioridade: Number(formData.get(`funcao_${funcao.id}_prioridade`) || 0),
+          desde: textValue(formData, `funcao_${funcao.id}_desde`),
+          ate: textValue(formData, `funcao_${funcao.id}_ate`),
+          observacao: textValue(formData, `funcao_${funcao.id}_observacao`),
+        })),
+      );
+      if (!funcoesResult.success) {
+        throw new Error('Não foi possível salvar as funções do tarefeiro.');
+      }
+    }
+
     const disponibilidadeResult = await saveTarefeiroDisponibilidades(pessoaId, availabilityValues(formData));
     if (!disponibilidadeResult.success) {
       throw new Error('Não foi possível salvar a disponibilidade.');
@@ -128,7 +155,10 @@ async function handleUpdatePessoa(pessoaId: string, formData: FormData) {
 }
 
 async function EditPessoaContent({ id }: { id: string }) {
-  const { pessoa, vinculos, disponibilidades } = await getPessoaById(id);
+  const [{ pessoa, vinculos, disponibilidades, funcoes: funcoesAtuais }, funcoesCatalogo] = await Promise.all([
+    getPessoaById(id),
+    getFuncoesParaTarefeiro(),
+  ]);
 
   if (!pessoa) {
     return (
@@ -157,6 +187,7 @@ async function EditPessoaContent({ id }: { id: string }) {
 
   const vinculosSet = new Set(vinculos.map((v: any) => v.vinculo));
   const disponibilidadesByDay = new Map(disponibilidades.map((item: any) => [item.dia_semana, item]));
+  const funcoesById = new Map(funcoesAtuais.map((item: any) => [item.funcao_id, item]));
 
   return (
     <form action={(formData) => handleUpdatePessoa(id, formData)}>
@@ -296,6 +327,58 @@ async function EditPessoaContent({ id }: { id: string }) {
                 </label>
               ))}
             </div>
+          </div>
+        </section>
+
+        <section className="area-section">
+          <div className="area-section-title">
+            <h2>Funções do tarefeiro</h2>
+            <p>Marque Sim somente para as funções que esta pessoa pode exercer.</p>
+          </div>
+          <div className="table-surface" style={{ overflowX: 'auto' }}>
+            {!vinculosSet.has('tarefeiro') ? (
+              <p className="panel-note" style={{ margin: 0 }}>
+                Ative o vínculo Tarefeiro para configurar as funções operacionais.
+              </p>
+            ) : funcoesCatalogo.length === 0 ? (
+              <p className="panel-note" style={{ margin: 0 }}>
+                Nenhuma função ativa foi cadastrada no catálogo.
+              </p>
+            ) : (
+              <table className="admin-table">
+                <thead>
+                  <tr><th>Função</th><th>Descrição</th><th>Habilitado</th><th>Prioridade</th></tr>
+                </thead>
+                <tbody>
+                  {funcoesCatalogo.map((funcao) => {
+                    const atual = funcoesById.get(funcao.id);
+                    return (
+                      <tr key={funcao.id}>
+                        <td><strong>{funcao.nome}</strong></td>
+                        <td className="text-sm-muted">{funcao.descricao || '—'}</td>
+                        <td>
+                          <label className="tag" style={{ cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '0.5rem' }}>
+                            <input type="checkbox" name={`funcao_${funcao.id}`} defaultChecked={atual?.habilitado ?? false} />
+                            <span>{atual?.habilitado ? 'Sim' : 'Não'}</span>
+                          </label>
+                        </td>
+                        <td>
+                          <input
+                            type="number"
+                            name={`funcao_${funcao.id}_prioridade`}
+                            defaultValue={atual?.prioridade ?? 0}
+                            min={0}
+                            max={100}
+                            className="profile-form-input"
+                            style={{ maxWidth: '6rem' }}
+                          />
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            )}
           </div>
         </section>
 

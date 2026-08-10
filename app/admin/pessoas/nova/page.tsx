@@ -1,6 +1,16 @@
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
-import { createPessoa, getPessoaById, getPessoasAllowlist, removeVinculo, addVinculo, updatePessoa, saveTarefeiroDisponibilidades } from '../actions';
+import {
+  createPessoa,
+  getFuncoesParaTarefeiro,
+  getPessoaById,
+  getPessoasAllowlist,
+  removeVinculo,
+  addVinculo,
+  updatePessoa,
+  saveTarefeiroFuncoes,
+  saveTarefeiroDisponibilidades,
+} from '../actions';
 import { type tipo_vinculo } from '@/lib/supabase/types';
 import { buildFlashNoticeUrl } from '@/lib/notificacoes/flash-notice';
 import { LgpdFormNotice } from '@/components/lgpd/lgpd-form-notice';
@@ -33,6 +43,7 @@ const PERSONA_STEPS = [
   { key: 'contato', label: 'Contato' },
   { key: 'endereco', label: 'Endereço' },
   { key: 'vinculos', label: 'Vínculos' },
+  { key: 'funcoes', label: 'Funções' },
   { key: 'configuracoes', label: 'Configurações' },
   { key: 'disponibilidade', label: 'Disponibilidade' },
 ] as const;
@@ -250,6 +261,32 @@ async function savePessoaStep(formData: FormData) {
       );
     }
 
+    if (step === 'funcoes') {
+      const funcoes = await getFuncoesParaTarefeiro();
+      const funcoesResult = await saveTarefeiroFuncoes(
+        pessoaId,
+        funcoes.map((funcao) => ({
+          funcao_id: funcao.id,
+          habilitado: formData.get(`funcao_${funcao.id}`) === 'on',
+          prioridade: Number(formData.get(`funcao_${funcao.id}_prioridade`) || 0),
+          desde: textValue(formData, `funcao_${funcao.id}_desde`) || null,
+          ate: textValue(formData, `funcao_${funcao.id}_ate`) || null,
+          observacao: textValue(formData, `funcao_${funcao.id}_observacao`) || null,
+        })),
+      );
+      if (!funcoesResult.success) {
+        throw new Error('Não foi possível salvar as funções do tarefeiro.');
+      }
+
+      const nextStep = getNextStep(step);
+      redirect(
+        buildFlashNoticeUrl(nextStep ? buildHref(pessoaId, nextStep) : '/admin/pessoas', {
+          variant: 'success',
+          message: 'Funções salvas.',
+        }),
+      );
+    }
+
     if (step === 'disponibilidade') {
       await saveTarefeiroDisponibilidades(pessoaId, availabilityValues(formData));
       redirect(
@@ -278,11 +315,13 @@ async function NovaPessoaContent({ searchParams }: { searchParams: { id?: string
   const pessoaId = typeof searchParams.id === 'string' ? searchParams.id.trim() : '';
   const requestedStep = isPessoaStep(searchParams.tab) ? searchParams.tab : 'identificacao';
   const activeStep = pessoaId ? requestedStep : 'identificacao';
-  const pessoaData = pessoaId ? await getPessoaById(pessoaId) : { pessoa: null, vinculos: [], disponibilidades: [] };
+  const pessoaData = pessoaId ? await getPessoaById(pessoaId) : { pessoa: null, vinculos: [], disponibilidades: [], funcoes: [] };
   const allowlist = pessoaId ? [] : await getPessoasAllowlist(true);
+  const funcoesCatalogo = pessoaId ? await getFuncoesParaTarefeiro() : [];
   const pessoa = pessoaData.pessoa;
   const vinculosSet = new Set(pessoaData.vinculos.map((v: any) => v.vinculo));
   const disponibilidadesByDay = new Map(pessoaData.disponibilidades.map((item: any) => [item.dia_semana, item]));
+  const funcoesById = new Map(pessoaData.funcoes.map((item: any) => [item.funcao_id, item]));
 
   if (pessoaId && !pessoa) {
     return (
@@ -474,6 +513,47 @@ async function NovaPessoaContent({ searchParams }: { searchParams: { id?: string
                     <span>{vinculo}</span>
                   </label>
                 ))}
+              </div>
+            )}
+
+            {activeStep === 'funcoes' && (
+              <div>
+                <p className="panel-note" style={{ marginTop: 0 }}>
+                  Marque Sim somente para as funções que o tarefeiro pode exercer.
+                </p>
+                {!vinculosSet.has('tarefeiro') ? (
+                  <p className="panel-note">Ative o vínculo Tarefeiro na etapa anterior para configurar funções.</p>
+                ) : funcoesCatalogo.length === 0 ? (
+                  <p className="panel-note">Nenhuma função ativa foi cadastrada no catálogo.</p>
+                ) : (
+                  <div style={{ overflowX: 'auto' }}>
+                    <table className="admin-table">
+                      <thead>
+                        <tr><th>Função</th><th>Descrição</th><th>Habilitado</th><th>Prioridade</th></tr>
+                      </thead>
+                      <tbody>
+                        {funcoesCatalogo.map((funcao) => {
+                          const atual = funcoesById.get(funcao.id);
+                          return (
+                            <tr key={funcao.id}>
+                              <td><strong>{funcao.nome}</strong></td>
+                              <td className="text-sm-muted">{funcao.descricao || '—'}</td>
+                              <td>
+                                <label className="tag" style={{ cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '0.5rem' }}>
+                                  <input type="checkbox" name={`funcao_${funcao.id}`} defaultChecked={atual?.habilitado ?? false} />
+                                  <span>{atual?.habilitado ? 'Sim' : 'Não'}</span>
+                                </label>
+                              </td>
+                              <td>
+                                <input type="number" name={`funcao_${funcao.id}_prioridade`} defaultValue={atual?.prioridade ?? 0} min={0} max={100} className="profile-form-input" style={{ maxWidth: '6rem' }} />
+                              </td>
+                            </tr>
+                          );
+                        })}
+                      </tbody>
+                    </table>
+                  </div>
+                )}
               </div>
             )}
 
