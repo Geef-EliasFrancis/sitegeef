@@ -1,6 +1,6 @@
 import { redirect } from 'next/navigation';
 import Link from 'next/link';
-import { generateEscalaSugestao, getEscalaById, updateEscalaStatus } from '../actions';
+import { generateEscalaSugestao, getEscalaById, sortearAplicadoresPasse, updateEscalaStatus, updatePasseQuantidade } from '../actions';
 import { Suspense } from 'react';
 import { buildFlashNoticeUrl } from '@/lib/notificacoes/flash-notice';
 
@@ -44,6 +44,32 @@ async function handleGenerate(id: string) {
   } catch (error) {
     console.error('Erro ao gerar sugestão:', error);
     redirect(buildFlashNoticeUrl(`/admin/escalas/${id}`, { variant: 'error', message: 'Não foi possível gerar a sugestão.' }));
+  }
+}
+
+async function handlePasseQuantity(formData: FormData, escalaId: string, reuniaoId: string) {
+  'use server';
+  const quantidade = Number(formData.get('passe_quantidade') || 0);
+  try {
+    const result = await updatePasseQuantidade(reuniaoId, quantidade);
+    redirect(buildFlashNoticeUrl(`/admin/escalas/${escalaId}`, { variant: result.success ? 'success' : 'error', message: result.success ? 'Quantidade de passe salva.' : 'Não foi possível salvar a quantidade.' }));
+  } catch (error) {
+    console.error('Erro ao salvar quantidade de passe:', error);
+    redirect(buildFlashNoticeUrl(`/admin/escalas/${escalaId}`, { variant: 'error', message: 'Não foi possível salvar a quantidade.' }));
+  }
+}
+
+async function handleSortearPasse(escalaId: string, reuniaoId: string) {
+  'use server';
+  try {
+    const result = await sortearAplicadoresPasse(reuniaoId);
+    const message = result.pending > 0
+      ? `Sorteio: ${result.inserted} aplicadores incluídos e ${result.pending} pendências.`
+      : `Sorteio concluído: ${result.inserted} aplicadores incluídos.`;
+    redirect(buildFlashNoticeUrl(`/admin/escalas/${escalaId}`, { variant: result.success ? 'success' : 'error', message }));
+  } catch (error) {
+    console.error('Erro ao sortear passe:', error);
+    redirect(buildFlashNoticeUrl(`/admin/escalas/${escalaId}`, { variant: 'error', message: 'Não foi possível sortear os aplicadores.' }));
   }
 }
 
@@ -133,7 +159,21 @@ async function EditEscalaContent({ id }: { id: string }) {
 
                 <div className="area-section-title">
                   <h3>Passe</h3>
-                  <p>Pessoas escaladas e posições definidas.</p>
+                  <p>Defina a quantidade e sorteie os aplicadores disponíveis.</p>
+                </div>
+                <div className="area-panel-grid">
+                  <form action={(formData) => handlePasseQuantity(formData, id, reuniao.id)} className="admin-card">
+                    <label className="profile-form-field">
+                      <span>Quantidade de aplicadores</span>
+                      <input type="number" name="passe_quantidade" min="0" max="50" defaultValue={reuniao.passe_quantidade || 0} className="profile-form-input" />
+                    </label>
+                    <button type="submit" className="profile-form-btn profile-form-btn-secondary">Salvar quantidade</button>
+                  </form>
+                  {escala.status !== 'publicada' && (
+                    <form action={() => handleSortearPasse(id, reuniao.id)}>
+                      <button type="submit" className="profile-form-btn profile-form-btn-primary">Sortear aplicadores</button>
+                    </form>
+                  )}
                 </div>
                 {reuniao.escala_passe && reuniao.escala_passe.length > 0 ? (
                   <div className="area-panel-grid">

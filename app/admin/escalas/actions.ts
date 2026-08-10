@@ -55,7 +55,7 @@ export async function getEscalaById(id: string) {
       `
       *,
       reunioes (
-        id, data,
+        id, data, passe_quantidade,
         escala_funcoes (
           id, funcao_id, pessoa_id, substituto_id,
           funcoes (nome),
@@ -244,6 +244,87 @@ export async function generateEscalaSugestao(id: string) {
   invalidateEscalasCache();
   invalidateAdminDashboardCache();
   return { success: true, inserted: insercoes.length, pending };
+}
+
+export async function updatePasseQuantidade(reuniaoId: string, quantidade: number) {
+  await requireEscalasAccess();
+  const supabase = await createClient();
+  const normalized = Math.max(0, Math.min(50, Math.trunc(quantidade)));
+  const { error } = await supabase
+    .from('reunioes')
+    .update({ passe_quantidade: normalized })
+    .eq('id', reuniaoId);
+
+  if (error) return { success: false };
+  invalidateEscalasCache();
+  return { success: true };
+}
+
+export async function sortearAplicadoresPasse(reuniaoId: string) {
+  await requireEscalasAccess();
+  const supabase = await createClient();
+
+  const { data: reuniao, error: reuniaoError } = await supabase
+    .from('reunioes')
+    .select('id,data,passe_quantidade,escala_id,escala_funcoes(pessoa_id),escala_passe(id,pessoa_id,posicao)')
+    .eq('id', reuniaoId)
+    .maybeSingle();
+  if (reuniaoError || !reuniao) return { success: false, inserted: 0, pending: 0 };
+
+  const existentes = reuniao.escala_passe || [];
+  const faltantes = Math.max(0, reuniao.passe_quantidade - existentes.length);
+  if (faltantes === 0) return { success: true, inserted: 0, pending: 0 };
+
+  const [{ data: funcaoPasse }, { data: pessoas }, { data: vinculos }] = await Promise.all([
+    supabase.from('funcoes').select('id').eq('nome', 'Aplicador de passe').eq('ativo', true).maybeSingle(),
+    supabase.from('pessoas').select('id,nome,status').eq('status', 'ativo').order('nome'),
+    supabase.from('pessoa_vinculos').select('pessoa_id').eq('vinculo', 'tarefeiro'),
+  ]);
+  if (!funcaoPasse || !pessoas || !vinculos) return { success: false, inserted: 0, pending: faltantes };
+
+  const pessoaIds = pessoas.map((pessoa) => pessoa.id);
+  const [{ data: capacidades }, { data: disponibilidades }, { data: escalaCompleta }] = await Promise.all([
+    supabase.from('tarefeiro_funcoes').select('pessoa_id').eq('funcao_id', funcaoPasse.id).eq('habilitado', true).in('pessoa_id', pessoaIds),
+    supabase.from('tarefeiro_disponibilidades').select('pessoa_id,disponivel').eq('dia_semana', new Date(`${reuniao.data}T00:00:00`).getDay()).in('pessoa_id', pessoaIds),
+    supabase.from('reunioes').select('id,escala_passe(pessoa_id)').eq('escala_id', reuniao.escala_id),
+  ]);
+  if (!capacidades || !disponibilidades || !escalaCompleta) return { success: false, inserted: 0, pending: faltantes };
+
+  const tarefeiroIds = new Set(vinculos.map((vinculo) => vinculo.pessoa_id));
+  const capacidadeIds = new Set(capacidades.map((item) => item.pessoa_id));
+  const indisponiveis = new Set(disponibilidades.filter((item) => !item.disponivel).map((item) => item.pessoa_id));
+  const ocupadas = new Set([
+    ...(reuniao.escala_funcoes || []).map((item) => item.pessoa_id),
+    ...existentes.map((item) => item.pessoa_id),
+  ]);
+  const participacoes = new Map<string, number>();
+  for (const escala of escalaCompleta) {
+    for (const item of escala.escala_passe || []) {
+      participacoes.set(item.pessoa_id, (participacoes.get(item.pessoa_id) || 0) + 1);
+    }
+  }
+
+  const candidatos = pessoas
+    .filter((pessoa) => tarefeiroIds.has(pessoa.id) && capacidadeIds.has(pessoa.id))
+    .filter((pessoa) => !indisponiveis.has(pessoa.id) && !ocupadas.has(pessoa.id))
+    .sort((a, b) => (participacoes.get(a.id) || 0) - (participacoes.get(b.id) || 0) || Math.random() - 0.5);
+
+  const selecionados = candidatos.slice(0, faltantes);
+  if (selecionados.length > 0) {
+    const maiorPosicao = existentes.reduce((maior, item) => Math.max(maior, item.posicao || 0), 0);
+    const { error } = await supabase.from('escala_passe').insert(
+      selecionados.map((pessoa, index) => ({
+        reuniao_id: reuniaoId,
+        pessoa_id: pessoa.id,
+        posicao: maiorPosicao + index + 1,
+      })),
+    );
+    if (error) return { success: false, inserted: 0, pending: faltantes };
+  }
+
+  invalidateEscalasCache();
+  invalidateAdminDashboardCache();
+  return { success: true, inserted: selecionados.length, pending: faltantes - selecionados.length };
 }
 
 export async function addFuncao(reuniaoId: string, funcaoId: string, pessoaId: string, substitutoId?: string) {
