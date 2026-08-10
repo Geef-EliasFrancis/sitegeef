@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { generateEscalaSugestao, getEscalaById, getEscalaConflitos, getEscalaFuncoesHistorico, getEscalaPasseHistorico, sortearAplicadoresPasse, updateEscalaStatus, updatePasseQuantidade } from '../actions';
 import { Suspense } from 'react';
 import { buildFlashNoticeUrl } from '@/lib/notificacoes/flash-notice';
+import { EscalaAuditPanels } from '@/components/admin/escalas/escala-audit-panels';
 
 export const metadata = {
   title: 'Editar Escala - Admin GEEF',
@@ -125,67 +126,7 @@ async function EditEscalaContent({ id }: { id: string }) {
         <article className="stat-card"><span className="stat-label">Palestras</span><strong>{totalPalestras}</strong></article>
       </section>
 
-      {conflitos.length > 0 && (
-        <section className="area-section">
-          <div className="area-panel-item" style={{ borderColor: 'rgba(234, 179, 8, 0.45)' }}>
-            <div className="area-section-title">
-              <h2>Alertas de conflito</h2>
-              <p>A mesma pessoa aparece em mais de um compromisso na mesma data.</p>
-            </div>
-            <div className="area-panel-grid">
-              {conflitos.map((conflito) => (
-                <div key={`${conflito.data}-${conflito.pessoaId}`} className="area-panel-item">
-                  <strong>{conflito.nome}</strong>
-                  <span>{new Date(`${conflito.data}T00:00:00`).toLocaleDateString('pt-BR')}</span>
-                  <small>{conflito.compromissos.join(' · ')}</small>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
-
-      {historico.length > 0 && (
-        <section className="area-section">
-          <div className="area-panel-item">
-            <div className="area-section-title">
-              <h2>Histórico de substituições</h2>
-              <p>Alterações manuais preservadas para revisão da coordenação.</p>
-            </div>
-            <div className="area-panel-grid">
-              {historico.map((item: any) => (
-                <div key={item.id} className="area-panel-item">
-                  <strong>{item.escala_funcao?.funcoes?.nome || 'Função'}</strong>
-                  <span>{new Date(item.criado_em).toLocaleString('pt-BR')}</span>
-                  <small>{item.pessoa_anterior?.nome || '—'} → {item.pessoa_nova?.nome || '—'}; substituto: {item.substituto_anterior?.nome || '—'} → {item.substituto_novo?.nome || '—'}</small>
-                  {item.motivo ? <small>Motivo: {item.motivo}</small> : null}
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
-
-      {historicoPasse.length > 0 && (
-        <section className="area-section">
-          <div className="area-panel-item">
-            <div className="area-section-title">
-              <h2>Histórico dos aplicadores de passe</h2>
-              <p>Alterações manuais de pessoa ou posição preservadas para revisão.</p>
-            </div>
-            <div className="area-panel-grid">
-              {historicoPasse.map((item: any) => (
-                <div key={item.id} className="area-panel-item">
-                  <strong>Aplicador de passe</strong>
-                  <span>{new Date(item.criado_em).toLocaleString('pt-BR')}</span>
-                  <small>{item.pessoa_anterior?.nome || '—'} → {item.pessoa_nova?.nome || '—'}; posição: {item.posicao_anterior || '—'} → {item.posicao_nova || '—'}</small>
-                  {item.motivo ? <small>Motivo: {item.motivo}</small> : null}
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
+      <EscalaAuditPanels conflitos={conflitos} historico={historico} historicoPasse={historicoPasse} />
 
       {escala.reunioes && escala.reunioes.length > 0 ? (
         <section className="area-section">
