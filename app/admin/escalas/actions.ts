@@ -72,7 +72,7 @@ export async function getEscalaById(id: string) {
           temas_doutrinarios (titulo)
         ),
         escala_palestras (
-          id, expositor_id, palestrante_id, tema_id, tema_livre, cidade_origem, tipo_palestra,
+          id, expositor_id, palestrante_id, tema_id, tema_livre, cidade_origem, tipo_palestra, status,
           expositores:pessoas (nome),
           palestrantes (nome, cidade, instituicao),
           temas_doutrinarios (titulo)

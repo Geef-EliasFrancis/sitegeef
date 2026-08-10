@@ -41,6 +41,7 @@ export type PublicEscalaRecord = {
       tema_livre?: string | null;
       cidade_origem?: string | null;
       tipo_palestra?: string | null;
+      status?: string | null;
       expositores?: { nome?: string | null } | null;
       palestrantes?: { nome?: string | null; cidade?: string | null; instituicao?: string | null } | null;
       temas_doutrinarios?: { titulo?: string | null } | null;

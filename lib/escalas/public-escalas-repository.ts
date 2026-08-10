@@ -14,7 +14,7 @@ export async function listPublishedEscalasFromCurrentYear(currentYear: number) {
       escala_funcoes (id, funcao_id, pessoa_id, substituto_id, funcoes (nome), pessoas (nome), substitutos:pessoas!substituto_id (nome)),
       escala_passe (id, pessoa_id, posicao, pessoas (nome)),
       escala_evangelizacao (id, pessoa_id, tema_id, tema_livre, turma, pessoas (nome), temas_doutrinarios (titulo)),
-      escala_palestras (id, expositor_id, palestrante_id, tema_id, tema_livre, cidade_origem, tipo_palestra, expositores:pessoas (nome), palestrantes (nome, cidade, instituicao), temas_doutrinarios (titulo))
+      escala_palestras (id, expositor_id, palestrante_id, tema_id, tema_livre, cidade_origem, tipo_palestra, status, expositores:pessoas (nome), palestrantes (nome, cidade, instituicao), temas_doutrinarios (titulo))
     )
   `).eq("status", "publicada").gte("ano", currentYear).order("ano", { ascending: true }).order("mes", { ascending: true });
 }

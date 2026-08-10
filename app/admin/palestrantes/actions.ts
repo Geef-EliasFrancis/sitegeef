@@ -108,6 +108,7 @@ export async function createEscalaPalestra(form: {
   temaId?: string;
   temaLivre?: string;
   tipoPalestra?: string;
+  status?: string;
 }) {
   await requirePalestrantesAccess();
   const supabase = await createClient();
@@ -128,7 +129,51 @@ export async function createEscalaPalestra(form: {
     tema_id: form.temaId || null,
     tema_livre: form.temaLivre?.trim() || null,
     tipo_palestra: form.tipoPalestra?.trim() || null,
+    status: form.status || 'prevista',
   });
+  if (error) return { success: false, reason: 'salvar' };
+  invalidatePalestrantes();
+  return { success: true };
+}
+
+export async function getEscalaPalestraById(id: string) {
+  const supabase = await createClient();
+  const { data, error } = await supabase
+    .from('escala_palestras')
+    .select('id,reuniao_id,palestrante_id,tema_id,tema_livre,tipo_palestra,status,reunioes(escala_id),palestrantes(nome,cidade),temas_doutrinarios(titulo)')
+    .eq('id', id)
+    .maybeSingle();
+  return error ? null : data;
+}
+
+export async function updateEscalaPalestra(id: string, form: {
+  palestranteId: string;
+  temaId?: string;
+  temaLivre?: string;
+  tipoPalestra?: string;
+  status: string;
+}) {
+  await requirePalestrantesAccess();
+  const supabase = await createClient();
+  const { data: atual } = await supabase.from('escala_palestras').select('reuniao_id').eq('id', id).maybeSingle();
+  const { data: palestrante } = await supabase.from('palestrantes').select('id,pessoa_id,ativo').eq('id', form.palestranteId).maybeSingle();
+  if (!atual?.reuniao_id || !palestrante?.ativo) return { success: false, reason: 'palestrante' };
+
+  if (palestrante.pessoa_id) {
+    const [{ data: funcao }, { data: passe }] = await Promise.all([
+      supabase.from('escala_funcoes').select('id').eq('reuniao_id', atual.reuniao_id).eq('pessoa_id', palestrante.pessoa_id).maybeSingle(),
+      supabase.from('escala_passe').select('id').eq('reuniao_id', atual.reuniao_id).eq('pessoa_id', palestrante.pessoa_id).maybeSingle(),
+    ]);
+    if (funcao || passe) return { success: false, reason: 'conflito' };
+  }
+
+  const { error } = await supabase.from('escala_palestras').update({
+    palestrante_id: form.palestranteId,
+    tema_id: form.temaId || null,
+    tema_livre: form.temaLivre?.trim() || null,
+    tipo_palestra: form.tipoPalestra?.trim() || null,
+    status: form.status,
+  }).eq('id', id);
   if (error) return { success: false, reason: 'salvar' };
   invalidatePalestrantes();
   return { success: true };

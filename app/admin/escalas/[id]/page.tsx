@@ -210,6 +210,8 @@ async function EditEscalaContent({ id }: { id: string }) {
                         <p><strong>Expositor:</strong> {palestra.palestrantes?.nome || palestra.expositores?.nome || '—'}</p>
                         <p><strong>Tema:</strong> {palestra.temas_doutrinarios?.titulo || palestra.tema_livre || '—'}</p>
                         <p><strong>Origem:</strong> {palestra.palestrantes?.cidade || palestra.cidade_origem || '—'}</p>
+                        <p><strong>Status:</strong> {palestra.status || 'prevista'}</p>
+                        <Link href={`/admin/escalas/${id}/palestra/${palestra.id}`} className="profile-form-btn profile-form-btn-secondary">Editar</Link>
                       </div>
                     ))}
                   </div>
