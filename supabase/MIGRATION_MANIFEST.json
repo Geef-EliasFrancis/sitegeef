@@ -44,7 +44,7 @@
     { "file": "20260805030000_seed_visual_admin_allowlist.sql", "state": "applied_remote", "remote_version": "20260806003821" },
     { "file": "20260809010000_tarefeiro_funcoes.sql", "state": "applied_remote", "remote_version": "20260810015051" },
     { "file": "20260809020000_funcoes_escalaveis.sql", "state": "applied_remote", "remote_version": "20260810015155" },
-    { "file": "20260809030000_passe_quantidade_sorteio.sql", "state": "pending" }
+    { "file": "20260809030000_passe_quantidade_sorteio.sql", "state": "applied_remote", "remote_version": "20260810015246" }
   ],
   "remote_checkpoints": [
     { "version": "20260527024607", "name": "20260526_musica_versoes", "local_file": "20260526_musica_versoes.sql", "state": "mapped_remote" },
@@ -62,7 +62,8 @@
     { "version": "20260806001500", "name": "20260805020000_reconcile_pessoa_vinculos", "local_file": "20260805020000_reconcile_pessoa_vinculos.sql", "state": "mapped_remote" },
     { "version": "20260806003821", "name": "20260805030000_seed_visual_admin_allowlist", "local_file": "20260805030000_seed_visual_admin_allowlist.sql", "state": "mapped_remote" },
     { "version": "20260810015051", "name": "20260809010000_tarefeiro_funcoes", "local_file": "20260809010000_tarefeiro_funcoes.sql", "state": "mapped_remote" },
-    { "version": "20260810015155", "name": "20260809020000_funcoes_escalaveis", "local_file": "20260809020000_funcoes_escalaveis.sql", "state": "mapped_remote" }
+    { "version": "20260810015155", "name": "20260809020000_funcoes_escalaveis", "local_file": "20260809020000_funcoes_escalaveis.sql", "state": "mapped_remote" },
+    { "version": "20260810015246", "name": "20260809030000_passe_quantidade_sorteio", "local_file": "20260809030000_passe_quantidade_sorteio.sql", "state": "mapped_remote" }
   ],
   "known_duplicate_versions": [
     {
