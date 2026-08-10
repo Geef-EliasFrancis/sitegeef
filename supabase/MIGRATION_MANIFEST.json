@@ -45,10 +45,10 @@
     { "file": "20260809010000_tarefeiro_funcoes.sql", "state": "applied_remote", "remote_version": "20260810015051" },
     { "file": "20260809020000_funcoes_escalaveis.sql", "state": "applied_remote", "remote_version": "20260810015155" },
     { "file": "20260809030000_passe_quantidade_sorteio.sql", "state": "applied_remote", "remote_version": "20260810015246" }
-    ,{ "file": "20260809040000_palestrantes_externos.sql", "state": "pending" }
-    ,{ "file": "20260809050000_status_palestras.sql", "state": "pending" }
-    ,{ "file": "20260809060000_historico_substituicoes.sql", "state": "pending" }
-    ,{ "file": "20260809070000_historico_aplicadores_passe.sql", "state": "pending" }
+    ,{ "file": "20260809040000_palestrantes_externos.sql", "state": "applied_remote", "remote_version": "20260810022319" }
+    ,{ "file": "20260809050000_status_palestras.sql", "state": "applied_remote", "remote_version": "20260810022345" }
+    ,{ "file": "20260809060000_historico_substituicoes.sql", "state": "applied_remote", "remote_version": "20260810022409" }
+    ,{ "file": "20260809070000_historico_aplicadores_passe.sql", "state": "applied_remote", "remote_version": "20260810022433" }
   ],
   "remote_checkpoints": [
     { "version": "20260527024607", "name": "20260526_musica_versoes", "local_file": "20260526_musica_versoes.sql", "state": "mapped_remote" },
@@ -67,7 +67,11 @@
     { "version": "20260806003821", "name": "20260805030000_seed_visual_admin_allowlist", "local_file": "20260805030000_seed_visual_admin_allowlist.sql", "state": "mapped_remote" },
     { "version": "20260810015051", "name": "20260809010000_tarefeiro_funcoes", "local_file": "20260809010000_tarefeiro_funcoes.sql", "state": "mapped_remote" },
     { "version": "20260810015155", "name": "20260809020000_funcoes_escalaveis", "local_file": "20260809020000_funcoes_escalaveis.sql", "state": "mapped_remote" },
-    { "version": "20260810015246", "name": "20260809030000_passe_quantidade_sorteio", "local_file": "20260809030000_passe_quantidade_sorteio.sql", "state": "mapped_remote" }
+    { "version": "20260810015246", "name": "20260809030000_passe_quantidade_sorteio", "local_file": "20260809030000_passe_quantidade_sorteio.sql", "state": "mapped_remote" },
+    { "version": "20260810022319", "name": "20260809040000_palestrantes_externos", "local_file": "20260809040000_palestrantes_externos.sql", "state": "mapped_remote" },
+    { "version": "20260810022345", "name": "20260809050000_status_palestras", "local_file": "20260809050000_status_palestras.sql", "state": "mapped_remote" },
+    { "version": "20260810022409", "name": "20260809060000_historico_substituicoes", "local_file": "20260809060000_historico_substituicoes.sql", "state": "mapped_remote" },
+    { "version": "20260810022433", "name": "20260809070000_historico_aplicadores_passe", "local_file": "20260809070000_historico_aplicadores_passe.sql", "state": "mapped_remote" }
   ],
   "known_duplicate_versions": [
     {
