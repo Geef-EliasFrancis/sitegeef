@@ -42,7 +42,7 @@
     { "file": "20260805010000_tarefeiros_disponibilidade.sql", "state": "applied_remote", "remote_version": "20260806001407" },
     { "file": "20260805020000_reconcile_pessoa_vinculos.sql", "state": "applied_remote", "remote_version": "20260806001500" },
     { "file": "20260805030000_seed_visual_admin_allowlist.sql", "state": "applied_remote", "remote_version": "20260806003821" },
-    { "file": "20260809010000_tarefeiro_funcoes.sql", "state": "pending" },
+    { "file": "20260809010000_tarefeiro_funcoes.sql", "state": "applied_remote", "remote_version": "20260810015051" },
     { "file": "20260809020000_funcoes_escalaveis.sql", "state": "pending" },
     { "file": "20260809030000_passe_quantidade_sorteio.sql", "state": "pending" }
   ],
@@ -60,7 +60,8 @@
     { "version": "20260804011253", "name": "20260803030000_seed_pessoas_allowlist_admins", "local_file": "20260803030000_seed_pessoas_allowlist_admins.sql", "state": "mapped_remote" },
     { "version": "20260806001407", "name": "20260805010000_tarefeiros_disponibilidade", "local_file": "20260805010000_tarefeiros_disponibilidade.sql", "state": "mapped_remote" },
     { "version": "20260806001500", "name": "20260805020000_reconcile_pessoa_vinculos", "local_file": "20260805020000_reconcile_pessoa_vinculos.sql", "state": "mapped_remote" },
-    { "version": "20260806003821", "name": "20260805030000_seed_visual_admin_allowlist", "local_file": "20260805030000_seed_visual_admin_allowlist.sql", "state": "mapped_remote" }
+    { "version": "20260806003821", "name": "20260805030000_seed_visual_admin_allowlist", "local_file": "20260805030000_seed_visual_admin_allowlist.sql", "state": "mapped_remote" },
+    { "version": "20260810015051", "name": "20260809010000_tarefeiro_funcoes", "local_file": "20260809010000_tarefeiro_funcoes.sql", "state": "mapped_remote" }
   ],
   "known_duplicate_versions": [
     {
