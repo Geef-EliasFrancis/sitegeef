@@ -12,6 +12,7 @@ type FuncaoItem = {
   nome: string;
   descricao?: string | null;
   ativo: boolean;
+  escalavel: boolean;
 };
 
 async function FuncoesList({ closeKey }: { closeKey: string }) {
@@ -38,6 +39,10 @@ async function FuncoesList({ closeKey }: { closeKey: string }) {
                 <span>Descrição</span>
                 <input name="descricao" className="profile-form-input" placeholder="Descreva a função" />
               </label>
+              <label className="tag" style={{ cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '0.5rem' }}>
+                <input type="checkbox" name="escalavel" defaultChecked />
+                <span>Usar em escalas</span>
+              </label>
               <div><button type="submit" className="admin-btn admin-btn-primary">Salvar função</button></div>
             </form>
           </div>
@@ -54,6 +59,7 @@ async function FuncoesList({ closeKey }: { closeKey: string }) {
                 <tr>
                   <th>Nome</th>
                   <th>Descrição</th>
+                  <th>Ativa</th>
                   <th>Escalável</th>
                   <th>Ações</th>
                 </tr>
@@ -71,6 +77,11 @@ async function FuncoesList({ closeKey }: { closeKey: string }) {
                           {funcao.ativo ? 'Sim' : 'Não'}
                         </button>
                       </form>
+                    </td>
+                    <td>
+                      <span className={`inline-status ${funcao.escalavel ? 'inline-status-success' : 'inline-status-neutral'}`}>
+                        {funcao.escalavel ? 'Sim' : 'Não'}
+                      </span>
                     </td>
                     <td>
                       <Link href={`/admin/pessoas/funcoes/${funcao.id}`} className="profile-form-btn profile-form-btn-secondary">

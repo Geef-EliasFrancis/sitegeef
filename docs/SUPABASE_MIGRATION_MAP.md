@@ -18,6 +18,7 @@ Este documento alinha os nomes dos arquivos locais de migration com os checkpoin
 | `supabase/migrations/20260527030702_musica_creditos_unificados.sql` | `20260527030702_musica_creditos_unificados` |
 | `supabase/migrations/20260801020000_calendario_publico.sql` | `20260801020000_calendario_publico` |
 | `supabase/migrations/20260809010000_tarefeiro_funcoes.sql` | pendente de validação e aplicação remota |
+| `supabase/migrations/20260809020000_funcoes_escalaveis.sql` | pendente de validação e aplicação remota |
 
 ## Observações
 

@@ -14,6 +14,7 @@ async function handleSubmit(formData: FormData) {
     const funcao = await createFuncao({
       nome: formData.get('nome') as string,
       descricao: (formData.get('descricao') as string) || undefined,
+      escalavel: formData.get('escalavel') === 'on',
     });
 
     if (!funcao) {
@@ -54,6 +55,11 @@ export default function NovaFuncaoPage() {
               required
             />
           </div>
+
+          <label className="tag" style={{ cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '0.5rem' }}>
+            <input type="checkbox" name="escalavel" defaultChecked />
+            <span>Usar em escalas</span>
+          </label>
 
           <div className="admin-form-group">
             <label>Descrição</label>

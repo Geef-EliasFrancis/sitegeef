@@ -49,6 +49,7 @@ export async function getFuncaoById(id: string) {
 export async function createFuncao(formData: {
   nome: string;
   descricao?: string;
+  escalavel?: boolean;
 }) {
   await requireFuncoesAccess();
   const supabase = createServiceRoleClient();
@@ -59,6 +60,7 @@ export async function createFuncao(formData: {
       {
         nome: formData.nome,
         descricao: formData.descricao || null,
+        escalavel: formData.escalavel ?? true,
         ativo: true,
       },
     ])
@@ -79,6 +81,7 @@ export async function updateFuncao(
   formData: {
     nome?: string;
     descricao?: string;
+    escalavel?: boolean;
   }
 ) {
   await requireFuncoesAccess();
@@ -128,6 +131,7 @@ export async function createFuncaoFromList(formData: FormData) {
     const funcao = await createFuncao({
       nome,
       descricao: String(formData.get('descricao') ?? '').trim() || undefined,
+      escalavel: formData.get('escalavel') === 'on',
     });
 
     if (!funcao) {

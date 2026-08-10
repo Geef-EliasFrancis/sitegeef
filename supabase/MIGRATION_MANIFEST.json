@@ -42,7 +42,8 @@
     { "file": "20260805010000_tarefeiros_disponibilidade.sql", "state": "applied_remote", "remote_version": "20260806001407" },
     { "file": "20260805020000_reconcile_pessoa_vinculos.sql", "state": "applied_remote", "remote_version": "20260806001500" },
     { "file": "20260805030000_seed_visual_admin_allowlist.sql", "state": "applied_remote", "remote_version": "20260806003821" },
-    { "file": "20260809010000_tarefeiro_funcoes.sql", "state": "pending_remote_validation" }
+    { "file": "20260809010000_tarefeiro_funcoes.sql", "state": "pending_remote_validation" },
+    { "file": "20260809020000_funcoes_escalaveis.sql", "state": "pending_remote_validation" }
   ],
   "remote_checkpoints": [
     { "version": "20260527024607", "name": "20260526_musica_versoes", "local_file": "20260526_musica_versoes.sql", "state": "mapped_remote" },

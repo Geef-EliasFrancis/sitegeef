@@ -415,8 +415,9 @@ export async function getFuncoes() {
 
   const { data, error } = await supabase
     .from('funcoes')
-    .select('id, nome')
+    .select('id, nome, escalavel')
     .eq('ativo', true)
+    .eq('escalavel', true)
     .order('nome');
 
   if (error) return [];

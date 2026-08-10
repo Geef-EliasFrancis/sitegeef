@@ -15,6 +15,7 @@ async function handleUpdate(id: string, formData: FormData) {
     await updateFuncao(id, {
       nome: (formData.get('nome') as string) || undefined,
       descricao: (formData.get('descricao') as string) || undefined,
+      escalavel: formData.get('escalavel') === 'on',
     });
 
     redirect(buildFlashNoticeUrl(`/admin/pessoas/funcoes/${id}`, { variant: 'success', message: 'Função salva.' }));
@@ -82,6 +83,11 @@ async function EditFuncaoContent({ id }: { id: string }) {
               required
             />
           </div>
+
+          <label className="tag" style={{ cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '0.5rem' }}>
+            <input type="checkbox" name="escalavel" defaultChecked={funcao.escalavel} />
+            <span>Usar em escalas</span>
+          </label>
 
           <div className="admin-form-group">
             <label>Descrição</label>
