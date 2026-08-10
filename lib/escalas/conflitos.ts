@@ -13,6 +13,51 @@ export interface Conflito {
   mensagem: string;
 }
 
+export interface CompromissoEscala {
+  data: string;
+  pessoaId: string;
+  nome: string;
+  compromisso: string;
+  escalaId: string;
+}
+
+export interface ConflitoCompromisso {
+  data: string;
+  pessoaId: string;
+  nome: string;
+  compromissos: string[];
+}
+
+/** Agrupa compromissos da mesma pessoa e data, sem depender do banco. */
+export function detectarCompromissosConflitantes(compromissos: CompromissoEscala[]): ConflitoCompromisso[] {
+  const porData = new Map<string, Map<string, { nome: string; compromissos: string[]; escalas: Set<string> }>>();
+
+  for (const compromisso of compromissos) {
+    const pessoas = porData.get(compromisso.data) || new Map();
+    const registro = pessoas.get(compromisso.pessoaId) || {
+      nome: compromisso.nome,
+      compromissos: [],
+      escalas: new Set<string>(),
+    };
+    registro.nome = registro.nome || compromisso.nome;
+    registro.compromissos.push(compromisso.compromisso);
+    registro.escalas.add(compromisso.escalaId);
+    pessoas.set(compromisso.pessoaId, registro);
+    porData.set(compromisso.data, pessoas);
+  }
+
+  return [...porData.entries()].flatMap(([data, pessoas]) =>
+    [...pessoas.entries()]
+      .filter(([, registro]) => registro.compromissos.length > 1)
+      .map(([pessoaId, registro]) => ({
+        data,
+        pessoaId,
+        nome: registro.nome,
+        compromissos: registro.compromissos,
+      })),
+  ).sort((a, b) => a.data.localeCompare(b.data) || a.nome.localeCompare(b.nome, 'pt-BR'));
+}
+
 /**
  * Detecta se uma pessoa aparece em mais de uma função/bloco na mesma data
  */

@@ -6,6 +6,7 @@ import { invalidateUserAreaCache } from '@/lib/areas/invalidate-user-area';
 import { invalidateAdminDashboardCache } from '@/lib/admin/cache';
 import { calculateRange } from '@/lib/admin/query-helpers';
 import { checkModuleAccess } from '@/lib/auth/permissions';
+import { detectarCompromissosConflitantes, type CompromissoEscala } from '@/lib/escalas/conflitos';
 
 async function requireEscalasAccess() {
   const allowed = await checkModuleAccess('pode_escalas', ['coord_passe']);
@@ -110,18 +111,12 @@ export async function getEscalaConflitos(id: string) {
     .in('data', datas);
   if (error || !reunioes) return [];
 
-  const conflitos: Array<{ data: string; pessoaId: string; nome: string; compromissos: string[] }> = [];
-  const porData = new Map<string, Map<string, { nome: string; compromissos: string[]; escalas: Set<string> }>>();
+  const compromissos: CompromissoEscala[] = [];
 
   for (const reuniao of reunioes as any[]) {
-    const pessoas = porData.get(reuniao.data) || new Map();
     const registrar = (pessoaId: string | null | undefined, nome: string, compromisso: string) => {
       if (!pessoaId) return;
-      const atual = pessoas.get(pessoaId) || { nome, compromissos: [], escalas: new Set<string>() };
-      atual.nome = atual.nome || nome;
-      atual.compromissos.push(compromisso);
-      atual.escalas.add(reuniao.escala_id);
-      pessoas.set(pessoaId, atual);
+      compromissos.push({ data: reuniao.data, pessoaId, nome, compromisso, escalaId: reuniao.escala_id });
     };
     for (const item of reuniao.escala_funcoes || []) registrar(item.pessoa_id, item.pessoas?.nome || 'Pessoa', `Função: ${item.funcoes?.nome || 'não informada'}`);
     for (const item of reuniao.escala_passe || []) registrar(item.pessoa_id, item.pessoas?.nome || 'Pessoa', 'Aplicador de passe');
@@ -129,15 +124,9 @@ export async function getEscalaConflitos(id: string) {
       const pessoaId = item.palestrantes?.pessoa_id || item.expositor_id;
       registrar(pessoaId, item.palestrantes?.nome || item.expositores?.nome || 'Pessoa', 'Palestra');
     }
-    porData.set(reuniao.data, pessoas);
   }
 
-  for (const [data, pessoas] of porData) {
-    for (const [pessoaId, registro] of pessoas) {
-      if (registro.compromissos.length > 1) conflitos.push({ data, pessoaId, nome: registro.nome, compromissos: registro.compromissos });
-    }
-  }
-  return conflitos.sort((a, b) => a.data.localeCompare(b.data) || a.nome.localeCompare(b.nome, 'pt-BR'));
+  return detectarCompromissosConflitantes(compromissos);
 }
 
 export async function createEscala(formData: {
