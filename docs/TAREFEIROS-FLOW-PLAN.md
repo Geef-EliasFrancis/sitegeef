@@ -280,9 +280,9 @@ Antes de avançar para a etapa seguinte, validar:
 Até aqui foram implementados e validados localmente o catálogo escalável, a
 matriz Sim/Não de funções, os bloqueios de disponibilidade, a sugestão
 automática, o sorteio de aplicadores de passe e o cadastro/registro de
-palestrantes. As migrations dessas etapas de tarefeiros, funções e passe já
-estão aplicadas no Supabase GEEF. A migration de palestrantes está criada como
-pendente e deve ser aplicada após o gate de migrações.
+palestrantes. As migrations dessas etapas de tarefeiros, funções, passe,
+palestrantes e histórico já estão aplicadas no Supabase GEEF, com checkpoints
+registrados no manifesto.
 
 A tela de escala também passou a exibir alertas de conflito quando a mesma
 pessoa aparece em mais de um compromisso na mesma data, inclusive em outra
@@ -295,14 +295,10 @@ a revisão da coordenação. A edição e remoção de palestras já estão disp
 na própria escala. Alterações de aplicadores de passe também registram pessoa,
 posição, motivo, responsável e data.
 
-O próximo bloco é fechar a edição/remoção de registros de palestra, registrar
-conflitos e histórico de substituições e validar o fluxo autenticado no
-navegador.
+O próximo bloco é validar o fluxo autenticado no navegador, incluindo a
+edição/remoção de palestra, alertas de conflito e histórico de substituições.
 
-As migrations de vínculos, disponibilidade e histórico de substituições devem
-ser comparadas com o histórico do Supabase GEEF e aplicadas somente após
-validação do ambiente correto. A migration local
-`20260809060000_historico_substituicoes.sql` e
-`20260809070000_historico_aplicadores_passe.sql` ainda estão pendentes de
-aplicação remota. A prova estrutural local, a prova no banco remoto e a validação
-autenticada do formulário devem ser registradas separadamente.
+As migrations de vínculos, disponibilidade e histórico de substituições foram
+comparadas com o histórico do Supabase GEEF e aplicadas após a validação do
+ambiente correto. A prova estrutural local, a prova no banco remoto e a
+validação autenticada do formulário continuam registradas separadamente.
