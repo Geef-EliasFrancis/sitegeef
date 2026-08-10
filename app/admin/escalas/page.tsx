@@ -3,6 +3,7 @@ import { getEscalas } from './actions';
 import { Suspense } from 'react';
 import { AdminPageTitleAdd } from '@/components/admin/admin-page-title-add';
 import { EscalaStatusBadge } from '@/components/admin/escalas/escala-status-badge';
+import { getNomeMes } from '@/lib/escalas/datas';
 
 export const metadata = {
   title: 'Escalas Mensais - Admin GEEF',
@@ -15,14 +16,6 @@ type EscalaItem = {
   status?: string | null;
   criado_em: string;
 };
-
-function getMonthName(mes: number): string {
-  const months = [
-    'Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho',
-    'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro',
-  ];
-  return months[mes - 1];
-}
 
 async function EscalasList({ searchParams }: { searchParams: { page?: string } }) {
   const page = parseInt(searchParams.page || '1', 10);
@@ -59,7 +52,7 @@ async function EscalasList({ searchParams }: { searchParams: { page?: string } }
                 {escalaList.map((escala) => {
                   return (
                     <tr key={escala.id}>
-                      <td><strong>{getMonthName(escala.mes)}</strong></td>
+                      <td><strong>{getNomeMes(escala.mes)}</strong></td>
                       <td>{escala.ano}</td>
                       <td>
                         <EscalaStatusBadge status={escala.status} />

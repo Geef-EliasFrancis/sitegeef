@@ -5,18 +5,11 @@ import { Suspense } from 'react';
 import { buildFlashNoticeUrl } from '@/lib/notificacoes/flash-notice';
 import { EscalaAuditPanels } from '@/components/admin/escalas/escala-audit-panels';
 import { ReuniaoEscalaCard } from '@/components/admin/escalas/reuniao-escala-card';
+import { getNomeMes } from '@/lib/escalas/datas';
 
 export const metadata = {
   title: 'Editar Escala - Admin GEEF',
 };
-
-function getMonthName(mes: number): string {
-  const months = [
-    'Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho',
-    'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro',
-  ];
-  return months[mes - 1];
-}
 
 async function handlePublish(id: string) {
   'use server';
@@ -92,7 +85,7 @@ async function EditEscalaContent({ id }: { id: string }) {
         <div className="area-hero-top">
           <div>
             <p className="area-subtitle">Detalhe da escala</p>
-            <h1 className="area-hero-title">Escala {getMonthName(escala.mes)} de {escala.ano}</h1>
+            <h1 className="area-hero-title">Escala {getNomeMes(escala.mes)} de {escala.ano}</h1>
           </div>
           <div className="tag-list">
             <span className="tag">{escala.status}</span>
