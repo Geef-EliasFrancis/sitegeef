@@ -88,6 +88,58 @@ export async function getEscalaById(id: string) {
   return data;
 }
 
+export async function getEscalaConflitos(id: string) {
+  await requireEscalasAccess();
+  const supabase = await createClient();
+  const { data: escalaAtual, error: escalaError } = await supabase
+    .from('reunioes')
+    .select('id,data')
+    .eq('escala_id', id);
+  if (escalaError || !escalaAtual || escalaAtual.length === 0) return [];
+
+  const datas = escalaAtual.map((reuniao) => reuniao.data);
+  const { data: reunioes, error } = await supabase
+    .from('reunioes')
+    .select(`
+      id, data, escala_id,
+      escalas_mensais (mes, ano),
+      escala_funcoes (pessoa_id, funcoes(nome), pessoas(nome)),
+      escala_passe (pessoa_id, pessoas(nome)),
+      escala_palestras (expositor_id, expositores:pessoas(nome), palestrantes(nome, pessoa_id))
+    `)
+    .in('data', datas);
+  if (error || !reunioes) return [];
+
+  const conflitos: Array<{ data: string; pessoaId: string; nome: string; compromissos: string[] }> = [];
+  const porData = new Map<string, Map<string, { nome: string; compromissos: string[]; escalas: Set<string> }>>();
+
+  for (const reuniao of reunioes as any[]) {
+    const pessoas = porData.get(reuniao.data) || new Map();
+    const registrar = (pessoaId: string | null | undefined, nome: string, compromisso: string) => {
+      if (!pessoaId) return;
+      const atual = pessoas.get(pessoaId) || { nome, compromissos: [], escalas: new Set<string>() };
+      atual.nome = atual.nome || nome;
+      atual.compromissos.push(compromisso);
+      atual.escalas.add(reuniao.escala_id);
+      pessoas.set(pessoaId, atual);
+    };
+    for (const item of reuniao.escala_funcoes || []) registrar(item.pessoa_id, item.pessoas?.nome || 'Pessoa', `Função: ${item.funcoes?.nome || 'não informada'}`);
+    for (const item of reuniao.escala_passe || []) registrar(item.pessoa_id, item.pessoas?.nome || 'Pessoa', 'Aplicador de passe');
+    for (const item of reuniao.escala_palestras || []) {
+      const pessoaId = item.palestrantes?.pessoa_id || item.expositor_id;
+      registrar(pessoaId, item.palestrantes?.nome || item.expositores?.nome || 'Pessoa', 'Palestra');
+    }
+    porData.set(reuniao.data, pessoas);
+  }
+
+  for (const [data, pessoas] of porData) {
+    for (const [pessoaId, registro] of pessoas) {
+      if (registro.compromissos.length > 1) conflitos.push({ data, pessoaId, nome: registro.nome, compromissos: registro.compromissos });
+    }
+  }
+  return conflitos.sort((a, b) => a.data.localeCompare(b.data) || a.nome.localeCompare(b.nome, 'pt-BR'));
+}
+
 export async function createEscala(formData: {
   mes: number;
   ano: number;
@@ -378,7 +430,7 @@ export async function addFuncao(reuniaoId: string, funcaoId: string, pessoaId: s
   return data;
 }
 
-export async function updateFuncao(id: string, pessoaId: string, substitutoId?: string) {
+export async function updateFuncao(id: string, pessoaId: string, substitutoId?: string, motivo?: string) {
   await requireEscalasAccess();
   const supabase = await createClient();
 
@@ -388,7 +440,7 @@ export async function updateFuncao(id: string, pessoaId: string, substitutoId?: 
 
   const { data: escalaFuncao } = await supabase
     .from('escala_funcoes')
-    .select('funcao_id,reuniao_id,reunioes(data)')
+    .select('funcao_id,reuniao_id,pessoa_id,substituto_id,reunioes(data)')
     .eq('id', id)
     .maybeSingle();
   if (!escalaFuncao?.funcao_id || !escalaFuncao.reuniao_id) return { success: false };
@@ -429,8 +481,35 @@ export async function updateFuncao(id: string, pessoaId: string, substitutoId?: 
 
   if (error) return { success: false };
 
+  const titularMudou = escalaFuncao.pessoa_id !== pessoaId;
+  const substitutoMudou = (escalaFuncao.substituto_id || null) !== (substitutoId || null);
+  if (titularMudou || substitutoMudou) {
+    const { data: authData } = await supabase.auth.getUser();
+    const { error: historicoError } = await supabase.from('escala_funcoes_historico').insert({
+      escala_funcao_id: id,
+      pessoa_anterior_id: escalaFuncao.pessoa_id,
+      substituto_anterior_id: escalaFuncao.substituto_id || null,
+      pessoa_nova_id: pessoaId,
+      substituto_novo_id: substitutoId || null,
+      motivo: motivo?.trim() || null,
+      alterado_por: authData.user?.id || null,
+    });
+    if (historicoError) return { success: false };
+  }
+
   invalidateEscalasCache();
   return { success: true };
+}
+
+export async function getEscalaFuncoesHistorico(escalaId: string) {
+  await requireEscalasAccess();
+  const supabase = await createClient();
+  const { data, error } = await supabase
+    .from('escala_funcoes_historico')
+    .select('id,motivo,criado_em,pessoa_anterior:pessoas!pessoa_anterior_id(nome),pessoa_nova:pessoas!pessoa_nova_id(nome),substituto_anterior:pessoas!substituto_anterior_id(nome),substituto_novo:pessoas!substituto_novo_id(nome),escala_funcao:escala_funcoes!inner(reunioes!inner(data,escala_id),funcoes(nome))')
+    .eq('escala_funcao.reunioes.escala_id', escalaId)
+    .order('criado_em', { ascending: false });
+  return error ? [] : data || [];
 }
 
 export async function removeFuncao(id: string) {

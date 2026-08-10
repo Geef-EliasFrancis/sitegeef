@@ -15,7 +15,8 @@ async function handleUpdate(formData: FormData, escalaId: string, funcaoId: stri
     await updateFuncao(
       funcaoId,
       formData.get('pessoa_id') as string,
-      (formData.get('substituto_id') as string) || undefined
+      (formData.get('substituto_id') as string) || undefined,
+      (formData.get('motivo') as string) || undefined,
     );
 
     redirect(buildFlashNoticeUrl(`/admin/escalas/${escalaId}`, { variant: 'success', message: 'Função salva.' }));
@@ -147,6 +148,11 @@ async function EditFuncaoContent({
                 </option>
               ))}
             </select>
+          </div>
+
+          <div className="admin-form-group">
+            <label>Motivo da alteração</label>
+            <textarea name="motivo" rows={3} placeholder="Opcional; ficará registrado no histórico." />
           </div>
 
           <div style={{ display: 'flex', gap: '1rem', marginTop: '2rem' }}>

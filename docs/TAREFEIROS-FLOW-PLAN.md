@@ -284,11 +284,23 @@ palestrantes. As migrations dessas etapas de tarefeiros, funções e passe já
 estão aplicadas no Supabase GEEF. A migration de palestrantes está criada como
 pendente e deve ser aplicada após o gate de migrações.
 
+A tela de escala também passou a exibir alertas de conflito quando a mesma
+pessoa aparece em mais de um compromisso na mesma data, inclusive em outra
+escala mensal.
+
+Também foi incluído o histórico de alterações das funções da escala: cada
+troca de titular ou substituto registra os valores anterior e novo, o motivo,
+o responsável autenticado e a data. A tela da escala exibe esse histórico para
+a revisão da coordenação. A edição e remoção de palestras já estão disponíveis
+na própria escala.
+
 O próximo bloco é fechar a edição/remoção de registros de palestra, registrar
 conflitos e histórico de substituições e validar o fluxo autenticado no
 navegador.
 
-As migrations de vínculos e disponibilidade devem ser comparadas com o
-histórico do Supabase GEEF e aplicadas somente após validação do ambiente
-correto. A prova estrutural local, a prova no banco remoto e a validação
+As migrations de vínculos, disponibilidade e histórico de substituições devem
+ser comparadas com o histórico do Supabase GEEF e aplicadas somente após
+validação do ambiente correto. A migration local
+`20260809060000_historico_substituicoes.sql` ainda está pendente de aplicação
+remota. A prova estrutural local, a prova no banco remoto e a validação
 autenticada do formulário devem ser registradas separadamente.
