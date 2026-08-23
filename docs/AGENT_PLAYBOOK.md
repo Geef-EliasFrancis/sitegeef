@@ -19,7 +19,9 @@ Padronizar como o agente encontra o que alterar, como aplica mudancas e como evi
 2. `HANDOFF.md`
 3. `docs/MODULE_MAP.md`
 4. `docs/MCP_SUPABASE_GEEF.md` quando a tarefa envolver MCP do Supabase
-5. O arquivo do modulo alvo
+5. `docs/HYBRID_CODEX_WORKER.md` quando a tarefa envolver testes/builds na
+   homelab ou a futura ponte MCP híbrida
+6. O arquivo do modulo alvo
 
 ## Procedimento padrao para mudancas visuais
 

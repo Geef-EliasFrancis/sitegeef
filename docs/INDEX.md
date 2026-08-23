@@ -8,6 +8,7 @@
 - [Agent map JSON](../agent-map.json)
 - [Documento base do ERP](./baseerp.md)
 - [MCP Supabase GEEF](./MCP_SUPABASE_GEEF.md)
+- [Codex e worker híbrido](./HYBRID_CODEX_WORKER.md)
 - [Handoff de ativação completa do MCP Supabase](./SUPABASE_MCP_ACTIVATION_HANDOFF.md)
 - [Sistema de tema](./reference/THEME_SYSTEM.md)
 - [Padrão de tema, contraste e identidade](./PADRAO_TEMA_CONTRASTE_IDENTIDADE.md)

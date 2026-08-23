@@ -37,6 +37,20 @@ codex mcp login supabase-geef
 - Nunca misturar este projeto com outras contas ou outros projetos Supabase
 - Antes de qualquer leitura/escrita remota, confirmar que o MCP correto está `enabled` e autenticado por OAuth
 
+## Worker híbrido de validação
+
+- Leia `docs/HYBRID_CODEX_WORKER.md` antes de propor ou executar testes na
+  homelab.
+- O Codex no Coder edita no VPS; a homelab é somente um executor isolado de
+  `npm_test` e `npm_build` para um commit Git explícito.
+- A ponte MCP para despacho ainda não está instalada. Não alegue que a
+  homelab foi usada sem o identificador e o resultado de um job concluído.
+- Nunca disponibilize ao worker ou à futura ponte SSH, Docker, Coolify,
+  credenciais de produção, token do worker ou shell arbitrário.
+- Nunca coloque a credencial de submissão em Git, `.mcp.json`, `.env`, logs,
+  prompts ou documentação. Ela deverá ser um arquivo de segredo montado apenas
+  para a futura ponte.
+
 **Autoreflex local:**
 - Ao ser solicitado o início do localhost do GEEF, verificar primeiro se o
   Autoreflex responde em `http://127.0.0.1:8090/health`.
