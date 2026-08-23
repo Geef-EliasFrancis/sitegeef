@@ -23,10 +23,11 @@ implementação.
 - A ponte MCP local `hybrid_geef` foi implementada em
   `mcp/hybrid-worker.mjs` e declarada em `.codex/config.toml`. Ela expõe apenas
   `hybrid_test`, `hybrid_build` e `hybrid_job_status`.
-- A ponte só fica operacional no Coder após a versão do template ser publicada
-  e o arquivo secreto de submissão ser montado no workspace. Até essa
-  ativação, o Codex não deve afirmar que usou a homelab sem evidência de um job
-  concluído.
+- A ponte está ativada no workspace `site-geef` do Coder. A versão do template
+  publicada monta o arquivo secreto de submissão como leitura exclusiva.
+- Validação fim a fim em `2026-08-23`: o `job-7` executou `npm_test` para o
+  commit `c6b3dd1979c6837f6272d32d899b44c5fd5441d2` na
+  `homelab-dev-worker` e concluiu 77 testes com sucesso.
 
 ## Fluxo pretendido
 
@@ -63,17 +64,15 @@ locais e segredos do workspace nunca são transferidos à homelab.
 7. Resultado de teste ou build não autoriza deploy. Deploy continua sendo uma
    etapa separada e deliberada.
 
-## Ativação pendente
+## Ativação concluída
 
-1. Publicar a versão do template `vps-dev` que monta, apenas no workspace
-   `site-geef`, o arquivo
+1. O template `vps-dev` monta, apenas no workspace `site-geef`, o arquivo
    `/run/secrets/hybrid_site_geef_submitter_token` como leitura exclusiva.
-2. Provisionar o segredo fora do Git, com permissão `0600`, no host do runtime
-   Coder. A credencial é limitada pelo coordenador ao repositório GEEF.
-3. Atualizar o workspace em janela planejada, reiniciar o Codex e confirmar
-   `codex mcp get hybrid_geef`.
-4. Submeter um SHA de teste inofensivo e registrar o ID, executor e resultado
-   no handoff.
+2. O segredo permanece fora do Git, com permissão `0600`, e a credencial é
+   limitada pelo coordenador ao repositório GEEF.
+3. O workspace foi atualizado e `codex mcp get hybrid_geef` confirmou o
+   transporte STDIO e a allowlist das três ferramentas.
+4. O `job-7` confirmou a execução isolada do commit imutável na homelab.
 
 ## Ferramentas disponíveis após ativação
 
@@ -99,3 +98,11 @@ fim dessa ponte.
    commit de teste inofensivo.
 6. Registrar evidência do job (SHA, tipo, executor, status e resumo dos logs)
    no handoff, sem registrar tokens.
+
+## Observação técnica aberta
+
+No `job-7`, o `npm ci --ignore-scripts` executado fora do contêiner emitiu
+avisos de compatibilidade porque o Node assinado do LXC ainda é 18, enquanto o
+teste ocorre no contêiner Node 22. Os 77 testes passaram, mas uma etapa futura
+deve alinhar a instalação de dependências ao Node 22 sem remover os limites de
+rede, privilégios e lifecycle scripts.
