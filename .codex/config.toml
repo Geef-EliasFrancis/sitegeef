@@ -1,0 +1,14 @@
+[mcp_servers.hybrid_geef]
+command = "node"
+args = ["mcp/hybrid-worker.mjs"]
+cwd = "."
+enabled_tools = ["hybrid_test", "hybrid_build", "hybrid_job_status"]
+default_tools_approval_mode = "prompt"
+tool_timeout_sec = 30
+
+[mcp_servers.hybrid_geef.env]
+HYBRID_COORDINATOR_URL = "https://worker.aiveca.com.br"
+HYBRID_SUBMITTER_TOKEN_FILE = "/run/secrets/hybrid_site_geef_submitter_token"
+
+[mcp_servers.hybrid_geef.tools.hybrid_job_status]
+approval_mode = "approve"

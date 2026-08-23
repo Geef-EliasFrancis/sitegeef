@@ -43,7 +43,8 @@ codex mcp login supabase-geef
   homelab.
 - O Codex no Coder edita no VPS; a homelab é somente um executor isolado de
   `npm_test` e `npm_build` para um commit Git explícito.
-- A ponte MCP para despacho ainda não está instalada. Não alegue que a
+- A ponte MCP `hybrid_geef` é declarada em `.codex/config.toml`, mas só fica
+  ativa no Coder após a montagem do segredo de submissão. Não alegue que a
   homelab foi usada sem o identificador e o resultado de um job concluído.
 - Nunca disponibilize ao worker ou à futura ponte SSH, Docker, Coolify,
   credenciais de produção, token do worker ou shell arbitrário.
