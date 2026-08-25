@@ -2294,11 +2294,15 @@ body.musica-display-route * {
 .musica-display-screen--live .musica-display-verse-content pre {
   color: #201617;
   text-shadow: none;
-  -webkit-text-stroke: 0;
+  font-weight: 700;
+  letter-spacing: 0.012em;
+  -webkit-text-stroke: 0.12px currentColor;
 }
 
 .musica-display-screen--live .musica-display-header-subtitle {
   color: #5d4c4c;
+  font-weight: 650;
+  letter-spacing: 0.01em;
   text-shadow: none;
 }
 
