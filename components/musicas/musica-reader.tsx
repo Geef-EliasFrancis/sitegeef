@@ -9,6 +9,16 @@ import { IconArrowLeft, IconPrinter } from "@/components/icons";
 import { MusicaExibicaoPublicaButton } from "@/components/musicas/musica-exibicao-publica-button";
 import { getMusicaDisplayConfig, getMusicaDisplayScale } from "@/lib/musica-display-config";
 
+type DisplayPreset = "auto" | "hd" | "fullhd" | "classic";
+
+const DISPLAY_PRESET_STORAGE_KEY = "geef-musicas-display-preset";
+const DISPLAY_PRESETS: Record<DisplayPreset, { label: string; scale: number }> = {
+  auto: { label: "Automático", scale: 1 },
+  hd: { label: "HD 1280×720", scale: 0.9 },
+  fullhd: { label: "Full HD 1920×1080", scale: 1.08 },
+  classic: { label: "4:3 clássico", scale: 0.84 },
+};
+
 function isChordLine(line: string): boolean {
   if (!line || !line.trim()) return false;
   const tokens = line.split(/\s+/).filter(Boolean);
@@ -102,6 +112,7 @@ export function MusicaReader({
   const [viewMode, setViewMode] = useState<"letra" | "cifra">("letra");
   const [pipExpanded, setPipExpanded] = useState(false);
   const [pipHidden, setPipHidden] = useState(true);
+  const [displayPreset, setDisplayPreset] = useState<DisplayPreset>("auto");
   const [viewport, setViewport] = useState(() => ({
     width: 1366,
     height: 768,
@@ -414,34 +425,52 @@ export function MusicaReader({
   }, [displayMetrics.columns, partesVisiveis]);
 
   useEffect(() => {
+    if (!isDisplay) return;
+
+    const savedPreset = window.localStorage.getItem(DISPLAY_PRESET_STORAGE_KEY) as DisplayPreset | null;
+    if (savedPreset && savedPreset in DISPLAY_PRESETS) {
+      setDisplayPreset(savedPreset);
+    }
+  }, [isDisplay]);
+
+  useEffect(() => {
+    if (isDisplay) {
+      window.localStorage.setItem(DISPLAY_PRESET_STORAGE_KEY, displayPreset);
+    }
+  }, [displayPreset, isDisplay]);
+
+  useEffect(() => {
     const el = displayScreenRef.current;
     if (!isDisplay || !el) {
       return;
     }
 
+    const displayScale =
+      getMusicaDisplayScale(musica.titulo, viewport.width, displayMetrics.scale) * DISPLAY_PRESETS[displayPreset].scale;
+
     const properties: Record<string, string> = {
-      "--display-scale": String(getMusicaDisplayScale(musica.titulo, viewport.width, displayMetrics.scale)),
-      "--display-fit-scale": String(getMusicaDisplayScale(musica.titulo, viewport.width, displayMetrics.scale)),
+      "--display-scale": String(displayScale),
+      "--display-fit-scale": String(displayScale),
       "--display-columns": String(displayMetrics.columns),
       "--display-rows": String(displayMetrics.rows),
-      "--display-body-gap": `${displayMetrics.bodyGap * getMusicaDisplayScale(musica.titulo, viewport.width, displayMetrics.scale)}rem`,
-      "--display-header-pad-y": `${displayMetrics.headerPaddingY * getMusicaDisplayScale(musica.titulo, viewport.width, displayMetrics.scale)}rem`,
-      "--display-header-pad-x": `${displayMetrics.headerPaddingX * getMusicaDisplayScale(musica.titulo, viewport.width, displayMetrics.scale)}rem`,
-      "--display-body-pad-x": `${displayMetrics.headerPaddingX * getMusicaDisplayScale(musica.titulo, viewport.width, displayMetrics.scale)}rem`,
-      "--display-title-size": `${displayMetrics.titleSize * Math.max(1, getMusicaDisplayScale(musica.titulo, viewport.width, displayMetrics.scale))}rem`,
-      "--display-subtitle-size": `${displayMetrics.subtitleSize * Math.max(1, getMusicaDisplayScale(musica.titulo, viewport.width, displayMetrics.scale))}rem`,
-      "--display-logo-width": `${displayMetrics.logoWidth * Math.max(1, getMusicaDisplayScale(musica.titulo, viewport.width, displayMetrics.scale))}px`,
-      "--display-body-pad-top": `${displayMetrics.bodyPaddingTop * getMusicaDisplayScale(musica.titulo, viewport.width, displayMetrics.scale)}rem`,
-      "--display-verse-pad": `${displayMetrics.versePad * getMusicaDisplayScale(musica.titulo, viewport.width, displayMetrics.scale)}rem`,
-      "--display-verse-title": `${displayMetrics.verseTitle * (displayDensity === "full" ? 1.25 : 1) * getMusicaDisplayScale(musica.titulo, viewport.width, displayMetrics.scale)}rem`,
-      "--display-verse-text": `${displayMetrics.verseText * (displayDensity === "full" ? 1.45 : 1) * getMusicaDisplayScale(musica.titulo, viewport.width, displayMetrics.scale)}rem`,
-      "--display-verse-min-height": `${displayMetrics.verseMinHeight * getMusicaDisplayScale(musica.titulo, viewport.width, displayMetrics.scale)}rem`,
+      "--display-body-gap": `${displayMetrics.bodyGap * displayScale}rem`,
+      "--display-header-pad-y": `${displayMetrics.headerPaddingY * displayScale}rem`,
+      "--display-header-pad-x": `${displayMetrics.headerPaddingX * displayScale}rem`,
+      "--display-body-pad-x": `${displayMetrics.headerPaddingX * displayScale}rem`,
+      "--display-title-size": `${displayMetrics.titleSize * Math.max(1, displayScale)}rem`,
+      "--display-subtitle-size": `${displayMetrics.subtitleSize * Math.max(1, displayScale)}rem`,
+      "--display-logo-width": `${displayMetrics.logoWidth * Math.max(1, displayScale)}px`,
+      "--display-body-pad-top": `${displayMetrics.bodyPaddingTop * displayScale}rem`,
+      "--display-verse-pad": `${displayMetrics.versePad * displayScale}rem`,
+      "--display-verse-title": `${displayMetrics.verseTitle * (displayDensity === "full" ? 1.25 : 1) * displayScale}rem`,
+      "--display-verse-text": `${displayMetrics.verseText * (displayDensity === "full" ? 1.45 : 1) * displayScale}rem`,
+      "--display-verse-min-height": `${displayMetrics.verseMinHeight * displayScale}rem`,
     };
 
     Object.entries(properties).forEach(([property, value]) => {
       el.style.setProperty(property, value);
     });
-  }, [displayMetrics, isDisplay]);
+  }, [displayDensity, displayMetrics, displayPreset, isDisplay, musica.titulo, viewport.width]);
 
   useEffect(() => {
     const el = publicLyricsPanelRef.current;
@@ -519,6 +548,21 @@ export function MusicaReader({
           >
             <IconPrinter size={16} />
           </button>
+          <label className="musica-display-preset-control">
+            <span>Resolução</span>
+            <select
+              value={displayPreset}
+              onChange={(event) => setDisplayPreset(event.target.value as DisplayPreset)}
+              aria-label="Escolher ajuste de resolução da projeção"
+              title="Ajuste de resolução da projeção"
+            >
+              {Object.entries(DISPLAY_PRESETS).map(([value, preset]) => (
+                <option key={value} value={value}>
+                  {preset.label}
+                </option>
+              ))}
+            </select>
+          </label>
           {hasMedia ? (
             <button
               type="button"

@@ -2408,6 +2408,35 @@ body.musica-display-route .musica-display-screen--reader {
   outline-offset: 2px;
 }
 
+.musica-display-preset-control {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  min-height: 2.35rem;
+  padding: 0.25rem 0.45rem 0.25rem 0.7rem;
+  border: 1px solid rgba(101, 0, 76, 0.2);
+  border-radius: 999px;
+  background: #fff;
+  color: #3a2834;
+  font-size: 0.76rem;
+  font-weight: 750;
+  white-space: nowrap;
+}
+
+.musica-display-preset-control select {
+  max-width: 8.8rem;
+  border: 0;
+  background: transparent;
+  color: #65004c;
+  font: inherit;
+  cursor: pointer;
+}
+
+.musica-display-preset-control select:focus-visible {
+  outline: 2px solid rgba(138, 0, 90, 0.45);
+  outline-offset: 2px;
+}
+
 .musica-display-video-overlay {
   position: fixed;
   right: clamp(0.85rem, 1.5vw, 1.2rem);
@@ -2444,6 +2473,15 @@ body.musica-display-route .musica-display-screen--reader {
   .musica-display-command-button {
     flex: 1;
     padding-inline: 0.5rem;
+  }
+
+  .musica-display-preset-control {
+    flex: 2;
+    justify-content: center;
+  }
+
+  .musica-display-preset-control span {
+    display: none;
   }
 
   .musica-display-command-button span:last-child {
