@@ -187,6 +187,14 @@ Não pular diretamente para alterar migrations ou policies quando a falha estive
 
 As ferramentas concretas dependem do conjunto publicado pelo servidor e dos escopos OAuth. A sessão deve descobrir e registrar o que realmente está disponível; não presumir capacidade de escrita.
 
+## Registro de ativação — 2026-08-25
+
+- O OAuth do servidor isolado `supabase-geef` foi concluído com sucesso.
+- `codex mcp list` confirmou o servidor como `enabled` com autenticação `OAuth` e o project ref `nycgpokqlmrfzegjlrwa`.
+- `npm run mcp:supabase:gate` passou com `0 erro(s), 0 aviso(s)`; a CLI está autenticada e o checkout está vinculado ao projeto GEEF.
+- Esta conversa foi iniciada antes da renovação OAuth e ainda não recebeu as ferramentas MCP do Supabase. É necessário fechar e reabrir o Codex na raiz do projeto antes de continuar.
+- A ativação permanece **parcial** até que a nova sessão execute uma leitura MCP sem mutação e confirme o project ref e o schema. Nenhuma leitura MCP real ou escrita remota foi feita neste registro.
+
 ## Encerramento da ativação
 
 Marcar o MCP como totalmente ativo somente quando:
